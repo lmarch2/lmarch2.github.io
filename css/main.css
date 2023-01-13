@@ -2816,3 +2816,11 @@ body {
   -webkit-box-shadow: 0 0 5px #788072;
   -moz-box-shadow: 0 0 5px rgba(202,203,204,0.5);
 }
+.posts-expand .post-tags a {
+  display: inline-block;
+  font-size: 0.8em;
+  padding: 0px 10px;
+  border-radius: 8px;
+  color: #555;
+  border: 0px;
+}
