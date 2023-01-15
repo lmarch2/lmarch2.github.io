@@ -1,6 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>week3 T1</title>
+    <url>/posts/f93875d2/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T1-easy-overflow"><a href="#T1-easy-overflow" class="headerlink" title="T1 easy_overflow"></a>T1 easy_overflow</h2><blockquote>
+<p>2023-01-14WP<br>Hgame week1 pwn 第二题<br>考点：简单栈溢出</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p><strong>file</strong>——64-bit,<br><strong>checksec</strong> 开启NX<br><img data-src="https://picx.zhimg.com/80/v2-b02ac7a02df1467f41fa6b8ed8ecf147_1440w.png?source=d16d100b"></p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p><strong>IDA</strong>看源码，先找&#x2F;bin&#x2F;sh，一路索引过去发现在一个后门函数中</p>
+<p><img data-src="https://picx.zhimg.com/80/v2-9e559b87dc3591a21383567579e57aec_1440w.png?source=d16d100b"></p>
+<p><img data-src="https://pic1.zhimg.com/80/v2-6c43653aae10a9334f6d4a773827dcae_1440w.png?source=d16d100b"></p>
+<p>然后我的第一反应是先记下call system的地址，结果一看，没找到？取而代之的是call    sub_401060<br>于是我卡了一下，可能是第一次碰到这样的题的缘故，我没有意识到函数名称可以是不一样的<br>打开main函数伪代码也是这样……<br><img data-src="https://pic1.zhimg.com/80/v2-d944638581f5f4e8ed3bb1f91435d464_1440w.webp"><br>越看越不对劲，搜索资料才发现这种题的风格就是去符号使原函数名字无法显示<br>这么说IDA无法解决了</p>
+<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>我们转而动态调试试一下<br>我们假设文件带有system函数，又据题意应该是有gets或者read之类的函数的<br>运行文件测试一下确实如此<br><img data-src="https://pic1.zhimg.com/80/v2-c0c3d1d2b64d886ff2b0c795be14315c_1440w.webp"><br>那么我们在这几个函数处试着打断点<br><img data-src="https://pic3.zhimg.com/80/v2-ff2f8659b478bef6651b656f3a5ee762_1440w.webp"><br>我们可以看到，其中system的地址和后面函数中的call    sub_401060的plt处地址对上了<br>read函数的地址和main函数中的 call    sub_401080的plt处地址对上了<br>同时呢，gdb运行文件的时候还发现main函数中还有一个close函数，浏览一下main函数源码只有sub_401070了<br><img data-src="https://pic2.zhimg.com/80/v2-4d7a5a5c48c6c578df4ef9f351eac149_1440w.webp"><br><img data-src="https://pic2.zhimg.com/80/v2-8553dc620b792d521995f7e5718e1629_1440w.webp"><br>查阅了一些资料得知，close(1)关闭了标准输出，详细见这篇<a href="https://blog.csdn.net/xirenwang/article/details/104139866">文章</a><br>也就是有下面我们得到shell后无法在屏幕上看到flag的情况<br>这时候就要输入exec 1&gt;&amp;0重启标准输出<br>那么现在呢我们已经把文件里的几个主要函数分析好了，接下来就要找偏移量了</p>
+<h3 id="0x03-1"><a href="#0x03-1" class="headerlink" title="0x03"></a>0x03</h3><p>这一部分我发现一个很坑的地方，如果我们用ctf-wilki上的方法，那么我们在gdb调试设断点的时候就不能设 </p>
+<blockquote>
+<p>b read</p>
+</blockquote>
+<p>这样设的话我们直接就进入到read函数里了，那就无法看到储存数据的寄存器（不管是什么）距rsp或者rbp的偏移了<br>并且，此时已经开始进入read子函数，即已经分配了新的栈帧了，rsp已经移动，再去计算rsp和rbp的差值则会不准确</p>
+<blockquote>
+<p>b  *0x4011be</p>
+</blockquote>
+<p>我们应该这样设断点，这样就停止在进入read函数之前，不仅可以看到相对偏移,还能计算出rbp-rsp<br><img data-src="https://pic3.zhimg.com/80/v2-9efe6dca6df2fee543e1ebc2027b17de_1440w.webp"><br><img data-src="https://pic1.zhimg.com/80/v2-0d752265119152e7f608595ea4255d90_1440w.webp"><br>得出rsp和rsi 0x7fffffffddd0,rbp为0x7fffffffdde0,计算得距rbp偏移量就为0x7fffffffdde0-0x7fffffffddd0<br>那么再加上rbp求得为0x10+8</p>
+<p>还可以暴力求得  <del>懒得计算偏移量的话</del><br><img data-src="https://pic4.zhimg.com/80/v2-c7ec27fdfb682541c8a7d2aeb8e4c663_1440w.webp"></p>
+<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>可以写exp</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">p = remote(&quot;week-1.hgame.lwsec.cn&quot;, 30574)</span><br><span class="line"></span><br><span class="line">system_addr = 000000000401176</span><br><span class="line">payload = b &#x27; a &#x27; * 0x18 + p64(system_addr)</span><br><span class="line"></span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<h3 id="0x05"><a href="#0x05" class="headerlink" title="0x05"></a>0x05</h3><p>好奇怪为什么官方的WP可以直接反汇编成正常的函数？<br>搜了一下好像可以手动添加标签,<a href="https://blog.csdn.net/Breeze_CAT/article/details/103788796">这篇文章</a>教了一下这么回复库函数名，但是看不懂……</p>
+<h3 id="0x06"><a href="#0x06" class="headerlink" title="0x06"></a>0x06</h3><p><img data-src="https://pic4.zhimg.com/80/v2-23c72811fac836cd0c8980516e1acc83_1440w.webp"><br>得到shell后发现并没有办法显示出flag，问题就在之前的那个close(1)因为汇编代码中有这样一句</p>
+<blockquote>
+<p>mov     edi, 1</p>
+</blockquote>
+<p>所以认为close()括号里的参数时1<br>这时候需要使用命令让shell能够正常回显</p>
+<blockquote>
+<p>exec 1&gt;&amp;0</p>
+</blockquote>
+<p>累死了，终于拿到flag<br><img data-src="https://pic2.zhimg.com/80/v2-ee060de7086e6945edf7fda074674fa5_1440w.webp"></p>
+]]></content>
+      <categories>
+        <category>wp</category>
+      </categories>
+      <tags>
+        <tag>ctf</tag>
+        <tag>hgame</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>week2 T5</title>
     <url>/posts/46e9d6ae/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T5-cgpwn2"><a href="#T5-cgpwn2" class="headerlink" title="T5 cgpwn2"></a>T5 cgpwn2</h2><blockquote>
