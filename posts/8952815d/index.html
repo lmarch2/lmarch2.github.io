@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://pic1.zhimg.com/80/v2-1dda406b44f40e076971774458e5d654_1440w.webp">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/3bcd85545cf60cac9b4aefb0eee24d1b.png">
 <meta property="article:published_time" content="2023-01-15T14:42:38.000Z">
-<meta property="article:modified_time" content="2023-01-15T14:52:03.226Z">
+<meta property="article:modified_time" content="2023-01-16T03:11:14.867Z">
 <meta property="article:author" content="lmarch2">
 <meta property="article:tag" content="ctf">
 <meta property="article:tag" content="ctf-wiki">
@@ -305,9 +305,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2023-01-15 22:42:38 / 修改时间：22:52:03" itemprop="dateCreated datePublished" datetime="2023-01-15T22:42:38+08:00">2023-01-15</time>
+      <time title="创建时间：2023-01-15 22:42:38" itemprop="dateCreated datePublished" datetime="2023-01-15T22:42:38+08:00">2023-01-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-01-16 11:11:14" itemprop="dateModified" datetime="2023-01-16T11:11:14+08:00">2023-01-16</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -362,6 +368,10 @@
 <p>而我们用shellcraft生成的shellcode时44字节的，显然已经超过了<br>于是我们想找一个长度较小的shellcode来写入，但是由于某些我还没搞很懂的原因，我们必须要将把shellcode放在返回<br>地址的后面<br>那放在后面的话是不是44字节的shellcode就可以使用了呢？其实也不行，要注意到read函数是读取0x40字节的，这就使得读取的字符串长度有一定的限制。这0x40字节的数据，既要包括填充的垃圾数据，也要包括shellcode的返回地址和shellcode的内容，我们还得计算一下允许的shellcode的长度<br>0x40 - ( 0x10 + 8 ) - 8 &#x3D; 32<br>（0x10+8）为造成溢出填充的垃圾数据，后面8为是shellcode地址的长度，所以构建的shllcode必须在32以内<br>之前使用的shellcraft.sh()生成的shellcode有44字节，在这里只有32字节，因此并不适用</p>
 <blockquote>
 <p>shellcode&#x3D;”\x31\xf6\x48\xbb\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x56\x53\x54\x5f\x6a\x3b\x58\x31\xd2\x0f\x05”</p>
+</blockquote>
+<p>一个找shellcode的网站</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.exploit-db.com/shellcodes">https://www.exploit-db.com/shellcodes</a><br><a target="_blank" rel="noopener" href="http://shell-storm.org/shellcode/">http://shell-storm.org/shellcode/</a> </p>
 </blockquote>
 <p>这个shellcode只有23个字节，短小精悍，适合放在栈中去执行</p>
 <p>写exp</p>
@@ -584,7 +594,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">11 分钟</span>
+    <span title="站点阅读时长">12 分钟</span>
   </span>
 </div>
 <div class="busuanzi-count">
