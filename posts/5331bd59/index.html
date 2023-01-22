@@ -35,9 +35,8 @@
 <meta property="og:image" content="https://pic2.zhimg.com/80/v2-06f1ca937f2820c16be174944ebde851_1440w.webp">
 <meta property="og:image" content="https://pic4.zhimg.com/80/v2-d117911f69f0b5cdc99a9a7c5352489b_1440w.webp">
 <meta property="og:image" content="https://pic2.zhimg.com/80/v2-c7068e97c98c8f0dc5a292df9ab746cd_1440w.webp">
-<meta property="og:image" content="https://pic4.zhimg.com/80/v2-39e1446cefe516e40009a8526e953467_1440w.webp">
 <meta property="article:published_time" content="2023-01-13T12:15:14.000Z">
-<meta property="article:modified_time" content="2023-01-13T13:37:37.508Z">
+<meta property="article:modified_time" content="2023-01-22T10:09:00.265Z">
 <meta property="article:author" content="lmarch2">
 <meta property="article:tag" content="ctf">
 <meta property="article:tag" content="BUUCTF">
@@ -152,7 +151,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#T1-test-your-nc"><span class="nav-text">T1 test_your_nc</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E7%94%A8checksec%E6%A3%80%E6%B5%8B%E6%96%87%E4%BB%B6%E4%BF%9D%E6%8A%A4%E6%9C%BA%E5%88%B6"><span class="nav-text">一、用checksec检测文件保护机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%89%93%E5%BC%80IDA"><span class="nav-text">二、打开IDA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E7%BB%93%E5%90%88%E9%A2%98%E7%9B%AE%E6%8F%90%E7%A4%BA%E5%8F%AF%E7%9F%A5%E7%9B%B4%E6%8E%A5nc"><span class="nav-text">三、结合题目提示可知直接nc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E4%B8%80%E4%BA%9B%E7%96%91%E9%97%AE"><span class="nav-text">四、一些疑问</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#T1-test-your-nc"><span class="nav-text">T1 test_your_nc</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E7%94%A8checksec%E6%A3%80%E6%B5%8B%E6%96%87%E4%BB%B6%E4%BF%9D%E6%8A%A4%E6%9C%BA%E5%88%B6"><span class="nav-text">一、用checksec检测文件保护机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%89%93%E5%BC%80IDA"><span class="nav-text">二、打开IDA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E7%BB%93%E5%90%88%E9%A2%98%E7%9B%AE%E6%8F%90%E7%A4%BA%E5%8F%AF%E7%9F%A5%E7%9B%B4%E6%8E%A5nc"><span class="nav-text">三、结合题目提示可知直接nc</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -327,9 +326,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2023-01-13 20:15:14 / 修改时间：21:37:37" itemprop="dateCreated datePublished" datetime="2023-01-13T20:15:14+08:00">2023-01-13</time>
+      <time title="创建时间：2023-01-13 20:15:14" itemprop="dateCreated datePublished" datetime="2023-01-13T20:15:14+08:00">2023-01-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-01-22 18:09:00" itemprop="dateModified" datetime="2023-01-22T18:09:00+08:00">2023-01-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -355,7 +360,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>587</span>
+      <span>454</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -381,7 +386,6 @@
 <h3 id="一、用checksec检测文件保护机制"><a href="#一、用checksec检测文件保护机制" class="headerlink" title="一、用checksec检测文件保护机制"></a>一、用checksec检测文件保护机制</h3><p>下载文件，checksec得知已开启NX保护<br><img data-src="https://pic2.zhimg.com/80/v2-e67d3c6a1857cc38c34efd40ed29e80d_1440w.webp"><br>（奇怪的是checksec没有给出文件位数，后来还是file了一下得到是64位）</p>
 <h3 id="二、打开IDA"><a href="#二、打开IDA" class="headerlink" title="二、打开IDA"></a>二、打开IDA</h3><p>将文件扔到IDA中，按下shift+f12,打开string window，发现&#x2F;bin&#x2F;sh<br><img data-src="https://pic4.zhimg.com/v2-fbe627c7dd17761ef3bc56360d884f27_r.jpg"><br>双击&#x2F;bin&#x2F;sh，点击command，交叉引用快捷键X，发现地址在main函数里<br><img data-src="https://pic1.zhimg.com/80/v2-84f08756aa27af34ed8fa47762094234_1440w.webp"><br>按下f5确定main函数就是一个简单地调用了&#x2F;bin&#x2F;sh的system函数<br><img data-src="https://pic2.zhimg.com/80/v2-06f1ca937f2820c16be174944ebde851_1440w.webp"><br><del>(其实感觉前两步就这题来说没必要……但是看一篇博客说拿到文件先checksec一下再IDA一下于是想试一下……)</del></p>
 <h3 id="三、结合题目提示可知直接nc"><a href="#三、结合题目提示可知直接nc" class="headerlink" title="三、结合题目提示可知直接nc"></a>三、结合题目提示可知直接nc</h3><p><del>（这个地方一开始报错，仔细一看发现ctrl cv过来的端口那里还有一个：得把冒号去掉……）</del><br>ls列出文件目录<br><img data-src="https://pic4.zhimg.com/80/v2-d117911f69f0b5cdc99a9a7c5352489b_1440w.webp"><br>发现flag，用cat（concatenate，命令用于连接文件并打印到标准输出设备上）抓取flag得<br><img data-src="https://pic2.zhimg.com/80/v2-c7068e97c98c8f0dc5a292df9ab746cd_1440w.webp"></p>
-<h3 id="四、一些疑问"><a href="#四、一些疑问" class="headerlink" title="四、一些疑问"></a>四、一些疑问</h3><p>1.为什么我的checksec只能横着一排显示过去？打开文件时为什么只能用checksec –file&#x3D;而不能checksec file?（网上查找过资料没有解决方法）<br>2.用peda自带的checksec为什么用两种格式打开文件会出现不同的结果呢？<br><img data-src="https://pic4.zhimg.com/80/v2-39e1446cefe516e40009a8526e953467_1440w.webp"></p>
 
     </div>
 

