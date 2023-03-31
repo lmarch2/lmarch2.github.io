@@ -22,26 +22,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"lmarch2.github.com","root":"/","images":"/images","scheme":"Gemini","darkmode":"ture","version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="A Student studying Cybersecurity">
-<meta property="og:type" content="website">
-<meta property="og:title" content="lmarch2&#39;blog">
-<meta property="og:url" content="http://lmarch2.github.com/archives/2023/page/2/index.html">
+    <meta name="description" content="关于分配动态内存编译器警告C6001和C60110x00在做数据结构与算法的二叉树实验时，要在非递归计算度为1的节点的函数里用到一个结构体。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于分配动态内存编译器警告C6001和C6011">
+<meta property="og:url" content="http://lmarch2.github.com/posts/0/index.html">
 <meta property="og:site_name" content="lmarch2&#39;blog">
-<meta property="og:description" content="A Student studying Cybersecurity">
+<meta property="og:description" content="关于分配动态内存编译器警告C6001和C60110x00在做数据结构与算法的二叉树实验时，要在非递归计算度为1的节点的函数里用到一个结构体。">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-03-31T16:12:05.825Z">
+<meta property="article:modified_time" content="2023-03-31T16:32:56.526Z">
 <meta property="article:author" content="lmarch2">
-<meta property="article:tag" content="ctf">
+<meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://lmarch2.github.com/archives/2023/page/2/">
+<link rel="canonical" href="http://lmarch2.github.com/posts/0/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"archives/2023/page/2/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://lmarch2.github.com/posts/0/","path":"posts/0/","title":"关于分配动态内存编译器警告C6001和C6011"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>归档 | lmarch2'blog</title>
+<title>关于分配动态内存编译器警告C6001和C6011 | lmarch2'blog</title>
   
 
 
@@ -74,7 +76,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">lmarch2'blog</h1>
+      <p class="site-title">lmarch2'blog</p>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">求知若渴，虚心若愚</p>
@@ -128,7 +130,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -141,6 +143,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E5%88%86%E9%85%8D%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E7%BC%96%E8%AF%91%E5%99%A8%E8%AD%A6%E5%91%8AC6001%E5%92%8CC6011"><span class="nav-text">关于分配动态内存编译器警告C6001和C6011</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00"><span class="nav-text">0x00</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01"><span class="nav-text">0x01</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02"><span class="nav-text">0x02</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03"><span class="nav-text">0x03</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04"><span class="nav-text">0x04</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x05-%E6%80%BB%E7%BB%93"><span class="nav-text">0x05  总结</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -276,172 +279,253 @@
 
     </div>
 
-    <div class="main-inner archive posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
-  
-  
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 17 篇日志。 继续努力。</span>
-      </div>
 
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://lmarch2.github.com/posts/0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://pic3.zhimg.com/80/v2-ffbdad5d2f9183a625a6a112a4f96b02_1440w.webp">
+      <meta itemprop="name" content="lmarch2">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lmarch2'blog">
+      <meta itemprop="description" content="A Student studying Cybersecurity">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="关于分配动态内存编译器警告C6001和C6011 | lmarch2'blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          关于分配动态内存编译器警告C6001和C6011
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
       
-    <div class="collection-year">
-      <span class="collection-header">2023</span>
+
+      <time title="创建时间：2023-04-01 00:12:05 / 修改时间：00:32:56" itemprop="dateCreated datePublished" datetime="2023-04-01T00:12:05+08:00">2023-04-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AF%A5%E6%B3%A8%E6%84%8F%E7%9A%84%E5%9C%B0%E6%96%B9/" itemprop="url" rel="index"><span itemprop="name">该注意的地方</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="关于分配动态内存编译器警告C6001和C6011"><a href="#关于分配动态内存编译器警告C6001和C6011" class="headerlink" title="关于分配动态内存编译器警告C6001和C6011"></a>关于分配动态内存编译器警告C6001和C6011</h1><h2 id="0x00"><a href="#0x00" class="headerlink" title="0x00"></a>0x00</h2><p>在做数据结构与算法的二叉树实验时，要在非递归计算度为1的节点的函数里用到一个结构体。</p>
+<span id="more"></span>
+
+<h2 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h2><p> 一开始我的做法是直接声明了一个结构体指针实例BiTree  x；</p>
+<p>发现编译器警告C6001：</p>
+<blockquote>
+<p>使用未初始化的内存 </p>
+</blockquote>
+<p>查看Microsoft的官方文档</p>
+<blockquote>
+<p>当在分配值之前使用未初始化的局部变量时，将报告此警告。 这种用法可能会导致不可预知的结果。 在使用变量之前，始终应初始化变量。  </p>
+</blockquote>
+<p>于是我以为是需要在声明时将指针初始化为空指针，于是做了如下修改</p>
+<blockquote>
+<p>BiTree x &#x3D; NULL;</p>
+</blockquote>
+<h2 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h2><p>但是修改之后遇到了两种情况，一种是编译器警告使用未初始化的内存：</p>
+<blockquote>
+<p>取消引用 NULL 指针</p>
+</blockquote>
+<p>一种是编译器未给出任何报错</p>
+<h2 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h2><p>想了半天我突然想起来好像得给指针分配动态内存才能解决问题</p>
+<p>于是进行了如下修改</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BiTree x = (BiTree)<span class="built_in">malloc</span>(<span class="built_in">sizeof</span>(BiTNode))</span><br></pre></td></tr></table></figure>
+
+<p>然而报错仍然存在</p>
+<p>整不会了……</p>
+<h2 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h2><p>于是我再次查看Microsoft的帮助文档</p>
+<blockquote>
+<p>此警告指示代码取消引用潜在的 null 指针。 如果该指针的值无效，则结果是未定义的。 若要解决此问题，请在使用前验证指针。 </p>
+</blockquote>
+<p>并且在下方还有官方给出的demo</p>
+<blockquote>
+<p>以下代码生成此警告，因为如果内存不足，则 <code>malloc</code> 调用可能会返回 null： </p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;malloc.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">( )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="type">char</span> *p = ( <span class="type">char</span> * ) <span class="built_in">malloc</span>( <span class="number">10</span> );</span><br><span class="line">  *p = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// code ...</span></span><br><span class="line"> <span class="built_in">free</span>( p );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>函数可能使用 <code>Pre</code> 条件中的 <code>Null</code> 属性来注释参数。 取消引用参数之前，在这些函数中分配内存。 以下代码生成警告 C6011，因为尝试取消引用函数内的 null 指针 (<code>pc</code>)，而无需首先分配内存：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;sal.h&gt;</span><br><span class="line">using namespace vc_attributes;</span><br><span class="line">void f([Pre(Null=Yes)] char* pc)</span><br><span class="line">&#123;</span><br><span class="line">  *pc=&#x27;\0&#x27;; // warning C6011 - pc is null</span><br><span class="line">  // code ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>sodei原来不仅要申请动态内存，还要在申请后使用if判断语句判断申请是否成功</p>
+<h2 id="0x05-总结"><a href="#0x05-总结" class="headerlink" title="0x05  总结"></a>0x05  总结</h2><p>在分配动态内存时，需要在分配完成后对是否成功分配成功进行判断</p>
+<p>若遇到堆内存不够等分配不成功的情况会返回空指针，所以必须对是否成功申请进行判断。</p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2023-01-13T21:03:21+08:00"
-              content="2023-01-13">
-          01-13
-        </time>
-      </div>
+    
+    
+    
 
-      <div class="post-title">
-          <a class="post-title-link" href="/posts/d88d430d/" itemprop="url">
-            <span itemprop="name">week2 T2</span>
-          </a>
-      </div>
+<div> 
+	 
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------文章就到这里啦！<i class="fa fa-paw"></i>感谢您的阅读XD-------------</div>
+    
+</div> 
+	 
+</div>
 
-      
-    </header>
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>lmarch2
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://lmarch2.github.com/posts/0/" title="关于分配动态内存编译器警告C6001和C6011">http://lmarch2.github.com/posts/0/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+
+ <div class="post-tags">
+              <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 算法</a>
+          </div>
+          <script type="text/javascript">
+            var tagsall=document.getElementsByClassName("post-tags")
+            for (var i = tagsall.length - 1; i >= 0; i--){
+                var tags=tagsall[i].getElementsByTagName("a");
+                for (var j = tags.length - 1; j >= 0; j--) {
+                    var golden_ratio = 0.618033988749895;
+                    var s = 0.5;
+                    var v = 0.999;
+                    var h = golden_ratio + Math.random()*0.8 - 0.5;
+                    var h_i = parseInt(h * 6);
+                    var f = h * 6 - h_i;
+                    var p = v * (1 - s);
+                    var q = v * (1 - f * s);
+                    var t = v * (1 - (1 - f) * s);
+                    var r, g, b;
+                    switch (h_i) {
+                        case 0:
+                            r = v;
+                            g = t;
+                            b = p;
+                            break;
+                        case 1:
+                            r = q;
+                            g = v;
+                            b = p;
+                            break;
+                        case 2:
+                            r = p;
+                            g = v;
+                            b = t;
+                            break;
+                        case 3 :
+                            r = p;
+                            g = q;
+                            b = v;
+                            break;
+                        case 4:
+                            r = t;
+                            g = p;
+                            b = v;
+                            break;
+                        case 5:
+                            r = v;
+                            g = p;
+                            b = q;
+                            break;
+                        default:
+                            r = 1;
+                            g = 1;
+                            b = 1;
+                      }
+                    tags[j].style.background = "rgba("+parseInt(r*255)+","+parseInt(g*255)+","+parseInt(b*255)+","+0.5+")";
+                }
+            }                        
+            </script>
+
+
+              <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 算法</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/64ef4d6b/" rel="prev" title="week4 T1">
+                  <i class="fa fa-chevron-left"></i> week4 T1
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
   </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2023-01-13T21:03:09+08:00"
-              content="2023-01-13">
-          01-13
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/posts/418412b7/" itemprop="url">
-            <span itemprop="name">week2 T1</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2023-01-13T21:02:53+08:00"
-              content="2023-01-13">
-          01-13
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/posts/545c7940/" itemprop="url">
-            <span itemprop="name">week1 T5</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2023-01-13T21:02:24+08:00"
-              content="2023-01-13">
-          01-13
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/posts/235b49d6/" itemprop="url">
-            <span itemprop="name">week1 T4</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2023-01-13T21:02:17+08:00"
-              content="2023-01-13">
-          01-13
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/posts/bd3fdc75/" itemprop="url">
-            <span itemprop="name">week1 T3</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2023-01-13T21:01:55+08:00"
-              content="2023-01-13">
-          01-13
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/posts/ca38ece3/" itemprop="url">
-            <span itemprop="name">week1 T2</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2023-01-13T20:15:14+08:00"
-              content="2023-01-13">
-          01-13
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/posts/5331bd59/" itemprop="url">
-            <span itemprop="name">week1 T1</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
+</div>
 
 
-    </div>
-  </div>
-  
-  
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/archives/2023/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/2023/">1</a><span class="page-number current">2</span>
-  </nav>
+
+
+
 
 </div>
   </main>
