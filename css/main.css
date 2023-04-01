@@ -2827,7 +2827,7 @@ mark.search-keyword {
   opacity: 0.8;
 }
 body {
-  background: url("https://news.yxrb.net/uploadfile/2019/1106/20191106082724188.jpg");
+  background: url("/images/background.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
