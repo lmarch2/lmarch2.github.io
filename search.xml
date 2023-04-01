@@ -48,6 +48,7 @@
 <p>sodei原来不仅要申请动态内存，还要在申请后使用if判断语句判断申请是否成功</p>
 <h2 id="0x05-总结"><a href="#0x05-总结" class="headerlink" title="0x05  总结"></a>0x05  总结</h2><p>在分配动态内存时，需要在分配完成后对是否成功分配成功进行判断</p>
 <p>若遇到堆内存不够等分配不成功的情况会返回空指针，所以必须对是否成功申请进行判断。</p>
+<p>当然，如果在接下来的代码中不需要对声明的变量进行操作的话，比如不需要取用这个变量中的元素或者给这个变量中的元素赋值，则只用普通的声明变量就好了，不需要分配动态内存，也就不需要再注意要写条件判断了。</p>
 <p>参考<a href="https://learn.microsoft.com/zh-cn/cpp/code-quality/c6011?f1url=?appId=Dev16IDEF1&l=ZH-CN&k=k(C6011)&rd=true&view=msvc-170">Microsoft官方文档</a></p>
 ]]></content>
       <categories>
