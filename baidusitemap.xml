@@ -2,7 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>http://lmarch2.github.com/posts/0/</loc>
-    <lastmod>2023-03-31</lastmod>
+    <lastmod>2023-04-01</lastmod>
+  </url>
+  <url>
+    <loc>http://lmarch2.github.com/posts/64ef4d6b/</loc>
+    <lastmod>2023-04-01</lastmod>
+  </url>
+  <url>
+    <loc>http://lmarch2.github.com/posts/f93875d2/</loc>
+    <lastmod>2023-01-22</lastmod>
   </url>
   <url>
     <loc>http://lmarch2.github.com/posts/fe55b1cb/</loc>
@@ -47,14 +55,6 @@
   <url>
     <loc>http://lmarch2.github.com/posts/5331bd59/</loc>
     <lastmod>2023-01-22</lastmod>
-  </url>
-  <url>
-    <loc>http://lmarch2.github.com/posts/64ef4d6b/</loc>
-    <lastmod>2023-01-20</lastmod>
-  </url>
-  <url>
-    <loc>http://lmarch2.github.com/posts/f93875d2/</loc>
-    <lastmod>2023-01-15</lastmod>
   </url>
   <url>
     <loc>http://lmarch2.github.com/posts/60312468/</loc>
