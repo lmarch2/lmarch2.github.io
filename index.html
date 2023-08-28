@@ -307,7 +307,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2023-08-28 21:54:45 / 修改时间：21:55:44" itemprop="dateCreated datePublished" datetime="2023-08-28T21:54:45+08:00">2023-08-28</time>
+      <time title="创建时间：2023-08-28 21:54:45 / 修改时间：21:58:36" itemprop="dateCreated datePublished" datetime="2023-08-28T21:54:45+08:00">2023-08-28</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -350,131 +350,14 @@
 <p>ROPgadget –binary get_started_3dsctf_2016 –only “mov|ret” |grep eax</p>
 <p>ROPgadget –binary get_started_3dsctf_2016 –only “mov|ret” |grep ‘: mov eax’ </p>
 </blockquote>
-<ul>
-<li><p>–only ” | “ 表示只返回含有xx指令或xx指令的gadget</p>
-</li>
-<li><p>grep  表示含有什么什么特定字段（通常是寄存器）的指令</p>
-<p>但是grep能寻找的必须是连续的指令中间不能隔开，连空格都必须一致才能被搜索到</p>
-<p>比如你想要搜索<code>0x080701a8 : mov eax, ecx ; ret</code>，你可以用命令<code>ROPgadget --binary get_started_3dsctf_2016 --only &quot;mov|ret&quot; |grep &#39;eax, ecx&#39;</code>；命令<code>ROPgadget --binary get_started_3dsctf_2016 --only &quot;mov|ret&quot; |grep &#39;eax,ecx&#39;</code>无法成功因为逗号和ecx之间少了一个空格</p>
-</li>
-<li><p>取地址的指令[edx]无法被识别，[ ]在ROPgadget中貌似是表示含有[ ]内字母的指令</p>
-<p>比如 ROPgadget –binary get_started_3dsctf_2016 –only “mov|ret” |grep ‘[edx]’得到的是这样</p>
-<p><img data-src="https://pica.zhimg.com/80/v2-a03e74edb3f031ec31244d7ace622128_720w.png"></p>
-</li>
-</ul>
-<h2 id="ROPgadget-–binary-文件名-–sting-‘-x2F-bin-x2F-sh’"><a href="#ROPgadget-–binary-文件名-–sting-‘-x2F-bin-x2F-sh’" class="headerlink" title="ROPgadget –binary 文件名 –sting ‘&#x2F;bin&#x2F;sh’"></a>ROPgadget –binary 文件名 –sting ‘&#x2F;bin&#x2F;sh’</h2><p>查找字符串地址</p>
-<p>例子：</p>
-<blockquote>
-<p> ROPgadget –binary 文件名 –sting ‘&#x2F;bin&#x2F;sh’</p>
-<p> ROPgadget –binary 文件名 –sting ‘&#x2F;sh’</p>
-<p> ROPgadget –binary 文件名 –sting ‘sh’</p>
-<p> ROPgadget –binary 文件名 –sting ‘cat flag’</p>
-<p> ROPgadget –binary 文件名 –sting ‘cat flag.txt’</p>
-</blockquote>
-<p>![(</p>
-<p><img data-src="https://pic1.zhimg.com/80/v2-85292d5975829cdb33d0680fe463d9b0_720w.webp"></p>
-<h1 id="vmmap"><a href="#vmmap" class="headerlink" title="vmmap"></a>vmmap</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vmmap [-h] [pages_filter]</span><br></pre></td></tr></table></figure>
-
-<p>首先vmmap需要在pwndbg，且程序运行时使用</p>
-<ul>
-<li>输入vmmap，显示出程序运行时所用到的所有地址段</li>
-<li>输入vmmap  地址  ，显示该地址对应的地址段</li>
-<li>vmmap  -h，提示帮助；-w只显示可写的部分；-x只显示可执行的部分</li>
-</ul>
-<p>例子：</p>
-<p><img data-src="https://pic1.zhimg.com/80/v2-81b1d3537046d8b961f5b5f4e3ae9265_720w.png"></p>
-<p><img data-src="https://picx.zhimg.com/80/v2-d34d469968326f73e2dc20875beb8092_720w.png"></p>
-<p><img data-src="https://pic1.zhimg.com/80/v2-1e067d5c59a6e8aa80e6bc37f171f76e_720w.png?source=d16d100b"></p>
-<p>第一行，表明了哪个颜色对应哪个段，</p>
-<p>start和end对应该地址段的起始和结束位置</p>
-<p>Perm 是该段的权限，rwx代表可读、可写、可执行</p>
-<p>Size表示该段大小</p>
-<p>Offset表示这段与程序基址的偏移</p>
-<p>File表示加载的是什么</p>
-<h1 id="vim"><a href="#vim" class="headerlink" title="vim"></a>vim</h1><p>命令模式下：</p>
-<blockquote>
-<p>$	行末</p>
-<p>^	行首</p>
-<p>L	屏幕底行</p>
-<p>H	屏幕顶行</p>
-<p>yy	拷贝该行</p>
-<p>dd	删除该行</p>
-<p>P	前粘贴</p>
-<p>p	后粘贴</p>
-<p>D 	删除至行尾</p>
-<p>u	撤销</p>
-<p>gg	光标移至行首</p>
-<p>dG	删除光标行及光标行以下全部内容</p>
-</blockquote>
-<p>底线命令模式下：</p>
-<blockquote>
-<p>:wq		保存并退出</p>
-<p>:%d	删除全部内容</p>
-<p>:%s		替换       <a target="_blank" rel="noopener" href="http://10.102.32.142:8000/d/55-shi-bei-xi-ri-ben-ren-zai-ci-fen-xiang-you-qu-you-yong-de-xin-shou-xue-xi-zi-yuan/13#:~:text=%E5%89%8D%E5%B7%B2%E7%BC%96%E8%BE%91-,vim%E7%9A%84%E6%89%B9%E9%87%8F%E6%9B%BF%E6%8D%A2,-%E5%9C%A8%20Vim%20%E4%B8%AD">参考</a>（万里哥我滴神）</p>
-</blockquote>
-<p>#pwndbg</p>
-<p>基本指令</p>
-<ul>
-<li>r &#x3D; run 运行程序，如果你当前已经在运行程序了，再输入r会重新运行程序</li>
-<li>b &#x3D; break 下断点，在调试pwn中，一般是 b <em>0xabcde ，abcde是在ida中看到的地址,如b</em> 0x400908</li>
-<li>c &#x3D; continue 继续运行程序直到停在下一个断点</li>
-<li>n &#x3D; next 下一行，一般装了pwndbg之后下一行指的是下一条汇编，但是如果调试的程序是带调试信息的，一般会跳几行汇编</li>
-<li>ni &#x3D; nexti 下一条指令，这个就是真正的下一条汇编指令</li>
-<li>s &#x3D; step 单步进入函数</li>
-<li>d &#x3D; delete 删除断点，后面可带数字，说明删除第几个断点，如果不带参数，说明删除全部断点</li>
-<li>x 查看内存</li>
-</ul>
-<p>c,n,ni这几个程序都可以带一个数字，用来代表连续运行这个指令多少次</p>
-<blockquote>
-<p> x&#x2F;num xg  地址  64位查看某处地址</p>
-</blockquote>
-<blockquote>
-<p>x&#x2F;num xw  地址  32位查看某处地址</p>
-</blockquote>
-<blockquote>
-<p>s&#x2F;num s  地址  查看从地址开始的num个字符串</p>
-</blockquote>
-<blockquote>
-<p>b *$rebase(地址)           用于开启PIE该指令会在基址+地址处下断点 </p>
-</blockquote>
-<h1 id="ASLR和pie编译"><a href="#ASLR和pie编译" class="headerlink" title="ASLR和pie编译"></a>ASLR和pie编译</h1><p>查看系统当前ASLR打开情况</p>
-<blockquote>
-<p>sudo cat &#x2F;proc&#x2F;sys&#x2F;kernel&#x2F;randomize_va_space</p>
-</blockquote>
-<p>ASLR的三个级别 ：</p>
-<p>0， 不开启任何随机化；</p>
-<p>1， 开启stack、libraries [、executable base（special libraries -^-） if PIE is enabled while compiling] 的随机化；</p>
-<p>2，开启heap随机化。</p>
-<p>PIE编译出来的executable如果ASLR&#x3D;0的话，基址也是不会变的（有能力但没使用），如果ASLR&#x3D;1的话，即使按照ASLR定义这个级别似乎不会对heap基址随机化，但是由于executable的基址已经随机化了，所以heap的基址自然也就被随机化了</p>
-<blockquote>
-<p>指令关闭ASLR</p>
-<p>sysctl -w kernel.randomize_va_space&#x3D;0</p>
-<p>echo 0 &gt; &#x2F;proc&#x2F;sys&#x2F;kernel&#x2F;randomize_va_space</p>
-</blockquote>
-<p>  <img data-src="https://picx.zhimg.com/80/v2-a997d1be275e1071f3a7d542c0874870_720w.png"></p>
-<p>fPIE选项仅能在编译可执行码时用，不能用于编译库。所以，如果想要PIE的程序，需要你除了在gcc增加-fPIE选项外，还需要在ld时增加-pie选项才能产生这种代码。即gcc -fpie -pie来编译程序。单独使用哪一个都无法达到效果。 </p>
-<blockquote>
-<p>gcc  helloworld.c </p>
-<p>file a.out a.out: </p>
-<p>ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked (uses shared libs), for GNU&#x2F;Linux 2.6.9, not stripped </p>
-<p>file a.out a.out: </p>
-<p>ELF 32-bit LSB shared object, Intel 80386, version 1 (SYSV), dynamically linked (uses shared libs), for GNU&#x2F;Linux 2.6.9, not stripped </p>
-</blockquote>
-<p>未开启PIE的文件属性为executable，开启的为shared object</p>
-<p>注意PIE随机程序加载基地址，要和libc的随机libc库基地址区分</p>
-<h1 id="shellcode"><a href="#shellcode" class="headerlink" title="shellcode"></a>shellcode</h1><p>pwntools生成的shellcode默认64位</p>
-<blockquote>
-<p>shellcode &#x3D; asm(shellcraft.sh()) </p>
-</blockquote>
-<p>要生成32位的shellcode需要指定</p>
-<blockquote>
-<p>shellcode &#x3D; asm(shellcraft.sh(),arch&#x3D;’i386’,os&#x3D;’linux’)      </p>
-</blockquote>
-<p>手动反汇编汇编指令</p>
-<blockquote>
-<p>xx &#x3D; asm(‘’)</p>
-</blockquote>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/6121198a/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
