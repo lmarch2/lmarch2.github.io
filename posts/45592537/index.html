@@ -22,34 +22,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"lmarch2.github.com","root":"/","images":"/images","scheme":"Gemini","darkmode":"ture","version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="T2 wustctf2020_closed 2023-01-15WPBUUCTF  pwn考点：close函数">
+    <meta name="description" content="C++STL 学习笔记STL补充List  链表  list&lt;int&gt; mylist &#x3D; &amp;#123; &amp;#125;链表定义和初始化  void push_front(const T &amp; val)  将 val 插入链表最前面   void pop_front()   删除链表最前面的元素   list.push_back() 增加一个新的元素在 list 的尾端   list">
 <meta property="og:type" content="article">
-<meta property="og:title" content="week3 T2">
-<meta property="og:url" content="http://lmarch2.github.com/posts/60312468/index.html">
+<meta property="og:title" content="C++STL 学习笔记">
+<meta property="og:url" content="http://lmarch2.github.com/posts/45592537/index.html">
 <meta property="og:site_name" content="lmarch2&#39;blog">
-<meta property="og:description" content="T2 wustctf2020_closed 2023-01-15WPBUUCTF  pwn考点：close函数">
+<meta property="og:description" content="C++STL 学习笔记STL补充List  链表  list&lt;int&gt; mylist &#x3D; &amp;#123; &amp;#125;链表定义和初始化  void push_front(const T &amp; val)  将 val 插入链表最前面   void pop_front()   删除链表最前面的元素   list.push_back() 增加一个新的元素在 list 的尾端   list">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://pic2.zhimg.com/80/v2-bd22be15351c97aebae2de7f1bd0f4bd_1440w.webp">
-<meta property="og:image" content="https://pic3.zhimg.com/80/v2-640c1ebbaa31c9a5013bd8feafceaee6_1440w.webp">
-<meta property="og:image" content="https://pic4.zhimg.com/80/v2-2c7eb0afee1a164507dd332cf37e7813_1440w.webp">
-<meta property="og:image" content="https://pic3.zhimg.com/80/v2-49e09c530cab090cb5dedbddbd1a8812_1440w.webp">
-<meta property="article:published_time" content="2023-01-15T14:41:00.000Z">
-<meta property="article:modified_time" content="2023-01-15T14:45:55.067Z">
+<meta property="article:published_time" content="2023-08-29T12:37:51.000Z">
+<meta property="article:modified_time" content="2023-08-29T12:38:31.128Z">
 <meta property="article:author" content="lmarch2">
-<meta property="article:tag" content="ctf">
-<meta property="article:tag" content="BUUCTF">
+<meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pic2.zhimg.com/80/v2-bd22be15351c97aebae2de7f1bd0f4bd_1440w.webp">
 
 
-<link rel="canonical" href="http://lmarch2.github.com/posts/60312468/">
+<link rel="canonical" href="http://lmarch2.github.com/posts/45592537/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://lmarch2.github.com/posts/60312468/","path":"posts/60312468/","title":"week3 T2"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://lmarch2.github.com/posts/45592537/","path":"posts/45592537/","title":"C++STL 学习笔记"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>week3 T2 | lmarch2'blog</title>
+<title>C++STL 学习笔记 | lmarch2'blog</title>
   
 
 
@@ -149,7 +143,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#T2-wustctf2020-closed"><span class="nav-text">T2 wustctf2020_closed</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01"><span class="nav-text">0x01</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02"><span class="nav-text">0x02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03"><span class="nav-text">0x03</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04"><span class="nav-text">0x04</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#C-STL-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0"><span class="nav-text">C++STL 学习笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#STL%E8%A1%A5%E5%85%85"><span class="nav-text">STL补充</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#List-%E9%93%BE%E8%A1%A8"><span class="nav-text">List  链表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vector-%E5%AD%98%E6%94%BE%E4%BB%BB%E6%84%8F%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84"><span class="nav-text">vector  存放任意类型的动态数组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#STL%E5%AE%B9%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8"><span class="nav-text">STL容器适配器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#stack"><span class="nav-text">stack</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#queue"><span class="nav-text">queue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#priority-queue"><span class="nav-text">priority_queue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#deque"><span class="nav-text">deque</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#heap"><span class="nav-text">heap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pair"><span class="nav-text">pair</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%B1%BB%E5%9E%8B%E8%A1%A5%E5%85%85"><span class="nav-text">迭代器类型补充</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#STL%E5%AF%B9%E4%BA%8E%E7%A9%BA%E9%97%B4%E5%A4%A7%E5%B0%8F%E7%9A%84%E8%A7%84%E5%AE%9A"><span class="nav-text">STL对于空间大小的规定</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -287,7 +281,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://lmarch2.github.com/posts/60312468/">
+    <link itemprop="mainEntityOfPage" href="http://lmarch2.github.com/posts/45592537/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://github.com/lmarch2/images/blob/main/typora/202307282109602.jpg?raw=true">
@@ -300,12 +294,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="week3 T2 | lmarch2'blog">
+      <meta itemprop="name" content="C++STL 学习笔记 | lmarch2'blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          week3 T2
+          C++STL 学习笔记
         </h1>
 
         <div class="post-meta-container">
@@ -317,7 +311,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2023-01-15 22:41:00 / 修改时间：22:45:55" itemprop="dateCreated datePublished" datetime="2023-01-15T22:41:00+08:00">2023-01-15</time>
+      <time title="创建时间：2023-08-29 20:37:51 / 修改时间：20:38:31" itemprop="dateCreated datePublished" datetime="2023-08-29T20:37:51+08:00">2023-08-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -325,7 +319,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/wp/" itemprop="url" rel="index"><span itemprop="name">wp</span></a>
+          <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
         </span>
     </span>
 
@@ -343,14 +337,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>732</span>
+      <span>5.9k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>5 分钟</span>
     </span>
 </div>
 
@@ -361,35 +355,192 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="T2-wustctf2020-closed"><a href="#T2-wustctf2020-closed" class="headerlink" title="T2 wustctf2020_closed"></a>T2 wustctf2020_closed</h2><blockquote>
-<p>2023-01-15WP<br>BUUCTF  pwn<br>考点：close函数</p>
-</blockquote>
-<span id="more"></span>
-
-<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>做了hgame的第二题后，去补充了一下关于close函数的知识，再从BUUCTF中找了一题练了练<br>先file知道时64-bit</p>
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>这一题结构很简单，再IDA中直接能找到在main函数中的vulnerable函数中return shell函数中有system函数<br>直接给好了<br><img data-src="https://pic2.zhimg.com/80/v2-bd22be15351c97aebae2de7f1bd0f4bd_1440w.webp"><br><img data-src="https://pic3.zhimg.com/80/v2-640c1ebbaa31c9a5013bd8feafceaee6_1440w.webp"><br><img data-src="https://pic4.zhimg.com/80/v2-2c7eb0afee1a164507dd332cf37e7813_1440w.webp"></p>
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>但是因为</p>
-<blockquote>
-<p>close(1)<br>  close(2)</p>
-</blockquote>
-<p>将标准输出和标准错误输出关闭了，这样在窗口上看不到输出<br>这时候就需要我们重新定位标准输出</p>
-<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p><strong>补充一些知识</strong></p>
+        <h1 id="C-STL-学习笔记"><a href="#C-STL-学习笔记" class="headerlink" title="C++STL 学习笔记"></a>C++STL 学习笔记</h1><h2 id="STL补充"><a href="#STL补充" class="headerlink" title="STL补充"></a>STL补充</h2><h3 id="List-链表"><a href="#List-链表" class="headerlink" title="List  链表"></a>List  链表</h3><ul>
+<li><p><code> list&lt;int&gt; mylist = &#123; &#125;</code>链表定义和初始化</p>
+</li>
+<li><p><code>void push_front(const T &amp; val) </code> 将 val 插入链表最前面 </p>
+</li>
+<li><p><code>void pop_front()  </code> 删除链表最前面的元素 </p>
+</li>
+<li><p><code>list.push_back()</code> 增加一个新的元素在 list 的尾端 </p>
+</li>
+<li><p><code>list.pop_back()</code> 删除 list 的最末个元素 </p>
+</li>
+<li><p><code>void sort() </code>  将链表从小到大排序 </p>
+</li>
+<li><p><code>reverse()</code>反转链表</p>
+</li>
+<li><p><code>list.empty()</code> 若list内部为空，则回传true值 </p>
+</li>
+<li><p><code>list.size()</code> 回传list内实际的元素个数 </p>
+</li>
+<li><p><code>list.front()</code> 存取第一个元素 </p>
+</li>
+<li><p><code>list.back()</code> 存取最末个元素 </p>
+</li>
+<li><p><code>mylist.begin()</code> 首位迭代器</p>
+</li>
+<li><p><code>mylist.end()</code>末位迭代器</p>
+</li>
+<li><p>常见for循环</p>
 <ul>
-<li><p>在Linux中的文件，文件描述符（file descriptor）是内核为了高效管理已被打开的文件所创建的索引，是一个非负整数（通常是小整数），用于指代被打开的文件，所有执行I&#x2F;O操作的系统调用都通过文件描述符。程序刚刚启动的时候，0是标准输入，1是标准输出，2是标准错误。如果此时去打开一个新的文件，它的文件描述符会是3。</p>
+<li><p><code>for (auto it = mylist.begin(); it != mylist.end(); ++it)  </code></p>
+<pre><code>                  `cout &lt;&lt; *it &lt;&lt; &quot; &quot;;` 
+</code></pre>
 </li>
-<li><p>标准输入输出的指向是默认的，也就是默认打开一个终端后，0，1，2都指向同一个位置也就是当前终端，我们可以修改它们的指向，也即重定位</p>
+<li><p>it是迭代器指针，不能赋值，不能运算（+&#x3D;不行），只能++</p>
 </li>
-<li><p>我们可以将标准输出进行重定向</p>
-</li>
-<li><p>&amp;+文件描述符, 可以指代该文件(进程)</p>
+<li><p>list的迭代器只支持双向访问，不支持随机访问，因此不能直接进行加减操作 （和vector等区别）</p>
 </li>
 </ul>
-<p>现在可以解决close函数的问题了<br>在同一个进程里面, 标准输出和标准输入的指向都是相同的终端. 由于标准输入没有被禁用，所以我们可以使用命令</p>
+</li>
+<li><p><code>advance(it, n); </code>将迭代器<code>it</code>向前移动n个位置 </p>
+</li>
+<li><p><code>mylist.insert(it, k);</code>  向第it位迭代器位置插入新元素k（it之前）</p>
+</li>
+<li><p><code>mylist.erase(it);</code> 删除第it位迭代器位置所指元素</p>
+</li>
+<li><p><code>mylist.erase(it, it + n); </code>删除第it位到第it+n位元素（一共删除从it开始到it+n的n个元素）</p>
+</li>
+<li><p><code>next(it,n)</code>函数是C++ STL中的一个函数，它的作用是返回一个新的迭代器，该迭代器指向原始迭代器向前或向后移动指定距离后的位置 ，被用来移动it迭代器到下n位</p>
+</li>
+</ul>
+<h3 id="vector-存放任意类型的动态数组"><a href="#vector-存放任意类型的动态数组" class="headerlink" title="vector  存放任意类型的动态数组"></a>vector  存放任意类型的动态数组</h3><ul>
+<li><code>vector&lt;T&gt;(nSize,t)</code>创建一个vector，元素个数为nSize,且值均为t</li>
+<li><code>vector.push_back(k)</code> 在vector尾部插入元素k</li>
+<li><code>vector.insert(vector.begin() + 1, 2) </code> 在vector的第2个位置插入一个元素2 </li>
+<li><code>vector.pop_back() </code> 删除vector尾部的一个元素 </li>
+<li><code>vector.erase(v.begin() + 1) </code>删除vector的第2个元素 </li>
+<li><code>erase()</code>方法接受两个迭代器参数，表示要删除的区间的起始位置和结束位置。被删除的区间包括起始位置的元素，但不包括结束位置的元素。 </li>
+<li><code>vector.[0];</code> 访问vector的第1个元素 ， 可进行赋值等操作</li>
+<li><code>vector.at(0); </code>&#x2F;访问vector的第1个元素，如果越界会抛出异常 </li>
+<li><code>for (int i = 0; i &lt; v.size(); i++) &#123; cout &lt;&lt; v[i] &lt;&lt; &quot; &quot;; &#125; </code> 遍历vector</li>
+<li><code>vector.resize()</code> 改变实际元素的个数，新添加的元素会被默认初始化 </li>
+<li><code>vector.size() </code>获取vector的大小 ，这是当前存储的元素数量</li>
+<li><code>vector.capacity()</code>返回当前容量，这是目前容器最多储存的元素数量</li>
+<li><code>vector.front() </code>返回第一个元素的引用 </li>
+<li><code>vector.back()</code>返回最后一个元素的引用 </li>
+<li><code>vector.begin()</code>返回指向容器中第一个元素的迭代器 </li>
+<li><code>vector.end()</code>返回指向容器最后一个元素所在位置后一个位置的迭代器，通常和 begin() 结合使用</li>
+<li><code>vector.empty()</code>判断一个vector是否为空</li>
+</ul>
+<h2 id="STL容器适配器"><a href="#STL容器适配器" class="headerlink" title="STL容器适配器"></a>STL容器适配器</h2><h3 id="stack"><a href="#stack" class="headerlink" title="stack"></a>stack</h3><ul>
+<li><code>stack&lt;T&gt;</code> 创建栈对象</li>
+<li><code>push(element)</code>：将元素压入栈顶</li>
+<li><code>pop()</code>：弹出栈顶元素</li>
+<li><code>top()</code>：返回栈顶元素</li>
+<li><code>empty()</code>：返回栈是否为空</li>
+<li><code>size()</code>：返回栈中元素的数量</li>
+</ul>
 <blockquote>
-<p>exec 1&gt;&amp;0</p>
+<p>清空栈操作： <code>while (!myStack.empty()) &#123; myStack.pop(); &#125; </code></p>
 </blockquote>
-<p>让标准输出定位到标准输入的文件，也就相当于重启了标准输出<br>本质上即exec+重定向命令，只不过操作的是文件描述符<br>现在cat到的flag就能够输出了<br><img data-src="https://pic3.zhimg.com/80/v2-49e09c530cab090cb5dedbddbd1a8812_1440w.webp"><br><del>出题人很有意思，连接上环境第一件事是嘲讽一下你</del></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Y_peak/article/details/115406518">参考</a>    <a target="_blank" rel="noopener" href="https://blog.csdn.net/Y_peak/article/details/115406518">文章</a></p>
+<h3 id="queue"><a href="#queue" class="headerlink" title="queue"></a>queue</h3><ul>
+<li><code>queue &lt;int&gt; </code> 创建queue对象</li>
+<li><code>push(element)</code>：将元素添加到队列的末尾</li>
+<li><code>pop()</code>：从队列的头部取出元素，并将其从队列中删除</li>
+<li><code>front()</code>：返回队列头部的元素，但不将其从队列中删除</li>
+<li><code>back()</code>：返回队列末尾的元素，但不将其从队列中删除</li>
+<li><code>size()</code>：返回队列中元素的数量</li>
+<li><code>empty()</code>：判断队列是否为空</li>
+</ul>
+<h3 id="priority-queue"><a href="#priority-queue" class="headerlink" title="priority_queue"></a>priority_queue</h3><ul>
+<li><p><code>push(element)</code>：将元素添加到优先队列中，根据优先级顺序排列。</p>
+</li>
+<li><p><code>pop()</code>：从优先队列中取出优先级最高的元素，并将其从队列中删除。</p>
+</li>
+<li><p><code>top()</code>：返回优先队列中优先级最高的元素，但不将其从队列中删除。</p>
+</li>
+<li><p><code>size()</code>：返回优先队列中元素的数量。</p>
+</li>
+<li><p><code>empty()</code>：判断优先队列是否为空</p>
+</li>
+<li><p><code>priority_queue&lt;int, std::vector&lt;int&gt;, std::less&lt;int&gt;&gt; myMaxHeap;</code>创建大顶堆</p>
+</li>
+<li><p><code>less&lt;int&gt;</code>是<code>priority_queue</code>的默认比较函数，因此在创建大顶堆时可以省略第三个参数。以下是更简洁的表达式：<code>priority_queue&lt;int&gt; myMaxHeap;</code></p>
+</li>
+<li><p><code>priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; myMinHeap; </code> 创建小顶堆</p>
+</li>
+</ul>
+<blockquote>
+<p><code>priority_queue&lt;int, vector&lt;int&gt;,greater&lt;int&gt;&gt;</code> 指定了使用<code>greater&lt;int&gt;</code> 作为比较函数，因此创建的优先队列是升序的，即优先级数值小的元素排在队列前面。如果想要创建降序的优先队列，可以使用 <code>less&lt;int&gt;</code> 作为比较函数，例如 <code>priority_queue&lt;int, vector&lt;int&gt;, less&lt;int&gt;&gt;</code>  </p>
+</blockquote>
+<p>EG: 优先队列实现滑动窗口求最大值</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> k; <span class="comment">// 滑动窗口大小</span></span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; k;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">nums</span><span class="params">(n)</span></span>; <span class="comment">// 输入数组</span></span><br><span class="line">    priority_queue&lt;pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt;&gt; pq; <span class="comment">// 定义优先队列，存放数值和下标</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; nums.<span class="built_in">size</span>(); i++)</span><br><span class="line">        cin &gt;&gt; nums[i];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 先将前 k 个元素加入优先队列</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; k; i++) &#123;</span><br><span class="line">        pq.<span class="built_in">push</span>(&#123; nums[i], i &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 输出第一个滑动窗口的最大值</span></span><br><span class="line">    cout &lt;&lt; pq.<span class="built_in">top</span>().first &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 滑动窗口向右移动，每次加入一个新元素，弹出一个旧元素</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = k; i &lt; nums.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">        pq.<span class="built_in">push</span>(&#123; nums[i], i &#125;); <span class="comment">// 加入新元素</span></span><br><span class="line">        <span class="keyword">while</span> (pq.<span class="built_in">top</span>().second &lt;= i - k) &#123; <span class="comment">// 弹出旧元素</span></span><br><span class="line">            pq.<span class="built_in">pop</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; pq.<span class="built_in">top</span>().first &lt;&lt; <span class="string">&quot; &quot;</span>; <span class="comment">// 输出当前滑动窗口的最大值</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="deque"><a href="#deque" class="headerlink" title="deque"></a>deque</h3><ul>
+<li><code>push_back(element)</code>：在队尾插入一个元素。</li>
+<li><code>pop_back()</code>：删除队尾元素。</li>
+<li><code>push_front(element)</code>：在队头插入一个元素。</li>
+<li><code>pop_front()</code>：删除队头元素。</li>
+<li><code>front()</code>：返回队头元素，但不删除。</li>
+<li><code>back()</code>：返回队尾元素，但不删除。</li>
+<li><code>empty()</code>：如果队列为空，返回true，否则返回false。</li>
+<li><code>size()</code>：返回队列中元素的个数。</li>
+</ul>
+<h3 id="heap"><a href="#heap" class="headerlink" title="heap"></a>heap</h3><ul>
+<li><code>make_heap(first, last)</code>：将[first, last)区间内的元素转换为堆。</li>
+<li><code>push_heap(first, last)</code>：将[first, last-1)区间内的元素插入堆中。</li>
+<li><code>pop_heap(first, last)</code>：将堆顶元素移动到[last-1]位置，并重新构建堆。</li>
+<li><code>sort_heap(first, last)</code>：将[first, last)区间内的元素排序，使其满足堆的性质。</li>
+<li><code>is_heap(first, last)</code>：如果[first, last)区间内的元素满足堆的性质，返回true，否则返回false。</li>
+<li><code>push()</code>：将元素添加到堆中。</li>
+<li><code>pop()</code>：从堆中移除根节点元素。</li>
+<li><code>top()</code>：返回堆中的根节点元素。</li>
+<li><code>empty()</code>：检查堆是否为空。</li>
+<li><code>size()</code>：返回堆中元素的数量。</li>
+</ul>
+<blockquote>
+<p>STL中，堆是通过vector容器实现的，因此要声明一个堆对象，需要先声明一个vector容器，然后使用make_heap()函数将其转换为堆</p>
+<p><del>不如手搓</del></p>
+</blockquote>
+<h3 id="pair"><a href="#pair" class="headerlink" title="pair"></a>pair</h3><p><code>template&lt;class T1, class T2&gt; struct pair;</code>其中，<code>T1</code>和<code>T2</code>表示两个不同的类型。<code>std::pair</code>类包含了两个公有成员变量<code>first</code>和<code>second</code>，分别表示这两个值。可以通过以下方式创建和访问<code>std::pair</code>对象： </p>
+<p>编译器并不会对<code>std::vector&lt;std::pair&lt;int, int&gt;&gt;</code>中的元素顺序进行任何假设或者判断。它只会根据你的代码中对这个<code>std::vector</code>对象的使用来确定元素顺序。</p>
+<p>例如，如果你在代码中使用<code>v[i].first</code>来访问第i个元素的第一个元素，编译器就会认为第一个元素表示数值，第二个元素表示下标。如果你使用<code>v[i].second</code>来访问第i个元素的第二个元素，编译器就会认为第一个元素表示下标，第二个元素表示数值。</p>
+<h2 id="迭代器类型补充"><a href="#迭代器类型补充" class="headerlink" title="迭代器类型补充"></a>迭代器类型补充</h2><p>在C++中，STL容器的迭代器可以分为5种类型，分别是：</p>
+<ol>
+<li>输入迭代器（Input Iterator）：只读，只能单向移动，每个元素只能被访问一次。例如<code>istream_iterator</code>。</li>
+<li>输出迭代器（Output Iterator）：只写，只能单向移动，每个元素只能被赋值一次。例如<code>ostream_iterator</code>。</li>
+<li>前向迭代器（Forward Iterator）：可读写，只能单向移动，每个元素可以被访问或赋值多次。例如<code>forward_list</code>。</li>
+<li>双向迭代器（Bidirectional Iterator）：可读写，可以双向移动，每个元素可以被访问或赋值多次。例如<code>list</code>。</li>
+<li>随机访问迭代器（Random Access Iterator）：可读写，可以随机访问，支持加减运算，可以跳跃式访问容器中的元素。例如<code>vector</code>、<code>deque</code>。</li>
+</ol>
+<p>因此，可以根据迭代器的类型来判断容器是否支持随机访问。以下是一些常见的STL容器及其迭代器类型：</p>
+<ol>
+<li><code>vector</code>：支持随机访问迭代器。</li>
+<li><code>deque</code>：支持随机访问迭代器。</li>
+<li><code>list</code>：支持双向迭代器。</li>
+<li><code>forward_list</code>：支持前向迭代器。</li>
+<li><code>set</code>：支持双向迭代器。</li>
+<li><code>map</code>：支持双向迭代器。</li>
+<li><code>unordered_set</code>：支持前向迭代器。</li>
+<li><code>unordered_map</code>：支持前向迭代器。</li>
+</ol>
+<blockquote>
+<p>迭代器类型的不同，使得for循环的操作写法不同</p>
+<p>支持随机访问的可以使用熟悉的写法，对元素进行操作；不支持的如双向迭代器要对迭代器进行操作</p>
+</blockquote>
+<p>需要注意的是，对于容器的不同操作，可能需要不同类型的迭代器。例如，对于<code>list</code>容器，如果需要在容器中间插入或删除元素，需要使用双向迭代器；而如果只是进行遍历，可以使用前向迭代器。</p>
+<p><em><u>而且，要注意的是</u></em></p>
+<blockquote>
+<p><code>stack</code>是STL中的一个容器适配器，它并不是一个容器，因此没有迭代器。<code>stack</code>只提供了很少的操作，主要包括<code>push()</code>、<code>pop()</code>、<code>top()</code>、<code>empty()</code>和<code>size()</code>等方法，这些方法都是直接对栈顶元素进行操作，不需要使用迭代器来遍历栈中的元素。因此，<code>stack</code>并不属于任何一种迭代器类型。 </p>
+</blockquote>
+<h2 id="STL对于空间大小的规定"><a href="#STL对于空间大小的规定" class="headerlink" title="STL对于空间大小的规定"></a>STL对于空间大小的规定</h2><p>STL（标准模板库）中的容器分为两类：</p>
+<ol>
+<li><strong>顺序容器（Sequence Containers）</strong>：这些容器按照元素在容器中的位置来组织和存储元素。顺序容器包括<code>vector</code>、<code>deque</code>、<code>list</code>、<code>forward_list</code>、<code>array</code>。<ul>
+<li><code>vector</code>、<code>deque</code>、<code>array</code>需要在创建容器对象时指定容器的大小，因为它们使用连续的内存存储元素，所以需要预先分配足够的内存空间。</li>
+<li><code>list</code>、<code>forward_list</code>不需要指定容器大小，它们使用链表存储元素，可以动态地分配和释放内存。</li>
+</ul>
+</li>
+<li><strong>关联容器（Associative Containers）</strong>：这些容器按照元素的键值来组织和存储元素。关联容器包括<code>set</code>、<code>multiset</code>、<code>map</code>、<code>multimap</code>。<ul>
+<li>关联容器不需要在创建容器对象时指定容器的大小，它们使用树形结构存储元素，可以动态地分配和释放内存。</li>
+</ul>
+</li>
+</ol>
+<p>此外，还有另一种容器叫做<code>stack</code>和<code>queue</code>，它们是容器适配器（Container Adaptors），是在顺序容器的基础上提供了特定的接口，使其按照一定的规则进行操作。<code>stack</code>和<code>queue</code>都是基于顺序容器实现的，但是它们不需要指定容器的大小，因为它们使用的是顺序容器的默认构造函数，自动创建一个空的容器对象。</p>
+<p>总之，顺序容器中的<code>vector</code>、<code>deque</code>和<code>array</code>需要指定容器大小，而<code>list</code>和<code>forward_list</code>不需要。关联容器和容器适配器都不需要指定容器大小。</p>
 
     </div>
 
@@ -417,7 +568,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="http://lmarch2.github.com/posts/60312468/" title="week3 T2">http://lmarch2.github.com/posts/60312468/</a>
+      <a href="http://lmarch2.github.com/posts/45592537/" title="C++STL 学习笔记">http://lmarch2.github.com/posts/45592537/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -428,8 +579,7 @@
           <div class="post-tags">
 
  <div class="post-tags">
-              <a href="/tags/ctf/" rel="tag"><i class="fa fa-tag"></i> ctf</a>
-              <a href="/tags/BUUCTF/" rel="tag"><i class="fa fa-tag"></i> BUUCTF</a>
+              <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C++</a>
           </div>
           <script type="text/javascript">
             var tagsall=document.getElementsByClassName("post-tags")
@@ -488,84 +638,18 @@
             </script>
 
 
-              <a href="/tags/ctf/" rel="tag"><i class="fa fa-tag"></i> ctf</a>
-
- <div class="post-tags">
-              <a href="/tags/ctf/" rel="tag"><i class="fa fa-tag"></i> ctf</a>
-              <a href="/tags/BUUCTF/" rel="tag"><i class="fa fa-tag"></i> BUUCTF</a>
-          </div>
-          <script type="text/javascript">
-            var tagsall=document.getElementsByClassName("post-tags")
-            for (var i = tagsall.length - 1; i >= 0; i--){
-                var tags=tagsall[i].getElementsByTagName("a");
-                for (var j = tags.length - 1; j >= 0; j--) {
-                    var golden_ratio = 0.618033988749895;
-                    var s = 0.5;
-                    var v = 0.999;
-                    var h = golden_ratio + Math.random()*0.8 - 0.5;
-                    var h_i = parseInt(h * 6);
-                    var f = h * 6 - h_i;
-                    var p = v * (1 - s);
-                    var q = v * (1 - f * s);
-                    var t = v * (1 - (1 - f) * s);
-                    var r, g, b;
-                    switch (h_i) {
-                        case 0:
-                            r = v;
-                            g = t;
-                            b = p;
-                            break;
-                        case 1:
-                            r = q;
-                            g = v;
-                            b = p;
-                            break;
-                        case 2:
-                            r = p;
-                            g = v;
-                            b = t;
-                            break;
-                        case 3 :
-                            r = p;
-                            g = q;
-                            b = v;
-                            break;
-                        case 4:
-                            r = t;
-                            g = p;
-                            b = v;
-                            break;
-                        case 5:
-                            r = v;
-                            g = p;
-                            b = q;
-                            break;
-                        default:
-                            r = 1;
-                            g = 1;
-                            b = 1;
-                      }
-                    tags[j].style.background = "rgba("+parseInt(r*255)+","+parseInt(g*255)+","+parseInt(b*255)+","+0.5+")";
-                }
-            }                        
-            </script>
-
-
-              <a href="/tags/BUUCTF/" rel="tag"><i class="fa fa-tag"></i> BUUCTF</a>
+              <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C++</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/posts/f93875d2/" rel="prev" title="week3 T1">
-                  <i class="fa fa-chevron-left"></i> week3 T1
+                <a href="/posts/de339b6d/" rel="prev" title="not_the_same_3dsctf_2016">
+                  <i class="fa fa-chevron-left"></i> not_the_same_3dsctf_2016
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/posts/173614fe/" rel="next" title="week3 T3">
-                  week3 T3 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>

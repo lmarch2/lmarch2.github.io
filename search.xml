@@ -1,6 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>C++STL 学习笔记</title>
+    <url>/posts/45592537/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="C-STL-学习笔记"><a href="#C-STL-学习笔记" class="headerlink" title="C++STL 学习笔记"></a>C++STL 学习笔记</h1><h2 id="STL补充"><a href="#STL补充" class="headerlink" title="STL补充"></a>STL补充</h2><h3 id="List-链表"><a href="#List-链表" class="headerlink" title="List  链表"></a>List  链表</h3><ul>
+<li><p><code> list&lt;int&gt; mylist = &#123; &#125;</code>链表定义和初始化</p>
+</li>
+<li><p><code>void push_front(const T &amp; val) </code> 将 val 插入链表最前面 </p>
+</li>
+<li><p><code>void pop_front()  </code> 删除链表最前面的元素 </p>
+</li>
+<li><p><code>list.push_back()</code> 增加一个新的元素在 list 的尾端 </p>
+</li>
+<li><p><code>list.pop_back()</code> 删除 list 的最末个元素 </p>
+</li>
+<li><p><code>void sort() </code>  将链表从小到大排序 </p>
+</li>
+<li><p><code>reverse()</code>反转链表</p>
+</li>
+<li><p><code>list.empty()</code> 若list内部为空，则回传true值 </p>
+</li>
+<li><p><code>list.size()</code> 回传list内实际的元素个数 </p>
+</li>
+<li><p><code>list.front()</code> 存取第一个元素 </p>
+</li>
+<li><p><code>list.back()</code> 存取最末个元素 </p>
+</li>
+<li><p><code>mylist.begin()</code> 首位迭代器</p>
+</li>
+<li><p><code>mylist.end()</code>末位迭代器</p>
+</li>
+<li><p>常见for循环</p>
+<ul>
+<li><p><code>for (auto it = mylist.begin(); it != mylist.end(); ++it)  </code></p>
+<pre><code>                  `cout &lt;&lt; *it &lt;&lt; &quot; &quot;;` 
+</code></pre>
+</li>
+<li><p>it是迭代器指针，不能赋值，不能运算（+&#x3D;不行），只能++</p>
+</li>
+<li><p>list的迭代器只支持双向访问，不支持随机访问，因此不能直接进行加减操作 （和vector等区别）</p>
+</li>
+</ul>
+</li>
+<li><p><code>advance(it, n); </code>将迭代器<code>it</code>向前移动n个位置 </p>
+</li>
+<li><p><code>mylist.insert(it, k);</code>  向第it位迭代器位置插入新元素k（it之前）</p>
+</li>
+<li><p><code>mylist.erase(it);</code> 删除第it位迭代器位置所指元素</p>
+</li>
+<li><p><code>mylist.erase(it, it + n); </code>删除第it位到第it+n位元素（一共删除从it开始到it+n的n个元素）</p>
+</li>
+<li><p><code>next(it,n)</code>函数是C++ STL中的一个函数，它的作用是返回一个新的迭代器，该迭代器指向原始迭代器向前或向后移动指定距离后的位置 ，被用来移动it迭代器到下n位</p>
+</li>
+</ul>
+<h3 id="vector-存放任意类型的动态数组"><a href="#vector-存放任意类型的动态数组" class="headerlink" title="vector  存放任意类型的动态数组"></a>vector  存放任意类型的动态数组</h3><ul>
+<li><code>vector&lt;T&gt;(nSize,t)</code>创建一个vector，元素个数为nSize,且值均为t</li>
+<li><code>vector.push_back(k)</code> 在vector尾部插入元素k</li>
+<li><code>vector.insert(vector.begin() + 1, 2) </code> 在vector的第2个位置插入一个元素2 </li>
+<li><code>vector.pop_back() </code> 删除vector尾部的一个元素 </li>
+<li><code>vector.erase(v.begin() + 1) </code>删除vector的第2个元素 </li>
+<li><code>erase()</code>方法接受两个迭代器参数，表示要删除的区间的起始位置和结束位置。被删除的区间包括起始位置的元素，但不包括结束位置的元素。 </li>
+<li><code>vector.[0];</code> 访问vector的第1个元素 ， 可进行赋值等操作</li>
+<li><code>vector.at(0); </code>&#x2F;访问vector的第1个元素，如果越界会抛出异常 </li>
+<li><code>for (int i = 0; i &lt; v.size(); i++) &#123; cout &lt;&lt; v[i] &lt;&lt; &quot; &quot;; &#125; </code> 遍历vector</li>
+<li><code>vector.resize()</code> 改变实际元素的个数，新添加的元素会被默认初始化 </li>
+<li><code>vector.size() </code>获取vector的大小 ，这是当前存储的元素数量</li>
+<li><code>vector.capacity()</code>返回当前容量，这是目前容器最多储存的元素数量</li>
+<li><code>vector.front() </code>返回第一个元素的引用 </li>
+<li><code>vector.back()</code>返回最后一个元素的引用 </li>
+<li><code>vector.begin()</code>返回指向容器中第一个元素的迭代器 </li>
+<li><code>vector.end()</code>返回指向容器最后一个元素所在位置后一个位置的迭代器，通常和 begin() 结合使用</li>
+<li><code>vector.empty()</code>判断一个vector是否为空</li>
+</ul>
+<h2 id="STL容器适配器"><a href="#STL容器适配器" class="headerlink" title="STL容器适配器"></a>STL容器适配器</h2><h3 id="stack"><a href="#stack" class="headerlink" title="stack"></a>stack</h3><ul>
+<li><code>stack&lt;T&gt;</code> 创建栈对象</li>
+<li><code>push(element)</code>：将元素压入栈顶</li>
+<li><code>pop()</code>：弹出栈顶元素</li>
+<li><code>top()</code>：返回栈顶元素</li>
+<li><code>empty()</code>：返回栈是否为空</li>
+<li><code>size()</code>：返回栈中元素的数量</li>
+</ul>
+<blockquote>
+<p>清空栈操作： <code>while (!myStack.empty()) &#123; myStack.pop(); &#125; </code></p>
+</blockquote>
+<h3 id="queue"><a href="#queue" class="headerlink" title="queue"></a>queue</h3><ul>
+<li><code>queue &lt;int&gt; </code> 创建queue对象</li>
+<li><code>push(element)</code>：将元素添加到队列的末尾</li>
+<li><code>pop()</code>：从队列的头部取出元素，并将其从队列中删除</li>
+<li><code>front()</code>：返回队列头部的元素，但不将其从队列中删除</li>
+<li><code>back()</code>：返回队列末尾的元素，但不将其从队列中删除</li>
+<li><code>size()</code>：返回队列中元素的数量</li>
+<li><code>empty()</code>：判断队列是否为空</li>
+</ul>
+<h3 id="priority-queue"><a href="#priority-queue" class="headerlink" title="priority_queue"></a>priority_queue</h3><ul>
+<li><p><code>push(element)</code>：将元素添加到优先队列中，根据优先级顺序排列。</p>
+</li>
+<li><p><code>pop()</code>：从优先队列中取出优先级最高的元素，并将其从队列中删除。</p>
+</li>
+<li><p><code>top()</code>：返回优先队列中优先级最高的元素，但不将其从队列中删除。</p>
+</li>
+<li><p><code>size()</code>：返回优先队列中元素的数量。</p>
+</li>
+<li><p><code>empty()</code>：判断优先队列是否为空</p>
+</li>
+<li><p><code>priority_queue&lt;int, std::vector&lt;int&gt;, std::less&lt;int&gt;&gt; myMaxHeap;</code>创建大顶堆</p>
+</li>
+<li><p><code>less&lt;int&gt;</code>是<code>priority_queue</code>的默认比较函数，因此在创建大顶堆时可以省略第三个参数。以下是更简洁的表达式：<code>priority_queue&lt;int&gt; myMaxHeap;</code></p>
+</li>
+<li><p><code>priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; myMinHeap; </code> 创建小顶堆</p>
+</li>
+</ul>
+<blockquote>
+<p><code>priority_queue&lt;int, vector&lt;int&gt;,greater&lt;int&gt;&gt;</code> 指定了使用<code>greater&lt;int&gt;</code> 作为比较函数，因此创建的优先队列是升序的，即优先级数值小的元素排在队列前面。如果想要创建降序的优先队列，可以使用 <code>less&lt;int&gt;</code> 作为比较函数，例如 <code>priority_queue&lt;int, vector&lt;int&gt;, less&lt;int&gt;&gt;</code>  </p>
+</blockquote>
+<p>EG: 优先队列实现滑动窗口求最大值</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> k; <span class="comment">// 滑动窗口大小</span></span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; k;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">nums</span><span class="params">(n)</span></span>; <span class="comment">// 输入数组</span></span><br><span class="line">    priority_queue&lt;pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt;&gt; pq; <span class="comment">// 定义优先队列，存放数值和下标</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; nums.<span class="built_in">size</span>(); i++)</span><br><span class="line">        cin &gt;&gt; nums[i];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 先将前 k 个元素加入优先队列</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; k; i++) &#123;</span><br><span class="line">        pq.<span class="built_in">push</span>(&#123; nums[i], i &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 输出第一个滑动窗口的最大值</span></span><br><span class="line">    cout &lt;&lt; pq.<span class="built_in">top</span>().first &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 滑动窗口向右移动，每次加入一个新元素，弹出一个旧元素</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = k; i &lt; nums.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">        pq.<span class="built_in">push</span>(&#123; nums[i], i &#125;); <span class="comment">// 加入新元素</span></span><br><span class="line">        <span class="keyword">while</span> (pq.<span class="built_in">top</span>().second &lt;= i - k) &#123; <span class="comment">// 弹出旧元素</span></span><br><span class="line">            pq.<span class="built_in">pop</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; pq.<span class="built_in">top</span>().first &lt;&lt; <span class="string">&quot; &quot;</span>; <span class="comment">// 输出当前滑动窗口的最大值</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="deque"><a href="#deque" class="headerlink" title="deque"></a>deque</h3><ul>
+<li><code>push_back(element)</code>：在队尾插入一个元素。</li>
+<li><code>pop_back()</code>：删除队尾元素。</li>
+<li><code>push_front(element)</code>：在队头插入一个元素。</li>
+<li><code>pop_front()</code>：删除队头元素。</li>
+<li><code>front()</code>：返回队头元素，但不删除。</li>
+<li><code>back()</code>：返回队尾元素，但不删除。</li>
+<li><code>empty()</code>：如果队列为空，返回true，否则返回false。</li>
+<li><code>size()</code>：返回队列中元素的个数。</li>
+</ul>
+<h3 id="heap"><a href="#heap" class="headerlink" title="heap"></a>heap</h3><ul>
+<li><code>make_heap(first, last)</code>：将[first, last)区间内的元素转换为堆。</li>
+<li><code>push_heap(first, last)</code>：将[first, last-1)区间内的元素插入堆中。</li>
+<li><code>pop_heap(first, last)</code>：将堆顶元素移动到[last-1]位置，并重新构建堆。</li>
+<li><code>sort_heap(first, last)</code>：将[first, last)区间内的元素排序，使其满足堆的性质。</li>
+<li><code>is_heap(first, last)</code>：如果[first, last)区间内的元素满足堆的性质，返回true，否则返回false。</li>
+<li><code>push()</code>：将元素添加到堆中。</li>
+<li><code>pop()</code>：从堆中移除根节点元素。</li>
+<li><code>top()</code>：返回堆中的根节点元素。</li>
+<li><code>empty()</code>：检查堆是否为空。</li>
+<li><code>size()</code>：返回堆中元素的数量。</li>
+</ul>
+<blockquote>
+<p>STL中，堆是通过vector容器实现的，因此要声明一个堆对象，需要先声明一个vector容器，然后使用make_heap()函数将其转换为堆</p>
+<p><del>不如手搓</del></p>
+</blockquote>
+<h3 id="pair"><a href="#pair" class="headerlink" title="pair"></a>pair</h3><p><code>template&lt;class T1, class T2&gt; struct pair;</code>其中，<code>T1</code>和<code>T2</code>表示两个不同的类型。<code>std::pair</code>类包含了两个公有成员变量<code>first</code>和<code>second</code>，分别表示这两个值。可以通过以下方式创建和访问<code>std::pair</code>对象： </p>
+<p>编译器并不会对<code>std::vector&lt;std::pair&lt;int, int&gt;&gt;</code>中的元素顺序进行任何假设或者判断。它只会根据你的代码中对这个<code>std::vector</code>对象的使用来确定元素顺序。</p>
+<p>例如，如果你在代码中使用<code>v[i].first</code>来访问第i个元素的第一个元素，编译器就会认为第一个元素表示数值，第二个元素表示下标。如果你使用<code>v[i].second</code>来访问第i个元素的第二个元素，编译器就会认为第一个元素表示下标，第二个元素表示数值。</p>
+<h2 id="迭代器类型补充"><a href="#迭代器类型补充" class="headerlink" title="迭代器类型补充"></a>迭代器类型补充</h2><p>在C++中，STL容器的迭代器可以分为5种类型，分别是：</p>
+<ol>
+<li>输入迭代器（Input Iterator）：只读，只能单向移动，每个元素只能被访问一次。例如<code>istream_iterator</code>。</li>
+<li>输出迭代器（Output Iterator）：只写，只能单向移动，每个元素只能被赋值一次。例如<code>ostream_iterator</code>。</li>
+<li>前向迭代器（Forward Iterator）：可读写，只能单向移动，每个元素可以被访问或赋值多次。例如<code>forward_list</code>。</li>
+<li>双向迭代器（Bidirectional Iterator）：可读写，可以双向移动，每个元素可以被访问或赋值多次。例如<code>list</code>。</li>
+<li>随机访问迭代器（Random Access Iterator）：可读写，可以随机访问，支持加减运算，可以跳跃式访问容器中的元素。例如<code>vector</code>、<code>deque</code>。</li>
+</ol>
+<p>因此，可以根据迭代器的类型来判断容器是否支持随机访问。以下是一些常见的STL容器及其迭代器类型：</p>
+<ol>
+<li><code>vector</code>：支持随机访问迭代器。</li>
+<li><code>deque</code>：支持随机访问迭代器。</li>
+<li><code>list</code>：支持双向迭代器。</li>
+<li><code>forward_list</code>：支持前向迭代器。</li>
+<li><code>set</code>：支持双向迭代器。</li>
+<li><code>map</code>：支持双向迭代器。</li>
+<li><code>unordered_set</code>：支持前向迭代器。</li>
+<li><code>unordered_map</code>：支持前向迭代器。</li>
+</ol>
+<blockquote>
+<p>迭代器类型的不同，使得for循环的操作写法不同</p>
+<p>支持随机访问的可以使用熟悉的写法，对元素进行操作；不支持的如双向迭代器要对迭代器进行操作</p>
+</blockquote>
+<p>需要注意的是，对于容器的不同操作，可能需要不同类型的迭代器。例如，对于<code>list</code>容器，如果需要在容器中间插入或删除元素，需要使用双向迭代器；而如果只是进行遍历，可以使用前向迭代器。</p>
+<p><em><u>而且，要注意的是</u></em></p>
+<blockquote>
+<p><code>stack</code>是STL中的一个容器适配器，它并不是一个容器，因此没有迭代器。<code>stack</code>只提供了很少的操作，主要包括<code>push()</code>、<code>pop()</code>、<code>top()</code>、<code>empty()</code>和<code>size()</code>等方法，这些方法都是直接对栈顶元素进行操作，不需要使用迭代器来遍历栈中的元素。因此，<code>stack</code>并不属于任何一种迭代器类型。 </p>
+</blockquote>
+<h2 id="STL对于空间大小的规定"><a href="#STL对于空间大小的规定" class="headerlink" title="STL对于空间大小的规定"></a>STL对于空间大小的规定</h2><p>STL（标准模板库）中的容器分为两类：</p>
+<ol>
+<li><strong>顺序容器（Sequence Containers）</strong>：这些容器按照元素在容器中的位置来组织和存储元素。顺序容器包括<code>vector</code>、<code>deque</code>、<code>list</code>、<code>forward_list</code>、<code>array</code>。<ul>
+<li><code>vector</code>、<code>deque</code>、<code>array</code>需要在创建容器对象时指定容器的大小，因为它们使用连续的内存存储元素，所以需要预先分配足够的内存空间。</li>
+<li><code>list</code>、<code>forward_list</code>不需要指定容器大小，它们使用链表存储元素，可以动态地分配和释放内存。</li>
+</ul>
+</li>
+<li><strong>关联容器（Associative Containers）</strong>：这些容器按照元素的键值来组织和存储元素。关联容器包括<code>set</code>、<code>multiset</code>、<code>map</code>、<code>multimap</code>。<ul>
+<li>关联容器不需要在创建容器对象时指定容器的大小，它们使用树形结构存储元素，可以动态地分配和释放内存。</li>
+</ul>
+</li>
+</ol>
+<p>此外，还有另一种容器叫做<code>stack</code>和<code>queue</code>，它们是容器适配器（Container Adaptors），是在顺序容器的基础上提供了特定的接口，使其按照一定的规则进行操作。<code>stack</code>和<code>queue</code>都是基于顺序容器实现的，但是它们不需要指定容器的大小，因为它们使用的是顺序容器的默认构造函数，自动创建一个空的容器对象。</p>
+<p>总之，顺序容器中的<code>vector</code>、<code>deque</code>和<code>array</code>需要指定容器大小，而<code>list</code>和<code>forward_list</code>不需要。关联容器和容器适配器都不需要指定容器大小。</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>not_the_same_3dsctf_2016</title>
     <url>/posts/de339b6d/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script>]]></content>
