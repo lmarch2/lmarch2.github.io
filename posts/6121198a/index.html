@@ -35,8 +35,9 @@
 <meta property="og:image" content="https://picx.zhimg.com/80/v2-d34d469968326f73e2dc20875beb8092_720w.png">
 <meta property="og:image" content="https://pic1.zhimg.com/80/v2-1e067d5c59a6e8aa80e6bc37f171f76e_720w.png?source=d16d100b">
 <meta property="og:image" content="https://picx.zhimg.com/80/v2-a997d1be275e1071f3a7d542c0874870_720w.png">
+<meta property="og:image" content="https://github.com/lmarch2/images/blob/main/typora/202308012217243.png?raw=true">
 <meta property="article:published_time" content="2023-08-28T13:54:45.000Z">
-<meta property="article:modified_time" content="2023-08-28T13:58:36.318Z">
+<meta property="article:modified_time" content="2023-08-30T06:28:35.657Z">
 <meta property="article:author" content="lmarch2">
 <meta property="article:tag" content="ctf">
 <meta name="twitter:card" content="summary">
@@ -150,7 +151,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ROPgadget"><span class="nav-text">ROPgadget</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ROPgadget-%E2%80%93binary-%E6%96%87%E4%BB%B6%E5%90%8D-%E2%80%93only-%E2%80%9C%E6%8C%87%E4%BB%A4-%E6%8C%87%E4%BB%A4%E2%80%9D-grep-%E5%AF%84%E5%AD%98%E5%99%A8%E6%88%96%E8%80%85%E5%85%B6%E4%BB%96%E5%AD%98%E5%9C%A8%E7%9A%84%E5%AD%97%E6%AE%B5"><span class="nav-text">ROPgadget –binary 文件名 –only “指令|指令” | grep 寄存器或者其他存在的字段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ROPgadget-%E2%80%93binary-%E6%96%87%E4%BB%B6%E5%90%8D-%E2%80%93sting-%E2%80%98-x2F-bin-x2F-sh%E2%80%99"><span class="nav-text">ROPgadget –binary 文件名 –sting ‘&#x2F;bin&#x2F;sh’</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vmmap"><span class="nav-text">vmmap</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vim"><span class="nav-text">vim</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ASLR%E5%92%8Cpie%E7%BC%96%E8%AF%91"><span class="nav-text">ASLR和pie编译</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shellcode"><span class="nav-text">shellcode</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ROPgadget"><span class="nav-text">ROPgadget</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ROPgadget-%E2%80%93binary-%E6%96%87%E4%BB%B6%E5%90%8D-%E2%80%93only-%E2%80%9C%E6%8C%87%E4%BB%A4-%E6%8C%87%E4%BB%A4%E2%80%9D-grep-%E5%AF%84%E5%AD%98%E5%99%A8%E6%88%96%E8%80%85%E5%85%B6%E4%BB%96%E5%AD%98%E5%9C%A8%E7%9A%84%E5%AD%97%E6%AE%B5"><span class="nav-text">ROPgadget –binary 文件名 –only “指令|指令” | grep 寄存器或者其他存在的字段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ROPgadget-%E2%80%93binary-%E6%96%87%E4%BB%B6%E5%90%8D-%E2%80%93sting-%E2%80%98-x2F-bin-x2F-sh%E2%80%99"><span class="nav-text">ROPgadget –binary 文件名 –sting ‘&#x2F;bin&#x2F;sh’</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vmmap"><span class="nav-text">vmmap</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vim"><span class="nav-text">vim</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pwndbg"><span class="nav-text">pwndbg</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ASLR%E5%92%8Cpie%E7%BC%96%E8%AF%91"><span class="nav-text">ASLR和pie编译</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shellcode"><span class="nav-text">shellcode</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GCC%E7%BC%96%E8%AF%91%E6%8C%87%E4%BB%A4"><span class="nav-text">GCC编译指令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E7%AC%A6%E5%8F%B7%E8%A1%A8"><span class="nav-text">关于符号表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#patchelf"><span class="nav-text">patchelf</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -316,9 +317,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2023-08-28 21:54:45 / 修改时间：21:58:36" itemprop="dateCreated datePublished" datetime="2023-08-28T21:54:45+08:00">2023-08-28</time>
+      <time title="创建时间：2023-08-28 21:54:45" itemprop="dateCreated datePublished" datetime="2023-08-28T21:54:45+08:00">2023-08-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-30 14:28:35" itemprop="dateModified" datetime="2023-08-30T14:28:35+08:00">2023-08-30</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -344,14 +351,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3.1k</span>
+      <span>4.5k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
+      <span>4 分钟</span>
     </span>
 </div>
 
@@ -434,8 +441,7 @@
 <p>:%d	删除全部内容</p>
 <p>:%s		替换       <a target="_blank" rel="noopener" href="http://10.102.32.142:8000/d/55-shi-bei-xi-ri-ben-ren-zai-ci-fen-xiang-you-qu-you-yong-de-xin-shou-xue-xi-zi-yuan/13#:~:text=%E5%89%8D%E5%B7%B2%E7%BC%96%E8%BE%91-,vim%E7%9A%84%E6%89%B9%E9%87%8F%E6%9B%BF%E6%8D%A2,-%E5%9C%A8%20Vim%20%E4%B8%AD">参考</a>（万里哥我滴神）</p>
 </blockquote>
-<p>#pwndbg</p>
-<p>基本指令</p>
+<h1 id="pwndbg"><a href="#pwndbg" class="headerlink" title="pwndbg"></a>pwndbg</h1><p>基本指令</p>
 <ul>
 <li>r &#x3D; run 运行程序，如果你当前已经在运行程序了，再输入r会重新运行程序</li>
 <li>b &#x3D; break 下断点，在调试pwn中，一般是 b <em>0xabcde ，abcde是在ida中看到的地址,如b</em> 0x400908</li>
@@ -459,6 +465,11 @@
 <blockquote>
 <p>b *$rebase(地址)           用于开启PIE该指令会在基址+地址处下断点 </p>
 </blockquote>
+<p><a target="_blank" rel="noopener" href="https://wizardforcel.gitbooks.io/100-gdb-tips/content/index.html">https://wizardforcel.gitbooks.io/100-gdb-tips/content/index.html</a><br>100个gdb小技巧</p>
+<p>gdb制定程序运行的参数<br>gdb –args binary value</p>
+<p>gdb调试改变地址或地址指向值<br>set addr_old &#x3D; addr<br>set *addr_old &#x3D; addr</p>
+<p>bt<br>显示函数所有调用栈的信息<br>bt n<br>显示栈顶的n个调用信息<br>bt -n<br>显示栈底的n个调用信息</p>
+<p>中间加full表示   显示栈中所有帧的完全信息如：函数参数，本地变量</p>
 <h1 id="ASLR和pie编译"><a href="#ASLR和pie编译" class="headerlink" title="ASLR和pie编译"></a>ASLR和pie编译</h1><p>查看系统当前ASLR打开情况</p>
 <blockquote>
 <p>sudo cat &#x2F;proc&#x2F;sys&#x2F;kernel&#x2F;randomize_va_space</p>
@@ -494,8 +505,33 @@
 </blockquote>
 <p>手动反汇编汇编指令</p>
 <blockquote>
-<p>xx &#x3D; asm(‘’)</p>
+<p>xx &#x3D; asm(‘’’</p>
+<p>‘’’)</p>
 </blockquote>
+<h1 id="GCC编译指令"><a href="#GCC编译指令" class="headerlink" title="GCC编译指令"></a>GCC编译指令</h1><p>gcc各保护编译指令<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/tabactivity/article/details/126660974">https://blog.csdn.net/tabactivity/article/details/126660974</a><br><a target="_blank" rel="noopener" href="https://zoepla.github.io/2018/04/gcc%E7%9A%84%E7%BC%96%E8%AF%91%E5%85%B3%E4%BA%8E%E7%A8%8B%E5%BA%8F%E4%BF%9D%E6%8A%A4%E5%BC%80%E5%90%AF%E7%9A%84%E9%80%89%E9%A1%B9/">https://zoepla.github.io/2018/04/gcc%E7%9A%84%E7%BC%96%E8%AF%91%E5%85%B3%E4%BA%8E%E7%A8%8B%E5%BA%8F%E4%BF%9D%E6%8A%A4%E5%BC%80%E5%90%AF%E7%9A%84%E9%80%89%E9%A1%B9/</a><br>全开</p>
+<blockquote>
+<p>gcc test.c -o test -z noexecstack -z now -fstack-protector -fpie -pie</p>
+</blockquote>
+<p>全关</p>
+<blockquote>
+<p> gcc test.c -o test -z execstack -z norelro -fno-stack-protector -no-pie</p>
+</blockquote>
+<p>sudo sh -c “echo 0 &gt; &#x2F;proc&#x2F;sys&#x2F;kernel&#x2F;randomize_va_space”关闭ASLR<br>把0换成2就是开启</p>
+<p>编译时加上 -m32 即编译成32位程序</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Jason_ZhouYetao/article/details/81606358">https://blog.csdn.net/Jason_ZhouYetao/article/details/81606358</a></p>
+<h1 id="关于符号表"><a href="#关于符号表" class="headerlink" title="关于符号表"></a>关于符号表</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">readelf binary -p .comment</span><br><span class="line">或  objdump -s --section=.comment binary</span><br></pre></td></tr></table></figure>
+<p>可以查看程序或编译器版本</p>
+<p>readelf，objdump，去符号表，恢复符号表<br>上链接<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/edonlii/article/details/8779075">readelf</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41683305/article/details/105375214">objdump</a><br><a target="_blank" rel="noopener" href="https://xuanxuanblingbling.github.io/ctf/tools/2019/09/06/symbol/">去符号表</a><br><a target="_blank" rel="noopener" href="https://loora1n.github.io/2022/11/01/%E3%80%90%E7%A5%A5%E4%BA%91%E6%9D%AF2022%E3%80%91PWN-WriteUp-protocol/">恢复符号表</a></p>
+<h1 id="patchelf"><a href="#patchelf" class="headerlink" title="patchelf"></a>patchelf</h1><p>patchef四部曲</p>
+<p>ldd  binary<br>列出动态库依赖</p>
+<p>strings 题目给的libc名 | grep ubuntu<br>快速找到Libc文件对应版本</p>
+<p>（cp 想替换的文件到赛题目录）</p>
+<p>patchelf –set-interpreter .&#x2F;ld-2.27.so .&#x2F;binary<br>—————————对应的ld文件—-pwn文件</p>
+<p>patchelf –replace-needed libc.so.6 .&#x2F;libc-2.27.so .&#x2F;binary<br>————————-原本的libc—-要替换的libc—–pwn文件       </p>
+<p>（若只用上述命令碰到如下报错时）<br><img data-src="https://github.com/lmarch2/images/blob/main/typora/202308012217243.png?raw=true"><br>patchelf –replace-needed libpthread.so.0 .&#x2F;libpthread-2.31.so .&#x2F;binary<br> ——————————–原本的     ———   要替换的</p>
+<p>Linux命令    </p>
+<p>pwd ：获取当前所在目录路径<br>realpath file : 获取文件地址</p>
+<p>pip list查看已安装包<br>pip show 包名 查看包安装路径</p>
 
     </div>
 
@@ -639,13 +675,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">86k</span>
+    <span title="站点总字数">88k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:18</span>
+    <span title="站点阅读时长">1:20</span>
   </span>
 </div>
 <div class="busuanzi-count">
