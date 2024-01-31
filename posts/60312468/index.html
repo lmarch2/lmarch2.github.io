@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/bilicard.css">
+<!-- hexo injector head_begin end -->
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
@@ -149,7 +151,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#T2-wustctf2020-closed"><span class="nav-text">T2 wustctf2020_closed</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01"><span class="nav-text">0x01</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02"><span class="nav-text">0x02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03"><span class="nav-text">0x03</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04"><span class="nav-text">0x04</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">T2 wustctf2020_closed</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x01</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x03</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x04</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -175,7 +177,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -367,19 +369,19 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="T2-wustctf2020-closed"><a href="#T2-wustctf2020-closed" class="headerlink" title="T2 wustctf2020_closed"></a>T2 wustctf2020_closed</h2><blockquote>
+        <h2><span id="t2-wustctf2020_closed">T2 wustctf2020_closed</span></h2><blockquote>
 <p>2023-01-15WP<br>BUUCTF  pwn<br>考点：close函数</p>
 </blockquote>
 <span id="more"></span>
 
-<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>做了hgame的第二题后，去补充了一下关于close函数的知识，再从BUUCTF中找了一题练了练<br>先file知道时64-bit</p>
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>这一题结构很简单，再IDA中直接能找到在main函数中的vulnerable函数中return shell函数中有system函数<br>直接给好了<br><img data-src="https://pic2.zhimg.com/80/v2-bd22be15351c97aebae2de7f1bd0f4bd_1440w.webp"><br><img data-src="https://pic3.zhimg.com/80/v2-640c1ebbaa31c9a5013bd8feafceaee6_1440w.webp"><br><img data-src="https://pic4.zhimg.com/80/v2-2c7eb0afee1a164507dd332cf37e7813_1440w.webp"></p>
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>但是因为</p>
+<h3><span id="0x01">0x01</span></h3><p>做了hgame的第二题后，去补充了一下关于close函数的知识，再从BUUCTF中找了一题练了练<br>先file知道时64-bit</p>
+<h3><span id="0x02">0x02</span></h3><p>这一题结构很简单，再IDA中直接能找到在main函数中的vulnerable函数中return shell函数中有system函数<br>直接给好了<br><img data-src="https://pic2.zhimg.com/80/v2-bd22be15351c97aebae2de7f1bd0f4bd_1440w.webp"><br><img data-src="https://pic3.zhimg.com/80/v2-640c1ebbaa31c9a5013bd8feafceaee6_1440w.webp"><br><img data-src="https://pic4.zhimg.com/80/v2-2c7eb0afee1a164507dd332cf37e7813_1440w.webp"></p>
+<h3><span id="0x03">0x03</span></h3><p>但是因为</p>
 <blockquote>
 <p>close(1)<br>  close(2)</p>
 </blockquote>
 <p>将标准输出和标准错误输出关闭了，这样在窗口上看不到输出<br>这时候就需要我们重新定位标准输出</p>
-<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p><strong>补充一些知识</strong></p>
+<h3><span id="0x04">0x04</span></h3><p><strong>补充一些知识</strong></p>
 <ul>
 <li><p>在Linux中的文件，文件描述符（file descriptor）是内核为了高效管理已被打开的文件所创建的索引，是一个非负整数（通常是小整数），用于指代被打开的文件，所有执行I&#x2F;O操作的系统调用都通过文件描述符。程序刚刚启动的时候，0是标准输入，1是标准输出，2是标准错误。如果此时去打开一个新的文件，它的文件描述符会是3。</p>
 </li>
@@ -603,13 +605,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">211k</span>
+    <span title="站点总字数">212k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:12</span>
+    <span title="站点阅读时长">3:13</span>
   </span>
 </div>
 <div class="busuanzi-count">

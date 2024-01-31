@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/bilicard.css">
+<!-- hexo injector head_begin end -->
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
@@ -158,7 +160,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#T1-easy-overflow"><span class="nav-text">T1 easy_overflow</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01"><span class="nav-text">0x01</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02"><span class="nav-text">0x02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03"><span class="nav-text">0x03</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-1"><span class="nav-text">0x03</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04"><span class="nav-text">0x04</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x05"><span class="nav-text">0x05</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x06"><span class="nav-text">0x06</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">T1 easy_overflow</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x01</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x03</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x03</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x04</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x05</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x06</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -184,7 +186,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -376,18 +378,18 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="T1-easy-overflow"><a href="#T1-easy-overflow" class="headerlink" title="T1 easy_overflow"></a>T1 easy_overflow</h2><blockquote>
+        <h2><span id="t1-easy_overflow">T1 easy_overflow</span></h2><blockquote>
 <p>2023-01-14WP<br>Hgame week1 pwn 第二题<br>考点：简单栈溢出</p>
 </blockquote>
 <span id="more"></span>
 
-<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p><strong>file</strong>——64-bit,<br><strong>checksec</strong> 开启NX<br><img data-src="https://picx.zhimg.com/80/v2-b02ac7a02df1467f41fa6b8ed8ecf147_1440w.png?source=d16d100b"></p>
-<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p><strong>IDA</strong>看源码，先找&#x2F;bin&#x2F;sh，一路索引过去发现在一个后门函数中</p>
+<h3><span id="0x01">0x01</span></h3><p><strong>file</strong>——64-bit,<br><strong>checksec</strong> 开启NX<br><img data-src="https://picx.zhimg.com/80/v2-b02ac7a02df1467f41fa6b8ed8ecf147_1440w.png?source=d16d100b"></p>
+<h3><span id="0x02">0x02</span></h3><p><strong>IDA</strong>看源码，先找&#x2F;bin&#x2F;sh，一路索引过去发现在一个后门函数中</p>
 <p><img data-src="https://picx.zhimg.com/80/v2-9e559b87dc3591a21383567579e57aec_1440w.png?source=d16d100b"></p>
 <p><img data-src="https://pic1.zhimg.com/80/v2-6c43653aae10a9334f6d4a773827dcae_1440w.png?source=d16d100b"></p>
 <p>然后我的第一反应是先记下call system的地址，结果一看，没找到？取而代之的是call    sub_401060<br>于是我卡了一下，可能是第一次碰到这样的题的缘故，我没有意识到函数名称可以是不一样的<br>打开main函数伪代码也是这样……<br><img data-src="https://pic1.zhimg.com/80/v2-d944638581f5f4e8ed3bb1f91435d464_1440w.webp"><br>越看越不对劲，搜索资料才发现这种题的风格就是去符号使原函数名字无法显示<br>这么说IDA无法解决了</p>
-<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>我们转而动态调试试一下<br>我们假设文件带有system函数，又据题意应该是有gets或者read之类的函数的<br>运行文件测试一下确实如此<br><img data-src="https://pic1.zhimg.com/80/v2-c0c3d1d2b64d886ff2b0c795be14315c_1440w.webp"><br>那么我们在这几个函数处试着打断点<br><img data-src="https://pic3.zhimg.com/80/v2-ff2f8659b478bef6651b656f3a5ee762_1440w.webp"><br>我们可以看到，其中system的地址和后面函数中的call    sub_401060的plt处地址对上了<br>read函数的地址和main函数中的 call    sub_401080的plt处地址对上了<br>同时呢，gdb运行文件的时候还发现main函数中还有一个close函数，浏览一下main函数源码只有sub_401070了<br><img data-src="https://pic2.zhimg.com/80/v2-4d7a5a5c48c6c578df4ef9f351eac149_1440w.webp"><br><img data-src="https://pic2.zhimg.com/80/v2-8553dc620b792d521995f7e5718e1629_1440w.webp"><br>查阅了一些资料得知，close(1)关闭了标准输出，详细见这篇<a target="_blank" rel="noopener" href="https://blog.csdn.net/xirenwang/article/details/104139866">文章</a><br>也就是有下面我们得到shell后无法在屏幕上看到flag的情况<br>这时候就要输入exec 1&gt;&amp;0重启标准输出<br>那么现在呢我们已经把文件里的几个主要函数分析好了，接下来就要找偏移量了</p>
-<h3 id="0x03-1"><a href="#0x03-1" class="headerlink" title="0x03"></a>0x03</h3><p>这一部分我发现一个很坑的地方，如果我们用ctf-wilki上的方法，那么我们在gdb调试设断点的时候就不能设 </p>
+<h3><span id="0x03">0x03</span></h3><p>我们转而动态调试试一下<br>我们假设文件带有system函数，又据题意应该是有gets或者read之类的函数的<br>运行文件测试一下确实如此<br><img data-src="https://pic1.zhimg.com/80/v2-c0c3d1d2b64d886ff2b0c795be14315c_1440w.webp"><br>那么我们在这几个函数处试着打断点<br><img data-src="https://pic3.zhimg.com/80/v2-ff2f8659b478bef6651b656f3a5ee762_1440w.webp"><br>我们可以看到，其中system的地址和后面函数中的call    sub_401060的plt处地址对上了<br>read函数的地址和main函数中的 call    sub_401080的plt处地址对上了<br>同时呢，gdb运行文件的时候还发现main函数中还有一个close函数，浏览一下main函数源码只有sub_401070了<br><img data-src="https://pic2.zhimg.com/80/v2-4d7a5a5c48c6c578df4ef9f351eac149_1440w.webp"><br><img data-src="https://pic2.zhimg.com/80/v2-8553dc620b792d521995f7e5718e1629_1440w.webp"><br>查阅了一些资料得知，close(1)关闭了标准输出，详细见这篇<a target="_blank" rel="noopener" href="https://blog.csdn.net/xirenwang/article/details/104139866">文章</a><br>也就是有下面我们得到shell后无法在屏幕上看到flag的情况<br>这时候就要输入exec 1&gt;&amp;0重启标准输出<br>那么现在呢我们已经把文件里的几个主要函数分析好了，接下来就要找偏移量了</p>
+<h3><span id="0x03">0x03</span></h3><p>这一部分我发现一个很坑的地方，如果我们用ctf-wilki上的方法，那么我们在gdb调试设断点的时候就不能设 </p>
 <blockquote>
 <p>b read</p>
 </blockquote>
@@ -397,10 +399,10 @@
 </blockquote>
 <p>我们应该这样设断点，这样就停止在进入read函数之前，不仅可以看到相对偏移,还能计算出rbp-rsp<br><img data-src="https://pic3.zhimg.com/80/v2-9efe6dca6df2fee543e1ebc2027b17de_1440w.webp"><br><img data-src="https://pic1.zhimg.com/80/v2-0d752265119152e7f608595ea4255d90_1440w.webp"><br>得出rsp和rsi 0x7fffffffddd0,rbp为0x7fffffffdde0,计算得距rbp偏移量就为0x7fffffffdde0-0x7fffffffddd0<br>那么再加上rbp求得为0x10+8</p>
 <p>还可以暴力求得  <del>懒得计算偏移量的话</del><br><img data-src="https://pic4.zhimg.com/80/v2-c7ec27fdfb682541c8a7d2aeb8e4c663_1440w.webp"></p>
-<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>可以写exp</p>
+<h3><span id="0x04">0x04</span></h3><p>可以写exp</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">p = remote(<span class="string">&quot;week-1.hgame.lwsec.cn&quot;</span>, <span class="number">30574</span>)</span><br><span class="line"></span><br><span class="line">system_addr = 000000000401176</span><br><span class="line">payload = b <span class="string">&#x27; a &#x27;</span> * <span class="number">0x18</span> + p64(system_addr)</span><br><span class="line"></span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-<h3 id="0x05"><a href="#0x05" class="headerlink" title="0x05"></a>0x05</h3><p>好奇怪为什么官方的WP可以直接反汇编成正常的函数？<br>搜了一下好像可以手动添加标签,<a target="_blank" rel="noopener" href="https://blog.csdn.net/Breeze_CAT/article/details/103788796">这篇文章</a>教了一下这么回复库函数名，但是看不懂……</p>
-<h3 id="0x06"><a href="#0x06" class="headerlink" title="0x06"></a>0x06</h3><p><img data-src="https://pic4.zhimg.com/80/v2-23c72811fac836cd0c8980516e1acc83_1440w.webp"><br>得到shell后发现并没有办法显示出flag，问题就在之前的那个close(1)因为汇编代码中有这样一句</p>
+<h3><span id="0x05">0x05</span></h3><p>好奇怪为什么官方的WP可以直接反汇编成正常的函数？<br>搜了一下好像可以手动添加标签,<a target="_blank" rel="noopener" href="https://blog.csdn.net/Breeze_CAT/article/details/103788796">这篇文章</a>教了一下这么回复库函数名，但是看不懂……</p>
+<h3><span id="0x06">0x06</span></h3><p><img data-src="https://pic4.zhimg.com/80/v2-23c72811fac836cd0c8980516e1acc83_1440w.webp"><br>得到shell后发现并没有办法显示出flag，问题就在之前的那个close(1)因为汇编代码中有这样一句</p>
 <blockquote>
 <p>mov     edi, 1</p>
 </blockquote>
@@ -616,13 +618,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">211k</span>
+    <span title="站点总字数">212k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:12</span>
+    <span title="站点阅读时长">3:13</span>
   </span>
 </div>
 <div class="busuanzi-count">
