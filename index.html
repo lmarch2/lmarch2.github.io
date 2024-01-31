@@ -161,7 +161,7 @@
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -757,7 +757,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-02 17:02:20" itemprop="dateModified" datetime="2023-09-02T17:02:20+08:00">2023-09-02</time>
+      <time title="修改时间：2024-01-31 10:11:40" itemprop="dateModified" datetime="2024-01-31T10:11:40+08:00">2024-01-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -765,7 +765,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%B5%9B%E9%A2%98%E5%A4%8D%E7%8E%B0/" itemprop="url" rel="index"><span itemprop="name">赛题复现</span></a>
+          <a href="/categories/wp/" itemprop="url" rel="index"><span itemprop="name">wp</span></a>
         </span>
     </span>
 
@@ -794,7 +794,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="NSSCTF-2nd-WP"><a href="#NSSCTF-2nd-WP" class="headerlink" title="NSSCTF 2nd WP"></a>NSSCTF 2nd WP</h1>
+          <h1 id="NSSCTF-2nd-WP"><a href="#NSSCTF-2nd-WP" class="headerlink" title="NSSCTF 2nd WP"></a>NSSCTF 2nd WP</h1><h2 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h2><h3 id="gift-in-qrcode"><a href="#gift-in-qrcode" class="headerlink" title="gift_in_qrcode"></a>gift_in_qrcode</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> qrcode</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> randrange, getrandbits, seed</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line">flag = os.getenv(<span class="string">&quot;FLAG&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> flag == <span class="literal">None</span>:</span><br><span class="line">    flag = <span class="string">&quot;flag&#123;test&#125;&quot;</span></span><br><span class="line"></span><br><span class="line">secret_seed = randrange(<span class="number">1</span>, <span class="number">1000</span>)</span><br><span class="line">seed(secret_seed)</span><br><span class="line">reveal = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">20</span>):</span><br><span class="line">    reveal.append(<span class="built_in">str</span>(getrandbits(<span class="number">8</span>)))</span><br><span class="line">target = getrandbits(<span class="number">8</span>)</span><br><span class="line">reveal = <span class="string">&quot;,&quot;</span>.join(reveal)</span><br><span class="line"></span><br><span class="line">img_qrcode = qrcode.make(reveal)</span><br><span class="line">img_qrcode = img_qrcode.crop((<span class="number">35</span>, <span class="number">35</span>, img_qrcode.size[<span class="number">0</span>] - <span class="number">35</span>, img_qrcode.size[<span class="number">1</span>] - <span class="number">35</span>))</span><br><span class="line"></span><br><span class="line">offset, delta, rate = <span class="number">50</span>, <span class="number">3</span>, <span class="number">5</span></span><br><span class="line">img_qrcode = img_qrcode.resize(</span><br><span class="line">    (<span class="built_in">int</span>(img_qrcode.size[<span class="number">0</span>] / rate), <span class="built_in">int</span>(img_qrcode.size[<span class="number">1</span>] / rate)), Image.LANCZOS</span><br><span class="line">)</span><br><span class="line">img_out = Image.new(<span class="string">&quot;RGB&quot;</span>, img_qrcode.size)</span><br><span class="line"><span class="keyword">for</span> y <span class="keyword">in</span> <span class="built_in">range</span>(img_qrcode.size[<span class="number">1</span>]):</span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(img_qrcode.size[<span class="number">0</span>]):</span><br><span class="line">        pixel_qrcode = img_qrcode.getpixel((x, y))</span><br><span class="line">        <span class="keyword">if</span> pixel_qrcode == <span class="number">255</span>:</span><br><span class="line">            img_out.putpixel(</span><br><span class="line">                (x, y),</span><br><span class="line">                (</span><br><span class="line">                    randrange(offset, offset + delta),</span><br><span class="line">                    randrange(offset, offset + delta),</span><br><span class="line">                    randrange(offset, offset + delta),</span><br><span class="line">                ),</span><br><span class="line">            )</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            img_out.putpixel(</span><br><span class="line">                (x, y),</span><br><span class="line">                (</span><br><span class="line">                    randrange(offset - delta, offset),</span><br><span class="line">                    randrange(offset - delta, offset),</span><br><span class="line">                    randrange(offset - delta, offset),</span><br><span class="line">                ),</span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">img_out.save(<span class="string">&quot;qrcode.png&quot;</span>)</span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;qrcode.png&quot;</span>, <span class="string">&quot;rb&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    data = f.read()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;This my gift:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(base64.b64encode(data).decode(), <span class="string">&quot;\n&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(target)</span><br><span class="line"></span><br><span class="line">ans = <span class="built_in">input</span>(<span class="string">&quot;What&#x27;s your answer:&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> ans == <span class="built_in">str</span>(target):</span><br><span class="line">    <span class="built_in">print</span>(flag)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;No no no!&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/posts/4b18615c/#more" rel="contents">
@@ -868,7 +868,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-30 10:36:14" itemprop="dateModified" datetime="2023-08-30T10:36:14+08:00">2023-08-30</time>
+      <time title="修改时间：2024-01-31 10:11:02" itemprop="dateModified" datetime="2024-01-31T10:11:02+08:00">2024-01-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -876,7 +876,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B7%A5%E5%85%B7%E6%8A%80%E5%B7%A7/" itemprop="url" rel="index"><span itemprop="name">工具技巧</span></a>
+          <a href="/categories/tools-and-tricks/" itemprop="url" rel="index"><span itemprop="name">tools and tricks</span></a>
         </span>
     </span>
 
@@ -906,6 +906,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>pwndbg在WSL下一直没法使用下断点调试的功能，找了半天发现tmux可以帮助解决这个问题</p>
+<h2 id="安装tmux"><a href="#安装tmux" class="headerlink" title="安装tmux"></a>安装tmux</h2><p>用root权限安装</p>
+<blockquote>
+<p>sudo apt-get install tmux</p>
+</blockquote>
+<p>进入根目录</p>
+<blockquote>
+<p>cd ~</p>
+</blockquote>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/posts/19b7c9d1/#more" rel="contents">
@@ -971,9 +979,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2023-08-29 20:46:39 / 修改时间：20:48:13" itemprop="dateCreated datePublished" datetime="2023-08-29T20:46:39+08:00">2023-08-29</time>
+      <time title="创建时间：2023-08-29 20:46:39" itemprop="dateCreated datePublished" datetime="2023-08-29T20:46:39+08:00">2023-08-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-01-31 10:08:26" itemprop="dateModified" datetime="2024-01-31T10:08:26+08:00">2024-01-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -981,7 +995,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%B5%9B%E9%A2%98%E5%A4%8D%E7%8E%B0/" itemprop="url" rel="index"><span itemprop="name">赛题复现</span></a>
+          <a href="/categories/wp/" itemprop="url" rel="index"><span itemprop="name">wp</span></a>
         </span>
     </span>
 
@@ -1010,7 +1024,18 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="ROUND-14-love"><a href="#ROUND-14-love" class="headerlink" title="ROUND#14  love"></a>ROUND#14  love</h1>
+          <h1 id="NSSCTF-ROUND-14"><a href="#NSSCTF-ROUND-14" class="headerlink" title="NSSCTF ROUND#14"></a>NSSCTF ROUND#14</h1><h2 id="love"><a href="#love" class="headerlink" title="love"></a>love</h2><h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>程序开启NX和canary保护</p>
+<p><img src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202308101239901.png" alt="image-20230810123951784"></p>
+<p>vuln函数中存在栈溢出</p>
+<p>变量v4 &#x3D; 555，v5 &#x3D; 520</p>
+<p>read函数读入0x40字节，在printf处有格式化字符串漏洞</p>
+<p>需要注意buf为bss段变量，非栈格式化字符串漏洞不能直接修改栈上的值，需要通过二级指针，即栈链间接修改</p>
+<p>思路：</p>
+<ol>
+<li>利用格式化字符串漏洞任意写修改让v4&#x3D;v5，进入vuln函数</li>
+<li>利用格式化字符串泄露canary和__libc_start_main函数真实地址，计算出libc基址</li>
+<li>构造pay覆盖返回地址为og或system rop链getshell</li>
+</ol>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/posts/fa745d1d/#more" rel="contents">
@@ -1084,7 +1109,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-30 10:33:57" itemprop="dateModified" datetime="2023-08-30T10:33:57+08:00">2023-08-30</time>
+      <time title="修改时间：2024-01-31 10:13:22" itemprop="dateModified" datetime="2024-01-31T10:13:22+08:00">2024-01-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1092,7 +1117,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/retlibc%E5%90%88%E9%9B%86/" itemprop="url" rel="index"><span itemprop="name">retlibc合集</span></a>
+          <a href="/categories/collections/" itemprop="url" rel="index"><span itemprop="name">collections</span></a>
         </span>
     </span>
 
@@ -1187,9 +1212,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2023-08-29 20:37:51 / 修改时间：20:47:55" itemprop="dateCreated datePublished" datetime="2023-08-29T20:37:51+08:00">2023-08-29</time>
+      <time title="创建时间：2023-08-29 20:37:51" itemprop="dateCreated datePublished" datetime="2023-08-29T20:37:51+08:00">2023-08-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-01-31 10:12:40" itemprop="dateModified" datetime="2024-01-31T10:12:40+08:00">2024-01-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1197,7 +1228,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
+          <a href="/categories/notes/" itemprop="url" rel="index"><span itemprop="name">notes</span></a>
         </span>
     </span>
 
