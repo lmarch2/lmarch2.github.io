@@ -22,7 +22,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/green/pace-theme-minimal.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"lmarch2.github.com","root":"/","images":"/images","scheme":"Gemini","darkmode":"ture","version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lmarch2.github.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","width":350,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="NSSCTF 2nd WPMISCgift_in_qrcode1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162import qrcodefrom PIL import Imagefrom random import r">
 <meta property="og:type" content="article">
@@ -60,10 +60,11 @@
 
 
 
-
+<link rel="dns-prefetch" href="waline-server-pearl.vercel.app">
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
+<link rel="alternate" href="/atom.xml" title="lmarch2'blog" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
@@ -151,7 +152,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">NSSCTF 2nd WP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">MISC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">gift_in_qrcode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">Magic Docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">gift_in_qrcode(revenge)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">Crypto</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">EzRSA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">FunnyEncrypt</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#nssctf-2nd-wp"><span class="nav-text">NSSCTF 2nd WP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#misc"><span class="nav-text">MISC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gift_in_qrcode"><span class="nav-text">gift_in_qrcode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#magic-docker"><span class="nav-text">Magic Docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gift_in_qrcoderevenge"><span class="nav-text">gift_in_qrcode(revenge)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#crypto"><span class="nav-text">Crypto</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ezrsa"><span class="nav-text">EzRSA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#funnyencrypt"><span class="nav-text">FunnyEncrypt</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -238,6 +239,7 @@
     </div>
         </div>
       </div>
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=450 src="//music.163.com/outchain/player?type=0&id=9232910433&auto=1&height=430"></iframe>
     </div>
 
     
@@ -273,6 +275,8 @@
       </ul>
     </div>
 
+        <div class="pjax">
+        </div>
   </aside>
 
 
@@ -345,6 +349,20 @@
       <span class="post-meta-item-text">阅读次数：</span>
       <span id="busuanzi_value_page_pv"></span>
     </span>
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/posts/4b18615c/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/posts/4b18615c/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
     <span class="post-meta-break"></span>
     <span class="post-meta-item" title="本文字数">
       <span class="post-meta-item-icon">
@@ -369,13 +387,13 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1><span id="nssctf-2nd-wp">NSSCTF 2nd WP</span></h1><h2><span id="misc">MISC</span></h2><h3><span id="gift_in_qrcode">gift_in_qrcode</span></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> qrcode</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> randrange, getrandbits, seed</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line">flag = os.getenv(<span class="string">&quot;FLAG&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> flag == <span class="literal">None</span>:</span><br><span class="line">    flag = <span class="string">&quot;flag&#123;test&#125;&quot;</span></span><br><span class="line"></span><br><span class="line">secret_seed = randrange(<span class="number">1</span>, <span class="number">1000</span>)</span><br><span class="line">seed(secret_seed)</span><br><span class="line">reveal = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">20</span>):</span><br><span class="line">    reveal.append(<span class="built_in">str</span>(getrandbits(<span class="number">8</span>)))</span><br><span class="line">target = getrandbits(<span class="number">8</span>)</span><br><span class="line">reveal = <span class="string">&quot;,&quot;</span>.join(reveal)</span><br><span class="line"></span><br><span class="line">img_qrcode = qrcode.make(reveal)</span><br><span class="line">img_qrcode = img_qrcode.crop((<span class="number">35</span>, <span class="number">35</span>, img_qrcode.size[<span class="number">0</span>] - <span class="number">35</span>, img_qrcode.size[<span class="number">1</span>] - <span class="number">35</span>))</span><br><span class="line"></span><br><span class="line">offset, delta, rate = <span class="number">50</span>, <span class="number">3</span>, <span class="number">5</span></span><br><span class="line">img_qrcode = img_qrcode.resize(</span><br><span class="line">    (<span class="built_in">int</span>(img_qrcode.size[<span class="number">0</span>] / rate), <span class="built_in">int</span>(img_qrcode.size[<span class="number">1</span>] / rate)), Image.LANCZOS</span><br><span class="line">)</span><br><span class="line">img_out = Image.new(<span class="string">&quot;RGB&quot;</span>, img_qrcode.size)</span><br><span class="line"><span class="keyword">for</span> y <span class="keyword">in</span> <span class="built_in">range</span>(img_qrcode.size[<span class="number">1</span>]):</span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(img_qrcode.size[<span class="number">0</span>]):</span><br><span class="line">        pixel_qrcode = img_qrcode.getpixel((x, y))</span><br><span class="line">        <span class="keyword">if</span> pixel_qrcode == <span class="number">255</span>:</span><br><span class="line">            img_out.putpixel(</span><br><span class="line">                (x, y),</span><br><span class="line">                (</span><br><span class="line">                    randrange(offset, offset + delta),</span><br><span class="line">                    randrange(offset, offset + delta),</span><br><span class="line">                    randrange(offset, offset + delta),</span><br><span class="line">                ),</span><br><span class="line">            )</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            img_out.putpixel(</span><br><span class="line">                (x, y),</span><br><span class="line">                (</span><br><span class="line">                    randrange(offset - delta, offset),</span><br><span class="line">                    randrange(offset - delta, offset),</span><br><span class="line">                    randrange(offset - delta, offset),</span><br><span class="line">                ),</span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">img_out.save(<span class="string">&quot;qrcode.png&quot;</span>)</span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;qrcode.png&quot;</span>, <span class="string">&quot;rb&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    data = f.read()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;This my gift:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(base64.b64encode(data).decode(), <span class="string">&quot;\n&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(target)</span><br><span class="line"></span><br><span class="line">ans = <span class="built_in">input</span>(<span class="string">&quot;What&#x27;s your answer:&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> ans == <span class="built_in">str</span>(target):</span><br><span class="line">    <span class="built_in">print</span>(flag)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;No no no!&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+        <h1 id="nssctf-2nd-wp"><a href="#NSSCTF-2nd-WP" class="headerlink" title="NSSCTF 2nd WP"></a>NSSCTF 2nd WP</h1><h2 id="misc"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h2><h3 id="gift_in_qrcode"><a href="#gift-in-qrcode" class="headerlink" title="gift_in_qrcode"></a>gift_in_qrcode</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> qrcode</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> randrange, getrandbits, seed</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line">flag = os.getenv(<span class="string">&quot;FLAG&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> flag == <span class="literal">None</span>:</span><br><span class="line">    flag = <span class="string">&quot;flag&#123;test&#125;&quot;</span></span><br><span class="line"></span><br><span class="line">secret_seed = randrange(<span class="number">1</span>, <span class="number">1000</span>)</span><br><span class="line">seed(secret_seed)</span><br><span class="line">reveal = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">20</span>):</span><br><span class="line">    reveal.append(<span class="built_in">str</span>(getrandbits(<span class="number">8</span>)))</span><br><span class="line">target = getrandbits(<span class="number">8</span>)</span><br><span class="line">reveal = <span class="string">&quot;,&quot;</span>.join(reveal)</span><br><span class="line"></span><br><span class="line">img_qrcode = qrcode.make(reveal)</span><br><span class="line">img_qrcode = img_qrcode.crop((<span class="number">35</span>, <span class="number">35</span>, img_qrcode.size[<span class="number">0</span>] - <span class="number">35</span>, img_qrcode.size[<span class="number">1</span>] - <span class="number">35</span>))</span><br><span class="line"></span><br><span class="line">offset, delta, rate = <span class="number">50</span>, <span class="number">3</span>, <span class="number">5</span></span><br><span class="line">img_qrcode = img_qrcode.resize(</span><br><span class="line">    (<span class="built_in">int</span>(img_qrcode.size[<span class="number">0</span>] / rate), <span class="built_in">int</span>(img_qrcode.size[<span class="number">1</span>] / rate)), Image.LANCZOS</span><br><span class="line">)</span><br><span class="line">img_out = Image.new(<span class="string">&quot;RGB&quot;</span>, img_qrcode.size)</span><br><span class="line"><span class="keyword">for</span> y <span class="keyword">in</span> <span class="built_in">range</span>(img_qrcode.size[<span class="number">1</span>]):</span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(img_qrcode.size[<span class="number">0</span>]):</span><br><span class="line">        pixel_qrcode = img_qrcode.getpixel((x, y))</span><br><span class="line">        <span class="keyword">if</span> pixel_qrcode == <span class="number">255</span>:</span><br><span class="line">            img_out.putpixel(</span><br><span class="line">                (x, y),</span><br><span class="line">                (</span><br><span class="line">                    randrange(offset, offset + delta),</span><br><span class="line">                    randrange(offset, offset + delta),</span><br><span class="line">                    randrange(offset, offset + delta),</span><br><span class="line">                ),</span><br><span class="line">            )</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            img_out.putpixel(</span><br><span class="line">                (x, y),</span><br><span class="line">                (</span><br><span class="line">                    randrange(offset - delta, offset),</span><br><span class="line">                    randrange(offset - delta, offset),</span><br><span class="line">                    randrange(offset - delta, offset),</span><br><span class="line">                ),</span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">img_out.save(<span class="string">&quot;qrcode.png&quot;</span>)</span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;qrcode.png&quot;</span>, <span class="string">&quot;rb&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    data = f.read()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;This my gift:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(base64.b64encode(data).decode(), <span class="string">&quot;\n&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(target)</span><br><span class="line"></span><br><span class="line">ans = <span class="built_in">input</span>(<span class="string">&quot;What&#x27;s your answer:&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> ans == <span class="built_in">str</span>(target):</span><br><span class="line">    <span class="built_in">print</span>(flag)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;No no no!&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <span id="more"></span>
 
 <p>题目所给附件内容如上</p>
 <p>分析过后发现直接输入打印出的target即可获得flag</p>
-<h3><span id="magic-docker">Magic Docker</span></h3><p>题目提示执行命令，docker run randark&#x2F;nssctf-round15-magic-docker</p>
+<h3 id="magic-docker"><a href="#Magic-Docker" class="headerlink" title="Magic Docker"></a>Magic Docker</h3><p>题目提示执行命令，docker run randark&#x2F;nssctf-round15-magic-docker</p>
 <p>执行过后发现要求输入secrect</p>
 <p>查看docker文件</p>
 <p>发现app文件下的miain.py文件为</p>
@@ -387,7 +405,7 @@
 <p>所以我们自定义docker启动命令</p>
 <p>直接执行cat &#x2F;flag</p>
 <p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202308300038709.png" alt="image-20230829233059165"></p>
-<h3><span id="gift_in_qrcoderevenge">gift_in_qrcode(revenge)</span></h3><p>链接一下得到一堆Base64编码</p>
+<h3 id="gift_in_qrcoderevenge"><a href="#gift-in-qrcode-revenge" class="headerlink" title="gift_in_qrcode(revenge)"></a>gift_in_qrcode(revenge)</h3><p>链接一下得到一堆Base64编码</p>
 <p>先写个脚本解码Base64保存为png</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line"><span class="comment"># Paste the Base64 encoded string here</span></span><br><span class="line">base64_string = <span class="string">&quot;your_base64_string_here&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Decode the Base64 string</span></span><br><span class="line">decoded_data = base64.b64decode(base64_string)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Save the decoded data as a PNG file</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;image.png&quot;</span>, <span class="string">&quot;wb&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    f.write(decoded_data)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -406,14 +424,14 @@
 
 
 <p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202308300038607.png" alt="image-20230830001858060"></p>
-<h2><span id="crypto">Crypto</span></h2><h3><span id="ezrsa">EzRSA</span></h3><p>发现e - 3 ，低加密指数爆破</p>
+<h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="ezrsa"><a href="#EzRSA" class="headerlink" title="EzRSA"></a>EzRSA</h3><p>发现e - 3 ，低加密指数爆破</p>
 <p>脚本一把梭</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line"></span><br><span class="line">e = <span class="number">3</span></span><br><span class="line"><span class="comment"># 读入 n, 密文</span></span><br><span class="line">n = <span class="number">115383855234466224643769657979808398804254899116842846340552518876890834212233960206021018541117724144757264778086129841154749234706140951832603640953383528482125663673926452745186670807057426128028379664506531814550204605131476026038420737951652389070818761739123318769460392218629003518050621137961009397857</span></span><br><span class="line"></span><br><span class="line">c = <span class="number">5329266956476837379347536739209778690886367516092584944314921220156032648621405214333809779485753073093853063734538746101929825083615077</span></span><br><span class="line"></span><br><span class="line">i = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">    res = gmpy2.iroot(c+i*n,<span class="number">3</span>)</span><br><span class="line">    <span class="keyword">if</span>(res[<span class="number">1</span>] == <span class="literal">True</span>):</span><br><span class="line">        m=res[<span class="number">0</span>]</span><br><span class="line">        <span class="built_in">print</span>(binascii.unhexlify(<span class="built_in">hex</span>(m)[<span class="number">2</span>:].strip(<span class="string">&quot;L&quot;</span>)))</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;i=&quot;</span>+<span class="built_in">str</span>(i))</span><br><span class="line">    i = i+<span class="number">1</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p> NSSCTF{Rea1_Si9n3n}</p>
 </blockquote>
-<h3><span id="funnyencrypt">FunnyEncrypt</span></h3><p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202308300039451.png" alt="image-20230830002659009"></p>
+<h3 id="funnyencrypt"><a href="#FunnyEncrypt" class="headerlink" title="FunnyEncrypt"></a>FunnyEncrypt</h3><p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202308300039451.png" alt="image-20230830002659009"></p>
 <p>本来想看看能不能词频分析的，结果发现完全对不到</p>
 <p>只好根据已知的nssctf和前面的一堆话里面寻找符合预感的字符与字母对应关系  ， 慢慢对应着可以找到的</p>
 
@@ -539,6 +557,7 @@
 
 
 
+    <div class="comments" id="waline"></div>
 </div>
   </main>
 
@@ -652,8 +671,9 @@
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
 <script src="/js/third-party/search/local-search.js"></script>
@@ -666,17 +686,29 @@
   <script src="/js/third-party/pace.js"></script>
 
   
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
 
 
-
-</body>
-</html>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"waline-server-pearl.vercel.app","cssUrl":"https://unpkg.com/@waline/client@v2/dist/waline.css","commentCount":true,"pageview":false,"placeholder":"请文明评论呀","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"visitor":false,"comment_count":true,"requiredFields":[],"libUrl":"//unpkg.com/@waline/client@v2/dist/waline.js","el":"#waline","comment":true,"path":"/posts/4b18615c/"}</script>
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@v2/dist/waline.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
 
 //Aplayer播放器
 <link rel="stylesheet" href="/dist/APlayer.css">
 <div id="aplayer"></div>
 <script type="text/javascript" src="/dist/APlayer.min.js"></script>
 <script type="text/javascript" src="/dist/music.js"></script>
+
+</body>
+</html>
+

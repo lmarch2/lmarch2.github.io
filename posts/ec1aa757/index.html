@@ -22,7 +22,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/green/pace-theme-minimal.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"lmarch2.github.com","root":"/","images":"/images","scheme":"Gemini","darkmode":"ture","version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lmarch2.github.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","width":350,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="DASCTF X CBCTF 2023 WP PWNEASYBOX这题一开始通过CAT函数读出canary.txt，然后找溢出点找了两小时😅 最后发现直接就是个web题，在PING函数里面执行system函数命令">
 <meta property="og:type" content="article">
@@ -58,10 +58,11 @@
 
 
 
-
+<link rel="dns-prefetch" href="waline-server-pearl.vercel.app">
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
+<link rel="alternate" href="/atom.xml" title="lmarch2'blog" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
@@ -149,7 +150,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">DASCTF X CBCTF 2023 WP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">PWN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">EASYBOX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">GuestBook</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">Crypto</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">RSA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">CB backpack</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#dasctf-x-cbctf-2023-wp"><span class="nav-text">DASCTF X CBCTF 2023 WP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pwn"><span class="nav-text">PWN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#easybox"><span class="nav-text">EASYBOX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#guestbook"><span class="nav-text">GuestBook</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#crypto"><span class="nav-text">Crypto</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#rsa"><span class="nav-text">RSA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cb-backpack"><span class="nav-text">CB backpack</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -236,6 +237,7 @@
     </div>
         </div>
       </div>
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=450 src="//music.163.com/outchain/player?type=0&id=9232910433&auto=1&height=430"></iframe>
     </div>
 
     
@@ -271,6 +273,8 @@
       </ul>
     </div>
 
+        <div class="pjax">
+        </div>
   </aside>
 
 
@@ -337,6 +341,20 @@
       <span class="post-meta-item-text">阅读次数：</span>
       <span id="busuanzi_value_page_pv"></span>
     </span>
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/posts/ec1aa757/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/posts/ec1aa757/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
     <span class="post-meta-break"></span>
     <span class="post-meta-item" title="本文字数">
       <span class="post-meta-item-icon">
@@ -361,8 +379,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1><span id="dasctf-x-cbctf-2023-wp">DASCTF X CBCTF 2023 WP</span></h1><p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202310221106000.png" alt="image-20231022110621972"></p>
-<h1><span id="pwn">PWN</span></h1><h2><span id="easybox">EASYBOX</span></h2><p>这题一开始通过CAT函数读出canary.txt，然后找溢出点找了两小时😅</p>
+        <h1 id="dasctf-x-cbctf-2023-wp"><a href="#DASCTF-X-CBCTF-2023-WP" class="headerlink" title="DASCTF X CBCTF 2023 WP"></a>DASCTF X CBCTF 2023 WP</h1><p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202310221106000.png" alt="image-20231022110621972"></p>
+<h1 id="pwn"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h1><h2 id="easybox"><a href="#EASYBOX" class="headerlink" title="EASYBOX"></a>EASYBOX</h2><p>这题一开始通过CAT函数读出canary.txt，然后找溢出点找了两小时😅</p>
 <p>最后发现直接就是个web题，在PING函数里面执行system函数命令</p>
 <span id="more"></span>
 
@@ -370,7 +388,7 @@
 <p>;tac fla’’g;</p>
 </blockquote>
 <p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202310272057437.png" alt="image-20231021182601723"></p>
-<h2><span id="guestbook">GuestBook</span></h2><p>输入name的时候有溢出，可以覆盖一个字节泄露canary，</p>
+<h2 id="guestbook"><a href="#GuestBook" class="headerlink" title="GuestBook"></a>GuestBook</h2><p>输入name的时候有溢出，可以覆盖一个字节泄露canary，</p>
 <p>接着在strcpy中有溢出，直接传payload，被strcpy遇b’\x00’截断这个问题卡住了（遇零截断意味着无法传输字符\x00，然而canary以\x00结尾）</p>
 <p>调试解决发现在  __isoc99_scanf(“%s”, message);输入字符串的时候会在后面补零</p>
 <p>于是可以通过多次输入先输入覆盖返回地址和canary除去\x00的七个字符，再给canary补上\x00</p>
@@ -379,13 +397,13 @@
 
 
 <p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202310211839964.png" alt="image-20231021183919918"></p>
-<h1><span id="crypto">Crypto</span></h1><h2><span id="rsa">RSA</span></h2><p>想恢复p,关键在于二次剩余</p>
+<h1 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h1><h2 id="rsa"><a href="#RSA" class="headerlink" title="RSA"></a>RSA</h2><p>想恢复p,关键在于二次剩余</p>
 <p>加密是一个比特一个比特地加密,恢复时判断是否为二次剩余即可恢复</p>
 <p>对于q就更简单,直接求多项式的gcd即可</p>
 <p>代码如下</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> gmpy2 <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">c = <span class="number">124349762993424531697403299350944207725577290992189948388824124986066269514204313888980321088629462472088631052329128042837153718129149149661961926557818023704330462282009415874674794190206220980118413541269327644472633791532767765585035518183177197863522573410860341245613331398610013697803459403446614221369</span></span><br><span class="line"></span><br><span class="line">(e1, noise1, c1) = (<span class="number">1743</span>, <span class="number">44560588075773853612820227436439937514195680734214431948441190347878274184937952381785302837541202705212687700521129385632776241537669208088777729355349833215443048466316517110778502508209433792603420158786772339233397583637570006255153020675167597396958251208681121668808253767520416175569161674463861719776</span>, <span class="number">65643009354198075182587766550521107063140340983433852821580802983736094225036497335607400197479623208915379722646955329855681601551282788854644359967909570360251550766970054185510197999091645907461580987639650262519866292285164258262387411847857812391136042309550813795587776534035784065962779853621152905983</span>)</span><br><span class="line">(e2, noise2, c2) = (<span class="number">1325</span>, <span class="number">35282006599813744140721262875292395887558561517759721467291789696459426702600397172655624765281531167221787036009507833425145071265739486735993631460189629709591456017092661028839951392247601628468621576100035700437892164435424035004463142959219067199451575338270613300215815894328788753564798153516122567683</span>, <span class="number">50327632090778183759544755226710110702046850880299488259739672542025916422119065179822210884622225945376465802069464782311211031263046593145733701591371950349735709553105217501410716570601397725812709771348772095131473415552527749452347866778401205442409443726952960806789526845194216490544108773715759733714</span>)</span><br><span class="line">n2 = <span class="number">103670293685965841863872863719573676572683187403862749665555450164387906552249974071743238931253290278574192713467491802940810851806104430306195931179902098180199167945649526235613636163362672777298968943319216325949503045377100235181706964846408396946496139224344270391027205106691880999410424150216806861393</span></span><br><span class="line">n1 = <span class="number">65634094430927080732256164808833233563732628654160389042977689628512527168256899310662239009610512772020503283842588142453533499954947692968978190310627721338357432052800695091789711809256924541784954080619073213358228083200846540676931341013554634493581962527475555869292091755676130810562421465063412235309</span></span><br><span class="line">str0=<span class="string">&#x27;&#x27;</span><span class="comment">#wp装不下这么长的字符</span></span><br><span class="line"><span class="comment">#legendre_symbol(i,p)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">GCD</span>(<span class="params">a, b</span>):</span><br><span class="line">    <span class="keyword">if</span>(b == <span class="number">0</span>):</span><br><span class="line">        <span class="keyword">return</span> a.monic()        </span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> GCD(b, a % b)</span><br><span class="line"></span><br><span class="line">F.&lt;x&gt;=PolynomialRing(Zmod(n2))</span><br><span class="line">f1=(x+noise1)^e1-c1</span><br><span class="line">f2=(x+noise2)^e2-c2</span><br><span class="line"></span><br><span class="line"><span class="comment">#print(GCD(f1,f2))</span></span><br><span class="line"></span><br><span class="line">q=n2-<span class="number">103670293685965841863872863719573676572683187403862749665555450164387906552249974071743238931253290278574192713467491802940810851806104430306195931179902084990861262304328268863425199809518254496553684067856859306280794877830073274539837451563189724268783548897996668966918676147376205691514341926655798880936</span></span><br><span class="line"><span class="built_in">print</span>(q)</span><br><span class="line"><span class="built_in">print</span>(q.nbits())</span><br><span class="line"></span><br><span class="line">strlist=str0.split(<span class="string">&#x27;n&#x27;</span>)</span><br><span class="line"><span class="comment">#print(strlist)</span></span><br><span class="line">intlist=[<span class="built_in">int</span>(i) <span class="keyword">for</span> i <span class="keyword">in</span> strlist[:-<span class="number">1</span>]]</span><br><span class="line"><span class="comment">#print(intlist)</span></span><br><span class="line">p=<span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> intlist:</span><br><span class="line">    <span class="comment">#print(&#x27;test&#x27;+p)</span></span><br><span class="line">    <span class="keyword">if</span> jacobi(i,n1)==<span class="number">1</span>:</span><br><span class="line">        p=<span class="string">&#x27;1&#x27;</span>+p</span><br><span class="line">        <span class="comment">#print(p)</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        p=<span class="string">&#x27;0&#x27;</span>+p</span><br><span class="line"><span class="built_in">print</span>(p)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">int</span>(p,base=<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line">p=<span class="built_in">int</span>(p,base=<span class="number">2</span>)      </span><br><span class="line"><span class="built_in">print</span>(is_prime(p))</span><br><span class="line"><span class="built_in">print</span>(ZZ(p).nbits())</span><br><span class="line">n=p*q</span><br><span class="line">phi=(p-<span class="number">1</span>)*(q-<span class="number">1</span>)</span><br><span class="line">d=inverse_mod(<span class="number">65537</span>,phi)</span><br><span class="line"><span class="built_in">print</span>(long_to_bytes(<span class="built_in">int</span>(<span class="built_in">pow</span>(c,d,n))))</span><br></pre></td></tr></table></figure>
 
-<h2><span id="cb-backpack">CB backpack</span></h2><p>由于连续六个01串中有3个1，在原始背包格的基础上每连续六列新增一列，限制这个条件，最终LLL即可还原</p>
+<h2 id="cb-backpack"><a href="#CB-backpack" class="headerlink" title="CB backpack"></a>CB backpack</h2><p>由于连续六个01串中有3个1，在原始背包格的基础上每连续六列新增一列，限制这个条件，最终LLL即可还原</p>
 <p><del>脚本丢了XD</del></p>
 
     </div>
@@ -510,6 +528,7 @@
 
 
 
+    <div class="comments" id="waline"></div>
 </div>
   </main>
 
@@ -623,8 +642,9 @@
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
 <script src="/js/third-party/search/local-search.js"></script>
@@ -637,17 +657,29 @@
   <script src="/js/third-party/pace.js"></script>
 
   
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
 
 
-
-</body>
-</html>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"waline-server-pearl.vercel.app","cssUrl":"https://unpkg.com/@waline/client@v2/dist/waline.css","commentCount":true,"pageview":false,"placeholder":"请文明评论呀","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"visitor":false,"comment_count":true,"requiredFields":[],"libUrl":"//unpkg.com/@waline/client@v2/dist/waline.js","el":"#waline","comment":true,"path":"/posts/ec1aa757/"}</script>
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@v2/dist/waline.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
 
 //Aplayer播放器
 <link rel="stylesheet" href="/dist/APlayer.css">
 <div id="aplayer"></div>
 <script type="text/javascript" src="/dist/APlayer.min.js"></script>
 <script type="text/javascript" src="/dist/music.js"></script>
+
+</body>
+</html>
+
