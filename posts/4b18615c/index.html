@@ -622,13 +622,13 @@ i <span class="token operator">=</span> <span class="token number">0</span>
 <h3 id="FunnyEncrypt"><a href="#FunnyEncrypt" class="headerlink" title="FunnyEncrypt"></a>FunnyEncrypt</h3><p><img src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202308300039451.png" alt="image-20230830002659009"></p>
 <p>本来想看看能不能词频分析的，结果发现完全对不到</p>
 <p>只好根据已知的nssctf和前面的一堆话里面寻找符合预感的字符与字母对应关系  ， 慢慢对应着可以找到的</p>
-<h2 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h2><h3 id="happy"><a href="#happy" class="headerlink" title="happy"></a>happy</h3><p><img src="https://gitee.com/lmarch2/images/raw/master/Typora/202402042319627.png"></p>
+<h2 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h2><h3 id="happy"><a href="#happy" class="headerlink" title="happy"></a>happy</h3><p><img src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202402052153272.png"></p>
 <p>主函数首先绕过proof，接着fork一个子进程，在父进程中进行一个有沙箱限制的shellcode执行</p>
 <blockquote>
 <p>这个地方在调试的时候可能容易卡住，需要用set follow-fork-mode parent停留在父进程继续调试</p>
 </blockquote>
 <p>首先我们来看proof函数</p>
-<p><img src="https://gitee.com/lmarch2/images/raw/master/Typora/202402042339598.png" alt="image-20240204233943567"></p>
+<p><img src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202402052153300.png" alt="image-20240204233943567"></p>
 <p>要想让v4=v3，那么只能通过printf看看可不可以把一些信息泄露出来，然后再通过计算得到puts的地址</p>
 <p>通过调试能够发现，printf可以把栈上的数据打印出来，这里选择泄露出_IO_2_1_stderr_的libc地址</p>
 <p>计算得到puts的真实地址，绕过proof检测</p>
@@ -732,7 +732,7 @@ sl<span class="token punctuation">(</span>shellcode<span class="token punctuatio
 
 ia<span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre>
-<p><img src="https://gitee.com/lmarch2/images/raw/master/Typora/202402050006046.png" alt="image-20240205000529665"></p>
+<p><img src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202402052153417.png" alt="image-20240205000529665"></p>
 
                 
             </div>
