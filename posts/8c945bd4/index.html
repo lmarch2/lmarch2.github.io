@@ -395,14 +395,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    140
+                    684
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 
@@ -426,6 +426,64 @@
 <p>虽然不是什么好东西，也只有几行简单的代码，但本着开源分享的原则，今天研究了一下传到pypi上了</p>
 <p>23年暑假写的时候正在狂刷fate，然后直接粉上吾王，于是给库其名为Excalibur。至于为什么有个2 ，传的时候发现重名了……</p>
 <p>此博客记录一下这个库的上传和维护过程。</p>
+<h1 id="中文文档"><a href="#中文文档" class="headerlink" title="中文文档"></a>中文文档</h1><h2 id="Excalibur2"><a href="#Excalibur2" class="headerlink" title="Excalibur2"></a>Excalibur2</h2><h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p>一个打pwn的ctfer的简单集成库</p>
+<p>本Python库收录了常见的PWN题函数，旨在简化pwn题中脚本编写的过程呢个，帮助广大pwner节约时间，提高解题效率</p>
+<p>十分欢迎各位师傅使用Excalibur，同时欢迎对鄙人的代码提出意见和指导</p>
+<h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><p>安装</p>
+<blockquote>
+<p>pip3 install Excalibur2</p>
+</blockquote>
+<p>检查是否有更新版本</p>
+<blockquote>
+<p>python3 -m Excalibur2.__update__</p>
+</blockquote>
+<p>更新</p>
+<blockquote>
+<p>pip3 install Excalibur2 –upgrade</p>
+</blockquote>
+<h2 id="Help"><a href="#Help" class="headerlink" title="Help"></a>Help</h2><p>Python内置帮助</p>
+<blockquote>
+<p>python3 -m pydoc Excalibur2</p>
+</blockquote>
+<blockquote>
+<p>查看帮助文档</p>
+<p><code>import Excalibur2</code></p>
+<p><code>help(Excalibur2)</code></p>
+<p>查看函数帮助</p>
+<p><code>from Excalibur2 import *</code></p>
+<p><code>help(function)</code></p>
+</blockquote>
+<p>more details Please visit <a href="https://lmarch2.top/posts/8c945bd4/">https://lmarch2.top/posts/8c945bd4/</a> </p>
+<h2 id="Release"><a href="#Release" class="headerlink" title="Release"></a>Release</h2><h3 id="2-2-Feb-8-2024"><a href="#2-2-Feb-8-2024" class="headerlink" title="2.2,  Feb 8, 2024"></a>2.2,  Feb 8, 2024</h3><p>修复了一些由包名称引起的问题</p>
+<h3 id="2-1-Feb-8-2024"><a href="#2-1-Feb-8-2024" class="headerlink" title="2.1,  Feb 8, 2024"></a>2.1,  Feb 8, 2024</h3><p>支持自定义调试终端，添加检查更新功能</p>
+<h3 id="2-0-Feb-8-2024"><a href="#2-0-Feb-8-2024" class="headerlink" title="2.0,  Feb 8, 2024"></a>2.0,  Feb 8, 2024</h3><p>本包诞生之日</p>
+<h1 id="将Python库打包至pypi时遇到的坑"><a href="#将Python库打包至pypi时遇到的坑" class="headerlink" title="将Python库打包至pypi时遇到的坑"></a>将Python库打包至pypi时遇到的坑</h1><h2 id="2FA验证"><a href="#2FA验证" class="headerlink" title="2FA验证"></a>2FA验证</h2><p>首先你需要在pypi上创建账户（testpypi上也是，两个网站服务器相互独立），接着使用TOTP APP身份验证，我选择的是FreeOTP，并且选择在f-droid上下载（安卓手机，没有谷歌商店，懒得编译源码）</p>
+<p><img src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202402090052010.png" alt="image-20240209005231896"></p>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><p>一种使用pyproject.toml，一种使用setup.py，这里跟着官方教程选择pyproject.toml</p>
+<p>步骤官方文档里写的很清楚，这里不再赘述，简单来说就是创建如下目录和文件</p>
+<blockquote>
+<p>packaging_tutorial/<br>├── LICENSE<br>├── pyproject.toml<br>├── README.md<br>├── src/<br>│   └── example_package_YOUR_USERNAME_HERE/<br>│       ├── __init__.py<br>│       └── example.py<br>└── tests/</p>
+</blockquote>
+<p>强烈建议照着<a target="_blank" rel="noopener" href="https://packaging.python.org/en/latest/tutorials/packaging-projects/#packaging-python-projects">官方教程</a>先在testpypi测试平台上检测上传是否无误，无误后再转战pypi</p>
+<h2 id="API令牌验证上传"><a href="#API令牌验证上传" class="headerlink" title="API令牌验证上传"></a>API令牌验证上传</h2><p>创建API token（保存好）</p>
+<p>执行命令<code>python3 -m build</code> <em><code>python3 -m twine upload --repository testpypi dist/*</code></em></p>
+<p>提示输入用户名——__token__</p>
+<p>输入密码——刚刚的API秘钥</p>
+<h2 id="版本管理"><a href="#版本管理" class="headerlink" title="版本管理"></a>版本管理</h2><p>更新版本之后，可以build之后再dist文件夹下创建以版本号为名称的文件夹，把压缩包和whl放到对应文件夹下，上传的时候记得修改路径和pyproject.toml里的版本号</p>
+<h1 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h1><p>顺便记录一下颜色转义码</p>
+<blockquote>
+<p>定义 ANSI 转义码</p>
+<ul>
+<li>RED = ‘\033[91m’</li>
+<li>GREEN = ‘\033[92m’</li>
+<li>YELLOW = ‘\033[93m</li>
+<li>BLUE = ‘\033[94m</li>
+<li>MAGENTA = ‘\033[95m</li>
+<li>CYAN = ‘\033[96m’</li>
+<li>RESET = ‘\033[0m’</li>
+</ul>
+<p>colored_text = Color.RED + text + Color.RESET</p>
+</blockquote>
 
                 
             </div>
@@ -1082,7 +1140,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">44.6k</span>
+                        class="white-color">45.1k</span>
             
             
             
