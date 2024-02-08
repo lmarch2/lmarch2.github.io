@@ -6,14 +6,10 @@
 <link rel="stylesheet" href="/css/bilicard.css">
 <!-- hexo injector head_begin end -->
     <meta charset="utf-8">
-    <meta name="keywords" content="week1 T2, ctf,pwn">
-    <meta name="description" content="T2 rip
-2023-01-04WPBUUCTF pwn第二题考点：简单的栈溢出
-
-
-
-0x01 checksec查看保护机制啥都没开，非常nice
-0x02 IDAfile后是64位，扔到IDA里打开string window,发现有/">
+    <meta name="keywords" content="Excalibur维护日记, ctf,pwn">
+    <meta name="description" content="序之前看一些大神都有自己写的pwn题写exp用的python库，想着自己也写一个自用，方便exp的编写
+虽然不是什么好东西，也只有几行简单的代码，但本着开源分享的原则，今天研究了一下传到pypi上了
+23年暑假写的时候正在狂刷fate，然后">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -36,7 +32,7 @@
 </script>
 
 
-    <title>week1 T2 | lmarch2&#39;blog</title>
+    <title>Excalibur维护日记 | lmarch2&#39;blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -332,12 +328,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">week1 T2</h1>
+                    <h1 class="description center-align post-title">Excalibur维护日记</h1>
                 </div>
             </div>
         </div>
@@ -361,12 +357,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/ctf/">
-                                <span class="chip bg-color">ctf</span>
+                            <a href="/tags/pwn/">
+                                <span class="chip bg-color">pwn</span>
                             </a>
                         
-                            <a href="/tags/BUUCTF/">
-                                <span class="chip bg-color">BUUCTF</span>
+                            <a href="/tags/package/">
+                                <span class="chip bg-color">package</span>
                             </a>
                         
                     </div>
@@ -377,8 +373,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E5%85%A5%E9%97%A8%E9%9B%86%E8%AE%ADwp/" class="post-category">
-                                入门集训wp
+                            <a href="/categories/tools-and-tricks/" class="post-category">
+                                tools and tricks
                             </a>
                         
                     </div>
@@ -390,7 +386,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-01-13
+                    2024-02-08
                 </div>
                 
 
@@ -399,7 +395,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    304
+                    140
                 </div>
                 
 
@@ -426,15 +422,10 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="T2-rip"><a href="#T2-rip" class="headerlink" title="T2 rip"></a>T2 rip</h2><blockquote>
-<p>2023-01-04WP<br>BUUCTF pwn第二题<br>考点：简单的栈溢出</p>
-</blockquote>
-<span id="more"></span>
-
-<h3 id="0x01-checksec"><a href="#0x01-checksec" class="headerlink" title="0x01 checksec"></a>0x01 checksec</h3><p>查看保护机制<br><img src="https://pic2.zhimg.com/80/v2-58b53c6902894211862d4148de61eaa1_1440w.webp"><br>啥都没开，非常nice</p>
-<h3 id="0x02-IDA"><a href="#0x02-IDA" class="headerlink" title="0x02 IDA"></a>0x02 IDA</h3><p>file后是64位，扔到IDA里<br><img src="https://pic4.zhimg.com/80/v2-7006f2599ec061a9ccd9e41370a2c34b_1440w.webp"><br>打开string window,发现有/bin/sh，双击-》点击command,ctrl+X跳到fun函数里<br><del>Function window直接找也行….</del><br><img src="https://pic2.zhimg.com/80/v2-42111c4151f4950164f04d213c23e9bd_1440w.webp"><br>直接f5大法<br>main函数里好像没啥用<br>看到char了一个s数组还有get函数，栈溢出无疑了<br><img src="https://pic3.zhimg.com/80/v2-21033c9a0be0c615a751be12c50d7a6a_1440w.webp"><br>fun函数里有system函数，想到把fun函数的地址压进栈的return address里使fun函数得以执行<br>于是找出fun函数中调用system的地址0x40118A<br><img src="https://pic2.zhimg.com/80/v2-23ce5525745d5b11353c4a0c792f0edd_1440w.webp"><br>有了地址，现在需要知道的是s的长度，在IDA中可以找到<br><img src="https://pic1.zhimg.com/80/v2-a94f13524837503afef423f2bcea458c_1440w.webp"><br>距离rbp的距离是0Fh，也就是s的内存空间为15字节,当然了，除此之外，还需要8字节的数据将rbp填满，才能让数据溢过Local Variables 和 Caller’s rsp，溢出进入Return Address</p>
-<h3 id="0x03-exp"><a href="#0x03-exp" class="headerlink" title="0x03 exp"></a>0x03 exp</h3><p>vim pwn1.py<br><code>#pwn1.py from pwn import * p = remote("node4 .buuoj.cn",25026) payload = b'a' * (0xf+8) + p64(0x40118A) p.sendline(payload) p.interactive() </code><br><del>一开始没加b’’然后报错TypeError: can only concatenate str (not “bytes”) to str……</del><br>执行脚本得到flag<br><img src="https://pic2.zhimg.com/80/v2-8cf32a5f0007c9057c530f3e4be55c6d_1440w.webp"></p>
-<h3 id="0x04-补充一些知识"><a href="#0x04-补充一些知识" class="headerlink" title="0x04 补充一些知识"></a>0x04 补充一些知识</h3><p>IDA栈帧视窗详细说明：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u012206617/article/details/87717310">这篇文章</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/ComputerInBook/article/details/126840323">这篇文章</a>举了一个例子详细说明</p>
+                <h1 id="序"><a href="#序" class="headerlink" title="序"></a>序</h1><p>之前看一些大神都有自己写的pwn题写exp用的python库，想着自己也写一个自用，方便exp的编写</p>
+<p>虽然不是什么好东西，也只有几行简单的代码，但本着开源分享的原则，今天研究了一下传到pypi上了</p>
+<p>23年暑假写的时候正在狂刷fate，然后直接粉上吾王，于是给库其名为Excalibur。至于为什么有个2 ，传的时候发现重名了……</p>
+<p>此博客记录一下这个库的上传和维护过程。</p>
 
                 
             </div>
@@ -461,7 +452,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://lmarch2.top/posts/ca38ece3/">http://lmarch2.top/posts/ca38ece3/</a>
+                    <a href="http://lmarch2.top/posts/8c945bd4/">http://lmarch2.top/posts/8c945bd4/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -499,12 +490,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/ctf/">
-                                    <span class="chip bg-color">ctf</span>
+                                <a href="/tags/pwn/">
+                                    <span class="chip bg-color">pwn</span>
                                 </a>
                             
-                                <a href="/tags/BUUCTF/">
-                                    <span class="chip bg-color">BUUCTF</span>
+                                <a href="/tags/package/">
+                                    <span class="chip bg-color">package</span>
                                 </a>
                             
                         </div>
@@ -761,52 +752,52 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/posts/bd3fdc75/">
+                <a href="/posts/8c945bd4/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="week1 T3">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="Excalibur维护日记">
                         
-                        <span class="card-title">week1 T3</span>
+                        <span class="card-title">Excalibur维护日记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            T3 warmup_csaw_2016
-2023-01-06WPBUUCTF pwn第三题考点：栈溢出，与上题类似
-
+                            
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-01-13
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-02-08
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%85%A5%E9%97%A8%E9%9B%86%E8%AE%ADwp/" class="post-category">
-                                    入门集训wp
+                            <a href="/categories/tools-and-tricks/" class="post-category">
+                                    tools and tricks
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/ctf/">
-                        <span class="chip bg-color">ctf</span>
+                    <a href="/tags/pwn/">
+                        <span class="chip bg-color">pwn</span>
                     </a>
                     
-                    <a href="/tags/BUUCTF/">
-                        <span class="chip bg-color">BUUCTF</span>
+                    <a href="/tags/package/">
+                        <span class="chip bg-color">package</span>
                     </a>
                     
                 </div>
@@ -820,33 +811,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/posts/5331bd59/">
+                <a href="/posts/7d54edc7/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="week1 T1">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="2023古剑山pwn题wp">
                         
-                        <span class="card-title">week1 T1</span>
+                        <span class="card-title">2023古剑山pwn题wp</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            T1 test_your_nc
-2023-01-03WPBUUCTF pwn第一题
-
+                            
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-01-13
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-02-06
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%85%A5%E9%97%A8%E9%9B%86%E8%AE%ADwp/" class="post-category">
-                                    入门集训wp
+                            <a href="/categories/wp/" class="post-category">
+                                    wp
                                 </a>
                             
                             
@@ -860,8 +849,8 @@
                         <span class="chip bg-color">ctf</span>
                     </a>
                     
-                    <a href="/tags/BUUCTF/">
-                        <span class="chip bg-color">BUUCTF</span>
+                    <a href="/tags/%E6%9D%AF%E5%AD%90/">
+                        <span class="chip bg-color">杯子</span>
                     </a>
                     
                 </div>

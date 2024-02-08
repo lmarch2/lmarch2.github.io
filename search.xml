@@ -1262,7 +1262,7 @@ ia<span class="token punctuation">(</span><span class="token punctuation">)</spa
       </tags>
   </entry>
   <entry>
-    <title>HASHTEAM2024香山杯WP</title>
+    <title>HASHTEAM2023香山杯WP</title>
     <url>/posts/2611e12a/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>本wp是队友们共同努力的结果，感谢.N1nEmAn、HeyGap、1cfh、shui、hash_hash等师傅。</p>
 <h1 id="HASHTEAM香山杯WP"><a href="#HASHTEAM香山杯WP" class="headerlink" title="HASHTEAM香山杯WP"></a>HASHTEAM香山杯WP</h1><h2 id="misc"><a href="#misc" class="headerlink" title="misc"></a>misc</h2><h3 id="签到题"><a href="#签到题" class="headerlink" title="签到题"></a>签到题</h3><p>将题目所给编码丢入赛博大厨，得到类似凯撒密码的字符串。</p>
@@ -1901,6 +1901,22 @@ plaintext <span class="token operator">=</span> aes<span class="token punctuatio
       <tags>
         <tag>ctf</tag>
         <tag>NepCTF</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Excalibur维护日记</title>
+    <url>/posts/8c945bd4/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="序"><a href="#序" class="headerlink" title="序"></a>序</h1><p>之前看一些大神都有自己写的pwn题写exp用的python库，想着自己也写一个自用，方便exp的编写</p>
+<p>虽然不是什么好东西，也只有几行简单的代码，但本着开源分享的原则，今天研究了一下传到pypi上了</p>
+<p>23年暑假写的时候正在狂刷fate，然后直接粉上吾王，于是给库其名为Excalibur。至于为什么有个2 ，传的时候发现重名了……</p>
+<p>此博客记录一下这个库的上传和维护过程。</p>
+]]></content>
+      <categories>
+        <category>tools and tricks</category>
+      </categories>
+      <tags>
+        <tag>pwn</tag>
+        <tag>package</tag>
       </tags>
   </entry>
   <entry>
@@ -2598,12 +2614,9 @@ ia<span class="token punctuation">(</span><span class="token punctuation">)</spa
 <p>vim .tmux.conf</p>
 </blockquote>
 <p>在文件中输入</p>
-<pre><code>#输入
-bind-key c new-window -c "#{pane_current_path}"
-bind-key % split-window -h -c "#{pane_current_path}"
-bind-key '"' split-window -c "#{pane_current_path}"
-set -g mouse on
-</code></pre>
+<blockquote>
+<p>#输入<br>bind-key c new-window -c “#{pane_current_path}”<br>bind-key % split-window -h -c “#{pane_current_path}”<br>bind-key ‘“‘ split-window -c “#{pane_current_path}”<br>set -g mouse on</p>
+</blockquote>
 <p>关闭所有tmux窗口并输入</p>
 <blockquote>
 <p>tmux source-file ~/.tmux.conf</p>
