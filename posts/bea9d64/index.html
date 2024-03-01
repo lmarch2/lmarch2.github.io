@@ -521,7 +521,7 @@ seco">
 <p>区分mark：fd指向的是堆块的prev_size地址；malloc返回的是堆块的data_address，不包括chunk_head</p>
 </blockquote>
 <h2 id="七、触发unlink"><a href="#七、触发unlink" class="headerlink" title="七、触发unlink"></a>七、触发unlink</h2><p>来一起回顾一下，在之前的几个步骤中，我们在chunk2中构造了一个fake_chunk，并且布置好了fake_chunk的内部环境，同时伪造好了与chunk2物理地址相邻的chunk3的外部环境。上述所有的准备，都是为了绕过检查，在free chunk3的时候触发unlink</p>
-<h3 id="那么为什么free-chunk3就会触发unlink呢？"><a href="#那么为什么free-chunk3就会触发unlink呢？" class="headerlink" title="那么为什么free chunk3就会触发unlink呢？"></a><strong>那么为什么free chunk3就会触发unlink呢？</strong></h3><ul>
+<h3 id="为什么free-chunk3会触发unlink？"><a href="#为什么free-chunk3会触发unlink？" class="headerlink" title="为什么free chunk3会触发unlink？"></a><strong>为什么free chunk3会触发unlink？</strong></h3><ul>
 <li>fake_chunk和chunk3物理地址相连</li>
 <li>fake_chunk被伪造为空闲状态</li>
 <li>fake_chunk为了绕过检查，与first_chunk和third_chunk构成了一个双向链表</li>
