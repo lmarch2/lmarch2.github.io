@@ -429,9 +429,9 @@ seco">
 <p>second_fd = first_prev_addr<br>second_bk = third_prev_addr<br>first_bk = third_prev_addr<br>third_fd = first_prev_addr</p>
 </blockquote>
 <p>unlink前</p>
-<p><img src="https://img-blog.csdnimg.cn/20200911135522507.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMjAyMjM3,size_16,color_FFFFFF,t_70#pic_center" alt="https://img-blog.csdnimg.cn/20200911135522507.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMjAyMjM3,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202403011745125.png" alt="image"></p>
 <p>unlink后</p>
-<p><img src="https://img-blog.csdnimg.cn/20200911152738722.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMjAyMjM3,size_16,color_FFFFFF,t_70#pic_center" alt="https://img-blog.csdnimg.cn/20200911152738722.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMjAyMjM3,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202403011745030.png" alt="2"></p>
 <h2 id="二、什么时候执行了Unlink"><a href="#二、什么时候执行了Unlink" class="headerlink" title="二、什么时候执行了Unlink?"></a><strong>二、什么时候执行了Unlink?</strong></h2><p>翻看libc源码，在执行free函数时执行了_int_free函数，然后调用了unlink宏</p>
 <pre class=" language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">define</span> unlink(AV, P, BK, FD)</span>
 <span class="token macro property">#<span class="token directive keyword">define</span> prev_inuse(p) &amp;nbsp; &amp;nbsp; &amp;nbsp; ((p)->mchunk_size &amp; PREV_INUSE)</span>
