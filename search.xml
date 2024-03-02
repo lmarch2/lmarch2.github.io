@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>unlink学习笔记</title>
+    <title>how2unlink</title>
     <url>/posts/bea9d64/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="unlink学习笔记"><a href="#unlink学习笔记" class="headerlink" title="unlink学习笔记"></a>unlink学习笔记</h1><h2 id="一、什么是unlink"><a href="#一、什么是unlink" class="headerlink" title="一、什么是unlink"></a><strong>一、什么是unlink</strong></h2><p>首先不妨假设有三个free掉的chunk分别称为first_chunk、second_chunk、third_chunk</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="unlink学习笔记"><a href="#unlink学习笔记" class="headerlink" title="unlink学习笔记"></a>unlink学习笔记</h1><p>打pwn的师傅们都知道，堆攻击中有个大名鼎鼎的手法叫做unlink，我作为一个刚入门的新手，自然也想前往膜拜一下，这段时间跟着holk师傅的博文仔细学习了一番，在此记录总结一下整个Unlink流程（holk师傅写的太好了，大家想深入研究细节的话十分推荐阅读<a href="https://blog.csdn.net/qq_41202237/article/details/108481889">原文</a>）。以下内容偏总结性，希望能帮助到和我一样的新手。</p>
+<h2 id="一、What？"><a href="#一、What？" class="headerlink" title="一、What？"></a><strong>一、What</strong>？</h2><p>首先不妨假设有三个free掉的chunk分别称为first_chunk、second_chunk、third_chunk</p>
 <p>unlink其实是想把second_chunk摘掉，那怎么摘呢？</p>
+<p>学过数据结构的都知道，在链表中删除元素无非就是节点间相互指针的变化，unlink所作的操作也同样如此。大体步骤如下：</p>
 <blockquote>
 <p>second_fd = first_prev_addr<br>second_bk = third_prev_addr<br>first_bk = third_prev_addr<br>third_fd = first_prev_addr</p>
 </blockquote>
-<p>unlink前</p>
+<p>unlink前三个堆块的指针情况</p>
 <p><img src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202403011745125.png"></p>
 <p>unlink后</p>
 <p><img src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202403011745030.png"></p>
-<h2 id="二、什么时候执行了Unlink"><a href="#二、什么时候执行了Unlink" class="headerlink" title="二、什么时候执行了Unlink?"></a><strong>二、什么时候执行了Unlink?</strong></h2><p>翻看libc源码，在执行free函数时执行了_int_free函数，然后调用了unlink宏</p>
+<h2 id="二、When？"><a href="#二、When？" class="headerlink" title="二、When？"></a><strong>二、When？</strong></h2><p>翻看libc源码（这里的版本选的是2.27），发现Unlink原来是在执行free函数时执行了_int_free函数，在_int_free函数中的其中一行调用了unlink宏</p>
 <pre class=" language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">define</span> unlink(AV, P, BK, FD)</span>
 <span class="token macro property">#<span class="token directive keyword">define</span> prev_inuse(p)   ((p)->mchunk_size &amp; PREV_INUSE)</span>
 
@@ -23,14 +25,15 @@
             <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">prev_inuse</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// 检查prev_inuse位是否为1，位0则空闲块，启动合并操作</span>
                 prevsize <span class="token operator">=</span> p<span class="token operator">-></span>prev_size<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 1.记录前一个chunk的大小</span>
                 size <span class="token operator">+</span><span class="token operator">=</span> prevsize<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 2.将自己的大小和前一个要和并的大小相加得到合并后的大小</span>
-                p <span class="token operator">=</span> <span class="token function">chunk_at_offset</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> <span class="token operator">-</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">long</span><span class="token punctuation">)</span>prevsize<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 3. p指针向前移动，移动到前一个被合并的</span>
-                <span class="token function">unlink</span><span class="token punctuation">(</span>av<span class="token punctuation">,</span> p<span class="token punctuation">,</span> bck<span class="token punctuation">,</span> fwd<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 4</span>
+                p <span class="token operator">=</span> <span class="token function">chunk_at_offset</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> <span class="token operator">-</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">long</span><span class="token punctuation">)</span>prevsize<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 3. p指针向前移动，移动到前一个被合并的chunk</span>
+                <span class="token function">unlink</span><span class="token punctuation">(</span>av<span class="token punctuation">,</span> p<span class="token punctuation">,</span> bck<span class="token punctuation">,</span> fwd<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 4.调用unlink宏</span>
             <span class="token punctuation">}</span>
         <span class="token punctuation">}</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<h2 id="三、chunk状态检查"><a href="#三、chunk状态检查" class="headerlink" title="三、chunk状态检查"></a><strong>三、chunk状态检查</strong></h2><p>攻击时修改指针需要绕过的检查：</p>
+<h2 id="三、Checks"><a href="#三、Checks" class="headerlink" title="三、Checks"></a><strong>三、Checks</strong></h2><p>说完了what、when，接下来就要说how了，在这之前我们先来看看，想要偷偷地完成Unlink利用，需要绕过哪些glibc的“守卫”，先那小本本记下，之后有大用处</p>
+<p>攻击时修改指针需要绕过的检查：</p>
 <ol>
 <li><p><strong>检查1</strong>：检查与被释放chunk相邻高地址的chunk的prevsize的值是否等于被释放chunk的size大小</p>
 </li>
@@ -45,9 +48,9 @@
 </ul>
 </li>
 </ol>
-<h2 id="四、利用手法"><a href="#四、利用手法" class="headerlink" title="四、利用手法"></a><strong>四、利用手法</strong></h2><p><img src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202402201152563.png"></p>
+<h2 id="四、Conditions"><a href="#四、Conditions" class="headerlink" title="四、Conditions"></a>四、Conditions</h2><p><img src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202402201152563.png"></p>
 <p>可以看到，我们可以通过堆溢出控制prev_size和size，在关闭了PIE保护，知道堆块指针存放在哪，有堆溢出的情况下，可以利用unlink进行任意地址写</p>
-<h2 id="五、伪造堆块环境"><a href="#五、伪造堆块环境" class="headerlink" title="五、伪造堆块环境"></a>五、伪造堆块环境</h2><p>假设有堆块chunk1,chunk2,chunk3，其中chunk2的data块用于伪造fake_chunk</p>
+<h2 id="五、Fake-chunk"><a href="#五、Fake-chunk" class="headerlink" title="五、Fake chunk!"></a>五、Fake chunk!</h2><p>依然是假设有堆块chunk1,chunk2,chunk3，其中chunk2的data块用于伪造fake_chunk</p>
 <p><strong>注意：</strong>chunk1,chunk2,chunk3和first_chunk、second_chunk、third_chunk不同</p>
 <h3 id="a-外部环境——chunk3"><a href="#a-外部环境——chunk3" class="headerlink" title="(a).外部环境——chunk3"></a>(a).外部环境——chunk3</h3><ol>
 <li><p>chunk3的data块大小至少为</p>
@@ -66,16 +69,15 @@
 </li>
 <li><p>证明fake_chunk是一个空闲块，所以next_prev要等于size，即0x20</p>
 </li>
-<li><p>这里fake_chunk用不到next_size</p>
+<li><p>这里fake_chunk用不到next_size，随便写点something</p>
 <pre class=" language-python"><code class="language-python">fake_chunk  <span class="token operator">=</span> p64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">0x20</span><span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>fd<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>bk<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">0x20</span><span class="token punctuation">)</span> <span class="token operator">+</span> b<span class="token string">"somethin"</span>
 </code></pre>
 <p><img src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202403011718149.png"></p>
 <pre class=" language-python"><code class="language-python">payload <span class="token operator">=</span> fake_chunk <span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">0x30</span><span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">0x90</span><span class="token punctuation">)</span>
         <span class="token operator">=</span> p64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">0x20</span><span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>fd<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>bk<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">0x20</span><span class="token punctuation">)</span> <span class="token operator">+</span> b<span class="token string">"somethin"</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">0x30</span><span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">0x90</span><span class="token punctuation">)</span>
 </code></pre>
-</li>
-<li><p>那么fd和bk要怎么设置呢？</p>
-<p>为了使fake_chunk合法，就必须满足检查3，所以我们需要把fake_chunk当做标题一中的second_chunk来看待，也就是说需要设置</p>
+<p><strong>之前的设置已经让我们绕过了检查1和检查2 ，那么fd和bk要怎么设置呢？</strong></p>
+<p>为了使fake_chunk合法，就必须满足<strong>检查3</strong>，所以我们需要把fake_chunk当做标题一中的second_chunk（就是刚开头假设的chunk，忘了的可以往前看看）来看待，也就是说需要设置</p>
 <ul>
 <li>fake_fd = first_prev_addr</li>
 <li>fake_bk = third_prev_addr</li>
@@ -87,44 +89,57 @@
 <li>third_fd = fake_prev_addr</li>
 <li>first_bk = fake_prev_addr</li>
 </ul>
-<p>是已知的</p>
+<p>是已知的，必须满足的条件</p>
+<ul>
+<li>fake_fd = first_prev_addr</li>
+<li>fake_bk = third_prev_addr</li>
+</ul>
+<p>是未知的，可以由我们设置</p>
 <p><img src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202403011718038.png"></p>
 </li>
 </ol>
-<p><strong>那么现在的问题是如何设置我们能够控制的fake_chunk的fd和bk，来绕过检查3，达到欺骗堆管理器的效果呢?</strong></p>
-<p>假设我们的题目有一个存放所有申请的堆块的数组称为heap_array（图中0x602140），那么显然数组中按顺序存放了申请的堆块的地址s[1]、s[2]、s[3]，其中s[1]、s[2]、s[3]为标题五中一开始假设的堆块chunk1、chunk2、chunk3</p>
+<p>明白了这点，<strong>现在的问题就变成了我们如何控制fake_chunk的fd和bk，选择一个合适的”first_chunk”和”third_chunk”来欺骗堆管理器？</strong></p>
+<p>继续假设（嘿嘿）我们的题目有一个存放所有申请的堆块的数组称为heap_array（图中0x602140），那么显然数组中按顺序存放了申请的堆块的地址s[1]、s[2]、s[3]（忽略数组从0开始索引），其中s[1]、s[2]、s[3]为标题五中一开始假设的堆块chunk1、chunk2、chunk3</p>
 <p><img src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202403011718629.png"></p>
-<p>接下来就是魔法时刻</p>
+<p>接下来就是magic time：</p>
 <ul>
 <li>将0x602140作为一个<code>chunk</code>来看，该chunk的fd即为fake_chunk的地址，也就是说，如果我们选择0x602140作为fake_chunk的bk，可以满足fake_bk = third_prev_addr且third_fd = fake_prev_addr的检查，那么0x602140作为一个堆块来看的话，该堆块的fd就是fake_chunk，即它就是我们要找的third_chunk</li>
 <li>将0x602140 - 0x8作为一个<code>chunk</code>来看，该chunk的bk即为fake_chunk的地址，也就是说，如果我们选择0x602140 - 0x8作为fake_chunk的fd，可以满足fake_bk = first_prev_addr且first_fd = fake_prev_addr的检查，那么0x602140 - 0x8作为一个堆块来看的话，该堆块的bk就是fake_chunk，即它就是我们要找的first_chunk</li>
 </ul>
+<p>好诶！我们终于拼上了payload的最后一块拼图</p>
 <p>最终的paload即为</p>
 <pre class=" language-python"><code class="language-python">payload <span class="token operator">=</span> p64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">0x20</span><span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>heap_array <span class="token operator">-</span> <span class="token number">0x8</span><span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>heap_array<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">0x20</span><span class="token punctuation">)</span> <span class="token operator">+</span> b<span class="token string">"somethin"</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">0x30</span><span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">0x90</span><span class="token punctuation">)</span>
 </code></pre>
 <blockquote>
 <p>区分mark：fd指向的是堆块的prev_size地址；malloc返回的是堆块的data_address，不包括chunk_head</p>
 </blockquote>
-<h2 id="七、触发unlink"><a href="#七、触发unlink" class="headerlink" title="七、触发unlink"></a>七、触发unlink</h2><p>来一起回顾一下，在之前的几个步骤中，我们在chunk2中构造了一个fake_chunk，并且布置好了fake_chunk的内部环境，同时伪造好了与chunk2物理地址相邻的chunk3的外部环境。上述所有的准备，都是为了绕过检查，在free chunk3的时候触发unlink</p>
+<h2 id="七、Let’s-unlink"><a href="#七、Let’s-unlink" class="headerlink" title="七、Let’s unlink!"></a>七、Let’s unlink!</h2><p>来一起回顾一下，在之前的几个步骤中，我们在chunk2中构造了一个fake_chunk，并且布置好了fake_chunk的内部环境，同时伪造好了与chunk2物理地址相邻的chunk3的外部环境。上述所有的准备，都是为了绕过检查，在free chunk3的时候触发unlink</p>
 <h3 id="为什么free-chunk3会触发unlink？"><a href="#为什么free-chunk3会触发unlink？" class="headerlink" title="为什么free chunk3会触发unlink？"></a><strong>为什么free chunk3会触发unlink？</strong></h3><ul>
 <li>fake_chunk和chunk3物理地址相连</li>
 <li>fake_chunk被伪造为空闲状态</li>
 <li>fake_chunk为了绕过检查，与first_chunk和third_chunk构成了一个双向链表</li>
 <li>chunk3在被释放时会向前和fake_chunk合并，这个过程中需要把fake_chunk从双向链表中抢过来</li>
 </ul>
-<p>也就是说，执行unlink</p>
+<p>也就是说，执行free chunk3的前提是要让fake_chunk先脱离双向链表（当然这是我们伪造的），这个把fake_chunk从链表中取出的过程就是我们所说的unlink</p>
 <h3 id="unlink之后发生了什么？"><a href="#unlink之后发生了什么？" class="headerlink" title="unlink之后发生了什么？"></a>unlink之后发生了什么？</h3><p>有标题一中的内容可知，堆块指针会发生如下变化</p>
 <blockquote>
 <p>first_bk = third_prev_addr<br>third_fd = first_prev_addr</p>
 </blockquote>
 <p><img src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202403011719704.png"></p>
-<p>① fake_chunk被摘除之后首先执行的就是<code>first_bk = third_addr</code>，也就是说first_chunk的bk由原来指向fake_chunk地址更改成指向third_chunk地址：</p>
-<p><img src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202403011719704.png"></p>
-<p>② 接下来执行<code>third_fd = first_addr</code>，即third_chunk的fd由由原来指向fake_chunk地址更改成first_chunk地址：</p>
-<p><img src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202403011719704.png"></p>
-<p>这里需要注意的是<code>third_chunk的fd</code>与<code>first_chunk的bk</code>更改的其实是一个位置，但是由于third_fd = first_addr<code>后执行</code>，所以此处内容会从0x602140被覆盖成0x602138</p>
-<p><img src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202403011719704.png"></p>
-<p>OK，以上就是unlink的全部流程了，至此，我们已经可以实现通过菜单中的修改函数进行任意地址写，泄露，rop一把梭</p>
+<p>fake_chunk被摘除之后</p>
+<ol>
+<li>首先执行的就是<code>first_bk = third_addr</code>，即first_chunk的bk由原来指向fake_chunk地址更改成指向third_chunk地址：</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202403022130731.png" alt="image-20240302213010525"></p>
+<ol start="2">
+<li>接下来执行<code>third_fd = first_addr</code>，即third_chunk的fd由由原来指向fake_chunk地址更改成first_chunk地址：</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202403022130731.png"></p>
+<ol start="3">
+<li>third_chunk的fd与first_chunk的bk更改的其实是一个位置，但是由于third_fd = first_addr后执行，所以此处内容会从0x602140被覆盖成0x602138，即unlink之后s[2]存放的指针就是heap_array-0x8的地址，也就是说，可以通过对s2指针指向的内存进行修改，来任意修改heap_array中的内容，假设被写入的内容是函数的got表，接着就能进一步修改写入heap_array的got表指向的真实地址，达到劫持函数的目的</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202403022212479.png" alt="image-20240302221208427"></p>
+<p>OK，以上就是unlink的全部流程了，至此，我们已经可以实现通过菜单中的修改函数进行任意地址写，接下来就是泄露，找system，改got表，提权一把梭</p>
 <h2 id="八、例题2014-HITCON-stkof"><a href="#八、例题2014-HITCON-stkof" class="headerlink" title="八、例题2014 HITCON stkof"></a>八、例题<a href="https://github.com/ctf-wiki/ctf-challenges/tree/master/pwn/heap/unlink/2014_hitcon_stkof">2014 HITCON stkof</a></h2><h3 id="1、静态分析"><a href="#1、静态分析" class="headerlink" title="1、静态分析"></a>1、静态分析</h3><p><img src="https://raw.githubusercontent.com/lmarch2/images/main/typora/202403011719412.png"></p>
 <p>简单逆向重命名</p>
 <p>sub_400936函数，实现申请内存功能，重命名为add</p>
