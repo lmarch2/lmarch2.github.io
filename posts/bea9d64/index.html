@@ -469,8 +469,8 @@
 <p>可以看到，我们可以通过堆溢出控制prev_size和size，在关闭了PIE保护，知道堆块指针存放在哪，有堆溢出的情况下，可以利用unlink进行任意地址写</p>
 <h2 id="五、Fake-chunk"><a href="#五、Fake-chunk" class="headerlink" title="五、Fake chunk!"></a>五、Fake chunk!</h2><p>依然是假设有堆块chunk1,chunk2,chunk3，其中chunk2的data块用于伪造fake_chunk</p>
 <p><strong>注意：</strong>chunk1,chunk2,chunk3和first_chunk、second_chunk、third_chunk不同</p>
-<h3 id="a-外部环境——chunk3"><a href="#a-外部环境——chunk3" class="headerlink" title="(a).外部环境——chunk3"></a>(a).外部环境——chunk3</h3><ol>
-<li><p>chunk3的data块大小至少为</p>
+<h3 id="a-外部环境"><a href="#a-外部环境" class="headerlink" title="(a).外部环境"></a>(a).外部环境</h3><ol>
+<li><p>chunk2的data块大小至少为</p>
 <pre class=" language-python"><code class="language-python"><span class="token number">0x8</span><span class="token punctuation">(</span>prev_size<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">0x8</span><span class="token punctuation">(</span>size<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">0x8</span><span class="token punctuation">(</span>fd<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">0x8</span><span class="token punctuation">(</span>bk<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">0x8</span><span class="token punctuation">(</span>next_prev<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">0x8</span><span class="token punctuation">(</span>next_size<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0x30</span>
 </code></pre>
 </li>
