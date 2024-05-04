@@ -393,7 +393,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.8k
+                    2.9k
                 </div>
                 
 
@@ -479,6 +479,7 @@
 <li><p>想要触发unlink，chunk3的大小必须超过FAST_BIN_MAX且size的P标志位为0</p>
 </li>
 </ol>
+<p>（其实不加上next_prev和next_size也可以，chunk2在申请的时候设置为0x20，chunk3的presize改成0x20，也能绕过。不过既然可以构造堆块，在能控制的同一个堆块里构造数据更好）</p>
 <h3 id="b-内部环境——data-chunk"><a href="#b-内部环境——data-chunk" class="headerlink" title="(b).内部环境——data_chunk"></a>(b).内部环境——data_chunk</h3><ol>
 <li><p>unlink目标是释放chunk3的时候向前合并fake_chunk，并不需要合并chunk2，fake_chunk的prev_size置零就行</p>
 </li>
