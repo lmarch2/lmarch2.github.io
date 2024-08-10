@@ -746,7 +746,8 @@ ia<span class="token punctuation">(</span><span class="token punctuation">)</spa
 <p><code>help(function)</code></p>
 </blockquote>
 <p>more details Please visit <a href="https://lmarch2.top/posts/8c945bd4/">https://lmarch2.top/posts/8c945bd4/</a> </p>
-<h3 id="Release"><a href="#Release" class="headerlink" title="Release"></a>Release</h3><h4 id="2-2-Feb-8-2024"><a href="#2-2-Feb-8-2024" class="headerlink" title="2.2,  Feb 8, 2024"></a>2.2,  Feb 8, 2024</h4><p>修复了一些由包名称引起的问题</p>
+<h3 id="Release"><a href="#Release" class="headerlink" title="Release"></a>Release</h3><h4 id="2-4-Feb-8-2024"><a href="#2-4-Feb-8-2024" class="headerlink" title="2.4,  Feb 8, 2024"></a>2.4,  Feb 8, 2024</h4><p>contextset更名为setcontext<br>新增prhl函数<br>proc默认参数设置为./pwn<br>添加自动计算有基址的地址<br>修复了csu和ropgadget函数bug<br>修改部分alias<br>翻译成英文，txt格式</p>
+<h4 id="2-2-Feb-8-2024"><a href="#2-2-Feb-8-2024" class="headerlink" title="2.2,  Feb 8, 2024"></a>2.2,  Feb 8, 2024</h4><p>修复了一些由包名称引起的问题</p>
 <h4 id="2-1-Feb-8-2024"><a href="#2-1-Feb-8-2024" class="headerlink" title="2.1,  Feb 8, 2024"></a>2.1,  Feb 8, 2024</h4><p>支持自定义调试终端，添加检查更新功能</p>
 <h4 id="2-0-Feb-8-2024"><a href="#2-0-Feb-8-2024" class="headerlink" title="2.0,  Feb 8, 2024"></a>2.0,  Feb 8, 2024</h4><p>本包诞 生之日</p>
 <h1 id="将Python库打包至pypi时遇到的坑"><a href="#将Python库打包至pypi时遇到的坑" class="headerlink" title="将Python库打包至pypi时遇到的坑"></a>将Python库打包至pypi时遇到的坑</h1><h2 id="2FA验证"><a href="#2FA验证" class="headerlink" title="2FA验证"></a>2FA验证</h2><p>首先你需要在pypi上创建账户（testpypi上也是，两个网站服务器相互独立），接着使用TOTP APP身份验证，我选择的是FreeOTP，并且选择在f-droid上下载（安卓手机，没有谷歌商店，懒得编译源码）</p>
